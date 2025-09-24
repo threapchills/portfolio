@@ -75,7 +75,7 @@
     .embed {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;   /* keeps YouTube and Drive consistent */
+      aspect-ratio: 16 / 9;
       background: #000;
       border-radius: var(--radius);
       overflow: hidden;
@@ -163,7 +163,6 @@
         "design13.png","design14.png","design15.png","design16.png","design17.png"
       ],
       motion: [],
-      // CODE images in root/images
       apps: ["code1.png","code2.png","code3.png"],
       text: []
     };
@@ -173,14 +172,12 @@
       apps: {
         "code1.png": "https://mikewhyle.com/tarot/",
         "code2.png": "https://mikewhyle.com/slumbr/"
-        // code3 has no link
       }
     };
 
     const DIRS = {
       visuals: 'images',
       motion:  'images/motion',
-      // apps now reads from root/images
       apps:    'images',
       text:    'images/text'
     };
@@ -345,10 +342,10 @@
       });
     }
 
-    // Showreel placeholder: change filenames when you upload
+    // Showreel files live in /images
     const SHOWREEL = {
-      poster: "images/showreel-poster.jpg",   // put your poster here
-      src: "videos/showreel.mp4",             // put your mp4 here
+      poster: "images/showreelposter.png",
+      src: "images/Showreelsmall.mp4",
       type: "video/mp4"
     };
 
@@ -406,7 +403,6 @@
       const mount = document.getElementById('embeds-motion');
       if (!mount) return;
 
-      // De-duplicate any repeated links
       const seen = new Set();
       MOTION_EMBEDS.forEach(u => {
         if (seen.has(u)) return;
@@ -445,8 +441,8 @@
 
     (async function init(){
       await renderVisuals();
-      await renderMotion();          // motion with showreel and embeds
-      await renderSection('apps');   // code images with links
+      await renderMotion();
+      await renderSection('apps');
       await renderFold('text');
       renderStories();
     })();
