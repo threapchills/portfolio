@@ -18,52 +18,50 @@
       --soft:#f1fdfd;
       --shadow: 0 14px 36px rgba(0,0,0,.18);
       --radius: 14px;
-      --gutter: clamp(12px, 2.2vw, 36px);
-      --safe-scale: 1.02;
+      --gutter: clamp(10px, 2vw, 28px); /* smaller, responsive frame */
     }
 
     .wrap { max-width: 1920px; margin: 0 auto; padding: 16px; }
 
-    /* Hero image card */
-    .hero {
-      margin: 16px;
+    /* Card base */
+    .card {
+      width:100%;
+      background: var(--soft);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      overflow: hidden;
-      background: var(--soft);
+      overflow:hidden;
+      transform: translateZ(0);
       padding: var(--gutter);
     }
+
+    /* Hero */
+    .hero { margin: 16px; }
     .hero > img {
       display:block; width:100%; height:auto;
-      opacity:0; transform:scale(1); transform-origin:50% 50%;
-      transition: opacity .35s ease, transform 12s ease-in-out;
+      opacity:0; transition: opacity .35s ease;
     }
-    .hero.loaded > img { opacity:1; transform:scale(var(--safe-scale)); }
+    .hero.loaded > img { opacity:1; }
 
-    /* Fold image card */
-    .fold{
-      width:100%; background: var(--soft);
-      border-radius: var(--radius); box-shadow: var(--shadow);
-      overflow:hidden; transform:translateZ(0); padding: var(--gutter);
-      margin: 8px 16px 16px;
-    }
-    .fold.portrait{ max-width:720px; margin-left:auto; margin-right:auto; }
-
+    /* Fold */
+    .fold { margin: 8px 16px 16px; }
     .fold > img{
       display:block; width:100%; height:auto;
-      opacity:0; transform:scale(1); transform-origin:50% 50%;
-      transition: opacity .35s ease, transform 12s ease-in-out;
+      opacity:0; transition: opacity .35s ease;
     }
-    .fold.loaded > img{ opacity:1; transform:scale(var(--safe-scale)); }
+    .fold.loaded > img{ opacity:1; }
 
     /* Stacks */
     .stack{ display:flex; flex-direction:column; gap:24px; padding: 0 16px 24px; }
-    .slide{
-      width:100%; background: var(--soft);
-      border-radius: var(--radius); box-shadow: var(--shadow);
-      overflow:hidden; transform:translateZ(0); padding: var(--gutter);
-    }
+
+    .slide{ }
+    /* Portrait constraint only for stacked items, not grid */
     .slide.portrait{ max-width:720px; margin:0 auto; }
+
+    .slide > img{
+      display:block; width:100%; height:auto;
+      opacity:0; transition: opacity .35s ease;
+    }
+    .slide.loaded > img{ opacity:1; }
 
     /* 2×2 grid for first four design images */
     .grid4{
@@ -73,45 +71,42 @@
       padding: 0 16px 0;
       margin-bottom: 24px;
     }
-    .grid4 .slide{ margin:0; } /* use same card styling inside grid */
+    .grid4 .card{ margin:0; }
 
     @media (max-width:768px){
-      .fold.portrait, .slide.portrait{ max-width:100%; }
-      .grid4{ grid-template-columns: repeat(2, minmax(0, 1fr)); } /* still 2×2 on mobile as requested */
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .hero > img, .fold > img, .slide > img { transition: opacity .35s ease; transform:none !important; }
-      .hero.loaded > img, .fold.loaded > img, .slide.loaded > img { transform:none !important; }
+      .slide.portrait{ max-width:100%; }
+      .grid4{ grid-template-columns: repeat(2, minmax(0, 1fr)); } /* still 2×2 on mobile */
     }
   </style>
 </head>
 <body>
 
   <!-- HERO -->
-  <section class="hero" id="top">
+  <section class="hero card" id="top">
     <img id="heroImg" src="images/hero.png" alt="">
   </section>
 
   <div class="wrap">
-    <!-- VISUALS section containers (no headings or text) -->
+    <!-- VISUALS -->
     <section id="visuals">
       <div id="fold-visuals"></div>
       <div id="grid-visuals" class="grid4"></div>
       <main id="stack-visuals" class="stack" aria-live="polite"></main>
     </section>
 
-    <!-- Other sections keep only fold mounts and stacks, with no text -->
+    <!-- MOTION -->
     <section id="motion">
       <div id="fold-motion"></div>
       <main id="stack-motion" class="stack" aria-live="polite"></main>
     </section>
 
+    <!-- APPS -->
     <section id="apps">
       <div id="fold-apps"></div>
       <main id="stack-apps" class="stack" aria-live="polite"></main>
     </section>
 
+    <!-- TEXT -->
     <section id="text">
       <div id="fold-text"></div>
       <main id="stack-text" class="stack" aria-live="polite"></main>
@@ -178,46 +173,41 @@
       if (!res.ok) return;
 
       const fig = document.createElement('figure');
-      fig.className = 'fold';
-      if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
+      fig.className = 'fold card';
       fig.appendChild(res.img);
       mount.appendChild(fig);
       requestAnimationFrame(() => fig.classList.add('loaded'));
     }
 
-    // Render VISUALS with a 2×2 grid for first four images
+    // VISUALS: first four as 2×2 grid (no portrait constraint), rest stacked
     async function renderVisuals() {
       await renderFold('visuals');
 
       const files = SECTION_FILES.visuals || [];
       const dir = DIRS.visuals;
 
-      // First 4 into grid
       const gridMount = document.getElementById('grid-visuals');
       const firstFour = files.slice(0, 4);
       for (const name of firstFour) {
-        const src = `${dir}/${name}`;
-        const res = await loadImage(src);
+        const res = await loadImage(`${dir}/${name}`);
         if (!res.ok) continue;
 
         const fig = document.createElement('figure');
-        fig.className = 'slide';
-        if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
+        fig.className = 'card';       // no .slide, no .portrait — avoids 720px cap
         fig.appendChild(res.img);
         gridMount.appendChild(fig);
         requestAnimationFrame(() => fig.classList.add('loaded'));
       }
 
-      // Remaining images stacked
       const rest = files.slice(4);
       const stack = document.getElementById('stack-visuals');
       for (const name of rest) {
-        const src = `${dir}/${name}`;
-        const res = await loadImage(src);
+        const res = await loadImage(`${dir}/${name}`);
         if (!res.ok) continue;
 
         const fig = document.createElement('figure');
-        fig.className = 'slide';
+        fig.className = 'slide card';
+        // Only stacked items may get portrait width constraint
         if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
         fig.appendChild(res.img);
         stack.appendChild(fig);
@@ -225,7 +215,7 @@
       }
     }
 
-    // Generic renderer for other sections. No empty-state text.
+    // Generic renderer for other sections
     async function renderSection(sectionId) {
       await renderFold(sectionId);
 
@@ -234,12 +224,11 @@
       const stack = document.getElementById(`stack-${sectionId}`);
 
       for (const name of files) {
-        const src = `${dir}/${name}`;
-        const res = await loadImage(src);
+        const res = await loadImage(`${dir}/${name}`);
         if (!res.ok) continue;
 
         const fig = document.createElement('figure');
-        fig.className = 'slide';
+        fig.className = 'slide card';
         if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
         fig.appendChild(res.img);
         stack.appendChild(fig);
