@@ -62,7 +62,7 @@
     }
     .section p { margin: 0 0 8px; color:#333; }
 
-    /* Fold header card (uses same visual language as slides) */
+    /* Fold header card */
     .fold {
       width:100%; background: var(--soft);
       border-radius: var(--radius); box-shadow: var(--shadow);
@@ -85,10 +85,7 @@
       overflow:hidden; transform:translateZ(0); padding: var(--gutter);
     }
     .slide.portrait{ max-width:720px; margin:0 auto; }
-
-    @media (max-width:768px){
-      .fold.portrait, .slide.portrait{ max-width:100%; }
-    }
+    @media (max-width:768px){ .fold.portrait, .slide.portrait{ max-width:100%; } }
 
     .slide > img{
       display:block; width:100%; height:auto;
@@ -170,11 +167,7 @@
     if (hero.complete) hero.closest('.hero').classList.add('loaded');
     hero.addEventListener('load', () => hero.closest('.hero').classList.add('loaded'));
 
-    // ---- NEW: section fold images -------------------------------------------
-    // Expected in /images/ root:
-    //   designfold.png, motionfold.png, codefold.png, textfold.png
-    // If missing, the code silently skips the fold.
-
+    // Section fold images in /images root
     const FOLD_FILES = {
       visuals: 'images/designfold.png',
       motion:  'images/motionfold.png',
@@ -182,31 +175,31 @@
       text:    'images/textfold.png'
     };
 
-    // ---- EXISTING: arbitrary filenames per section --------------------------
-    // Put your files in these folders and list their names below.
+    // Arbitrary filenames per section
     const SECTION_FILES = {
       visuals: [
-        // "Hero.png", "design1.png", "design2.webp", "posterA.jpg"
+        "design1.png","design2.png","design3.png","design4.png","design5.png","design6.png",
+        "design7.png","design8.png","design9.png","design10.png","design11.png","design12.png",
+        "design13.png","design14.png","design15.png","design16.png","design17.png"
       ],
       motion: [
-        // "motion1.png", "vanta-black-frame-12.jpg"
+        // add later
       ],
       apps: [
-        // "code1.png", "slumbr-ui.png", "tarot-dashboard.webp"
+        // add later
       ],
       text: [
-        // "grok-cover.png", "smr-teaser.jpg", "risen-feature.webp"
+        // add later
       ]
     };
 
     const DIRS = {
-      visuals: 'images/visuals',
+      visuals: 'images',          // updated to root/images
       motion:  'images/motion',
       apps:    'images/apps',
       text:    'images/text'
     };
 
-    // ---- Helpers -------------------------------------------------------------
     function loadImage(src) {
       return new Promise(resolve => {
         const img = new Image();
@@ -225,7 +218,7 @@
       if (!foldSrc || !mount) return;
 
       const res = await loadImage(foldSrc);
-      if (!res.ok) return; // silent skip if not present
+      if (!res.ok) return;
 
       const fig = document.createElement('figure');
       fig.className = 'fold';
@@ -240,7 +233,6 @@
       const files = SECTION_FILES[sectionId] || [];
       const dir = DIRS[sectionId];
 
-      // Render the fold first
       await renderFold(sectionId);
 
       if (!files.length) {
@@ -267,7 +259,6 @@
       }
     }
 
-    // ---- Boot ---------------------------------------------------------------
     (async function init(){
       await renderSection('visuals');
       await renderSection('motion');
