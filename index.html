@@ -69,6 +69,31 @@
     .article p  { margin: 0; color:#222; font-size: clamp(14px, 2.6vw, 18px); line-height: 1.6; }
     .article a  { display:inline-block; margin-top:10px; font-weight:700; text-decoration:none; color:#0E7C7B; border-bottom:1px solid rgba(14,124,123,.35); }
     .article a:hover { border-bottom-color: rgba(14,124,123,.7); }
+
+    /* Video players */
+    .player.card { margin: 8px 16px 16px; }
+    .embed {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;   /* keeps YouTube and Drive consistent */
+      background: #000;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .embed > iframe,
+    .embed > video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+    }
+    .embeds {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 0 16px 24px;
+    }
   </style>
 </head>
 <body>
@@ -89,6 +114,10 @@
     <!-- MOTION -->
     <section id="motion">
       <div id="fold-motion"></div>
+      <!-- Showreel placeholder -->
+      <div id="reel-motion"></div>
+      <!-- External embeds list -->
+      <div id="embeds-motion" class="embeds"></div>
       <main id="stack-motion" class="stack" aria-live="polite"></main>
     </section>
 
@@ -273,7 +302,7 @@
       {
         title: "RISEN FROM THE SEA",
         url: "https://mikewhyle.com/risen-from-the-sea/",
-        excerpt: "Table Mountain, known to the Khoe as Hoerikwaggo — ‘risen from the sea’ — stands as a geological masterpiece and living cultural symbol, a wilderness on the city’s doorstep."
+        excerpt: "Table Mountain, known to the Khoe as Hoerikwaggo ‘risen from the sea’ stands as a geological masterpiece and living cultural symbol, a wilderness on the city’s doorstep."
       },
       {
         title: "“What in the SMR is this?!”",
@@ -283,7 +312,7 @@
       {
         title: "The power of mindfulness: embracing calm in a hectic world",
         url: "https://mikewhyle.com/the-power-of-mindfulness-embracing-calm-in-a-hectic-world/",
-        excerpt: "A practical case for everyday mindfulness — cultivating presence to counter stress, sharpen focus, and anchor wellbeing."
+        excerpt: "A practical case for everyday mindfulness cultivating presence to counter stress, sharpen focus, and anchor wellbeing."
       },
       {
         title: "What’s causing the skyrocketing demand for compute?",
@@ -298,7 +327,7 @@
       {
         title: "Blood, Books and Bots: The True Origins of AI",
         url: "https://mikewhyle.com/blood-books-and-bots-the-true-origins-of-ai/",
-        excerpt: "From palaeolithic cave marks to the printing press, humanity has long augmented memory and meaning with external tools — a lineage that frames today’s AI as the latest step."
+        excerpt: "From palaeolithic cave marks to the printing press, humanity has long augmented memory and meaning with external tools a lineage that frames today’s AI as the latest step."
       }
     ];
 
@@ -316,10 +345,108 @@
       });
     }
 
+    // Showreel placeholder: change filenames when you upload
+    const SHOWREEL = {
+      poster: "images/showreel-poster.jpg",   // put your poster here
+      src: "videos/showreel.mp4",             // put your mp4 here
+      type: "video/mp4"
+    };
+
+    // Motion embeds: Google Drive and YouTube links
+    const MOTION_EMBEDS = [
+      "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing",
+      "https://drive.google.com/file/d/1J_j_Z7Lu_V6eloxoYpKqr4vLmh4FG9ZB/view?usp=sharing",
+      "https://drive.google.com/file/d/1qkm1kRKqVQTI9aZI8P1OtqdwyfGhTXjA/view?usp=sharing",
+      "https://www.youtube.com/watch?v=iDio-suJ57k",
+      "https://www.youtube.com/watch?v=alNjwAm7x8w&t=26s",
+      "https://www.youtube.com/watch?v=iDio-suJ57k",
+      "https://www.youtube.com/watch?v=Ghzg8XYxvHc"
+    ];
+
+    function toYouTubeEmbed(url){
+      const v = (url.match(/[?&]v=([A-Za-z0-9_-]{11})/) || [])[1];
+      if (!v) return null;
+      const start = (url.match(/[?&]t=(\d+)/) || [])[1];
+      const t = start ? `&start=${start}` : "";
+      return `https://www.youtube-nocookie.com/embed/${v}?rel=0${t}`;
+    }
+
+    function toDriveEmbed(url){
+      const m = url.match(/\/file\/d\/([A-Za-z0-9_-]+)\//);
+      if (!m) return null;
+      return `https://drive.google.com/file/d/${m[1]}/preview`;
+    }
+
+    function renderShowreel(){
+      const mount = document.getElementById('reel-motion');
+      if (!mount) return;
+
+      const fig = document.createElement('figure');
+      fig.className = 'player card';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'embed';
+
+      const video = document.createElement('video');
+      video.controls = true;
+      video.preload = 'metadata';
+      video.poster = SHOWREEL.poster;
+
+      const src = document.createElement('source');
+      src.src = SHOWREEL.src;
+      src.type = SHOWREEL.type;
+
+      video.appendChild(src);
+      wrap.appendChild(video);
+      fig.appendChild(wrap);
+      mount.appendChild(fig);
+    }
+
+    function renderMotionEmbeds(){
+      const mount = document.getElementById('embeds-motion');
+      if (!mount) return;
+
+      // De-duplicate any repeated links
+      const seen = new Set();
+      MOTION_EMBEDS.forEach(u => {
+        if (seen.has(u)) return;
+        seen.add(u);
+
+        let embed = null;
+        if (u.includes('youtube.com') || u.includes('youtu.be')) {
+          embed = toYouTubeEmbed(u);
+        } else if (u.includes('drive.google.com')) {
+          embed = toDriveEmbed(u);
+        }
+        if (!embed) return;
+
+        const fig = document.createElement('figure');
+        fig.className = 'card';
+
+        const frameWrap = document.createElement('div');
+        frameWrap.className = 'embed';
+
+        const iframe = document.createElement('iframe');
+        iframe.src = embed;
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+
+        frameWrap.appendChild(iframe);
+        fig.appendChild(frameWrap);
+        mount.appendChild(fig);
+      });
+    }
+
+    async function renderMotion(){
+      await renderFold('motion');
+      renderShowreel();
+      renderMotionEmbeds();
+    }
+
     (async function init(){
       await renderVisuals();
-      await renderSection('motion');
-      await renderSection('apps');   // now loads code1..code3 with links
+      await renderMotion();          // motion with showreel and embeds
+      await renderSection('apps');   // code images with links
       await renderFold('text');
       renderStories();
     })();
