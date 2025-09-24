@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mike Whyle — Portfolio</title>
-  <!-- Font: Sora (similar geometric feel to Arbotek) -->
+  <!-- Font: Sora (geometric, Arbotek-adjacent) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -23,12 +23,12 @@
       --shadow: 0 14px 36px rgba(0,0,0,.18);
       --radius: 14px;
       --gutter: clamp(12px, 2.2vw, 36px);
-      --safe-scale: 1.02;   /* gentle in-frame zoom */
+      --safe-scale: 1.02;
     }
 
     .wrap { max-width: 1920px; margin: 0 auto; padding: 16px; }
 
-    /* Hero card displaying images/hero.png */
+    /* Hero card */
     .hero {
       margin: 16px;
       border-radius: var(--radius);
@@ -44,10 +44,7 @@
     }
     .hero.loaded > img { opacity:1; transform:scale(var(--safe-scale)); }
 
-    .hero-cta {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      padding: 14px 4px 4px;
-    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; padding: 14px 4px 4px; }
     .btn {
       display:inline-block; text-decoration:none;
       padding: 12px 18px; border-radius: 999px;
@@ -65,18 +62,33 @@
     }
     .section p { margin: 0 0 8px; color:#333; }
 
+    /* Fold header card (uses same visual language as slides) */
+    .fold {
+      width:100%; background: var(--soft);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      overflow:hidden; transform:translateZ(0); padding: var(--gutter);
+      margin: 8px 0 16px 0;
+    }
+    .fold.portrait{ max-width:720px; margin-left:auto; margin-right:auto; }
+    .fold > img{
+      display:block; width:100%; height:auto;
+      opacity:0; transform:scale(1); transform-origin:50% 50%;
+      transition: opacity .35s ease, transform 12s ease-in-out;
+    }
+    .fold.loaded > img{ opacity:1; transform:scale(var(--safe-scale)); }
+
     /* Stack of slides */
     .stack{ display:flex; flex-direction:column; gap:24px; padding: 0 16px 24px; }
-
     .slide{
       width:100%; background: var(--soft);
       border-radius: var(--radius); box-shadow: var(--shadow);
       overflow:hidden; transform:translateZ(0); padding: var(--gutter);
     }
-
-    /* Orientation aware: narrow portraits for nicer flow */
     .slide.portrait{ max-width:720px; margin:0 auto; }
-    @media (max-width:768px){ .slide.portrait{ max-width:100%; } }
+
+    @media (max-width:768px){
+      .fold.portrait, .slide.portrait{ max-width:100%; }
+    }
 
     .slide > img{
       display:block; width:100%; height:auto;
@@ -86,8 +98,8 @@
     .slide.loaded > img{ opacity:1; transform:scale(var(--safe-scale)); }
 
     @media (prefers-reduced-motion: reduce){
-      .hero > img, .slide > img { transition: opacity .35s ease; transform:none !important; }
-      .hero.loaded > img, .slide.loaded > img { transform:none !important; }
+      .hero > img, .fold > img, .slide > img { transition: opacity .35s ease; transform:none !important; }
+      .hero.loaded > img, .fold.loaded > img, .slide.loaded > img { transform:none !important; }
     }
 
     footer{ padding:40px 16px 80px; text-align:center; color:#333; font-size:14px; }
@@ -97,7 +109,7 @@
 </head>
 <body>
 
-  <!-- HERO: uses /images/hero.png -->
+  <!-- HERO: /images/hero.png -->
   <section class="hero" id="top">
     <img id="heroImg" src="images/hero.png" alt="Portfolio hero">
     <div class="hero-cta">
@@ -112,6 +124,7 @@
     <!-- VISUALS -->
     <section id="visuals" class="section" aria-labelledby="visuals-heading">
       <h2 id="visuals-heading">VISUALS</h2>
+      <div id="fold-visuals"></div>
       <p>Brand work, posters, still frames, key art.</p>
       <main id="stack-visuals" class="stack" aria-live="polite"></main>
     </section>
@@ -119,6 +132,7 @@
     <!-- MOTION -->
     <section id="motion" class="section" aria-labelledby="motion-heading">
       <h2 id="motion-heading">MOTION</h2>
+      <div id="fold-motion"></div>
       <p>Frames from reels and sequences. Use stills or strips.</p>
       <main id="stack-motion" class="stack" aria-live="polite"></main>
     </section>
@@ -126,6 +140,7 @@
     <!-- APPS / CODE -->
     <section id="apps" class="section" aria-labelledby="apps-heading">
       <h2 id="apps-heading">APPS/CODE</h2>
+      <div id="fold-apps"></div>
       <p>Product UI, tools, and web apps.</p>
       <main id="stack-apps" class="stack" aria-live="polite"></main>
     </section>
@@ -133,6 +148,7 @@
     <!-- TEXT -->
     <section id="text" class="section" aria-labelledby="text-heading">
       <h2 id="text-heading">TEXT</h2>
+      <div id="fold-text"></div>
       <p>Selected writing with links back to the full portfolio.</p>
       <main id="stack-text" class="stack" aria-live="polite"></main>
     </section>
@@ -143,27 +159,37 @@
   </footer>
 
   <script>
-    // Smooth scrolling if supported
+    // Smooth scrolling and year
     if ('scrollBehavior' in document.documentElement.style) {
       document.documentElement.style.scrollBehavior = 'smooth';
     }
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Load hero gracefully
+    // Hero reveal
     const hero = document.getElementById('heroImg');
     if (hero.complete) hero.closest('.hero').classList.add('loaded');
     hero.addEventListener('load', () => hero.closest('.hero').classList.add('loaded'));
 
-    // ---- CONFIG: arbitrary filenames per section -----------------------------
-    // Put your files in:
-    // images/visuals/, images/motion/, images/apps/, images/text/
-    // Mix any dimensions and names. Examples shown below; edit as you add files.
+    // ---- NEW: section fold images -------------------------------------------
+    // Expected in /images/ root:
+    //   designfold.png, motionfold.png, codefold.png, textfold.png
+    // If missing, the code silently skips the fold.
+
+    const FOLD_FILES = {
+      visuals: 'images/designfold.png',
+      motion:  'images/motionfold.png',
+      apps:    'images/codefold.png',
+      text:    'images/textfold.png'
+    };
+
+    // ---- EXISTING: arbitrary filenames per section --------------------------
+    // Put your files in these folders and list their names below.
     const SECTION_FILES = {
       visuals: [
         // "Hero.png", "design1.png", "design2.webp", "posterA.jpg"
       ],
       motion: [
-        // "motion1.png", "Vanta-black-frame-12.jpg"
+        // "motion1.png", "vanta-black-frame-12.jpg"
       ],
       apps: [
         // "code1.png", "slumbr-ui.png", "tarot-dashboard.webp"
@@ -180,7 +206,7 @@
       text:    'images/text'
     };
 
-    // ---- RENDER --------------------------------------------------------------
+    // ---- Helpers -------------------------------------------------------------
     function loadImage(src) {
       return new Promise(resolve => {
         const img = new Image();
@@ -193,10 +219,29 @@
       });
     }
 
+    async function renderFold(sectionId) {
+      const foldSrc = FOLD_FILES[sectionId];
+      const mount = document.getElementById(`fold-${sectionId}`);
+      if (!foldSrc || !mount) return;
+
+      const res = await loadImage(foldSrc);
+      if (!res.ok) return; // silent skip if not present
+
+      const fig = document.createElement('figure');
+      fig.className = 'fold';
+      if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
+      fig.appendChild(res.img);
+      mount.appendChild(fig);
+      requestAnimationFrame(() => fig.classList.add('loaded'));
+    }
+
     async function renderSection(sectionId) {
       const stack = document.getElementById(`stack-${sectionId}`);
       const files = SECTION_FILES[sectionId] || [];
       const dir = DIRS[sectionId];
+
+      // Render the fold first
+      await renderFold(sectionId);
 
       if (!files.length) {
         const p = document.createElement('p');
@@ -222,6 +267,7 @@
       }
     }
 
+    // ---- Boot ---------------------------------------------------------------
     (async function init(){
       await renderSection('visuals');
       await renderSection('motion');
