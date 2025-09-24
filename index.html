@@ -4,21 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mike Whyle — Portfolio</title>
-  <!-- Font: Sora (geometric, Arbotek-adjacent) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* Reset */
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; background: #fff; color: #0b0b0c; }
+    html, body { margin: 0; padding: 0; background: #fff; color: #84b3e4; }
     body { font-family: Sora, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.45; }
 
-    /* Theme */
     :root{
       --ink:#0b0b0c;
       --paper:#ffffff;
-      --cyan:#0E7C7B;       /* dark cyan */
-      --cyan-700:#0b5f5e;
+      --cyan:#0E7C7B;
       --soft:#f1fdfd;
       --shadow: 0 14px 36px rgba(0,0,0,.18);
       --radius: 14px;
@@ -28,7 +24,7 @@
 
     .wrap { max-width: 1920px; margin: 0 auto; padding: 16px; }
 
-    /* Hero card */
+    /* Hero image card */
     .hero {
       margin: 16px;
       border-radius: var(--radius);
@@ -44,32 +40,15 @@
     }
     .hero.loaded > img { opacity:1; transform:scale(var(--safe-scale)); }
 
-    .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; padding: 14px 4px 4px; }
-    .btn {
-      display:inline-block; text-decoration:none;
-      padding: 12px 18px; border-radius: 999px;
-      font-weight: 800; font-size: 14px; letter-spacing:.2px;
-      background: var(--cyan); color: #fff; border: 1px solid var(--cyan);
-      transition: transform .08s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-    }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.14); background: var(--cyan-700); border-color: var(--cyan-700); }
-
-    /* Section headings */
-    .section { padding: 8px 16px; scroll-margin-top: 8px; }
-    .section h2 {
-      font-size: clamp(18px, 3.2vw, 24px); margin: 24px 0 10px;
-      font-weight: 900; letter-spacing:.3px;
-    }
-    .section p { margin: 0 0 8px; color:#333; }
-
-    /* Fold header card */
-    .fold {
+    /* Fold image card */
+    .fold{
       width:100%; background: var(--soft);
       border-radius: var(--radius); box-shadow: var(--shadow);
       overflow:hidden; transform:translateZ(0); padding: var(--gutter);
-      margin: 8px 0 16px 0;
+      margin: 8px 16px 16px;
     }
     .fold.portrait{ max-width:720px; margin-left:auto; margin-right:auto; }
+
     .fold > img{
       display:block; width:100%; height:auto;
       opacity:0; transform:scale(1); transform-origin:50% 50%;
@@ -77,7 +56,7 @@
     }
     .fold.loaded > img{ opacity:1; transform:scale(var(--safe-scale)); }
 
-    /* Stack of slides */
+    /* Stacks */
     .stack{ display:flex; flex-direction:column; gap:24px; padding: 0 16px 24px; }
     .slide{
       width:100%; background: var(--soft);
@@ -85,89 +64,72 @@
       overflow:hidden; transform:translateZ(0); padding: var(--gutter);
     }
     .slide.portrait{ max-width:720px; margin:0 auto; }
-    @media (max-width:768px){ .fold.portrait, .slide.portrait{ max-width:100%; } }
 
-    .slide > img{
-      display:block; width:100%; height:auto;
-      opacity:0; transform:scale(1); transform-origin:50% 50%;
-      transition: opacity .35s ease, transform 12s ease-in-out;
+    /* 2×2 grid for first four design images */
+    .grid4{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:24px;
+      padding: 0 16px 0;
+      margin-bottom: 24px;
     }
-    .slide.loaded > img{ opacity:1; transform:scale(var(--safe-scale)); }
+    .grid4 .slide{ margin:0; } /* use same card styling inside grid */
+
+    @media (max-width:768px){
+      .fold.portrait, .slide.portrait{ max-width:100%; }
+      .grid4{ grid-template-columns: repeat(2, minmax(0, 1fr)); } /* still 2×2 on mobile as requested */
+    }
 
     @media (prefers-reduced-motion: reduce){
       .hero > img, .fold > img, .slide > img { transition: opacity .35s ease; transform:none !important; }
       .hero.loaded > img, .fold.loaded > img, .slide.loaded > img { transform:none !important; }
     }
-
-    footer{ padding:40px 16px 80px; text-align:center; color:#333; font-size:14px; }
-    footer a{ color: var(--cyan); text-decoration:none; border-bottom:1px solid color-mix(in oklab, var(--cyan), #000 30%); }
-    footer a:hover{ border-bottom-color: color-mix(in oklab, var(--cyan), #000 10%); }
   </style>
 </head>
 <body>
 
-  <!-- HERO: /images/hero.png -->
+  <!-- HERO -->
   <section class="hero" id="top">
-    <img id="heroImg" src="images/hero.png" alt="Portfolio hero">
-    <div class="hero-cta">
-      <a class="btn" href="#visuals">VISUALS</a>
-      <a class="btn" href="#motion">MOTION</a>
-      <a class="btn" href="#apps">APPS/CODE</a>
-      <a class="btn" href="#text">TEXT</a>
-    </div>
+    <img id="heroImg" src="images/hero.png" alt="">
   </section>
 
   <div class="wrap">
-    <!-- VISUALS -->
-    <section id="visuals" class="section" aria-labelledby="visuals-heading">
-      <h2 id="visuals-heading">VISUALS</h2>
+    <!-- VISUALS section containers (no headings or text) -->
+    <section id="visuals">
       <div id="fold-visuals"></div>
-      <p>Brand work, posters, still frames, key art.</p>
+      <div id="grid-visuals" class="grid4"></div>
       <main id="stack-visuals" class="stack" aria-live="polite"></main>
     </section>
 
-    <!-- MOTION -->
-    <section id="motion" class="section" aria-labelledby="motion-heading">
-      <h2 id="motion-heading">MOTION</h2>
+    <!-- Other sections keep only fold mounts and stacks, with no text -->
+    <section id="motion">
       <div id="fold-motion"></div>
-      <p>Frames from reels and sequences. Use stills or strips.</p>
       <main id="stack-motion" class="stack" aria-live="polite"></main>
     </section>
 
-    <!-- APPS / CODE -->
-    <section id="apps" class="section" aria-labelledby="apps-heading">
-      <h2 id="apps-heading">APPS/CODE</h2>
+    <section id="apps">
       <div id="fold-apps"></div>
-      <p>Product UI, tools, and web apps.</p>
       <main id="stack-apps" class="stack" aria-live="polite"></main>
     </section>
 
-    <!-- TEXT -->
-    <section id="text" class="section" aria-labelledby="text-heading">
-      <h2 id="text-heading">TEXT</h2>
+    <section id="text">
       <div id="fold-text"></div>
-      <p>Selected writing with links back to the full portfolio.</p>
       <main id="stack-text" class="stack" aria-live="polite"></main>
     </section>
   </div>
 
-  <footer>
-    © <span id="year"></span> Mike Whyle • <a href="https://mikewhyle.com" rel="noopener">mikewhyle.com</a>
-  </footer>
-
   <script>
-    // Smooth scrolling and year
+    // Smooth scroll if available
     if ('scrollBehavior' in document.documentElement.style) {
       document.documentElement.style.scrollBehavior = 'smooth';
     }
-    document.getElementById('year').textContent = new Date().getFullYear();
 
     // Hero reveal
     const hero = document.getElementById('heroImg');
     if (hero.complete) hero.closest('.hero').classList.add('loaded');
     hero.addEventListener('load', () => hero.closest('.hero').classList.add('loaded'));
 
-    // Section fold images in /images root
+    // Fold images (optional). If absent, nothing shows.
     const FOLD_FILES = {
       visuals: 'images/designfold.png',
       motion:  'images/motionfold.png',
@@ -175,26 +137,21 @@
       text:    'images/textfold.png'
     };
 
-    // Arbitrary filenames per section
+    // Files per section
     const SECTION_FILES = {
       visuals: [
-        "design1.png","design2.png","design3.png","design4.png","design5.png","design6.png",
-        "design7.png","design8.png","design9.png","design10.png","design11.png","design12.png",
+        "design1.png","design2.png","design3.png","design4.png",
+        "design5.png","design6.png","design7.png","design8.png",
+        "design9.png","design10.png","design11.png","design12.png",
         "design13.png","design14.png","design15.png","design16.png","design17.png"
       ],
-      motion: [
-        // add later
-      ],
-      apps: [
-        // add later
-      ],
-      text: [
-        // add later
-      ]
+      motion: [],
+      apps: [],
+      text: []
     };
 
     const DIRS = {
-      visuals: 'images',          // updated to root/images
+      visuals: 'images',
       motion:  'images/motion',
       apps:    'images/apps',
       text:    'images/text'
@@ -228,21 +185,53 @@
       requestAnimationFrame(() => fig.classList.add('loaded'));
     }
 
-    async function renderSection(sectionId) {
-      const stack = document.getElementById(`stack-${sectionId}`);
-      const files = SECTION_FILES[sectionId] || [];
-      const dir = DIRS[sectionId];
+    // Render VISUALS with a 2×2 grid for first four images
+    async function renderVisuals() {
+      await renderFold('visuals');
 
+      const files = SECTION_FILES.visuals || [];
+      const dir = DIRS.visuals;
+
+      // First 4 into grid
+      const gridMount = document.getElementById('grid-visuals');
+      const firstFour = files.slice(0, 4);
+      for (const name of firstFour) {
+        const src = `${dir}/${name}`;
+        const res = await loadImage(src);
+        if (!res.ok) continue;
+
+        const fig = document.createElement('figure');
+        fig.className = 'slide';
+        if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
+        fig.appendChild(res.img);
+        gridMount.appendChild(fig);
+        requestAnimationFrame(() => fig.classList.add('loaded'));
+      }
+
+      // Remaining images stacked
+      const rest = files.slice(4);
+      const stack = document.getElementById('stack-visuals');
+      for (const name of rest) {
+        const src = `${dir}/${name}`;
+        const res = await loadImage(src);
+        if (!res.ok) continue;
+
+        const fig = document.createElement('figure');
+        fig.className = 'slide';
+        if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
+        fig.appendChild(res.img);
+        stack.appendChild(fig);
+        requestAnimationFrame(() => fig.classList.add('loaded'));
+      }
+    }
+
+    // Generic renderer for other sections. No empty-state text.
+    async function renderSection(sectionId) {
       await renderFold(sectionId);
 
-      if (!files.length) {
-        const p = document.createElement('p');
-        p.style.textAlign = 'center';
-        p.style.padding = '40px';
-        p.textContent = `Add files to ${dir} and list them in SECTION_FILES.${sectionId} in index.html.`;
-        stack.appendChild(p);
-        return;
-      }
+      const files = SECTION_FILES[sectionId] || [];
+      const dir = DIRS[sectionId];
+      const stack = document.getElementById(`stack-${sectionId}`);
 
       for (const name of files) {
         const src = `${dir}/${name}`;
@@ -252,7 +241,6 @@
         const fig = document.createElement('figure');
         fig.className = 'slide';
         if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
-
         fig.appendChild(res.img);
         stack.appendChild(fig);
         requestAnimationFrame(() => fig.classList.add('loaded'));
@@ -260,7 +248,7 @@
     }
 
     (async function init(){
-      await renderSection('visuals');
+      await renderVisuals();
       await renderSection('motion');
       await renderSection('apps');
       await renderSection('text');
