@@ -14,7 +14,6 @@
     :root{
       --ink:#0b0b0c;
       --paper:#ffffff;
-      --cyan:#0E7C7B;
       --soft:#f1fdfd;
       --shadow: 0 14px 36px rgba(0,0,0,.18);
       --radius: 14px;
@@ -59,18 +58,16 @@
       margin-bottom: 24px;
     }
     .grid4 .card{ margin:0; }
-    /* Shrink portrait items in the grid to half width, centred */
-    .grid4 .card.portrait img{
-      width:50%;
-      height:auto;
-      margin-inline:auto;
-      display:block;
-    }
+    .grid4 .card.portrait img{ width:50%; height:auto; margin-inline:auto; display:block; }
+    @media (max-width:540px){ .grid4 .card.portrait img{ width:60%; } }
 
-    @media (max-width:540px){
-      /* Slightly larger on very small screens for readability */
-      .grid4 .card.portrait img{ width:60%; }
-    }
+    /* Text articles */
+    .articles { padding: 0 16px 24px; display:flex; flex-direction:column; gap:24px; }
+    .article { background: var(--soft); border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(14px, 2.2vw, 28px); }
+    .article h3 { margin: 0 0 6px 0; font-size: clamp(18px, 3.4vw, 26px); font-weight: 800; color: var(--ink); letter-spacing:.2px; }
+    .article p  { margin: 0; color:#222; font-size: clamp(14px, 2.6vw, 18px); line-height: 1.6; }
+    .article a  { display:inline-block; margin-top:10px; font-weight:700; text-decoration:none; color:#0E7C7B; border-bottom:1px solid rgba(14,124,123,.35); }
+    .article a:hover { border-bottom-color: rgba(14,124,123,.7); }
   </style>
 </head>
 <body>
@@ -103,7 +100,7 @@
     <!-- TEXT -->
     <section id="text">
       <div id="fold-text"></div>
-      <main id="stack-text" class="stack" aria-live="polite"></main>
+      <div id="articles" class="articles"></div>
     </section>
   </div>
 
@@ -123,8 +120,10 @@
       visuals: 'images/designfold.png',
       motion:  'images/motionfold.png',
       apps:    'images/codefold.png',
+      // Make text fold a hyperlink to your main portfolio page:
       text:    'images/textfold.png'
     };
+    const TEXT_FOLD_LINK = "https://mikewhyle.com/about/delivered/";
 
     // Files per section
     const SECTION_FILES = {
@@ -166,14 +165,24 @@
       const res = await loadImage(foldSrc);
       if (!res.ok) return;
 
+      // For TEXT only, wrap the fold in an anchor
+      const wrapper = document.createElement(sectionId === 'text' ? 'a' : 'div');
+      if (sectionId === 'text') {
+        wrapper.href = TEXT_FOLD_LINK;
+        wrapper.target = "_blank";
+        wrapper.rel = "noopener";
+        wrapper.style.textDecoration = "none";
+      }
+
       const fig = document.createElement('figure');
       fig.className = 'fold card';
       fig.appendChild(res.img);
-      mount.appendChild(fig);
+      wrapper.appendChild(fig);
+      mount.appendChild(wrapper);
       requestAnimationFrame(() => fig.classList.add('loaded'));
     }
 
-    // VISUALS: first four as 2×2 grid with portrait downscaled 2×, rest stacked
+    // VISUALS: first four grid, rest stacked
     async function renderVisuals() {
       await renderFold('visuals');
 
@@ -185,9 +194,7 @@
       for (const name of firstFour) {
         const res = await loadImage(`${dir}/${name}`);
         if (!res.ok) continue;
-
         const fig = document.createElement('figure');
-        // mark portrait so CSS can shrink it in grid
         const isPortrait = res.img.naturalHeight > res.img.naturalWidth;
         fig.className = `card${isPortrait ? ' portrait' : ''}`;
         fig.appendChild(res.img);
@@ -200,7 +207,6 @@
       for (const name of rest) {
         const res = await loadImage(`${dir}/${name}`);
         if (!res.ok) continue;
-
         const fig = document.createElement('figure');
         fig.className = 'slide card';
         if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
@@ -210,18 +216,17 @@
       }
     }
 
-    // Generic renderer for other sections
+    // Generic renderer for other image sections
     async function renderSection(sectionId) {
       await renderFold(sectionId);
-
       const files = SECTION_FILES[sectionId] || [];
       const dir = DIRS[sectionId];
       const stack = document.getElementById(`stack-${sectionId}`);
+      if (!stack) return;
 
       for (const name of files) {
         const res = await loadImage(`${dir}/${name}`);
         if (!res.ok) continue;
-
         const fig = document.createElement('figure');
         fig.className = 'slide card';
         if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
@@ -229,13 +234,68 @@
         stack.appendChild(fig);
         requestAnimationFrame(() => fig.classList.add('loaded'));
       }
+    }
+
+    // TEXT: seven best stories as inline cards (title + excerpt + link)
+    // You can paste full text later inside the <p> if you want it all on-page.
+    const STORIES = [
+      {
+        title: "Why you can’t trust Grok 4’s benchmarks",
+        url: "https://mikewhyle.com/trust-issues-with-grok-4/",
+        excerpt: "On paper, xAI’s Grok 4 posts top scores on major AI benchmarks. In practice, early users report a gap between test results and real performance, raising questions about hype, methodology, and trust." // Source: article intro
+      },
+      {
+        title: "RISEN FROM THE SEA",
+        url: "https://mikewhyle.com/risen-from-the-sea/",
+        excerpt: "Table Mountain, known to the Khoe as Hoerikwaggo — ‘risen from the sea’ — stands as a geological masterpiece and living cultural symbol, a wilderness on the city’s doorstep."
+      },
+      {
+        title: "“What in the SMR is this?!”",
+        url: "https://mikewhyle.com/what-in-the-smr-is-this/",
+        excerpt: "Small Modular Reactors promise clean baseload power with modular deployment and operational simplicity, offering strategic advantages where size and redundancy matter."
+      },
+      {
+        title: "The power of mindfulness: embracing calm in a hectic world",
+        url: "https://mikewhyle.com/the-power-of-mindfulness-embracing-calm-in-a-hectic-world/",
+        excerpt: "A practical case for everyday mindfulness — cultivating presence to counter stress, sharpen focus, and anchor wellbeing." // Summary line; link resolves on your site
+      },
+      {
+        title: "What’s causing the skyrocketing demand for compute?",
+        url: "https://mikewhyle.com/whats-causing-the-skyrocketing-demand-for-compute/",
+        excerpt: "Generative AI and digital services are driving unprecedented demand for data centre capacity, turning energy into one of the most lucrative inputs in the modern economy."
+      },
+      {
+        title: "Pioneering Progress",
+        url: "https://mikewhyle.com/pioneering-progress/",
+        excerpt: "Radiology and oncology in Africa sit at a difficult intersection of innovation and access, where technology leads but affordability and capacity constraints lag."
+      },
+      {
+        title: "Blood, Books and Bots: The True Origins of AI",
+        url: "https://mikewhyle.com/blood-books-and-bots-the-true-origins-of-ai/",
+        excerpt: "From palaeolithic cave marks to the printing press, humanity has long augmented memory and meaning with external tools — a lineage that frames today’s AI as the latest step."
+      }
+    ];
+
+    function renderStories(){
+      const mount = document.getElementById('articles');
+      STORIES.forEach(s => {
+        const art = document.createElement('article');
+        art.className = 'article';
+        art.innerHTML = `
+          <h3>${s.title}</h3>
+          <p>${s.excerpt}</p>
+          <a href="${s.url}" target="_blank" rel="noopener">Read the full story</a>
+        `;
+        mount.appendChild(art);
+      });
     }
 
     (async function init(){
       await renderVisuals();
       await renderSection('motion');
       await renderSection('apps');
-      await renderSection('text');
+      await renderFold('text');  // hyperlink-enabled fold
+      renderStories();           // add text stories beneath the fold
     })();
   </script>
 </body>
