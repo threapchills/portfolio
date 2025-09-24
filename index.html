@@ -18,7 +18,7 @@
       --soft:#f1fdfd;
       --shadow: 0 14px 36px rgba(0,0,0,.18);
       --radius: 14px;
-      --gutter: clamp(10px, 2vw, 28px); /* smaller, responsive frame */
+      --gutter: clamp(10px, 2vw, 28px);
     }
 
     .wrap { max-width: 1920px; margin: 0 auto; padding: 16px; }
@@ -36,32 +36,19 @@
 
     /* Hero */
     .hero { margin: 16px; }
-    .hero > img {
-      display:block; width:100%; height:auto;
-      opacity:0; transition: opacity .35s ease;
-    }
+    .hero > img { display:block; width:100%; height:auto; opacity:0; transition: opacity .35s ease; }
     .hero.loaded > img { opacity:1; }
 
     /* Fold */
     .fold { margin: 8px 16px 16px; }
-    .fold > img{
-      display:block; width:100%; height:auto;
-      opacity:0; transition: opacity .35s ease;
-    }
+    .fold > img{ display:block; width:100%; height:auto; opacity:0; transition: opacity .35s ease; }
     .fold.loaded > img{ opacity:1; }
 
     /* Stacks */
     .stack{ display:flex; flex-direction:column; gap:24px; padding: 0 16px 24px; }
-
-    .slide{ }
-    /* Portrait constraint only for stacked items, not grid */
-    .slide.portrait{ max-width:720px; margin:0 auto; }
-
-    .slide > img{
-      display:block; width:100%; height:auto;
-      opacity:0; transition: opacity .35s ease;
-    }
+    .slide > img{ display:block; width:100%; height:auto; opacity:0; transition: opacity .35s ease; }
     .slide.loaded > img{ opacity:1; }
+    .slide.portrait{ max-width:720px; margin:0 auto; }
 
     /* 2×2 grid for first four design images */
     .grid4{
@@ -72,10 +59,17 @@
       margin-bottom: 24px;
     }
     .grid4 .card{ margin:0; }
+    /* Shrink portrait items in the grid to half width, centred */
+    .grid4 .card.portrait img{
+      width:50%;
+      height:auto;
+      margin-inline:auto;
+      display:block;
+    }
 
-    @media (max-width:768px){
-      .slide.portrait{ max-width:100%; }
-      .grid4{ grid-template-columns: repeat(2, minmax(0, 1fr)); } /* still 2×2 on mobile */
+    @media (max-width:540px){
+      /* Slightly larger on very small screens for readability */
+      .grid4 .card.portrait img{ width:60%; }
     }
   </style>
 </head>
@@ -179,7 +173,7 @@
       requestAnimationFrame(() => fig.classList.add('loaded'));
     }
 
-    // VISUALS: first four as 2×2 grid (no portrait constraint), rest stacked
+    // VISUALS: first four as 2×2 grid with portrait downscaled 2×, rest stacked
     async function renderVisuals() {
       await renderFold('visuals');
 
@@ -193,7 +187,9 @@
         if (!res.ok) continue;
 
         const fig = document.createElement('figure');
-        fig.className = 'card';       // no .slide, no .portrait — avoids 720px cap
+        // mark portrait so CSS can shrink it in grid
+        const isPortrait = res.img.naturalHeight > res.img.naturalWidth;
+        fig.className = `card${isPortrait ? ' portrait' : ''}`;
         fig.appendChild(res.img);
         gridMount.appendChild(fig);
         requestAnimationFrame(() => fig.classList.add('loaded'));
@@ -207,7 +203,6 @@
 
         const fig = document.createElement('figure');
         fig.className = 'slide card';
-        // Only stacked items may get portrait width constraint
         if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
         fig.appendChild(res.img);
         stack.appendChild(fig);
