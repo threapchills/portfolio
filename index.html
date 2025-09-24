@@ -115,12 +115,11 @@
     if (hero.complete) hero.closest('.hero').classList.add('loaded');
     hero.addEventListener('load', () => hero.closest('.hero').classList.add('loaded'));
 
-    // Fold images (optional). If absent, nothing shows.
+    // Fold images
     const FOLD_FILES = {
       visuals: 'images/designfold.png',
       motion:  'images/motionfold.png',
       apps:    'images/codefold.png',
-      // Make text fold a hyperlink to your main portfolio page:
       text:    'images/textfold.png'
     };
     const TEXT_FOLD_LINK = "https://mikewhyle.com/about/delivered/";
@@ -134,14 +133,25 @@
         "design13.png","design14.png","design15.png","design16.png","design17.png"
       ],
       motion: [],
-      apps: [],
+      // CODE images in root/images
+      apps: ["code1.png","code2.png","code3.png"],
       text: []
+    };
+
+    // Optional per-image links
+    const SECTION_LINKS = {
+      apps: {
+        "code1.png": "https://mikewhyle.com/tarot/",
+        "code2.png": "https://mikewhyle.com/slumbr/"
+        // code3 has no link
+      }
     };
 
     const DIRS = {
       visuals: 'images',
       motion:  'images/motion',
-      apps:    'images/apps',
+      // apps now reads from root/images
+      apps:    'images',
       text:    'images/text'
     };
 
@@ -165,9 +175,9 @@
       const res = await loadImage(foldSrc);
       if (!res.ok) return;
 
-      // For TEXT only, wrap the fold in an anchor
-      const wrapper = document.createElement(sectionId === 'text' ? 'a' : 'div');
-      if (sectionId === 'text') {
+      const isText = sectionId === 'text';
+      const wrapper = document.createElement(isText ? 'a' : 'div');
+      if (isText) {
         wrapper.href = TEXT_FOLD_LINK;
         wrapper.target = "_blank";
         wrapper.rel = "noopener";
@@ -216,7 +226,7 @@
       }
     }
 
-    // Generic renderer for other image sections
+    // Generic image section with optional per-image links
     async function renderSection(sectionId) {
       await renderFold(sectionId);
       const files = SECTION_FILES[sectionId] || [];
@@ -227,22 +237,37 @@
       for (const name of files) {
         const res = await loadImage(`${dir}/${name}`);
         if (!res.ok) continue;
+
         const fig = document.createElement('figure');
         fig.className = 'slide card';
         if (res.img.naturalHeight > res.img.naturalWidth) fig.classList.add('portrait');
         fig.appendChild(res.img);
-        stack.appendChild(fig);
+
+        const linkMap = SECTION_LINKS[sectionId] || {};
+        const href = linkMap[name];
+        if (href) {
+          const a = document.createElement('a');
+          a.href = href;
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.style.display = "block";
+          a.style.textDecoration = "none";
+          a.appendChild(fig);
+          stack.appendChild(a);
+        } else {
+          stack.appendChild(fig);
+        }
+
         requestAnimationFrame(() => fig.classList.add('loaded'));
       }
     }
 
-    // TEXT: seven best stories as inline cards (title + excerpt + link)
-    // You can paste full text later inside the <p> if you want it all on-page.
+    // Text stories list
     const STORIES = [
       {
         title: "Why you can’t trust Grok 4’s benchmarks",
         url: "https://mikewhyle.com/trust-issues-with-grok-4/",
-        excerpt: "On paper, xAI’s Grok 4 posts top scores on major AI benchmarks. In practice, early users report a gap between test results and real performance, raising questions about hype, methodology, and trust." // Source: article intro
+        excerpt: "On paper, xAI’s Grok 4 posts top scores on major AI benchmarks. In practice, early users report a gap between test results and real performance, raising questions about hype, methodology, and trust."
       },
       {
         title: "RISEN FROM THE SEA",
@@ -257,7 +282,7 @@
       {
         title: "The power of mindfulness: embracing calm in a hectic world",
         url: "https://mikewhyle.com/the-power-of-mindfulness-embracing-calm-in-a-hectic-world/",
-        excerpt: "A practical case for everyday mindfulness — cultivating presence to counter stress, sharpen focus, and anchor wellbeing." // Summary line; link resolves on your site
+        excerpt: "A practical case for everyday mindfulness — cultivating presence to counter stress, sharpen focus, and anchor wellbeing."
       },
       {
         title: "What’s causing the skyrocketing demand for compute?",
@@ -293,9 +318,9 @@
     (async function init(){
       await renderVisuals();
       await renderSection('motion');
-      await renderSection('apps');
-      await renderFold('text');  // hyperlink-enabled fold
-      renderStories();           // add text stories beneath the fold
+      await renderSection('apps');   // now loads code1..code3 with links
+      await renderFold('text');
+      renderStories();
     })();
   </script>
 </body>
