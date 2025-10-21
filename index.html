@@ -352,12 +352,26 @@
     ];
 
     function toYouTubeEmbed(url){
-      const v = (url.match(/[?&]v=([A-Za-z0-9_-]{11})/) || [])[1];
+      // Handle youtube.com/watch?v= format
+      let v = (url.match(/[?&]v=([A-Za-z0-9_-]{11})/) || [])[1];
+      
+      // Handle youtu.be/ format
+      if (!v) {
+        v = (url.match(/youtu\.be\/([A-Za-z0-9_-]{11})/) || [])[1];
+      }
+  
+      // Handle youtube.com/shorts/ format
+      if (!v) {
+        v = (url.match(/\/shorts\/([A-Za-z0-9_-]{11})/) || [])[1];
+      }
+      
       if (!v) return null;
+      
       const start = (url.match(/[?&]t=(\d+)/) || [])[1];
       const t = start ? `&start=${start}` : "";
       return `https://www.youtube-nocookie.com/embed/${v}?rel=0${t}`;
     }
+
 
     function toDriveEmbed(url){
       const m = url.match(/\/file\/d\/([A-Za-z0-9_-]+)\//);
