@@ -50,18 +50,6 @@
     .slide.loaded > img{ opacity:1; }
     .slide.portrait{ max-width:720px; margin:0 auto; }
 
-    /* 2×2 grid for first four design images */
-    .grid4{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:24px;
-      padding: 0 16px 0;
-      margin-bottom: 24px;
-    }
-    .grid4 .card{ margin:0; }
-    .grid4 .card.portrait img{ width:50%; height:auto; margin-inline:auto; display:block; }
-    @media (max-width:540px){ .grid4 .card.portrait img{ width:60%; } }
-
     /* Text articles */
     .articles { padding: 0 16px 24px; display:flex; flex-direction:column; gap:24px; }
     .article { background: var(--soft); border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(14px, 2.2vw, 28px); }
@@ -95,7 +83,7 @@
       padding: 0 16px 24px;
     }
 
-    /* Footer (added) */
+    /* Footer */
     .footer { text-align: center; padding: 40px 16px 48px; }
     .footer a { display: inline-block; text-decoration: none; }
     .footer img { max-width: 240px; width: 40vw; height: auto; display:block; margin: 0 auto 10px; }
@@ -113,7 +101,6 @@
     <!-- VISUALS -->
     <section id="visuals">
       <div id="fold-visuals"></div>
-      <div id="grid-visuals" class="grid4"></div>
       <main id="stack-visuals" class="stack" aria-live="polite"></main>
     </section>
 
@@ -140,7 +127,7 @@
     </section>
   </div>
 
-  <!-- FOOTER (added) -->
+  <!-- FOOTER -->
   <footer class="footer">
     <a href="https://www.mikewhyle.com" target="_blank" rel="noopener">
       <img src="images/mikelogo.png" alt="Mike Whyle">
@@ -171,10 +158,12 @@
     // Files per section
     const SECTION_FILES = {
       visuals: [
+        "design01.png","design02.png","design03.png","design04.png","design05.png","design06.png","design07.png",
         "design1.png","design2.png","design3.png","design4.png",
         "design5.png","design6.png","design7.png","design8.png",
         "design9.png","design10.png","design11.png","design12.png",
-        "design13.png","design14.png","design15.png","design16.png","design17.png"
+        "design13.png","design14.png","design15.png","design16.png","design17.png",
+        "design18.png","design19.png"
       ],
       motion: [],
       apps: ["code1.png","code2.png","code3.png"],
@@ -233,29 +222,15 @@
       requestAnimationFrame(() => fig.classList.add('loaded'));
     }
 
-    // VISUALS: first four grid, rest stacked
+    // VISUALS: all images stacked vertically
     async function renderVisuals() {
       await renderFold('visuals');
 
       const files = SECTION_FILES.visuals || [];
       const dir = DIRS.visuals;
-
-      const gridMount = document.getElementById('grid-visuals');
-      const firstFour = files.slice(0, 4);
-      for (const name of firstFour) {
-        const res = await loadImage(`${dir}/${name}`);
-        if (!res.ok) continue;
-        const fig = document.createElement('figure');
-        const isPortrait = res.img.naturalHeight > res.img.naturalWidth;
-        fig.className = `card${isPortrait ? ' portrait' : ''}`;
-        fig.appendChild(res.img);
-        gridMount.appendChild(fig);
-        requestAnimationFrame(() => fig.classList.add('loaded'));
-      }
-
-      const rest = files.slice(4);
       const stack = document.getElementById('stack-visuals');
-      for (const name of rest) {
+
+      for (const name of files) {
         const res = await loadImage(`${dir}/${name}`);
         if (!res.ok) continue;
         const fig = document.createElement('figure');
@@ -306,19 +281,19 @@
     // Text stories list
     const STORIES = [
       {
-        title: "Why you can’t trust Grok 4’s benchmarks",
+        title: "Why you can't trust Grok 4's benchmarks",
         url: "https://mikewhyle.com/trust-issues-with-grok-4/",
-        excerpt: "For users in South Africa and across the continent, the stakes are particularly high. Big Tech has a long history of treating Africa as an afterthought. As a vibrant local AI ecosystem begins to emerge, trust is the most critical currency. Before any AI company can expect the confidence of users here, it must first demonstrate a genuine commitment to integrity. All things considered, Elon Musk’s xAI has given his country of origin precious little reason to trust his latest chatbot, no matter what the benchmarks claim."
+        excerpt: "For users in South Africa and across the continent, the stakes are particularly high. Big Tech has a long history of treating Africa as an afterthought. As a vibrant local AI ecosystem begins to emerge, trust is the most critical currency. Before any AI company can expect the confidence of users here, it must first demonstrate a genuine commitment to integrity. All things considered, Elon Musk's xAI has given his country of origin precious little reason to trust his latest chatbot, no matter what the benchmarks claim."
       },
       {
         title: "RISEN FROM THE SEA",
         url: "https://mikewhyle.com/risen-from-the-sea/",
-        excerpt: "Imagine gazing out at a sunset that cascades over the ocean, viewed from the summit of a majestic flat-topped peak that has stood as witness to the passage of time for hundreds of millions of years. This is Table Mountain. An iconic landmark in the heart of Cape Town, one of Africa’s most dynamic urban landscapes, and the oldest city in South Africa."
+        excerpt: "Imagine gazing out at a sunset that cascades over the ocean, viewed from the summit of a majestic flat-topped peak that has stood as witness to the passage of time for hundreds of millions of years. This is Table Mountain. An iconic landmark in the heart of Cape Town, one of Africa's most dynamic urban landscapes, and the oldest city in South Africa."
       },
       {
-        title: "“What in the SMR is this?!”",
+        title: ""What in the SMR is this?!"",
         url: "https://mikewhyle.com/what-in-the-smr-is-this/",
-        excerpt: "Generative AI and the digital economy are advancing at breakneck pace, but looming energy shortfalls could thwart Big Tech’s best-laid plans for expansion. The worldwide race for reliable, clean energy has become a high-stakes game where digital progress and climate survival hang in the balance. Now hyperscalers may have found their panacea in miniaturized, mass-produced nuclear reactors."
+        excerpt: "Generative AI and the digital economy are advancing at breakneck pace, but looming energy shortfalls could thwart Big Tech's best-laid plans for expansion. The worldwide race for reliable, clean energy has become a high-stakes game where digital progress and climate survival hang in the balance. Now hyperscalers may have found their panacea in miniaturized, mass-produced nuclear reactors."
       },
       {
         title: "The Future of Insurance in Africa",
@@ -326,7 +301,7 @@
         excerpt: "Presently, the insurance industry stands at a pivotal juncture marked by prominent shifts in the environmental, economic, societal, and technological landscapes. These transformations highlight both challenges and opportunities that demand careful consideration and a strategic response. To adapt to the current circumstances and secure the longevity of their businesses, insurers must move beyond being resilient to being disruptive."
       },
       {
-        title: "What’s causing the skyrocketing demand for compute?",
+        title: "What's causing the skyrocketing demand for compute?",
         url: "https://mikewhyle.com/whats-causing-the-skyrocketing-demand-for-compute/",
         excerpt: "Data centers have evolved from repositories of information to become the operational bedrock of modern businesses. They now form the backbone of our digital economy, supporting everything from streaming services to complex AI operations. This transformation has ushered in one of the most lucrative business models in the history of humankind: converting energy into compute power. "
       },
