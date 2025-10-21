@@ -281,6 +281,11 @@
     // Text stories list
     const STORIES = [
       {
+        title: "The AI detector dilemma",
+        url: "https://gadget.co.za/aidetector36t/",
+        excerpt: "Using an AI detector to catch a modern LLM is like sending a 1990s-era MS Office Paperclip Helper to fight a T1000 from the Terminator movies. The LLM is a trillion-parameter model trained on supercomputer clusters; the detector is a thin classifier guessing from shallow patterns."
+      },
+      {
         title: "Why you can't trust Grok 4's benchmarks",
         url: "https://mikewhyle.com/trust-issues-with-grok-4/",
         excerpt: "For users in South Africa and across the continent, the stakes are particularly high. Big Tech has a long history of treating Africa as an afterthought. As a vibrant local AI ecosystem begins to emerge, trust is the most critical currency. Before any AI company can expect the confidence of users here, it must first demonstrate a genuine commitment to integrity. All things considered, Elon Musk's xAI has given his country of origin precious little reason to trust his latest chatbot, no matter what the benchmarks claim."
@@ -359,7 +364,7 @@
       if (!v) {
         v = (url.match(/youtu\.be\/([A-Za-z0-9_-]{11})/) || [])[1];
       }
-  
+      
       // Handle youtube.com/shorts/ format
       if (!v) {
         v = (url.match(/\/shorts\/([A-Za-z0-9_-]{11})/) || [])[1];
@@ -371,7 +376,6 @@
       const t = start ? `&start=${start}` : "";
       return `https://www.youtube-nocookie.com/embed/${v}?rel=0${t}`;
     }
-
 
     function toDriveEmbed(url){
       const m = url.match(/\/file\/d\/([A-Za-z0-9_-]+)\//);
