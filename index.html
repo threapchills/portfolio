@@ -16,8 +16,8 @@
       --ink: #0b0b0c;
       --paper: #ffffff;
       --soft: #fafbfc;
-      --accent: #0E7C7B;
-      --accent-bright: #14a8a7;
+      --accent: #aaaaac;
+      --accent-bright: #c0c0c0;
       --shadow: 0 14px 36px rgba(0,0,0,.18);
       --radius: 14px;
       --gutter: clamp(10px, 2vw, 28px);
@@ -47,7 +47,7 @@
       height: 12px;
       margin: 16px 0;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(170, 170, 172, 0.2);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
@@ -84,22 +84,12 @@
     .site-header {
       position: relative;
       width: 100%;
-      background: linear-gradient(135deg, #0a0a0b 0%, #1a1a1f 100%);
+      background-image: url('images/banner.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       overflow: hidden;
       padding: clamp(40px, 8vw, 80px) 0;
-    }
-
-    .site-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(14, 124, 123, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(20, 168, 167, 0.15) 0%, transparent 50%);
-      pointer-events: none;
     }
 
     .logo-container {
@@ -343,7 +333,6 @@
 </head>
 <body>
 
-  <!-- NAVIGATION DOTS -->
   <nav class="nav-dots" aria-label="Quick navigation">
     <a href="#top" data-label="Top"></a>
     <a href="#visuals" data-label="Visuals"></a>
@@ -352,7 +341,6 @@
     <a href="#text" data-label="Writing"></a>
   </nav>
 
-  <!-- HEADER WITH LOGO -->
   <header class="site-header" id="top">
     <div class="logo-container">
       <div class="logo-placeholder">
@@ -369,41 +357,33 @@
   </header>
 
   <div class="wrap">
-    <!-- HERO -->
     <section class="hero card">
       <img id="heroImg" src="images/hero.png" alt="">
     </section>
 
-    <!-- VISUALS -->
     <section id="visuals">
       <div id="fold-visuals"></div>
       <main id="stack-visuals" class="stack" aria-live="polite"></main>
     </section>
 
-    <!-- MOTION -->
     <section id="motion">
       <div id="fold-motion"></div>
-      <!-- Showreel placeholder -->
       <div id="reel-motion"></div>
-      <!-- External embeds list -->
       <div id="embeds-motion" class="embeds"></div>
       <main id="stack-motion" class="stack" aria-live="polite"></main>
     </section>
 
-    <!-- APPS -->
     <section id="apps">
       <div id="fold-apps"></div>
       <main id="stack-apps" class="stack" aria-live="polite"></main>
     </section>
 
-    <!-- TEXT -->
     <section id="text">
       <div id="fold-text"></div>
       <div id="articles" class="articles"></div>
     </section>
   </div>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <a href="https://www.mikewhyle.com" target="_blank" rel="noopener">
       <img src="images/mikelogo.png" alt="Mike Whyle">
