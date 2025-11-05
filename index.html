@@ -103,7 +103,7 @@
     }
 
     .logo-container {
-      max-width: 280px;
+      max-width: 400px;
       margin: 0 auto;
       position: relative;
       z-index: 2;
@@ -111,9 +111,9 @@
 
     /* Placeholder for liquid metal shader - to be replaced with React component or iframe */
     .logo-placeholder {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 24px;
+      width: 350px;
+      height: 350px;
+      margin: 0 auto 32px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -124,7 +124,7 @@
       border-radius: 50%;
       overflow: hidden;
       background: transparent;
-      box-shadow: 0 0 60px rgba(170, 170, 172, 0.4);
+      box-shadow: 0 0 80px rgba(170, 170, 172, 0.5);
     }
 
     .site-title {
@@ -140,9 +140,9 @@
     .site-tagline {
       text-align: center;
       color: rgba(255, 255, 255, 0.7);
-      font-size: clamp(16px, 2.5vw, 22px);
+      font-size: clamp(18px, 2.8vw, 24px);
       font-weight: 400;
-      margin: 12px 0 0;
+      margin: 0;
       letter-spacing: 0.01em;
     }
 
@@ -358,13 +358,12 @@
       <div class="logo-placeholder">
         <iframe 
           src="https://liquid-metal-logo-lvnq.vercel.app/" 
-          width="200" 
-          height="200" 
+          width="350" 
+          height="350" 
           title="Liquid Metal Logo"
           scrolling="no"
         ></iframe>
       </div>
-      <h1 class="site-title">Mike Whyle</h1>
       <p class="site-tagline">Writer · Creative · AI Consultant</p>
     </div>
   </header>
