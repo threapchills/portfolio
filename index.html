@@ -367,6 +367,11 @@
       <main id="stack-visuals" class="stack" aria-live="polite"></main>
     </section>
 
+    <!-- Liquid Metal Effect -->
+    <div style="display: flex; justify-content: center; padding: 48px 0;">
+      <div id="liquid-metal-design-footer"></div>
+    </div>
+
     <section id="motion">
       <div id="fold-motion"></div>
       <div id="reel-motion"></div>
@@ -724,6 +729,54 @@
       await renderFold('text');
       renderStories();
     })();
+  </script>
+
+  <!-- Liquid Metal Effect Script -->
+  <script type="module">
+    import React from 'https://esm.sh/react@18.2.0';
+    import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+    import { LiquidMetal } from 'https://esm.sh/@paper-design/shaders-react@0.0.62';
+
+    // Define the component with your custom settings
+    const LiquidMetalDesignFooter = () => {
+      const props = {
+        image: "https://workers.paper.design/file-assets/01K9ATDMCCTA1A410R58A1S132/01K9CPMXJWX7BWYK4D3NASJ3S3.png",
+        speed: 1,
+        colorBack: "#00000000",
+        colorTint: "#FFFFFF",
+        softness: 0.1,
+        repetition: 2,
+        shiftRed: 0.3,
+        shiftBlue: 0.3,
+        distortion: 0.07,
+        contour: 0.4,
+        scale: 0.6,
+        rotation: 0,
+        shape: "diamond",
+        angle: 70,
+        frame: 66455.10000023847,
+        style: {
+          backgroundColor: '#AAAAAC',
+          borderColor: '#261512',
+          borderRadius: '116px',
+          borderStyle: 'solid',
+          borderWidth: '0px',
+          flexShrink: '0',
+          height: '275px',
+          outline: '0px solid #000000',
+          width: '621px'
+        }
+      };
+
+      return React.createElement(LiquidMetal, props);
+    };
+
+    // Mount the component
+    const container = document.getElementById('liquid-metal-design-footer');
+    if (container) {
+      const root = ReactDOM.createRoot(container);
+      root.render(React.createElement(LiquidMetalDesignFooter));
+    }
   </script>
 </body>
 </html>
