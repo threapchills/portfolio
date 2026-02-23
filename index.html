@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mike Whyle — Portfolio</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a0a0b;
+      color: #e8e8e8;
+      font-family: Sora, system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --ink: #0b0b0c;
+      --paper: #ffffff;
+      --soft: #fafbfc;
+      --accent: #aaaaac;
+      --accent-bright: #c0c0c0;
+      --tunnel-bg: #0a0a0b;
+      --void-bg: #000000;
+    }
+
+    /* Loading overlay */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #0a0a0b;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 800;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    /* Core Wrappers */
+    .journey-wrapper {
+      position: relative;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* Nav dots */
+    .nav-dots {
+      position: fixed;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: none;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-dots {
+        display: block;
+      }
+    }
+
+    .nav-dots a {
+      display: block;
+      width: 12px;
+      height: 12px;
+      margin: 16px 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.4s;
+      position: relative;
+    }
+
+    .nav-dots a:hover,
+    .nav-dots a.active {
+      background: #fff;
+      transform: scale(1.3);
+    }
+
+    /* --- SECTION 1: HERO (Liquid Immersion) --- */
+    .sec-hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    /* Section fold header component */
+    .section-fold {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .section-fold img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .section-fold .fold-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 30px 5vw;
+      font-size: clamp(32px, 6vw, 90px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      color: #fff;
+      background: linear-gradient(transparent, rgba(10, 10, 11, 0.9));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform-origin: center center;
+    }
+
+    .logo-placeholder {
+      width: clamp(250px, 40vw, 450px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(170, 170, 172, 0.5);
+    }
+
+    .logo-placeholder iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    /* --- SECTION 2: Z-AXIS CAROUSEL (Visuals) --- */
+    .sec-carousel {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: var(--tunnel-bg);
+      overflow: hidden;
+      perspective: 1200px;
+    }
+
+    .carousel-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+
+    .carousel-item {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: 50% 50%;
+      width: clamp(140px, 18vw, 260px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: zoom-in;
+      will-change: transform, opacity;
+      transition: filter 0.3s;
+    }
+
+    .carousel-item:hover {
+      filter: brightness(1.2);
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .carousel-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(40px, 8vw, 120px);
+      font-weight: 800;
+      color: white;
+      text-align: center;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    #image-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+
+    #image-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #image-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: white;
+      font-size: 50px;
+      cursor: pointer;
+      font-weight: 200;
+      line-height: 1;
+    }
+
+    /* --- SECTION 3: CINEMA EXPANSION (Motion) --- */
+    .sec-void {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: var(--void-bg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .void-track {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      padding: 0 10vw;
+      height: 100%;
+    }
+
+    .cinema-item {
+      position: relative;
+      flex-shrink: 0;
+      width: 75vw;
+      max-width: 1000px;
+      aspect-ratio: 16/9;
+      background: #111;
+      border-radius: 0px;
+      overflow: hidden;
+      clip-path: polygon(0 49%, 100% 49%, 100% 51%, 0 51%);
+      will-change: clip-path;
+    }
+
+    .cinema-item iframe,
+    .cinema-item video {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      object-fit: cover;
+    }
+
+    /* --- SECTION 4: BRUTALIST COMPILATION (Apps) --- */
+    .sec-brutalist {
+      position: relative;
+      width: 100vw;
+      min-height: 100vh;
+      background: #e8e8e8;
+      color: #0a0a0b;
+      padding: 100px 5vw;
+    }
+
+    .brutalist-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    .brutalist-header {
+      grid-column: 1 / -1;
+      font-size: clamp(50px, 8vw, 150px);
+      font-weight: 800;
+      text-transform: uppercase;
+      border-bottom: 2px solid #0a0a0b;
+      margin-bottom: 50px;
+      opacity: 0;
+      overflow: hidden;
+      color: #0a0a0b;
+    }
+
+    .app-card {
+      grid-column: span 6;
+      border: 1px solid #0a0a0b;
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    @media(min-width: 1024px) {
+      .app-card {
+        grid-column: span 3;
+      }
+    }
+
+    .app-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      object-position: top center;
+      filter: grayscale(100%) contrast(1.2);
+      transition: filter 0.3s;
+    }
+
+    .app-card:hover img {
+      filter: grayscale(0%);
+    }
+
+    /* --- SECTION 5: EDITORIAL HORIZON (Text) --- */
+    .sec-editorial {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+      color: #111;
+      overflow: hidden;
+    }
+
+    .editorial-track {
+      display: flex;
+      height: 100%;
+      width: max-content;
+      padding: 0 20vw;
+      align-items: center;
+      gap: 15vw;
+    }
+
+    .editorial-item {
+      position: relative;
+      width: 60vw;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      padding: 40px;
+      background: rgba(244, 244, 240, 0.9);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .blind-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .blind {
+      flex: 1;
+      background: #0a0a0b;
+      transform-origin: top;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .editorial-item h3 {
+      font-size: clamp(30px, 5vw, 80px);
+      font-weight: 800;
+      line-height: 1;
+      margin: 0 0 20px 0;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+    }
+
+    .editorial-item p {
+      font-size: clamp(16px, 2vw, 24px);
+      line-height: 1.5;
+      font-weight: 400;
+      max-width: 600px;
+    }
+
+    .editorial-item a {
+      margin-top: 30px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #111;
+      text-decoration: none;
+      border-bottom: 2px solid #111;
+      display: inline-block;
+      width: max-content;
+    }
+
+    /* --- SECTION 6: SINGULARITY (Footer) --- */
+    .sec-singularity {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: #0a0a0b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .singularity-dot {
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .footer-content {
+      opacity: 0;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .footer-content img {
+      max-width: 250px;
+      margin-bottom: 20px;
+      filter: invert(1);
+    }
+
+    .footer-content p {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="loader">Initializing Cascade...</div>
+
+  <nav class="nav-dots" aria-label="Quick navigation">
+    <a href="#hero" data-label="Immersion"></a>
+    <a href="#visuals" data-label="Visuals"></a>
+    <a href="#motion" data-label="Cinema"></a>
+    <a href="#apps" data-label="Coding"></a>
+    <a href="#text" data-label="Editorial"></a>
+  </nav>
+
+  <div class="journey-wrapper">
+
+    <!-- 1. HERO -->
+    <section id="hero" class="sec-hero">
+      <div class="hero-content">
+        <div class="logo-placeholder"
+          style="background: url('images/liquid_metal.png') center/cover; border-radius: 50%; box-shadow: 0 0 100px rgba(0,0,0,0.5); width: clamp(300px, 50vw, 600px); height: clamp(300px, 50vw, 600px);">
+          <iframe src="https://liquid-metal-logo-lvnq.vercel.app/" title="Liquid Metal Logo" scrolling="no"
+            style="width: 100%; height: 100%; border: none; filter: brightness(1.2);"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. CAROUSEL -->
+    <section id="visuals" class="sec-carousel">
+      <div class="section-fold" style="position:absolute;inset:0;opacity:0.2;pointer-events:none;">
+        <img src="images/designfold.png" alt="" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <h2 class="carousel-title">DESIGN</h2>
+      <div class="carousel-container" id="carousel-mount">
+        <!-- JS injected visuals here -->
+      </div>
+    </section>
+
+    <!-- 3. VOID CINEMA -->
+    <section id="motion" class="sec-void">
+      <div class="section-fold"
+        style="position:absolute;top:0;left:0;width:100%;opacity:0.15;pointer-events:none;z-index:0;">
+        <img src="images/motionfold.png" alt="" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="void-track" id="void-mount">
+        <!-- JS injected videos here -->
+      </div>
+    </section>
+
+    <!-- 4. BRUTALIST APPS -->
+    <section id="apps" class="sec-brutalist">
+      <div class="section-fold" style="margin-bottom:40px;">
+        <img src="images/codefold.png" alt="Coding">
+        <div class="fold-label">CODING</div>
+      </div>
+      <div class="brutalist-grid">
+        <!-- JS injected apps here -->
+      </div>
+    </section>
+
+    <!-- 5. EDITORIAL TEXT -->
+    <section id="text" class="sec-editorial">
+      <div class="editorial-track" id="editorial-mount">
+        <div class="editorial-item"
+          style="background:none;box-shadow:none;min-width:50vw;display:flex;align-items:center;justify-content:center;">
+          <img src="images/textfold.png" alt="Writing"
+            style="max-width:80%;max-height:60vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.15);">
+        </div>
+        <!-- JS injected articles here -->
+      </div>
+    </section>
+
+    <!-- 6. SINGULARITY -->
+    <section id="footer" class="sec-singularity">
+      <div class="singularity-dot"></div>
+      <div class="footer-content">
+        <a href="https://www.mikewhyle.com" target="_blank" rel="noopener">
+          <img src="images/mikelogo.png" alt="Mike Whyle">
+        </a>
+        <p>&copy; 2026 | Mike Whyle - Writer, Creative & AI Consultant</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- OVERLAY -->
+  <div id="image-overlay">
+    <div class="overlay-close">&times;</div>
+    <img src="" alt="Enlarged view">
+  </div>
+
+  <!-- CDNS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    // Smooth scroll
+    if ('scrollBehavior' in document.documentElement.style) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
+
+    // Active nav dot on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navDots = document.querySelectorAll('.nav-dots a');
+
+    function updateActiveNav() {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.pageYOffset >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navDots.forEach(dot => {
+        dot.classList.remove('active');
+        if (dot.getAttribute('href') === `#${current}`) {
+          dot.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveNav);
+
+
+
+    // Fold images
+    const FOLD_FILES = {
+      visuals: 'images/designfold.png',
+      motion: 'images/motionfold.png',
+      apps: 'images/codefold.png',
+      text: 'images/textfold.png'
+    };
+    const TEXT_FOLD_LINK = "https://mikewhyle.com/about/delivered/";
+
+    // Files per section
+    const SECTION_FILES = {
+      visuals: [
+        "design0A.png", "design0B.png", "design0C.png",
+        "design01.png", "design02.png", "design03.png", "design04.png", "design05.png", "design06.png", "design07.png",
+        "design1.png", "design2.png", "design3.png", "design4.png",
+        "design5.png", "design6.png", "design7.png", "design8.png",
+        "design9.png", "design10.png", "design11.png", "design12.png",
+        "design13.png", "design14.png", "design15.png", "design16.png", "design17.png",
+        "design18.png", "design19.png"
+      ],
+      motion: [],
+      apps: ["code0.png", "code1.png", "code2.png", "code3.png"],
+      text: []
+    };
+
+    // Optional per-image links
+    const SECTION_LINKS = {
+      apps: {
+        "code0.png": "https://threapchills.github.io/skybaby/",
+        "code1.png": "https://mikewhyle.com/tarot/",
+        "code2.png": "https://mikewhyle.com/slumbr/"
+      }
+    };
+
+    const DIRS = {
+      visuals: 'images',
+      motion: 'images/motion',
+      apps: 'images',
+      text: 'images/text'
+    };
+
+    function loadImage(src) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.loading = 'eager';
+        img.alt = '';
+        img.onload = () => resolve({ ok: true, img });
+        img.onerror = () => resolve({ ok: false, src });
+        img.src = src;
+      });
+    }
+
+    async function renderVisuals() {
+      const files = SECTION_FILES.visuals || [];
+      const dir = DIRS.visuals;
+      const mount = document.getElementById('carousel-mount');
+      if (!mount) return;
+
+      for (let i = 0; i < files.length; i++) {
+        const res = await loadImage(`${dir}/${files[i]}`);
+        if (!res.ok) continue;
+
+        const div = document.createElement('div');
+        div.className = 'carousel-item';
+        div.style.zIndex = files.length - i;
+        div.appendChild(res.img);
+        mount.appendChild(div);
+      }
+    }
+
+    async function renderApps() {
+      const files = SECTION_FILES.apps || [];
+      const dir = DIRS.apps;
+      const mount = document.querySelector('.brutalist-grid');
+      if (!mount) return;
+
+      for (const name of files) {
+        const res = await loadImage(`${dir}/${name}`);
+        if (!res.ok) continue;
+
+        const card = document.createElement('div');
+        card.className = 'app-card';
+        card.appendChild(res.img);
+
+        const linkMap = SECTION_LINKS.apps || {};
+        const href = linkMap[name];
+        if (href) {
+          const a = document.createElement('a');
+          a.href = href; a.target = "_blank"; a.style.display = "contents";
+          a.appendChild(card);
+          mount.appendChild(a);
+        } else {
+          mount.appendChild(card);
+        }
+      }
+    }
+
+    // Text stories list
+    const STORIES = [
+      {
+        title: "The AI detector dilemma",
+        url: "https://gadget.co.za/aidetector36t/",
+        excerpt: "Using an AI detector to catch a modern LLM is like sending a 1990s-era MS Office Paperclip Helper to fight a T1000 from the Terminator movies. The LLM is a trillion-parameter model trained on supercomputer clusters; the detector is a thin classifier guessing from shallow patterns."
+      },
+      {
+        title: "Why you can't trust Grok 4's benchmarks",
+        url: "https://mikewhyle.com/trust-issues-with-grok-4/",
+        excerpt: "For users in South Africa and across the continent, the stakes are particularly high. Big Tech has a long history of treating Africa as an afterthought. As a vibrant local AI ecosystem begins to emerge, trust is the most critical currency. Before any AI company can expect the confidence of users here, it must first demonstrate a genuine commitment to integrity. All things considered, Elon Musk's xAI has given his country of origin precious little reason to trust his latest chatbot, no matter what the benchmarks claim."
+      },
+      {
+        title: "RISEN FROM THE SEA",
+        url: "https://mikewhyle.com/risen-from-the-sea/",
+        excerpt: "Imagine gazing out at a sunset that cascades over the ocean, viewed from the summit of a majestic flat-topped peak that has stood as witness to the passage of time for hundreds of millions of years. This is Table Mountain. An iconic landmark in the heart of Cape Town, one of Africa's most dynamic urban landscapes, and the oldest city in South Africa."
+      },
+      {
+        title: "What in the SMR is this?!",
+        url: "https://mikewhyle.com/what-in-the-smr-is-this/",
+        excerpt: "Generative AI and the digital economy are advancing at breakneck pace, but looming energy shortfalls could thwart Big Tech's best-laid plans for expansion. The worldwide race for reliable, clean energy has become a high-stakes game where digital progress and climate survival hang in the balance. Now hyperscalers may have found their panacea in miniaturized, mass-produced nuclear reactors."
+      },
+      {
+        title: "The Future of Insurance in Africa",
+        url: "https://mikewhyle.com/the-future-of-insurance-in-africa//",
+        excerpt: "Presently, the insurance industry stands at a pivotal juncture marked by prominent shifts in the environmental, economic, societal, and technological landscapes. These transformations highlight both challenges and opportunities that demand careful consideration and a strategic response. To adapt to the current circumstances and secure the longevity of their businesses, insurers must move beyond being resilient to being disruptive."
+      },
+      {
+        title: "What's causing the skyrocketing demand for compute?",
+        url: "https://mikewhyle.com/whats-causing-the-skyrocketing-demand-for-compute/",
+        excerpt: "Data centers have evolved from repositories of information to become the operational bedrock of modern businesses. They now form the backbone of our digital economy, supporting everything from streaming services to complex AI operations. This transformation has ushered in one of the most lucrative business models in the history of humankind: converting energy into compute power. "
+      },
+      {
+        title: "Pioneering Progress",
+        url: "https://mikewhyle.com/pioneering-progress/",
+        excerpt: "Experts are concerned about resource limits and insufficient radiology skills and services in Africa, particularly for cancer detection and treatment. As the continent grapples with the rising burden of cancer, the intersection of oncology and radiology emerges as a complex landscape where cutting-edge advancements contend with pressing issues of accessibility, affordability, and healthcare system economics."
+      },
+      {
+        title: "Blood, Books and Bots: The True Origins of AI",
+        url: "https://mikewhyle.com/blood-books-and-bots-the-true-origins-of-ai/",
+        excerpt: "The first known use of AI is actually much earlier than people think. In fact it was during the Palaeolithic era, probably around 100,000 years ago. "
+      }
+    ];
+
+    function renderEditorial() {
+      const mount = document.getElementById('editorial-mount');
+      if (!mount) return;
+      STORIES.forEach(s => {
+        const item = document.createElement('div');
+        item.className = 'editorial-item';
+
+        // Window blinds
+        const blindWrap = document.createElement('div');
+        blindWrap.className = 'blind-wrap';
+        for (let i = 0; i < 6; i++) {
+          const b = document.createElement('div');
+          b.className = 'blind';
+          blindWrap.appendChild(b);
+        }
+        item.appendChild(blindWrap);
+
+        const content = document.createElement('div');
+        content.style.position = 'relative'; content.style.zIndex = '10';
+        content.innerHTML = `
+          <h3>${s.title}</h3>
+          <p>${s.excerpt}</p>
+          <a href="${s.url}" target="_blank" rel="noopener">Read the full story</a>
+        `;
+        item.appendChild(content);
+
+        mount.appendChild(item);
+      });
+    }
+
+    // Showreel files
+    const SHOWREEL = {
+      poster: "images/showreelposter.png",
+      src: "images/showreelsmall.mp4",
+      type: "video/mp4"
+    };
+
+    // Motion embeds
+    const MOTION_EMBEDS = [
+      "https://drive.google.com/file/d/1r6bXQpUGQ1G8Uphgd9ugZbrKlqFH_IwH/view?usp=sharing",
+      "https://drive.google.com/file/d/1t40QjErBrtredC6FVyrHR_l8RmNu-_28/view?usp=sharing",
+      "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing",
+      "https://drive.google.com/file/d/1J_j_Z7Lu_V6eloxoYpKqr4vLmh4FG9ZB/view?usp=sharing",
+      "https://drive.google.com/file/d/1qkm1kRKqVQTI9aZI8P1OtqdwyfGhTXjA/view?usp=sharing",
+      "https://youtu.be/5jpuoFmo-DY",
+      "https://youtube.com/shorts/Hh5Opro2tgo?feature=share",
+      "https://www.youtube.com/watch?v=iDio-suJ57k"
+    ];
+
+    function toYouTubeEmbed(url) {
+      let v = (url.match(/[?&]v=([A-Za-z0-9_-]{11})/) || [])[1];
+      if (!v) v = (url.match(/youtu\.be\/([A-Za-z0-9_-]{11})/) || [])[1];
+      if (!v) v = (url.match(/\/shorts\/([A-Za-z0-9_-]{11})/) || [])[1];
+      if (!v) return null;
+      const start = (url.match(/[?&]t=(\d+)/) || [])[1];
+      const t = start ? `&start=${start}` : "";
+      return `https://www.youtube-nocookie.com/embed/${v}?rel=0${t}`;
+    }
+
+    function toDriveEmbed(url) {
+      const m = url.match(/\/file\/d\/([A-Za-z0-9_-]+)\//);
+      if (!m) return null;
+      return `https://drive.google.com/file/d/${m[1]}/preview`;
+    }
+
+    function renderCinema() {
+      const mount = document.getElementById('void-mount');
+      if (!mount) return;
+
+      // Showreel
+      const reelWrap = document.createElement('div');
+      reelWrap.className = 'cinema-item';
+      const video = document.createElement('video');
+      video.controls = true; video.preload = 'metadata'; video.poster = SHOWREEL.poster;
+      const src = document.createElement('source'); src.src = SHOWREEL.src; src.type = SHOWREEL.type;
+      video.appendChild(src); reelWrap.appendChild(video);
+      mount.appendChild(reelWrap);
+
+      // Embeds
+      const seen = new Set();
+      MOTION_EMBEDS.forEach(u => {
+        if (seen.has(u)) return;
+        seen.add(u);
+
+        let embed = null;
+        if (u.includes('youtube.com') || u.includes('youtu.be')) embed = toYouTubeEmbed(u);
+        else if (u.includes('drive.google.com')) embed = toDriveEmbed(u);
+        if (!embed) return;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'cinema-item';
+        const iframe = document.createElement('iframe');
+        iframe.src = embed;
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+        wrap.appendChild(iframe);
+        mount.appendChild(wrap);
+      });
+    }
+
+
+
+    (async function init() {
+      await renderVisuals();
+      renderCinema();
+      await renderApps();
+      renderEditorial();
+
+      // Remove loader when done
+      const loader = document.getElementById('loader');
+      setTimeout(() => {
+        if (loader) loader.style.opacity = '0';
+        setTimeout(() => loader?.remove(), 500);
+      }, 500);
+
+      // Initialize GSAP & Lenis
+      initGSAP();
+    })();
+
+    function initGSAP() {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 1. HERO IMMERSION
+      const heroTl = gsap.timeline({
+        scrollTrigger: { trigger: "#hero", start: "top top", end: "+=150%", scrub: 1, pin: true }
+      });
+      heroTl.to(".logo-placeholder", { scale: 10, opacity: 0, ease: "power2.in" }, 0);
+
+      // 2. VISUALS CAROUSEL
+      const items = gsap.utils.toArray('.carousel-item');
+      if (items.length) {
+        const radius = window.innerWidth > 800 ? 550 : 300;
+        items.forEach((item, i) => {
+          const angle = (i / items.length) * Math.PI * 2 * 2; // 2 spirals
+          const yOffset = (i - items.length / 2) * 40;
+          gsap.set(item, {
+            xPercent: -50, yPercent: -50,
+            x: Math.sin(angle) * radius,
+            y: yOffset,
+            z: Math.cos(angle) * radius - 800,
+            rotationY: angle * (180 / Math.PI),
+            opacity: 0.8
+          });
+        });
+        const carouselTl = gsap.timeline({
+          scrollTrigger: { trigger: "#visuals", start: "top top", end: "+=400%", scrub: 1, pin: true }
+        });
+
+
+
+        carouselTl.to(".carousel-title", { opacity: 0.1, scale: 2 }, 0);
+        carouselTl.to(".carousel-container", { z: 1200, rotationY: -360, ease: "none" }, 0);
+
+        // Overlay Click
+        const overlay = document.getElementById('image-overlay');
+        const overlayImg = overlay.querySelector('img');
+        items.forEach(item => {
+          item.addEventListener('click', () => {
+            overlayImg.src = item.querySelector('img').src;
+            overlay.classList.add('active');
+          });
+        });
+        document.querySelector('.overlay-close').addEventListener('click', () => overlay.classList.remove('active'));
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('active'); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.classList.remove('active'); });
+      }
+
+      // 3. CINEMA VOID (Horizontal + ClipPath)
+      const voidTrack = document.querySelector('.void-track');
+      if (voidTrack) {
+        const voidScroll = gsap.to(voidTrack, {
+          x: () => -(voidTrack.scrollWidth - window.innerWidth),
+          ease: "none",
+          scrollTrigger: { trigger: "#motion", start: "top top", end: () => "+=" + voidTrack.scrollWidth, scrub: 1, pin: true }
+        });
+        const cinemaItems = gsap.utils.toArray('.cinema-item');
+        cinemaItems.forEach(item => {
+          gsap.to(item, {
+            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+            ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: item, containerAnimation: voidScroll,
+              start: "left 80%", end: "center center", scrub: 1
+            }
+          });
+        });
+      }
+
+      // 4. CODING SECTION
+      gsap.to(".app-card", {
+        y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: "back.out(1.7)",
+        scrollTrigger: { trigger: ".brutalist-grid", start: "top 60%" }
+      });
+
+      // 5. EDITORIAL HORIZON
+      const edTrack = document.querySelector('.editorial-track');
+      if (edTrack) {
+        const edScroll = gsap.to(edTrack, {
+          x: () => -(edTrack.scrollWidth - window.innerWidth),
+          ease: "none",
+          scrollTrigger: { trigger: "#text", start: "top top", end: () => "+=" + edTrack.scrollWidth, scrub: 1, pin: true }
+        });
+        // Animate Window Blinds
+        gsap.utils.toArray('.editorial-item').forEach(item => {
+          gsap.to(item.querySelectorAll('.blind'), {
+            scaleY: 0,
+            stagger: 0.1,
+            ease: "power3.inOut",
+            scrollTrigger: {
+              trigger: item, containerAnimation: edScroll,
+              start: "left 75%"
+            }
+          });
+        });
+      }
+
+      // 6. SINGULARITY FOOTER
+      const singTl = gsap.timeline({
+        scrollTrigger: { trigger: "#footer", start: "top top", end: "+=120%", scrub: 1, pin: true }
+      });
+      singTl.to(".singularity-dot", { scale: window.innerWidth > window.innerHeight ? 300 : 500, ease: "power4.in" })
+        .to(".footer-content", { opacity: 1 }, "-=0.2");
+    }
+  </script>
+</body>
+
+</html>
