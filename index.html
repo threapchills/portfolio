@@ -42,11 +42,46 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      font-size: 24px;
-      font-weight: 800;
       transition: opacity 0.5s ease;
       pointer-events: none;
+    }
+
+    .loader-logo {
+      position: relative;
+      width: clamp(200px, 40vw, 400px);
+      height: auto;
+    }
+
+    .loader-logo img {
+      width: 100%;
+      filter: invert(1);
+      opacity: 0.15;
+    }
+
+    .loader-fill {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      animation: loaderFill 2s ease-in-out infinite;
+    }
+
+    .loader-fill img {
+      width: 100%;
+      filter: invert(1);
+    }
+
+    @keyframes loaderFill {
+      0% {
+        clip-path: inset(0 100% 0 0);
+      }
+
+      50% {
+        clip-path: inset(0 0 0 0);
+      }
+
+      100% {
+        clip-path: inset(0 0 0 100%);
+      }
     }
 
     /* Core Wrappers */
@@ -286,7 +321,6 @@
       letter-spacing: 2px;
     }
 
-    /* --- SECTION 3: CINEMA EXPANSION (Motion) --- */
     .sec-void {
       position: relative;
       width: 100vw;
@@ -295,7 +329,7 @@
       overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     .void-track {
@@ -422,7 +456,7 @@
 
     .blind {
       flex: 1;
-      background: #ffffff;
+      background: #0a0a0b;
       transform-origin: top;
     }
 
@@ -500,7 +534,12 @@
 
 <body>
 
-  <div id="loader">Initializing Cascade...</div>
+  <div id="loader">
+    <div class="loader-logo">
+      <img src="images/mikelogo.png" alt="">
+      <div class="loader-fill"><img src="images/mikelogo.png" alt=""></div>
+    </div>
+  </div>
 
   <nav class="nav-dots" aria-label="Quick navigation">
     <a href="#hero" data-label="Immersion"></a>
@@ -884,19 +923,18 @@
     function initGSAP() {
       gsap.registerPlugin(ScrollTrigger);
 
-      // 1. HERO — logo follows mouse
+      // 1. HERO — coin follows mouse (only the coin, not the background)
       const heroSection = document.getElementById('hero');
-      const logoEl = document.querySelector('.hero-content');
-      if (heroSection && logoEl) {
-        let mouseX = 0, mouseY = 0;
+      const logoCoin = document.querySelector('.logo-placeholder');
+      if (heroSection && logoCoin) {
         heroSection.addEventListener('mousemove', (e) => {
           const rect = heroSection.getBoundingClientRect();
-          mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 80;
-          mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 80;
+          const mx = (e.clientX - rect.left - rect.width / 2) * 0.25;
+          const my = (e.clientY - rect.top - rect.height / 2) * 0.25;
+          gsap.to(logoCoin, { x: mx, y: my, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
         });
-        heroSection.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
-        gsap.ticker.add(() => {
-          gsap.to(logoEl, { x: mouseX, y: mouseY, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
+        heroSection.addEventListener('mouseleave', () => {
+          gsap.to(logoCoin, { x: 0, y: 0, duration: 0.6, ease: 'power2.out' });
         });
       }
       const heroTl = gsap.timeline({
@@ -922,27 +960,28 @@
       function closeGallery() { overlay.classList.remove('active'); }
 
       if (items.length) {
-        const radius = window.innerWidth > 800 ? 400 : 250;
-        const totalHeight = items.length * 30;
+        // Carousel: items in a vertical spiral, always face forward
+        const radius = window.innerWidth > 800 ? 350 : 200;
+        const spacing = 60;
+        const totalSpan = items.length * spacing;
         items.forEach((item, i) => {
-          const angle = (i / items.length) * Math.PI * 2 * 1.5;
-          const yOffset = (i / items.length) * totalHeight - totalHeight / 2;
+          const angle = (i / items.length) * Math.PI * 2 * 2; // 2 full loops
           gsap.set(item, {
             xPercent: -50, yPercent: -50,
             x: Math.sin(angle) * radius,
-            y: yOffset,
-            z: Math.cos(angle) * radius - 600,
-            rotationY: (angle * 180 / Math.PI) * 0.3,
-            opacity: 0.85
+            y: i * spacing - totalSpan / 2,
+            z: Math.cos(angle) * (radius * 0.5),
+            rotationY: 0,
+            opacity: 0.9
           });
         });
         const carouselTl = gsap.timeline({
-          scrollTrigger: { trigger: "#visuals", start: "top top", end: "+=500%", scrub: 1, pin: true }
+          scrollTrigger: { trigger: "#visuals", start: "top top", end: "+=800%", scrub: 0.5, pin: true }
         });
-        carouselTl.to(".carousel-title", { opacity: 0.1, scale: 2 }, 0);
-        carouselTl.to(".carousel-container", { y: -totalHeight * 0.8, rotationY: -180, ease: "none" }, 0);
+        carouselTl.to(".carousel-title", { opacity: 0.05, scale: 3 }, 0);
+        carouselTl.to(".carousel-container", { y: totalSpan * 0.6, ease: "none" }, 0);
 
-        // Click any item → open gallery at that index
+        // Click any item to open gallery
         items.forEach((item, i) => {
           item.addEventListener('click', () => showGallery(i));
         });
