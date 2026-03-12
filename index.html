@@ -631,7 +631,7 @@
       </div>
     </section>
 
-    <!-- 4. VOID CINEMA -->
+    <!-- 3. VOID CINEMA -->
     <section id="motion" class="sec-void">
       <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
         <img src="images/cinema_bg.png" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.2;">
@@ -641,7 +641,7 @@
       </div>
     </section>
 
-    <!-- 5. BRUTALIST APPS -->
+    <!-- 4. BRUTALIST APPS -->
     <section id="apps" class="sec-brutalist">
       <div class="section-fold" style="margin-bottom:40px;">
         <img src="images/codefold.png" alt="Coding">
@@ -1014,7 +1014,33 @@
         typeTl.to(".type-text", { opacity: 0, scale: 1.5, y: -100, ease: "power2.in", duration: 0.5 });
       }
 
-      // 2. VISUALS CAROUSEL — gallery overlay with prev/next
+      // 2. EDITORIAL — horizontal scroll with blinds reveal
+      const edTrack = document.querySelector('.editorial-track');
+      if (edTrack) {
+        const edScroll = gsap.to(edTrack, {
+          x: () => -(edTrack.scrollWidth - window.innerWidth),
+          ease: "none",
+          scrollTrigger: { trigger: "#text", start: "top top", end: () => "+=" + edTrack.scrollWidth, scrub: 1, pin: true }
+        });
+        gsap.utils.toArray('.editorial-item').forEach(item => {
+          const blinds = item.querySelectorAll('.blind');
+          if (!blinds.length) return;
+          gsap.to(blinds, {
+            scaleY: 0,
+            stagger: 0.08,
+            duration: 0.6,
+            ease: "power3.inOut",
+            scrollTrigger: {
+              trigger: item,
+              containerAnimation: edScroll,
+              start: "left 85%",
+              toggleActions: "play none none reset"
+            }
+          });
+        });
+      }
+
+      // 3. VISUALS CAROUSEL — gallery overlay with prev/next
       const items = gsap.utils.toArray('.carousel-item');
       const allSrcs = items.map(item => item.querySelector('img').src);
       let galleryIndex = 0;
@@ -1123,31 +1149,7 @@
         scrollTrigger: { trigger: ".brutalist-grid", start: "top 70%" }
       });
 
-      // 5. EDITORIAL — blinds replay every scroll
-      const edTrack = document.querySelector('.editorial-track');
-      if (edTrack) {
-        const edScroll = gsap.to(edTrack, {
-          x: () => -(edTrack.scrollWidth - window.innerWidth),
-          ease: "none",
-          scrollTrigger: { trigger: "#text", start: "top top", end: () => "+=" + edTrack.scrollWidth, scrub: 1, pin: true }
-        });
-        gsap.utils.toArray('.editorial-item').forEach(item => {
-          const blinds = item.querySelectorAll('.blind');
-          if (!blinds.length) return;
-          gsap.to(blinds, {
-            scaleY: 0,
-            stagger: 0.08,
-            duration: 0.6,
-            ease: "power3.inOut",
-            scrollTrigger: {
-              trigger: item,
-              containerAnimation: edScroll,
-              start: "left 85%",
-              toggleActions: "play none none reset"
-            }
-          });
-        });
-      }
+      // (Editorial trigger created earlier to match DOM order)
 
       // 6. SINGULARITY FOOTER
       const singTl = gsap.timeline({
