@@ -126,10 +126,12 @@ function initProjectPage(projectId) {
     const track = document.createElement('div');
     track.className = 'carousel-track';
 
-    p.gallery.forEach(src => {
+    p.gallery.forEach((src, idx) => {
       const item = document.createElement('div');
       item.className = 'carousel-item';
+      item.style.cursor = 'zoom-in';
       item.innerHTML = `<img src="${src}" alt="" loading="lazy">`;
+      item.addEventListener('click', () => openLightbox(p.gallery, idx));
       track.appendChild(item);
     });
 
@@ -209,4 +211,59 @@ function initProjectPage(projectId) {
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+}
+
+/* ── Lightbox ──────────────────────────────────────────────── */
+function openLightbox(images, startIdx) {
+  let current = startIdx;
+
+  // Build DOM once; reuse if it exists
+  let lb = document.getElementById('lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'lightbox';
+    lb.className = 'lightbox';
+    lb.innerHTML = `
+      <button class="lightbox-close">Close</button>
+      <button class="lightbox-nav lightbox-prev">←</button>
+      <img class="lightbox-img" src="" alt="">
+      <button class="lightbox-nav lightbox-next">→</button>
+      <span class="lightbox-counter"></span>`;
+    document.body.appendChild(lb);
+
+    // Close on background click or close button
+    lb.addEventListener('click', e => {
+      if (e.target === lb || e.target.classList.contains('lightbox-close')) closeLightbox();
+    });
+
+    // Keyboard nav
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') lb.querySelector('.lightbox-next').click();
+      if (e.key === 'ArrowLeft') lb.querySelector('.lightbox-prev').click();
+    });
+  }
+
+  const img = lb.querySelector('.lightbox-img');
+  const counter = lb.querySelector('.lightbox-counter');
+
+  function show(idx) {
+    current = (idx + images.length) % images.length;
+    img.src = images[current];
+    counter.textContent = `${current + 1} / ${images.length}`;
+  }
+
+  lb.querySelector('.lightbox-prev').onclick = e => { e.stopPropagation(); show(current - 1); };
+  lb.querySelector('.lightbox-next').onclick = e => { e.stopPropagation(); show(current + 1); };
+
+  show(current);
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  if (lb) lb.classList.remove('open');
+  document.body.style.overflow = '';
 }
