@@ -82,7 +82,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
       "../../images/vast-island/Exquisite_modern_disney_2k_202602160103.webp"
     ],
     links: [
-      { label: "Watch the trailer", url: "https://www.youtube.com/watch?v=hQ7ZkjxpdIQ", primary: true }
+      { label: "Watch the trailer", url: "https://www.youtube.com/watch?v=JgBicFpTIDM", primary: true }
     ]
   },
   {
@@ -97,7 +97,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     heroImage: "../../images/vanta-hero.webp",
     gallery: [],
     links: [
-      { label: "Watch the ad", url: "https://www.youtube.com/watch?v=oN0L2n3y668", primary: true }
+      { label: "Watch the ad", url: "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing", primary: true }
     ]
   },
   {
