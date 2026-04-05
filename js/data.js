@@ -1,5 +1,5 @@
 /* ============================================================
-   PROJECT DATA — single source of truth
+   PROJECT DATA – single source of truth
    Edit here to update project info across the whole site.
    ============================================================ */
 
@@ -9,14 +9,14 @@ const PROJECTS = [
     index: "01",
     title: "Kalimba",
     category: "GenAI Filmmaking",
-    type: "Personal — Competition",
+    type: "Personal / Competition",
     skills: ["AI Prompting", "Visual Storytelling", "Writing", "Graphic Design"],
     tagline: "An Afrofuturist mockumentary shortlisted from 400+ entries.",
     description: `Proud to share that KALIMBA, a GenAI film I made, was shortlisted amongst 400+ entries in the BrandTech Group GenAI film competition and awarded $1,000.
 
 KALIMBA is an Afrofuturist mockumentary in which the ordinary collides with the mythic: a South African innovator discovers a way to measure and record consciousness. The story is told through a surreal chromatic journey, juxtaposing the biblical and the digital, where AI-generated environments morph as fluidly as the soul of the film's protagonist.
 
-I tried to craft something symbolic and layered — a philosophical allegory that leans into what generative filmmaking can actually do when you use it for quiet, intentional storytelling as opposed to loud chaotic spectacle.`,
+I tried to craft something symbolic and layered: a philosophical allegory that leans into what generative filmmaking can actually do when you use it for quiet, intentional storytelling rather than loud chaotic spectacle.`,
     heroVideo: "../../video/kalimba-hero.mp4",
     heroFallback: "../../images/kalimba/thumb.webp",
     gallery: [
@@ -35,10 +35,10 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     index: "02",
     title: "Mythopoeic",
     category: "Graphic Design",
-    type: "Client — Pencil AI",
+    type: "Client: Pencil AI",
     skills: ["Graphic Design", "AI Prompting", "Brand Building", "Visual Storytelling"],
     tagline: "A speculative jewellery brand demonstrating the power of AI for advertising and visual identity.",
-    description: `A fake jewellery brand built entirely with AI tools, commissioned to showcase what AI-powered advertising, branding, and visual storytelling can achieve at the highest end of the market. The result: a fully realised luxury identity — editorial imagery, product visualisation, campaign assets — indistinguishable from a six-figure production budget.`,
+    description: `A fake jewellery brand built entirely with AI tools, commissioned to showcase what AI-powered advertising, branding, and visual storytelling can achieve at the highest end of the market. The result: a fully realised luxury identity; editorial imagery, product visualisation, campaign assets indistinguishable from a six-figure production budget.`,
     heroSlides: [
       "../../images/mythopoeic/hero1.webp",
       "../../images/mythopoeic/hero2.webp",
@@ -71,7 +71,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     type: "Personal",
     skills: ["AI Prompting", "Visual Storytelling"],
     tagline: "A faux CGI-animated film trailer built with cutting-edge AI video tools.",
-    description: `Little Big Island is a faux CGI-animated style film trailer, pushing the limits of what current AI video generation can produce. Shot using Seedance 2 and Veo 3.1, it explores a lush, expansive world that feels simultaneously handcrafted and machine-dreamed — a proof of concept for what generative filmmaking looks like when you treat it as a medium rather than a shortcut.`,
+    description: `Little Big Island is a faux CGI-animated style film trailer, pushing the limits of what current AI video generation can produce. Shot using Seedance 2 and Veo 3.1, it explores a lush, expansive world that feels simultaneously handcrafted and machine-dreamed; a proof of concept for what generative filmmaking looks like when you treat it as a medium, not a shortcut.`,
     heroVideo: "../../video/vast-island-hero.mp4",
     heroFallback: "../../images/vast-island/Exquisite_modern_disney_2k_202602152353-2.webp",
     gallery: [
@@ -93,7 +93,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     type: "Personal / Spec Ad",
     skills: ["AI Prompting", "Graphic Design", "Visual Storytelling"],
     tagline: "A spec ad for a non-existent cooldrink. Because why not.",
-    description: `A fun spec ad for a non-existent variant of a popular cooldrink, designed to test the limits of AI filmmaking and revel in the creative space it opens up. Vanta Black Fanta Black exists nowhere except in the imagination — and now on screen.`,
+    description: `A fun spec ad for a non-existent variant of a popular cooldrink, designed to test the limits of AI filmmaking and revel in the creative space it opens up. Vanta Black Fanta Black exists nowhere except in the imagination. And now on screen.`,
     heroImage: "../../images/vanta-hero.webp",
     gallery: [],
     links: [
@@ -108,7 +108,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     type: "Client",
     skills: ["Brand Building", "Graphic Design", "Visual Storytelling", "Copywriting"],
     tagline: "Brand identity and visual systems for three healthtech startups.",
-    description: `Recent design work across three healthtech clients at various stages of growth. Each brand required a distinct visual language — from accessible edtech to clinical travel medicine to the speculative territory of digital twin technology — unified by a design sensibility that makes complex ideas feel approachable without dumbing them down.`,
+    description: `Recent design work across three healthtech clients at various stages of growth. Each brand required a distinct visual language: accessible edtech, clinical travel medicine, speculative digital twin technology. The unifying thread is a design sensibility that makes complex ideas feel approachable without dumbing them down.`,
     heroImage: "../../images/healthtech-design0B.webp",
     gallery: [
       "../../images/healthtech-design0C.webp",
@@ -130,7 +130,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     type: "Personal",
     skills: ["AI Prompting", "Graphic Design", "Vibe-Coding"],
     tagline: "A free, top-tier sleep meditation and white noise machine. Calibrated for deep rest.",
-    description: `Slumbr is a vibe-coded web app for sleep, meditation, and dream work. Free, no gatekeeping, no accounts — just deep sound environments and guided sessions designed around actual rest science. Built entirely through agentic orchestration; I directed, Claude built.`,
+    description: `Slumbr is a vibe-coded web app for sleep, meditation, and dream work. Free, no gatekeeping, no accounts; just deep sound environments and guided sessions designed around actual rest science. Built entirely through agentic orchestration; I directed, Claude built.`,
     heroImage: "../../images/code2.png",
     gallery: [],
     links: [
@@ -145,7 +145,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     type: "Personal",
     skills: ["AI Prompting", "Graphic Design", "Vibe-Coding"],
     tagline: "Free, no-gatekeeping wisdom from the cosmos. On tap.",
-    description: `Afrikan Tarot is a free web-based tarot reading experience rooted in African symbolism and cosmology. No subscriptions, no paywalls — the wisdom is there for whoever comes seeking it.`,
+    description: `Afrikan Tarot is a free web-based tarot reading experience rooted in African symbolism and cosmology. No subscriptions, no paywalls. The wisdom is there for whoever comes seeking it.`,
     heroImage: "../../images/code1.png",
     gallery: [],
     links: [
@@ -160,7 +160,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     type: "Personal",
     skills: ["AI Prompting", "Vibe-Coding", "Game Design"],
     tagline: "Vibe-coded games and early Unreal Engine solo dev work.",
-    description: `Mystik Skies sits at the intersection of vibe-coding and solo game development. Playable browser games built through agentic workflows, alongside longer-form projects developing in Unreal Engine — exploring what it means to be a one-person studio in the age of AI-assisted creation.`,
+    description: `Mystik Skies sits at the intersection of vibe-coding and solo game development. Playable browser games built through agentic workflows, alongside longer-form projects developing in Unreal Engine, exploring what it means to be a one-person studio in the age of AI-assisted creation.`,
     heroImage: "../../images/code0.png",
     gallery: [],
     links: [
@@ -174,7 +174,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     category: "Writing",
     type: "Client + Personal",
     skills: ["Content Writing", "Copywriting", "Research", "Thought Leadership"],
-    tagline: "Technology, AI, and Africa — reported and argued from Cape Town.",
+    tagline: "Technology, AI, and Africa: reported and argued from Cape Town.",
     description: `A selection of articles spanning AI criticism, technology infrastructure, African innovation, and speculative futures. Written for publications and personal channels; always from a position of genuine curiosity rather than press release repackaging.`,
     heroImage: "../../images/design01.png",
     stories: [
@@ -196,7 +196,7 @@ I tried to craft something symbolic and layered — a philosophical allegory tha
     category: "GenAI Filmmaking",
     type: "Personal",
     skills: ["AI Prompting", "Visual Storytelling"],
-    tagline: "The rest of the reel — experiments, shorts, and work in progress.",
+    tagline: "The rest of the reel: experiments, shorts, and work in progress.",
     description: `An ongoing archive of GenAI filmmaking work: anime-influenced short films, experimental pieces, and various explorations of what AI video generation can do when given an actual aesthetic direction rather than a prompt list.`,
     heroImage: "../../images/motionfold.png",
     videos: [
