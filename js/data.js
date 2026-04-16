@@ -31,23 +31,45 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
     ]
   },
   {
-    id: "mythopoeic",
+    id: "writing",
     index: "02",
+    title: "Writing",
+    category: "Writing",
+    type: "Client + Personal",
+    skills: ["Content Writing", "Copywriting", "Research", "Thought Leadership"],
+    tagline: "Technology, AI, and Africa: reported and argued from Cape Town.",
+    description: `A selection of articles spanning AI criticism, technology infrastructure, African innovation, and speculative futures. Written for publications and personal channels; always from a position of genuine curiosity rather than press release repackaging.`,
+    heroImage: "../../images/writing-hero.webp",
+    stories: [
+      { title: "The AI detector dilemma", url: "https://gadget.co.za/aidetector36t/", excerpt: "Using an AI detector to catch a modern LLM is like sending a 1990s-era MS Office Paperclip Helper to fight a T1000 from the Terminator movies." },
+      { title: "Why you can't trust Grok 4's benchmarks", url: "https://mikewhyle.com/trust-issues-with-grok-4/", excerpt: "For users in South Africa and across the continent, the stakes are particularly high. Trust is the most critical currency." },
+      { title: "Risen from the sea", url: "https://mikewhyle.com/risen-from-the-sea/", excerpt: "Imagine gazing out at a sunset that cascades over the ocean, viewed from the summit of a majestic flat-topped peak that has stood as witness to the passage of time for hundreds of millions of years." },
+      { title: "What in the SMR is this?!", url: "https://mikewhyle.com/what-in-the-smr-is-this/", excerpt: "Generative AI and the digital economy are advancing at breakneck pace, but looming energy shortfalls could thwart Big Tech's best-laid plans for expansion." },
+      { title: "The future of insurance in Africa", url: "https://mikewhyle.com/the-future-of-insurance-in-africa//", excerpt: "To adapt to the current circumstances and secure the longevity of their businesses, insurers must move beyond being resilient to being disruptive." },
+      { title: "What's causing the skyrocketing demand for compute?", url: "https://mikewhyle.com/whats-causing-the-skyrocketing-demand-for-compute/", excerpt: "Data centers have evolved from repositories of information to become the operational bedrock of modern businesses." },
+      { title: "Pioneering progress", url: "https://mikewhyle.com/pioneering-progress/", excerpt: "Experts are concerned about resource limits and insufficient radiology skills and services in Africa, particularly for cancer detection and treatment." },
+      { title: "Blood, books and bots: the true origins of AI", url: "https://mikewhyle.com/blood-books-and-bots-the-true-origins-of-ai/", excerpt: "The first known use of AI is actually much earlier than people think. In fact it was during the Palaeolithic era, probably around 100,000 years ago." }
+    ],
+    links: []
+  },
+  {
+    id: "mythopoeic",
+    index: "03",
     title: "Mythopoeic",
     category: "Graphic Design",
     type: "Client: Pencil AI",
     skills: ["Graphic Design", "AI Prompting", "Brand Building", "Visual Storytelling"],
     tagline: "A speculative jewellery brand demonstrating the power of AI for advertising and visual identity.",
     description: `A fake jewellery brand built entirely with AI tools, commissioned to showcase what AI-powered advertising, branding, and visual storytelling can achieve at the highest end of the market. The result: a fully realised luxury identity; editorial imagery, product visualisation, campaign assets indistinguishable from a six-figure production budget.`,
-    heroSlides: [
+    heroVideo: "../../video/mythopoeic-hero.mp4",
+    heroFallback: "../../images/mythopoeic/hero1.webp",
+    gallery: [
       "../../images/mythopoeic/hero1.webp",
       "../../images/mythopoeic/hero2.webp",
       "../../images/mythopoeic/hero3.webp",
       "../../images/mythopoeic/hero4.webp",
       "../../images/mythopoeic/hero5.webp",
-      "../../images/mythopoeic/hero6.webp"
-    ],
-    gallery: [
+      "../../images/mythopoeic/hero6.webp",
       "../../images/mythopoeic/bracelet-model.webp",
       "../../images/mythopoeic/bracelet-showcase.webp",
       "../../images/mythopoeic/necklace-showcase-1.webp",
@@ -61,11 +83,35 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
       "../../images/mythopoeic/rhino.webp",
       "../../images/mythopoeic/seabed.webp"
     ],
+    links: [
+      { label: "Watch the film", url: "https://vimeo.com/1182972379", primary: true }
+    ]
+  },
+  {
+    id: "healthtech",
+    index: "04",
+    title: "EduTalkz · TravelMedz · TwinTech",
+    category: "Graphic Design",
+    type: "Client",
+    skills: ["Brand Building", "Graphic Design", "Visual Storytelling", "Copywriting"],
+    tagline: "Brand identity and visual systems for three healthtech startups.",
+    description: `Recent design work across three healthtech clients at various stages of growth. Each brand required a distinct visual language: accessible edtech, clinical travel medicine, speculative digital twin technology. The unifying thread is a design sensibility that makes complex ideas feel approachable without dumbing them down.`,
+    heroImage: "../../images/healthtech-design0B.webp",
+    gallery: [
+      "../../images/healthtech-design0C.webp",
+      "../../images/healthtech-design2.webp",
+      "../../images/healthtech-design3.webp",
+      "../../images/healthtech-design7.webp",
+      "../../images/healthtech-design9.webp",
+      "../../images/healthtech-design6.webp",
+      "../../images/healthtech-design10.webp",
+      "../../images/healthtech-design13.webp"
+    ],
     links: []
   },
   {
     id: "little-big-island",
-    index: "03",
+    index: "05",
     title: "Little Big Island",
     category: "GenAI Filmmaking",
     type: "Personal",
@@ -87,7 +133,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "vanta-black",
-    index: "04",
+    index: "06",
     title: "Vanta Black Fanta Black",
     category: "GenAI Filmmaking",
     type: "Personal / Spec Ad",
@@ -101,30 +147,8 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
     ]
   },
   {
-    id: "healthtech",
-    index: "05",
-    title: "EduTalkz · TravelMedz · TwinTech",
-    category: "Graphic Design",
-    type: "Client",
-    skills: ["Brand Building", "Graphic Design", "Visual Storytelling", "Copywriting"],
-    tagline: "Brand identity and visual systems for three healthtech startups.",
-    description: `Recent design work across three healthtech clients at various stages of growth. Each brand required a distinct visual language: accessible edtech, clinical travel medicine, speculative digital twin technology. The unifying thread is a design sensibility that makes complex ideas feel approachable without dumbing them down.`,
-    heroImage: "../../images/healthtech-design0B.webp",
-    gallery: [
-      "../../images/healthtech-design0C.webp",
-      "../../images/healthtech-design2.webp",
-      "../../images/healthtech-design3.webp",
-      "../../images/healthtech-design7.webp",
-      "../../images/healthtech-design9.webp",
-      "../../images/healthtech-design6.webp",
-      "../../images/healthtech-design10.webp",
-      "../../images/healthtech-design13.webp"
-    ],
-    links: []
-  },
-  {
     id: "slumbr",
-    index: "06",
+    index: "07",
     title: "Slumbr",
     category: "Vibe-Coding",
     type: "Personal",
@@ -139,7 +163,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "afrikan-tarot",
-    index: "07",
+    index: "08",
     title: "Afrikan Tarot",
     category: "Vibe-Coding",
     type: "Personal",
@@ -154,7 +178,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "mystik-skies",
-    index: "08",
+    index: "09",
     title: "Mystik Skies",
     category: "Vibe-Coding",
     type: "Personal",
@@ -166,28 +190,6 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
     links: [
       { label: "Play Skybaby", url: "https://threapchills.github.io/skybaby/", primary: true }
     ]
-  },
-  {
-    id: "writing",
-    index: "09",
-    title: "Writing",
-    category: "Writing",
-    type: "Client + Personal",
-    skills: ["Content Writing", "Copywriting", "Research", "Thought Leadership"],
-    tagline: "Technology, AI, and Africa: reported and argued from Cape Town.",
-    description: `A selection of articles spanning AI criticism, technology infrastructure, African innovation, and speculative futures. Written for publications and personal channels; always from a position of genuine curiosity rather than press release repackaging.`,
-    heroImage: "../../images/design01.png",
-    stories: [
-      { title: "The AI detector dilemma", url: "https://gadget.co.za/aidetector36t/", excerpt: "Using an AI detector to catch a modern LLM is like sending a 1990s-era MS Office Paperclip Helper to fight a T1000 from the Terminator movies." },
-      { title: "Why you can't trust Grok 4's benchmarks", url: "https://mikewhyle.com/trust-issues-with-grok-4/", excerpt: "For users in South Africa and across the continent, the stakes are particularly high. Trust is the most critical currency." },
-      { title: "Risen from the sea", url: "https://mikewhyle.com/risen-from-the-sea/", excerpt: "Imagine gazing out at a sunset that cascades over the ocean, viewed from the summit of a majestic flat-topped peak that has stood as witness to the passage of time for hundreds of millions of years." },
-      { title: "What in the SMR is this?!", url: "https://mikewhyle.com/what-in-the-smr-is-this/", excerpt: "Generative AI and the digital economy are advancing at breakneck pace, but looming energy shortfalls could thwart Big Tech's best-laid plans for expansion." },
-      { title: "The future of insurance in Africa", url: "https://mikewhyle.com/the-future-of-insurance-in-africa//", excerpt: "To adapt to the current circumstances and secure the longevity of their businesses, insurers must move beyond being resilient to being disruptive." },
-      { title: "What's causing the skyrocketing demand for compute?", url: "https://mikewhyle.com/whats-causing-the-skyrocketing-demand-for-compute/", excerpt: "Data centers have evolved from repositories of information to become the operational bedrock of modern businesses." },
-      { title: "Pioneering progress", url: "https://mikewhyle.com/pioneering-progress/", excerpt: "Experts are concerned about resource limits and insufficient radiology skills and services in Africa, particularly for cancer detection and treatment." },
-      { title: "Blood, books and bots: the true origins of AI", url: "https://mikewhyle.com/blood-books-and-bots-the-true-origins-of-ai/", excerpt: "The first known use of AI is actually much earlier than people think. In fact it was during the Palaeolithic era, probably around 100,000 years ago." }
-    ],
-    links: []
   },
   {
     id: "video-archive",
