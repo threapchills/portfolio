@@ -1,15 +1,15 @@
 /* ============================================================
    Custom cursor + hero-banner glitch overlay.
-   Injects an SVG chromatic-aberration filter, attaches a
-   reticle cursor, and places a filtered clone of each hero
-   background that is revealed only within a radial zone
-   around the cursor.
+
+   Single-video approach: the glitch layer is driven by each
+   hero's poster / fallback image, not a cloned video. Keeps
+   GPU load low and sidesteps Chrome's concurrent-decoder cap.
    ============================================================ */
 
 (function () {
   const isCoarse = window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches;
 
-  /* ── SVG filter (once per document) ─────────────────────── */
+  /* ── SVG filter (static; no animated seed) ──────────────── */
   if (!document.getElementById('glitch-filter-svg')) {
     const svgNS = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(svgNS, 'svg');
@@ -18,18 +18,16 @@
     svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;';
     svg.innerHTML = `
       <defs>
-        <filter id="glitch-filter" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.018 0.06" numOctaves="2" seed="3" result="turb">
-            <animate attributeName="seed" from="0" to="99" dur="2.4s" repeatCount="indefinite"/>
-          </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="turb" scale="14" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
-          <feColorMatrix in="displaced" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="redChan"/>
-          <feColorMatrix in="displaced" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="grnChan"/>
-          <feColorMatrix in="displaced" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bluChan"/>
-          <feOffset in="redChan" dx="7" dy="0" result="redShift"/>
-          <feOffset in="bluChan" dx="-7" dy="0" result="bluShift"/>
-          <feBlend mode="screen" in="redShift" in2="grnChan" result="rg"/>
-          <feBlend mode="screen" in="rg" in2="bluShift"/>
+        <filter id="glitch-filter" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.025 0.08" numOctaves="2" seed="5" result="turb"/>
+          <feDisplacementMap in="SourceGraphic" in2="turb" scale="10" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+          <feColorMatrix in="displaced" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="redCh"/>
+          <feColorMatrix in="displaced" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="grnCh"/>
+          <feColorMatrix in="displaced" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bluCh"/>
+          <feOffset in="redCh" dx="8" dy="0" result="redOff"/>
+          <feOffset in="bluCh" dx="-8" dy="0" result="bluOff"/>
+          <feBlend in="redOff" in2="grnCh" mode="lighten" result="rg"/>
+          <feBlend in="rg" in2="bluOff" mode="lighten"/>
         </filter>
       </defs>`;
     document.body.appendChild(svg);
@@ -72,7 +70,7 @@
     document.addEventListener('mouseup', () => cursor.classList.remove('cursor-down'));
   }
 
-  /* ── Glitch overlays on hero backgrounds ────────────────── */
+  /* ── Glitch overlays (poster-image driven, no video clone) ─ */
   function wireGlitch(root) {
     const heroes = (root || document).querySelectorAll('.panel-bg, .project-hero-bg');
     heroes.forEach(bg => {
@@ -84,52 +82,33 @@
 
       const vid = bg.querySelector('video');
       if (vid) {
-        const sourceEl = vid.querySelector('source');
-        const src = (sourceEl && sourceEl.getAttribute('src')) || vid.getAttribute('src');
-        if (src) {
-          const vCopy = document.createElement('video');
-          vCopy.muted = true;
-          vCopy.loop = true;
-          vCopy.autoplay = true;
-          vCopy.defaultMuted = true;
-          vCopy.setAttribute('playsinline', '');
-          vCopy.setAttribute('muted', '');
-          vCopy.setAttribute('autoplay', '');
-          vCopy.preload = 'auto';
-          const copySrc = document.createElement('source');
-          const sep = src.includes('?') ? '&' : '?';
-          copySrc.setAttribute('src', src + sep + 'glitch=1');
-          copySrc.setAttribute('type', 'video/mp4');
-          vCopy.appendChild(copySrc);
-          copy.appendChild(vCopy);
-
-          /* Best-effort resync to match the primary video each time it plays. */
-          const resync = () => {
-            try { vCopy.currentTime = (vid && !isNaN(vid.currentTime)) ? vid.currentTime : 0; } catch (_) {}
-            vCopy.play().catch(() => {});
-          };
-          vid.addEventListener('playing', resync);
-          vid.addEventListener('play', resync);
-          bg.addEventListener('mouseenter', resync, { passive: true });
-          if (vCopy.readyState < 1) {
-            try { vCopy.load(); } catch (_) {}
-          }
-          if (!vid.paused) resync();
-        }
+        const poster = vid.getAttribute('poster');
+        if (poster) copy.style.backgroundImage = `url('${poster}')`;
       } else {
-        const bgImg = bg.style.backgroundImage;
-        if (bgImg) copy.style.backgroundImage = bgImg;
+        const inlineBg = bg.style.backgroundImage;
+        if (inlineBg) copy.style.backgroundImage = inlineBg;
       }
 
       bg.appendChild(copy);
 
+      /* Batch mouse updates to one paint per frame. */
+      let pending = 0;
+      let lastX = -9999, lastY = -9999;
       bg.addEventListener('mousemove', e => {
         const rect = bg.getBoundingClientRect();
-        bg.style.setProperty('--gx', `${e.clientX - rect.left}px`);
-        bg.style.setProperty('--gy', `${e.clientY - rect.top}px`);
+        lastX = e.clientX - rect.left;
+        lastY = e.clientY - rect.top;
+        if (!pending) {
+          pending = requestAnimationFrame(() => {
+            bg.style.setProperty('--gx', `${lastX}px`);
+            bg.style.setProperty('--gy', `${lastY}px`);
+            pending = 0;
+          });
+        }
       }, { passive: true });
 
       bg.addEventListener('mouseleave', () => {
+        if (pending) { cancelAnimationFrame(pending); pending = 0; }
         bg.style.setProperty('--gx', `-9999px`);
         bg.style.setProperty('--gy', `-9999px`);
       });

@@ -897,29 +897,20 @@ html.cursor-active .nav-menu-btn {
   background-size: cover;
   background-position: center;
   mask-image: radial-gradient(
-    circle 240px at var(--gx, -9999px) var(--gy, -9999px),
+    circle 220px at var(--gx, -9999px) var(--gy, -9999px),
     black 0%,
     black 22%,
     rgba(0,0,0,0.6) 55%,
     transparent 95%
   );
   -webkit-mask-image: radial-gradient(
-    circle 240px at var(--gx, -9999px) var(--gy, -9999px),
+    circle 220px at var(--gx, -9999px) var(--gy, -9999px),
     black 0%,
     black 22%,
     rgba(0,0,0,0.6) 55%,
     transparent 95%
   );
   z-index: 1;
-  transform: translateZ(0);
-  will-change: mask-image;
-}
-.glitch-copy video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* Ensure dark gradient (::after) still sits above the glitch layer. */

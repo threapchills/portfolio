@@ -38,9 +38,10 @@ function initProjectPage(projectId) {
   const hero = document.getElementById('project-hero');
 
   if (p.heroVideo) {
+    const posterAttr = p.heroFallback ? ` poster="${p.heroFallback}"` : '';
     hero.innerHTML = `
       <div class="project-hero-bg">
-        <video autoplay muted loop playsinline>
+        <video autoplay muted loop playsinline${posterAttr}>
           <source src="${p.heroVideo}" type="video/mp4">
         </video>
       </div>`;
