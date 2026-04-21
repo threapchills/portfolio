@@ -260,6 +260,18 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 1rem;
 }
 
+.panel-title .title-zh,
+.project-hero-title .title-zh {
+  display: block;
+  font-size: 0.5em;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  opacity: 0.85;
+  margin-top: 0.3em;
+  line-height: 1;
+}
+
 .panel-meta {
   display: flex;
   align-items: center;
@@ -813,6 +825,121 @@ a { color: inherit; text-decoration: none; }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ── Custom cursor ────────────────────────────────────────── */
+html.cursor-active,
+html.cursor-active body,
+html.cursor-active a,
+html.cursor-active button,
+html.cursor-active .project-panel,
+html.cursor-active .carousel-item,
+html.cursor-active .writing-card,
+html.cursor-active .carousel-btn,
+html.cursor-active .nav-menu-btn {
+  cursor: none;
+}
+
+#cursor-reticle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: difference;
+  transition: width 0.28s var(--ease-out),
+              height 0.28s var(--ease-out),
+              border-color 0.3s,
+              opacity 0.2s;
+  will-change: transform;
+}
+
+#cursor-reticle .cursor-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  margin-top: -1.5px;
+  margin-left: -1.5px;
+  border-radius: 50%;
+  background: var(--gold);
+  transition: background 0.25s, transform 0.18s var(--ease-out);
+}
+
+#cursor-reticle.cursor-hover {
+  width: 58px;
+  height: 58px;
+  border-color: var(--teal);
+}
+#cursor-reticle.cursor-hover .cursor-dot {
+  background: var(--teal);
+  transform: scale(1.6);
+}
+
+#cursor-reticle.cursor-down {
+  width: 18px;
+  height: 18px;
+}
+
+#cursor-reticle.cursor-gone { opacity: 0; }
+
+/* ── Hero glitch overlay (follows cursor) ─────────────────── */
+.glitch-copy {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  filter: url(#glitch-filter);
+  background-size: cover;
+  background-position: center;
+  mask-image: radial-gradient(
+    circle 240px at var(--gx, -9999px) var(--gy, -9999px),
+    black 0%,
+    black 22%,
+    rgba(0,0,0,0.6) 55%,
+    transparent 95%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 240px at var(--gx, -9999px) var(--gy, -9999px),
+    black 0%,
+    black 22%,
+    rgba(0,0,0,0.6) 55%,
+    transparent 95%
+  );
+  z-index: 1;
+  transform: translateZ(0);
+  will-change: mask-image;
+}
+.glitch-copy video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ensure dark gradient (::after) still sits above the glitch layer. */
+.panel-bg::after,
+.project-hero-bg::after { z-index: 2; }
+
+/* Mobile: drop cursor + glitch to preserve native scrolling. */
+@media (hover: none), (pointer: coarse) {
+  html.cursor-active,
+  html.cursor-active body,
+  html.cursor-active a,
+  html.cursor-active button,
+  html.cursor-active .project-panel,
+  html.cursor-active .carousel-item,
+  html.cursor-active .writing-card,
+  html.cursor-active .carousel-btn,
+  html.cursor-active .nav-menu-btn { cursor: auto; }
+
+  #cursor-reticle { display: none; }
+  .glitch-copy { display: none; }
 }
 
 /* ── Mobile ───────────────────────────────────────────────── */

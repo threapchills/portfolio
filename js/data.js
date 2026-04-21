@@ -132,15 +132,46 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
     ]
   },
   {
-    id: "vanta-black",
+    id: "tale-of-twins",
     index: "06",
+    title: `Tale of Twins<span class="title-zh">雙貓双雄</span>`,
+    category: "GenAI Filmmaking",
+    type: "Personal / For Fun",
+    skills: ["AI Prompting", "Visual Storytelling", "Film Editing"],
+    tagline: "A viral-leaning homage to 70s wuxia cinema, starring two cats.",
+    description: `Tale of Twins is a tongue-in-cheek homage to 70s kung-fu wuxia cinema, reimagined as a duel between two cats; one an ascetic white-robed monk, the other crowned in black armour. Made purely for fun, it nonetheless runs the full GenAI filmmaking stack end-to-end: star frames hand-crafted in Nano Banana to fix character and world, motion generated with Seedance 2, and the whole thing stitched and graded in Premiere Pro.
+
+Proof, I think, that the medium is ready for genre; not just spectacle.`,
+    heroVideo: "../../video/tale-of-twins-hero.mp4",
+    heroFallback: "../../images/tale-of-twins/thumb.webp",
+    gallery: [
+      "../../images/tale-of-twins/twins-forest-run.webp",
+      "../../images/tale-of-twins/yin-yang-cats.webp",
+      "../../images/tale-of-twins/bamboo-forest.webp",
+      "../../images/tale-of-twins/mountain-village.webp",
+      "../../images/tale-of-twins/white-cat-ruins.webp",
+      "../../images/tale-of-twins/wuxia-village.webp",
+      "../../images/tale-of-twins/desert-fight.webp",
+      "../../images/tale-of-twins/tavern.webp",
+      "../../images/tale-of-twins/cherry-blossom.webp",
+      "../../images/tale-of-twins/desert-camp.webp",
+      "../../images/tale-of-twins/duel.webp"
+    ],
+    links: [
+      { label: "Watch the film", url: "https://www.youtube.com/watch?v=u2bsxG1hylc", primary: true }
+    ]
+  },
+  {
+    id: "vanta-black",
+    index: "07",
     title: "Vanta Black Fanta Black",
     category: "GenAI Filmmaking",
     type: "Personal / Spec Ad",
     skills: ["AI Prompting", "Graphic Design", "Visual Storytelling"],
     tagline: "A spec ad for a non-existent cooldrink. Because why not.",
     description: `A fun spec ad for a non-existent variant of a popular cooldrink, designed to test the limits of AI filmmaking and revel in the creative space it opens up. Vanta Black Fanta Black exists nowhere except in the imagination. And now on screen.`,
-    heroImage: "../../images/vanta-hero.webp",
+    heroVideo: "../../video/vanta-hero.mp4",
+    heroFallback: "../../images/vanta-hero.webp",
     gallery: [],
     links: [
       { label: "Watch the ad", url: "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing", primary: true }
@@ -148,7 +179,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "slumbr",
-    index: "07",
+    index: "08",
     title: "Slumbr",
     category: "Vibe-Coding",
     type: "Personal",
@@ -163,7 +194,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "afrikan-tarot",
-    index: "08",
+    index: "09",
     title: "Afrikan Tarot",
     category: "Vibe-Coding",
     type: "Personal",
@@ -178,7 +209,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "mystik-skies",
-    index: "09",
+    index: "10",
     title: "Mystik Skies",
     category: "Vibe-Coding",
     type: "Personal",
@@ -193,7 +224,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "video-archive",
-    index: "10",
+    index: "11",
     title: "More Films",
     category: "GenAI Filmmaking",
     type: "Personal",
