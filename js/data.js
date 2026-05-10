@@ -139,7 +139,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
     type: "Personal / Creative Concept",
     skills: ["AI Prompting", "Visual Storytelling", "Film Editing"],
     tagline: "A short visual study. Afrofuturism on film.",
-    description: `Ice Tea is a creative concept piece; a study in ornament, attitude, and Afrofuturist visual language. No narrative beats, no message to oversell. The frames do the talking.`,
+    description: `I've become low key obsessed with this like magical realism meets gritty Afrofuturist crime drama in a faux music video format vibe 😛 More incoming! 🙌`,
     heroVideo: "../../video/ice-tea-hero.mp4",
     heroFallback: "../../images/ice-tea/frame_02.webp",
     gallery: [
