@@ -31,8 +31,34 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
     ]
   },
   {
-    id: "writing",
+    id: "ramses",
     index: "02",
+    title: "Ramses",
+    category: "GenAI Filmmaking",
+    type: "Runway 2026 Film Competition",
+    skills: ["AI Prompting", "Visual Storytelling", "Writing", "Film Editing"],
+    tagline: "A mythic Egyptian animated epic; my entry to the Runway 2026 film competition.",
+    description: `This was my entry to the Runway 2026 film competition. I didn't win, but I'm glad I made this, because now it exists!`,
+    heroVideo: "../../video/ramses-hero.mp4",
+    heroFallback: "../../images/ramses/07-lion-money-shot.webp",
+    gallery: [
+      "../../images/ramses/01-nile-boat.webp",
+      "../../images/ramses/02-family-dock.webp",
+      "../../images/ramses/03-sphinx.webp",
+      "../../images/ramses/04-seer.webp",
+      "../../images/ramses/05-horus.webp",
+      "../../images/ramses/06-coronation.webp",
+      "../../images/ramses/07-lion-money-shot.webp",
+      "../../images/ramses/08-khopesh.webp",
+      "../../images/ramses/09-sunset.webp"
+    ],
+    links: [
+      { label: "Watch the film", url: "https://drive.google.com/file/d/1lANyxkWP2oqHhilP28eTMtdJaVXpD-jx/view?usp=sharing", primary: true }
+    ]
+  },
+  {
+    id: "writing",
+    index: "03",
     title: "Writing",
     category: "Writing",
     type: "Client + Personal",
@@ -54,7 +80,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "mythopoeic",
-    index: "03",
+    index: "04",
     title: "Mythopoeic",
     category: "Graphic Design",
     type: "Spec Ad",
@@ -89,7 +115,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
   },
   {
     id: "healthtech",
-    index: "04",
+    index: "05",
     title: "EduTalkz · TravelMedz · TwinTech",
     category: "Graphic Design",
     type: "Client",
@@ -106,30 +132,6 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
       "../../images/healthtech-design6.webp",
       "../../images/healthtech-design10.webp",
       "../../images/healthtech-design13.webp"
-    ],
-    links: []
-  },
-  {
-    id: "ramses",
-    index: "05",
-    title: "Ramses",
-    category: "GenAI Filmmaking",
-    type: "Runway 2026 Film Competition",
-    skills: ["AI Prompting", "Visual Storytelling", "Writing", "Film Editing"],
-    tagline: "A mythic Egyptian animated epic; my entry to the Runway 2026 film competition.",
-    description: `This was my entry to the Runway 2026 film competition. I didn't win, but I'm glad I made this, because now it exists!`,
-    heroVideo: "../../video/ramses-hero.mp4",
-    heroFallback: "../../images/ramses/07-lion-money-shot.webp",
-    gallery: [
-      "../../images/ramses/01-nile-boat.webp",
-      "../../images/ramses/02-family-dock.webp",
-      "../../images/ramses/03-sphinx.webp",
-      "../../images/ramses/04-seer.webp",
-      "../../images/ramses/05-horus.webp",
-      "../../images/ramses/06-coronation.webp",
-      "../../images/ramses/07-lion-money-shot.webp",
-      "../../images/ramses/08-khopesh.webp",
-      "../../images/ramses/09-sunset.webp"
     ],
     links: []
   },
