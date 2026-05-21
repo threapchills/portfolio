@@ -9,7 +9,7 @@ const PROJECTS = [
     index: "01",
     title: "Kalimba",
     category: "GenAI Filmmaking",
-    type: "Personal / Competition",
+    type: "BTG GenAI Film Competition",
     skills: ["AI Prompting", "Visual Storytelling", "Writing", "Graphic Design"],
     tagline: "An Afrofuturist mockumentary shortlisted from 400+ entries.",
     description: `Proud to share that KALIMBA, a GenAI film I made, was shortlisted amongst 400+ entries in the BrandTech Group GenAI film competition and awarded $1,000.
@@ -57,7 +57,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
     index: "03",
     title: "Mythopoeic",
     category: "Graphic Design",
-    type: "Client: Pencil AI",
+    type: "Spec Ad",
     skills: ["Graphic Design", "AI Prompting", "Brand Building", "Visual Storytelling"],
     tagline: "A speculative jewellery brand demonstrating the power of AI for advertising and visual identity.",
     description: `A fake jewellery brand built entirely with AI tools, commissioned to showcase what AI-powered advertising, branding, and visual storytelling can achieve at the highest end of the market. The result: a fully realised luxury identity; editorial imagery, product visualisation, campaign assets indistinguishable from what a full crew and major production budget would deliver.`,
@@ -110,26 +110,28 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
     links: []
   },
   {
-    id: "little-big-island",
+    id: "ramses",
     index: "05",
-    title: "Little Big Island",
+    title: "Ramses",
     category: "GenAI Filmmaking",
-    type: "Personal",
-    skills: ["AI Prompting", "Visual Storytelling"],
-    tagline: "A faux CGI-animated film trailer built with cutting-edge AI video tools.",
-    description: `Little Big Island is a faux CGI-animated style film trailer, pushing the limits of what current AI video generation can produce. Shot using Seedance 2 and Veo 3.1, it explores a lush, expansive world that feels simultaneously handcrafted and machine-dreamed; a proof of concept for what generative filmmaking looks like when you treat it as a medium, not a shortcut.`,
-    heroVideo: "../../video/vast-island-hero.mp4",
-    heroFallback: "../../images/vast-island/Exquisite_modern_disney_2k_202602152353-2.webp",
+    type: "Runway 2026 Film Competition",
+    skills: ["AI Prompting", "Visual Storytelling", "Writing", "Film Editing"],
+    tagline: "A mythic Egyptian animated epic; my entry to the Runway 2026 film competition.",
+    description: `This was my entry to the Runway 2026 film competition. I didn't win, but I'm glad I made this, because now it exists!`,
+    heroVideo: "../../video/ramses-hero.mp4",
+    heroFallback: "../../images/ramses/07-lion-money-shot.webp",
     gallery: [
-      "../../images/vast-island/Exquisite_modern_disney_2k_202602152357.webp",
-      "../../images/vast-island/Exquisite_modern_disney_2k_202602160004.webp",
-      "../../images/vast-island/Exquisite_modern_disney_2k_202602160018.webp",
-      "../../images/vast-island/Exquisite_modern_disney_2k_202602160018-1.webp",
-      "../../images/vast-island/Exquisite_modern_disney_2k_202602160103.webp"
+      "../../images/ramses/01-nile-boat.webp",
+      "../../images/ramses/02-family-dock.webp",
+      "../../images/ramses/03-sphinx.webp",
+      "../../images/ramses/04-seer.webp",
+      "../../images/ramses/05-horus.webp",
+      "../../images/ramses/06-coronation.webp",
+      "../../images/ramses/07-lion-money-shot.webp",
+      "../../images/ramses/08-khopesh.webp",
+      "../../images/ramses/09-sunset.webp"
     ],
-    links: [
-      { label: "Watch the trailer", url: "https://www.youtube.com/watch?v=JgBicFpTIDM", primary: true }
-    ]
+    links: []
   },
   {
     id: "ice-tea",
@@ -191,27 +193,11 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
     ]
   },
   {
-    id: "vanta-black",
-    index: "08",
-    title: "Vanta Black Fanta Black",
-    category: "GenAI Filmmaking",
-    type: "Personal / Spec Ad",
-    skills: ["AI Prompting", "Graphic Design", "Visual Storytelling"],
-    tagline: "A spec ad for a non-existent cooldrink. Because why not.",
-    description: `A fun spec ad for a non-existent variant of a popular cooldrink, designed to test the limits of AI filmmaking and revel in the creative space it opens up. Agency-grade polish, one operator, no studio. Vanta Black Fanta Black exists nowhere except in the imagination. And now on screen.`,
-    heroVideo: "../../video/vanta-hero.mp4",
-    heroFallback: "../../images/vanta-hero.webp",
-    gallery: [],
-    links: [
-      { label: "Watch the ad", url: "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing", primary: true }
-    ]
-  },
-  {
     id: "slumbr",
-    index: "09",
+    index: "08",
     title: "Slumbr",
     category: "Vibe-Coding",
-    type: "Personal",
+    type: "Vibe Coding",
     skills: ["AI Prompting", "Graphic Design", "Vibe-Coding"],
     tagline: "A free, top-tier sleep meditation and white noise machine. Calibrated for deep rest.",
     description: `Slumbr is a free vibe-coded web app for sleep, meditation, and dream work. A small fix for a real gap at the lower end of the market: quality, lightweight, offline sleep-sounds and white-noise without ads, accounts, or paywalls. Built through agentic orchestration; I directed, Claude built. The same pipeline turns into a new kind of brand deliverable: apps, games, and tools that earn engagement a static ad never could.`,
@@ -223,10 +209,10 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
   },
   {
     id: "afrikan-tarot",
-    index: "10",
+    index: "09",
     title: "Afrikan Tarot",
     category: "Vibe-Coding",
-    type: "Personal",
+    type: "Vibe Coding",
     skills: ["AI Prompting", "Graphic Design", "Vibe-Coding"],
     tagline: "Free, no-gatekeeping wisdom from the cosmos. On tap.",
     description: `Afrikan Tarot is a free web-based tarot reading experience rooted in African symbolism and cosmology. No subscriptions, no paywalls. The wisdom is there for whoever comes seeking it. A small example of the kind of interactive piece brands can now commission instead of yet another banner ad.`,
@@ -238,10 +224,10 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
   },
   {
     id: "mystik-skies",
-    index: "11",
+    index: "10",
     title: "Mystik Skies",
     category: "Vibe-Coding",
-    type: "Personal",
+    type: "Vibe Coding",
     skills: ["AI Prompting", "Vibe-Coding", "Game Design"],
     tagline: "Vibe-coded games and early Unreal Engine solo dev work.",
     description: `Mystik Skies sits at the intersection of vibe-coding and solo game development. Playable browser games built through agentic workflows, alongside longer-form projects developing in Unreal Engine, exploring what it means to be a one-person studio in the age of AI-assisted creation. The same toolkit unlocks a new shelf of brand deliverables: playable ads, branded mini-games, interactive worlds.`,
@@ -253,7 +239,7 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
   },
   {
     id: "video-archive",
-    index: "12",
+    index: "11",
     title: "More Films",
     category: "GenAI Filmmaking",
     type: "Personal",
@@ -262,6 +248,7 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
     description: `An ongoing archive of GenAI filmmaking work: anime-influenced short films, experimental pieces, and various explorations of what AI video generation can do when given an actual aesthetic direction rather than a prompt list.`,
     heroImage: "../../images/motionfold.png",
     videos: [
+      "https://www.youtube.com/watch?v=JgBicFpTIDM",
       "https://www.youtube.com/watch?v=hQ7ZkjxpdIQ",
       "https://drive.google.com/file/d/1r6bXQpUGQ1G8Uphgd9ugZbrKlqFH_IwH/view?usp=sharing",
       "https://drive.google.com/file/d/1t40QjErBrtredC6FVyrHR_l8RmNu-_28/view?usp=sharing",
