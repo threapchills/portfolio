@@ -264,3 +264,76 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
     links: []
   }
 ];
+
+/* ============================================================
+   2026 OVERHAUL EXTENSIONS - additive only.
+   Existing PROJECTS entries above are untouched; these maps
+   decorate them at load with chamber routing fields.
+   ============================================================ */
+
+const CHAMBER_MAP = {
+  "kalimba":       { chamber: "film",    chamberOrder: 1, rackLoop: "video/kalimba-hero.mp4" },
+  "ramses":        { chamber: "film",    chamberOrder: 2, rackLoop: "video/ramses-hero.mp4" },
+  "ice-tea":       { chamber: "film",    chamberOrder: 3, rackLoop: "video/ice-tea-hero.mp4" },
+  "tale-of-twins": { chamber: "film",    chamberOrder: 4, rackLoop: "video/tale-of-twins-hero.mp4" },
+  "video-archive": { chamber: "film",    chamberOrder: 5 },
+  "mythopoeic":    { chamber: "design",  chamberOrder: 1 },
+  "healthtech":    { chamber: "design",  chamberOrder: 2 },
+  "writing":       { chamber: "writing", chamberOrder: 1 },
+  "slumbr":        { chamber: "coding",  chamberOrder: 1 },
+  "afrikan-tarot": { chamber: "coding",  chamberOrder: 2 },
+  "mystik-skies":  { chamber: "coding",  chamberOrder: 3 }
+};
+PROJECTS.forEach(function (p) {
+  var extra = CHAMBER_MAP[p.id];
+  if (extra) Object.assign(p, extra);
+});
+
+/* Writing cube faces: collections referencing the existing article
+   objects in the writing project's stories array, untouched. */
+const WRITING_FACES = (function () {
+  var w = PROJECTS.find(function (p) { return p.id === "writing"; });
+  var byTitle = function (t) {
+    return w.stories.find(function (s) { return s.title === t; });
+  };
+  return [
+    {
+      id: "newsdrop",
+      title: "The News Drop",
+      eyebrow: "The weekly AI dispatch",
+      type: "newsdrop"
+    },
+    {
+      id: "commentary",
+      title: "Commentary",
+      eyebrow: "Published articles",
+      type: "stories",
+      items: [
+        byTitle("The AI detector dilemma"),
+        byTitle("Why you can't trust Grok 4's benchmarks"),
+        byTitle("What in the SMR is this?!"),
+        byTitle("What's causing the skyrocketing demand for compute?"),
+        byTitle("Blood, books and bots: the true origins of AI")
+      ]
+    },
+    {
+      id: "client",
+      title: "Client work",
+      eyebrow: "Commissioned writing",
+      type: "stories",
+      items: [
+        byTitle("The future of insurance in Africa"),
+        byTitle("Pioneering progress")
+      ]
+    },
+    {
+      id: "longform",
+      title: "Longform",
+      eyebrow: "Essays and other creatures",
+      type: "stories",
+      items: [
+        byTitle("Risen from the sea")
+      ]
+    }
+  ];
+})();

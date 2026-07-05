@@ -1,0 +1,16 @@
+const NEWSDROP = [
+  { n: 16, date: "2026-06-26", title: "New models, new rules, same Friday", file: "issue-16.txt" },
+  { n: 14, date: "2026-06-12", title: "Jailbreaks, Starships, and Full-Body Scans", file: "issue-14.txt" },
+  { n: 12, date: "2026-05-29", title: "A rising tide lifts all boats", file: "issue-12.txt" },
+  { n: 11, date: "2026-05-22", title: "Soul in the Machine", file: "issue-11.txt" },
+  { n: 10, date: "2026-05-15", title: "Google I/O Tea", file: "issue-10.txt" },
+  { n: 9, date: "2026-05-08", title: "Politics and Power Struggles", file: "issue-09.txt" },
+  { n: 8, date: "2026-05-01", title: "Shifting Goalposts", file: "issue-08.txt" },
+  { n: 7, date: "2026-04-24", title: "The Trillion-Dollar  Spider-Man Standoff", file: "issue-07.txt" },
+  { n: 6, date: "2026-04-17", title: "Category Collapse", file: "issue-06.txt" },
+  { n: 5, date: "2026-04-10", title: "Techno-optimism with teeth", file: "issue-05.txt" },
+  { n: 4, date: "2026-04-03", title: "The prophecy of the one-person unicorn fulfilled!", file: "issue-04.txt" },
+  { n: 3, date: "2026-03-27", title: "A Drop in the Ocean", file: "issue-03.txt" },
+  { n: 2, date: "2026-03-20", title: "The Pencil Still Needs a Hand", file: "issue-02.txt" },
+  { n: 1, date: "2026-03-13", title: "Three AI drops in five days. Did you miss them?", file: "issue-01.txt" },
+];

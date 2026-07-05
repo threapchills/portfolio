@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-root="..">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Film | Mike Whyle</title>
+  <meta name="description" content="GenAI filmmaking by Mike Whyle: Kalimba, Ramses, Ice Tea, Tale of Twins, and the archive. Cinematic AI film made in Cape Town.">
+  <meta property="og:title" content="Film | Mike Whyle">
+  <meta property="og:description" content="Scrub through the world of the Mikey spec film, then walk the rack.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://portfolio.mikewhyle.com/images/kalimba/thumb.webp">
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/overhaul.css">
+</head>
+<body class="overhaul film-page">
+
+  <noscript>
+    <div class="noscript-poster">
+      <p>The film chamber needs JavaScript. The films themselves are patient:</p>
+      <nav><a href="../projects/kalimba/">Kalimba</a> <a href="../projects/ramses/">Ramses</a> <a href="../projects/ice-tea/">Ice Tea</a> <a href="../projects/tale-of-twins/">Tale of Twins</a> <a href="../projects/video-archive/">Archive</a></nav>
+    </div>
+  </noscript>
+
+  <div id="chamber-loader">
+    <div class="chamber-moon">
+      <img src="../assets/journey/moon-3.webp" alt="">
+      <div class="chamber-moon-fill"><img src="../assets/journey/moon-3.webp" alt=""></div>
+    </div>
+  </div>
+
+  <header class="veil-nav">
+    <a href="../#reading" class="return-reading" id="return-reading">
+      <img src="../assets/cards/card-back.webp" alt="">
+      <span>The reading</span>
+    </a>
+    <button id="mute-btn" aria-label="Mute">
+      <svg class="wave" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/></svg>
+      <svg class="strike" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 8l6 8M22 8l-6 8"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- the hero scrub: the chamber's cinematic introduction -->
+    <section id="scrub-wrap" aria-label="The Mikey spec film">
+      <div id="scrub-stage" class="vignette">
+        <canvas id="scrub-canvas"></canvas>
+        <div class="scrub-brand" id="scrub-brand">
+          <img src="../assets/brand/mikey-logo.webp" alt="Mikey">
+          <p>A spec film. This is what cinematic AI looks like now.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- the Rack -->
+    <section id="rack-wrap" aria-label="The films">
+      <div id="rack-stage">
+        <div id="rack-track"><!-- planes injected --></div>
+      </div>
+    </section>
+
+    <section class="chamber-outro">
+      <h2 class="outro-title">More where that came from.</h2>
+      <div class="outro-contact">
+        <a class="contact-pill" href="../#reading" id="outro-return">Return to the reading</a>
+        <a class="contact-pill" href="mailto:mikewhyle@gmail.com">Email</a>
+        <a class="contact-pill" href="https://wa.me/27616554726" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <p class="outro-credit">&copy; 2026 Mike Whyle</p>
+    </section>
+  </main>
+
+  <div class="grain-veil"></div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/vendor/gsap.min.js"></script>
+  <script src="../js/vendor/ScrollTrigger.min.js"></script>
+  <script src="../js/vendor/lenis.min.js"></script>
+  <script type="module">
+    import { initChamberLoader } from '../js/core/loader.js';
+    import { FrameScrubber } from '../js/core/sequence.js';
+    import { GLPlanes } from '../js/core/gl-planes.js';
+    import { audio, mountMuteButton } from '../js/core/audio.js';
+    import { IS_MOBILE, clamp, seg } from '../js/core/util.js';
+
+    gsap.registerPlugin(ScrollTrigger);
+    mountMuteButton();
+    history.scrollRestoration = 'manual';
+    scrollTo(0, 0);
+
+    // mark the way home: back means the table, not the threshold
+    for (const a of document.querySelectorAll('#return-reading, #outro-return')) {
+      a.addEventListener('click', () => sessionStorage.setItem('mw-return', '1'));
+    }
+
+    const lenis = new Lenis({ lerp: IS_MOBILE ? 0.12 : 0.09 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    window.__lenis = lenis;
+
+    /* ---- the scrub ---- */
+    const canvas = document.getElementById('scrub-canvas');
+    const scrubber = new FrameScrubber(canvas, {
+      dir: IS_MOBILE ? '../video/mikey/frames-800' : '../video/mikey/frames',
+      count: 128,
+    });
+    const brand = document.getElementById('scrub-brand');
+
+    let scrubP = 0;
+    ScrollTrigger.create({
+      trigger: '#scrub-wrap',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: (self) => { scrubP = self.progress; },
+    });
+
+    /* ---- the Rack ---- */
+    const films = PROJECTS
+      .filter((p) => p.chamber === 'film')
+      .sort((a, b) => a.chamberOrder - b.chamberOrder);
+    const track = document.getElementById('rack-track');
+    const rel = (path) => path ? path.replace('../../', '../') : '';
+
+    for (const f of films) {
+      const poster = rel(f.heroFallback || f.heroImage || (f.gallery && f.gallery[0]) || '');
+      const el = document.createElement('a');
+      el.className = 'film-plane';
+      el.href = `../projects/${f.id}/`;
+      el.innerHTML = `
+        <span class="plane-media">
+          <img src="${poster}" alt="${f.title.replace(/<[^>]+>/g, '')} still" loading="lazy">
+          ${f.rackLoop ? `<video muted loop playsinline preload="none" src="../${f.rackLoop}"></video>` : ''}
+        </span>
+        <span class="plane-meta">
+          <h3>${f.title}</h3>
+          <span class="plane-tag">${f.category} · ${f.index}</span>
+        </span>`;
+      track.appendChild(el);
+      const video = el.querySelector('video');
+      if (video) {
+        el.addEventListener('pointerenter', () => {
+          video.play().then(() => video.classList.add('is-playing')).catch(() => {});
+        });
+        el.addEventListener('pointerleave', () => {
+          video.classList.remove('is-playing');
+          video.pause();
+        });
+      }
+    }
+
+    // pinned horizontal travel
+    const rackLen = () => Math.max(track.scrollWidth - innerWidth, 0);
+    gsap.to(track, {
+      x: () => -rackLen(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#rack-wrap',
+        start: 'top top',
+        end: () => `+=${rackLen()}`,
+        scrub: true,
+        pin: true,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    /* ---- GL: bend + ripple on the rack planes (desktop only) ---- */
+    let engine = null;
+    if (!IS_MOBILE) {
+      const glc = document.createElement('canvas');
+      glc.id = 'gl-canvas';
+      document.body.appendChild(glc);
+      engine = new GLPlanes(glc);
+      if (engine.enabled) {
+        document.body.classList.add('gl-on');
+        for (const el of track.querySelectorAll('.film-plane')) {
+          const img = el.querySelector('img');
+          const plane = engine.addPlane(el.querySelector('.plane-media'), {
+            srcA: img.src, ripple: true, bend: true,
+          });
+          // the GL poster steps aside while a hover loop plays
+          const video = el.querySelector('video');
+          if (video && plane) {
+            video.addEventListener('playing', () => { plane.hide = true; });
+            el.addEventListener('pointerleave', () => { plane.hide = false; });
+          }
+        }
+      }
+    }
+
+    /* ---- frame loop ---- */
+    let last = performance.now();
+    gsap.ticker.add(() => {
+      const now = performance.now();
+      const dt = Math.min((now - last) / 1000, 0.1);
+      last = now;
+      scrubber.setProgress(scrubP);
+      scrubber.tick(dt);
+      const bo = 1 - seg(scrubP, 0.16, 0.26);
+      brand.style.opacity = (seg(scrubP, 0.02, 0.06) * bo).toFixed(3);
+      engine?.render(now / 1000, dt);
+    });
+
+    /* ---- chamber loader: preload the frames behind the moon ---- */
+    document.body.style.overflow = 'hidden';
+    const fill = document.querySelector('.chamber-moon-fill');
+    initChamberLoader([], [
+      scrubber.preload((p) => { fill.style.transform = `scaleY(${p})`; }),
+    ]).then(() => {
+      document.body.style.overflow = '';
+      scrubber.draw(true);
+      ScrollTrigger.refresh();
+    });
+
+    /* soft chamber bed once sound is unlocked by any gesture */
+    const resume = () => {
+      audio.start(audio.muted);
+      audio.setMix({ fire: 0.20, sea: 0.08, sky: 0, earth: 0 });
+    };
+    window.addEventListener('pointerdown', resume, { once: true });
+    window.addEventListener('keydown', resume, { once: true });
+  </script>
+</body>
+</html>

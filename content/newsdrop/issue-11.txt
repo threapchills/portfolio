@@ -1,0 +1,40 @@
+The News Drop # 11 – Soul in the Machine
+
+The Friday brief for people who make marketing move.
+
+LinkedIn Caption
+The Erdős breakthrough. Claude goes colossal. Pope Leo’s call for restraint. AI pet translator? 👇
+
+📜 Trying Not To Die
+
+Insilico Medicine is partnering with Human Life Foundation Models to build large-scale AI foundation models dedicated to human longevity science. Echoing the ancient Mesopotamian saga of Gilgamesh, their goal is a noble one: to decode ageing biology, predict disease risk earlier, and accelerate the discovery of therapies that extend human healthspans.
+
+Incidentally, in a moment when AI is more divisive (and more powerful) than ever, stories like this - about AI dedicated to overtly human-centric causes - are exactly the kind of thing that push us towards an abundant, prosperous future, as opposed to doom scenarios à la Dune’s ‘Butlerian Jihad’. → LINK
+
+🆕 Superhumanly Good at Maths
+
+On May 20, 2026, OpenAI announced that one of its models produced the first fully autonomous solution of a central problem in mathematics. Posed by Paul Erdős, some 80 years back, the planar unit distance problem asks: “if you place any number of points in a Cartesian plane, how many pairs of points can be exactly 1 unit of distance apart?”
+
+The prevailing belief was that square-grid-style constructions were the best bet. The model found an infinite family of examples that actually do better. AI found a path mathematicians had overlooked for decades. It used tools and frameworks that existed in mathematical literature but had never been applied to this geometric problem before.
+This wasn’t the public-facing ChatGPT 5.5 model, but rather an unreleased, internal-only Mythos-class titan. Notably, it was a general-purpose reasoning model, as opposed to a bespoke maths engine trained only to grind through proofs. This is a historic moment that hasn’t received much airtime outside of AI bubbles: the first instance of AI autonomously resolving a major open conjecture in mathematics. → LINK
+
+🤝 Strange Bedfellows
+
+Back in Edition #9, We looked at the Dario Amodei-Elon Musk power-play. From an ideological standpoint, the pair appear to be the unlikeliest of bedfellows; xAI have always championed a utilitarian vision of AI as a tool - devoid of any intrinsic values, opinions or personhood. Anthropic on the other hand, tend to position AI as a sovereign entity - one that should be afforded certain rights and dignities, and even be imbued with a moral outlook of its own.
+
+Regardless, SpaceX and Anthropic have just deepened the partnership. Claude’s compute-constrained maker is reportedly paying SpaceX $1.25 billion a month, and will begin utilising the Colossus II data centre in Memphis, as well as Colossus I (which together constitute the world's biggest supercomputer in terms of sheer energy consumption). The massive scale of compute here strongly implies heavy training runs for future models - not just runtime inference for existing ones. → LINK
+
+💙 AI Interspecies translation tech.
+
+PettiChat collar is a new AI pet translator from Chinese startup Meng Xiaoyi. It clips onto a pet’s existing collar, listens to vocalisations, reads movement through sensors, and turns all of that into human-speak via a companion mobile app. It also claims to translate our human speech back into animal-friendly signals - seemingly via audio emitted from the collar attachment. Pre-order sales are apparently rolling in.
+Perhaps a little too honest and effective, on the product’s own landing page, the very first thing the cat in the demo video says is basically, ‘get that thing away from me!’
+The model is trained on pet audio, annotated video and Alibaba’s open-source powerhouse, Qwen. The company claims up to 95% accuracy across more than 20 emotions.
+
+To paraphrase folks in the comments: “95% accurate according to whom, the dogs?” 🤔 → LINK
+
+🔥Disarming the Machine
+
+Pope Leo wants AI “disarmed”. Not abolished, but rather freed from logics of domination, exclusion, war and technocratic power.
+His first encyclical, Magnifica humanitas, frames artificial intelligence as a social, moral and political force, and one we should be mindful of. The Vatican explicitly links this moment to Rerum Novarum, Pope Leo XIII’s historic response to the industrial revolution in 1891. New machines. Old anxieties. Same question: How do we ensure humans stay okay amidst the inexorable progress of machine productivity?
+History repeats, but never cleanly. Back then, the Church responded to factories, labour exploitation and capital concentration. Now, it’s responding to autonomous weapons, synthetic media, algorithmic influence, and the possibility that ultimate accountability gets slowly outsourced to systems, rather than people.
+“Disarm AI” is a caution against the AI arms race. It’s a clarion call to build technology with moral restraint, to avoid becoming drunk on power and scale, and to remember that true progress is progress against war, hunger, poverty, suffering and disease. → LINK

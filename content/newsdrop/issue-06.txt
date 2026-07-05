@@ -1,0 +1,34 @@
+The News Drop #6 – Category Collapse
+
+LinkedIn Caption:
+
+The Banana dethroned. A drive-by nuking by design. Exploited loopholes.
+What a week! 👇
+
+The Friday brief for people who make marketing move.
+📜 Something Old - Ads
+Ads in Chat is a thing. Advertising has been creeping into AI for a while. This year, ads landed in ChatGPT, and OpenAI is unmistakably tracking the Google-Meta arc: democratised at scale eventually. Enterprise-focused for now.
+OpenAI’s major shift this week was a pivot from CPM to CPC. Performance-based pricing, as opposed to the initial impressions-based one that was rolled out to some tiers of users in the USA earlier this year.
+Frontier labs with SOTA LLMs potentially have their hands on the richest source of user data yet, in the form of our chat logs. All our quirky questions; our half-formed 3am thoughts; even things we're working through internally before we're ready to say them out loud. Could AI usher in an era of deep personalisation in advertising? Or is this just enshittification and attention capture with a chatbot UI?
+
+Zooming out though, it’s even bigger than that: Today’s advertising may be akin to what candles were, compared to electricity. AI is poised to allow a world of near-infinite hyper-tailored content. A continuous stream of infinitely engaging, hyper-personalised media, generated in real time, tuned to your mood, your context, your unspoken desires. In such a world, what is content? What is product? What is advertising even?  → LINK
+
+🆕 Something New - A powerful new image model!
+We flagged some stealth leaderboard entries last week. Now it’s official: GPT-Image-2 is out, and it's #1 across every Image Arena.ai leaderboard! Google's Nano Banana family, having held on to the top spot for many moons now, has finally been dethroned.
+It’s not perfect, but it handles the stuff that's previously been a bit tricky for commercial-grade image gen work: long passages of in-image text; detailed iconography, UI elements, and dense typography. Packshots, mockups, infographics, layouts with actual readable copy. For anyone running brand or product workflows where fidelity is the whole game, this might just be our new go-to. → LINK
+
+🤝 Something Borrowed (from your own stack)
+Anthropic launched Claude Design last Thursday. Text prompt in. Live, clickable HTML prototype out. But now it’s personal and on-brand: Claude Design reads your actual codebase and existing Figma files first, inheriting your design system before generating anything. The output arrives styled in your look & feel, your components, and your conventions. Then it hands off the bundle to Claude Code for implementation.
+Figma stock dropped ~7% within hours. 😬  → LINK
+
+💙 Something Blue
+In February, a Context.ai employee downloaded some malware-infected Roblox cheat scripts onto their work laptop. Two months later, that one infection had walked through Context.ai's AWS environment, harvested OAuth tokens, and reached a Vercel employee, who'd signed up for Context's AI Office Suite with his enterprise Google Workspace. That’s how it got into Vercel's internal systems.
+The stolen data is already up for sale on a cybercriminal marketplace, with a $2 million asking price. And because Vercel hosts websites and apps for a significant portion of the crypto world, teams everywhere are racing to change passwords and keys before whoever buys the data gets there first.
+Vercel CEO Guillermo Rauch kept composure in his statement but didn't hide the unease. The attackers, he said, moved with unusual velocity and a depth of Vercel-specific knowledge that didn't fit a standard opportunistic breach. His suspicion, stated plainly: the operation was “significantly accelerated by AI.” Vercel has since called in Mandiant - the elite cyber-crisis firm Google leans on when a breach gets serious.
+Just a Roblox cheat, an overpermissioned OAuth grant, and a checkbox left unticked. AI just allowed the exploitation to happen at the speed of token exchange. Last week's hot take stands: AI-accelerated threats make cybersecurity fundamentals more important than ever.  → LINK
+
+🔥 Hot take
+Categories are collapsing everywhere you look. Claude Design makes the line between code and design basically vestigial - in digital products, great design is code under the hood; the two were always the same artefact in different clothes. The ads story is the same collapse on a grander scale: content, advertising, and raw data are blurring into a single tokenised substrate.
+What's striking is what we thought AI would automate away first. The old collective fantasy was neatly technical: AI would do the dishes, the laundry, and fill out the spreadsheets - leaving humans free for art and music and meaning. The AI we got is general-purpose. It codes and it composes. It reasons and it writes. Is the boundary between creative work and technical work also dissolving?
+→ Try Pencil today for free!
+→ Know someone who'd like this? Forward it or share the subscribe link.

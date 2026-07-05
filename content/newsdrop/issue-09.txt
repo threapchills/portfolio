@@ -1,0 +1,56 @@
+The News Drop #9 – Politics and Power Struggles
+
+LinkedIn Caption
+Old foes find common ground. Smart devices in our pockets. Data centers in our homes? Compute is going celestial. 👇
+
+The Friday brief for people who make marketing move.
+
+📜 Power Struggles in the Highest Echelons
+Elon Musk does not like Sam Altman.
+
+Neither does Dario Amodei. Amodei and Altman famously could not bring themselves to hold hands, even when optics and etiquette of the situation seemingly demanded it, at an AI leaders’ symbolic hand-joining ceremony during the AI Impact Summit in India earlier this year.
+
+Musk’s ongoing court case against Altman and Brockman over OpenAI’s non-profit status has also intensified of late.
+
+In the biggest beef since the Drake-Kendrick debacle, Musk and Dario have now put their philosophical differences aside and joined forces against their rival OpenAI.
+
+Musk visited team Claude’s HQ for a week to talk shop. Anthropic has the top-tier models, and has won enterprise trust, but is compute-constrained in the wake of its generational run over the past couple of months, which is spurring widespread adoption.
+
+SpaceX (having absorbed xAI) has the data center capacity. Musk is allocating Colossus - largely considered the world’s biggest AI supercomputer - for Anthropic's models.
+
+Although Musk plans to preserve Colossus 2 - which is even more powerful - for Grok models, the deal will likely also entail first dibs on the space pipeline for Anthropic. Yes, off-earth supercomputers are coming very soon! More on that below.
+
+OpenAI has both the models and the compute. The new alliance poses a formidable challenge to its ongoing market dominance.
+
+It really feels like the AI arms race is heating up!  → LINK
+
+🆕 Something New in the Hardware Space
+OpenAI is officially entering the hardware game with its own phone. Leading the project: Jony Ive, the man who designed the iPhone itself. OpenAI scooped up his hardware startup io for $6.5B last year, and this is the first concrete product to surface from that bet.
+
+Details are sparse, but leaks suggest a device built from the ground up for a native AI experience, moving beyond the app-based paradigm of iOS and Android.
+
+It's a direct challenge to the incumbents, betting that a truly integrated AI companion is a more compelling proposition than simply another device running AI as an application.
+
+If they get it right, it could fundamentally reshape our relationship with personal computing. → LINK
+
+🤝 The Great Unbundling.
+Nvidia plans to put data centers in houses.
+
+This week, Nvidia announced it’s partnering with smart panel startups to install mini, liquid-cooled data centers in residential homes, borrowing unused electrical capacity to create a distributed compute fabric. → LINK
+
+💙 No warning. No opt-out.
+
+Meanwhile, Google leveraged its massive distribution to push a 4 GB on-device AI model file to potentially millions of compatible devices running Chrome.
+
+In a quietly unnerving though technically impressive feat of distribution prowess, the hyperscaler has started auto-installing weights for its Gemini Nano models directly onto devices around the world.
+
+Anthropic ran the same playbook two weeks earlier: Claude Desktop silently registered itself across seven Chromium-based browsers. → LINK
+
+🌶️Get data centers off the planet!
+With SpaceX’s absorption of xAI and Nvidia bringing data centers into our homes, how long until they’re orbiting above them?
+
+The idea of data centers in space is gaining serious traction. The pros are compelling: near-infinite solar power and abundant cold for radiative cooling.
+
+The challenges, however, are astronomical: launch costs, maintenance, and the risk of low-earth orbit pollution, to name a few.
+
+It sounds like science fiction, but as AI scales and its energy appetite balloons, the economics may start making sense sooner than we think. → LINK

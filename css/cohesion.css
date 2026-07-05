@@ -1,0 +1,69 @@
+/* ============================================================
+   cohesion.css - a light grade over the legacy project pages
+   so they sit beside the overhaul. Loads after style.css;
+   typography and token alignment only, no layout changes.
+   ============================================================ */
+
+/* Tokens the legacy sheet lacks; gold and teal already match. */
+:root {
+  --ink: #0d0b09;
+  --moon: #f2e2a0;
+}
+
+/* ---- typographic polish ---- */
+
+/* Hero titles: a shade more weight, a shade less crush.
+   Cormorant loads at 300/400/600 here, so 400 is the honest step
+   towards the overhaul's 500. */
+.project-hero-title,
+.panel-title {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* The hero index sits in the UI face like every other label. */
+.project-hero-num {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+}
+
+/* Labels tracked out to the overhaul's measure. */
+.section-label,
+.sidebar-label {
+  letter-spacing: 0.24em;
+}
+
+/* ---- selection and focus ---- */
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* Custom focus, always visible, never the default blue. */
+:focus { outline: none; }
+:focus-visible {
+  outline: 1px solid var(--moon);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ---- hover heat: moonlight instead of raw gold or white ---- */
+
+.nav-external a:hover,
+.menu-list a:hover,
+.writing-card a:hover,
+.footer-link:hover,
+.back-link:hover,
+.menu-overlay-close:hover,
+.lightbox-close:hover,
+.contact-btn:hover {
+  color: var(--moon);
+}
+
+/* The one off-token hex in style.css (#d4a235) retired for moon. */
+.btn-primary:hover {
+  background: var(--moon);
+  color: var(--ink);
+}

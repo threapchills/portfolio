@@ -1,0 +1,63 @@
+The News Drop # 12 – A rising tide lifts all boats
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+Amodei and Altman walk back jobs-pocalypse. Token-maxxing gone awry. A storyteller’s stance. There isn’t enough money in the world for AI. It’s time to fly! 👇
+
+📜 CEOs change their minds
+
+Recently, both Sam Altman and Dario Amodei (separately - the pair are likely still not on speaking terms) pivoted their stances on AI automation, and the tech’s impacts on employment writ large.
+
+Altman, addressing a Commonwealth Bank of Australia conference last month, noted that the technology’s impact on entry-level white-collar jobs around the world has actually been much softer than what he’d previously predicted.
+
+Amodei, who has vocally espoused a somewhat radical controversial view that around one in two knowledge workers could face unemployment, is apparently now leaning towards a Jevons’ Paradox-like view that, counterintuitively, AI might expand the domain of knowledge work to include more humans than before.  → LINK
+
+🆕 SotA Models from frontier AI labs
+
+Frontier lab vendors are going full steam ahead and new model drops are coming in thick and fast. The development time between iterations has compressed from months to weeks.
+
+Late last week, Anthropic released Opus 4.8. They claim it’s the smartest general purpose model available to the public thus far, and it seems to push ahead on common benchmarks, at a similar cost to its predecessor, version 4.7.
+
+The official release announcement also positions this as a stepping stone towards their controversial Mythos model, which they promise is now imminent, after having made swift progress on Project Glasswing - the initial rollout of Mythos, restricted to leading cybersecurity experts for testing, which we’ve covered in previous News Drops. → LINK
+
+Meanwhile OpenAI’s GPT-5.6 is expected to launch this week. Yesterday they released a teaser video with the cryptic tagline, “it’s time to fly.” Rumour has it that this model could be on Mythos’ level or even better.
+
+In other news YouTube superstar PewDiePie’s new open source harness has been going viral and amassed almost 50k of those coveted GitHub repo stars.
+
+Odysseus supports both local, open-source models and frontier commercial cloud-based ones via API integrations. → LINK
+
+In PewDiePie’s own words, Odysseus is “meant to be the self-hosted version of the UI experience you get from ChatGPT and Claude. But with more jank and fun. Running on your own hardware, with your own data -- local-first, privacy-first…”
+
+🤝 More than the world
+
+Anthropic’s near-trillion dollar valuation (making it the world’s biggest AI company) is a perennial feature in the AI news cycle. At this point, SpaceX, OpenAI, and Anthropic have all filed for upcoming Q4 IPOs. The combined target raise for these three companies alone is a staggering $180 billion. To put that into perspective, this exceeds the $164 billion raised across the entire three-year dot-com bubble.  → LINK
+
+The primary driver for these IPOs is the immense scale of capital spending required to continue building out AI. These companies have outgrown private capital markets, and now, standard index rules in the US meant to protect passive investors are actually being changed to accommodate their entry into the public markets. Alongside these IPOs, Google simultaneously raised an $80 billion "war chest" of outside capital to fund its own AI expansion plans.
+
+This complex trillion dollar spiderman standoff of entangled interests gives rise to a unique, somewhat circular dynamic in AI, where these massive entities are effectively funding each other. The money raised is highly interconnected, with major players contributing to each other's balance sheets to sustain the broader ecosystem.
+
+But there may not be enough money in circulation in the global economy for the scale of what these companies plan to do. Even taking money out of the equation, the physical constraints of power and infrastructure on Earth are also becoming a bottleneck for them. This ties into a broader tech acceleration meta-narrative in which AI and the data center buildout are intertwined with off-earth infrastructure and space exploration.
+
+Meanwhile, back on terra firma, divisive music generator AI Suno just announced a successful Series D funding round to the tune of $400M, bringing their valuation up to an impressive $5.4B  → LINK
+
+💙 A costly oversight
+
+An unnamed company (some suspect it might be Amazon) inadvertently burned through $500M in tokens, after allegedly forgetting to set a cap on Claude’s token usage and compute spending. → LINK
+
+This echoes a story from April, in which Uber announced they’d already blazed through their 2026 AI compute budget, just four months in, after thousands of engineers racked up massive API and token costs after having aggressively adopted the company’s new agentic tool stack. → LINK
+
+The broader shift is that intelligence is now officially a marketable commodity, and AI labs are clamping down on token-maxxers, as compute costs are no longer being subsidised as a kind of loss-leader. Compute itself has hitherto been heavily subsidised, with AI companies trying to entice users to invest time in their ecosystems, long before the product is actually net profitable.
+
+Now we’re hooked, and providers are gradually shifting towards more market related pricing models for their myriad services. That said, analysts are hopeful that rising costs for average AI users on the ground will be offset by macro-economic forces pulling in the opposite direction, such as Moore’s law, and the overarching incentive to innovate at every layer with a view to making AI more compute- and energy-efficient.
+
+For context, despite many people thinking AI is an economic bubble waiting to burst, demand for AI’s underlying infrastructure layer - electricity, chips, data centers; still appears to be insatiable. For example, analysts have pointed out that GPUs from five years ago are in many cases being rented out at a higher cost than they were five years ago, despite apparent (or imminent) obsolescence.
+
+🔥 Scorsese takes a stand
+
+“Cinema is a young medium, only around 125 years old, so we have to be open to how it can evolve…” - Martin Scorsese
+
+Hollywood legend Martin Scorsese - considered by many to be the GOAT of cinematic mafia crime noir - is now an advisor at AI company Black Forest Labs, which was founded by some of the pioneering researchers who created Stable Diffusion and latent diffusion technology. → LINK
+
+He joins a growing cohort of iconoclastic directors aligning themselves with AI as a tool for filmmaking and storytelling, not a replacement for people or creativity - a list which also includes Hollywood heavyweight James Cameron, who sits on Stability AI’s board of directors.
+
+Scorsese now faces an inevitable backlash from the technology’s many vociferous detractors within the film industry. Acclaimed animation director and producer Jorge R. Gutiérrez recently capitulated after his own pro-AI stance set off a heavy, emotional wave of backlash from the online art community.

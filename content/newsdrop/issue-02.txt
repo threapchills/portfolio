@@ -1,0 +1,26 @@
+The News Drop #2 – The Pencil Still Needs a Hand
+
+The Friday brief for people who make marketing move.
+📜 Something Old
+For two decades, marketing effectiveness had one gospel: The attention economy. Mental availability. Be easy to recall at the moment of choice. Byron Sharp said it. The industry built on it. It worked. Ben Essen, global CSO at Iris, argues the foundations are cracking. AI systems now curate the shortlist before a human even engages. Search gives answers instead of options. “Advantage shifts from recall to reputation,” Essen suggests. Google itself is hedging against its own ad model: AI Overviews correlate with a 58% drop in click-through rates for top-ranking pages. His closing is profound: "The future of brand isn't being remembered. It's being recommended." → LINK
+🆕 Something New
+Anthropic is on a roll! And the pattern is clear: every new feature pushes Claude further into autonomous, agentic territory. The latest update introduces computer use for all Pro and Max subscribers as a research preview - although currently still macOS only. It lets Claude open apps, navigate browsers, fill spreadsheets and run dev tools on your behalf. Message it a task from your phone via Dispatch, and it executes while you're away from your desk. Claude reaches for direct integrations first - Google Workspace, Slack - and only falls back to (computationally expensive) screen control when no connectors are available. It asks permission before doing stuff, and you can stop it at any time. Anthropic cautions against using it with any sensitive data at this early stage. → LINK
+TurboQuant is Google’s new compression algorithm that shrinks the ‘working memory’ AI models need to run by at least six times. No loss in accuracy and no retraining required. Memory chip stocks wobbled on the news, but analysts reckon it's a net positive. Jevons paradox strikes again: cheaper inference means more AI applications, not fewer. The internet is calling it Pied Piper, a nod to the fictional compression startup from HBO's Silicon Valley. → LINK
+
+Also, AI filmmakers and creatives are about to have a fun weekend. 😁
+MidJourney has dropped the long-awaited v8 model into alpha - For those moody key frames. → LINK
+Suno 5.5 - Your score just got an upgrade. → LINK
+Kling 3.0 + Motion Control - Director-level camera controls, shot-by-shot storyboarding, native audio sync, and mocap-quality motion transfer from a reference clip. Get your Nolan on. → LINK
+🤝 Something Borrowed
+Merriam-Webster named "slop" its 2025 Word of the Year, and AI Fruit Love Island is the poster child: objectively low-quality content - choppy edits, mismatched lip-sync, nonsensical plotlines. And yet: nearly 300 million views, 23 million likes, and individual episodes clearing 10 million in under two weeks. One TikToker put it plainly: "All it has taken for people to switch their opinion on AI is seeing an AI strawberry and an AI orange having relationship drama." So is this enslopification? Or is simply, as Forbes puts it, driving “massive engagement”? For marketers, the uncomfortable answer is: probably both. The whole affair raises uncomfortable questions about content, quality, and engagement. → LINK
+
+BREAKING: In the aftermath of mega-virality, TikTok has removed some episodes of Fruit Love Island from the platform, allegedly for violating community guidelines.
+
+💙 Something Blue (no villain, just a feeling)
+Sora is no more... Six months after launching a standalone app that topped the App Store, OpenAI announced it's shutting the whole thing down. App, API, website. Gone. The Disney deal is off too. The $1 billion investment and 200-character licensing agreement from December? No money ever changed hands. Disney said it "respects OpenAI's decision to exit the video generation business." Why now? Compute costs. OpenAI said it needed to make trade-offs on products with high resource demands as it pivots toward enterprise, coding and a planned IPO. Downloads had already dropped sharply from 3.3 million in November to 1.1 million by February. The platform dependency risk is well-documented in the AI space. Few expected to see it materialise quite this abruptly. Runway, Kling, Pika and LTX remain. The tools aren't going away. This one just did. → LINK
+
+🔥 Hot take Everyone's talking about GEO like it's a whole new discipline. But actually it’s the same old SEO we know and love, with one more audience. Yes, there's LLMs.txt alongside robots.txt. Yes, you're optimising to answer questions directly rather than hitting keywords. But at the copywriting level, the core principle hasn't changed: be clear, be trustworthy, be useful. LLMs are trained on natural language. Write like a human who knows what they're talking about, and the machines will find you too.
+And, if you want to stay ahead of it, Pencil has integrated Share of Model so your creative team can track how LLMs perceive your brand — without leaving your workspace. → LINK
+
+→ Try Pencil today for free!
+→ Know someone who'd like this? Forward it or share the subscribe link.

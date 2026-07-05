@@ -1,0 +1,46 @@
+The News Drop #5 – Techno-optimism with teeth
+
+LinkedIn Caption:
+
+A Molotov cocktail hurled at Sam. A clanker chasing boars. Kurzweil’s AI consciousness prediction.  More Juicy AI tidbits! 👇
+
+The Friday brief for people who make marketing move.
+📜 Something Old - A repeating pattern in the AI news cycle
+“Our new model that we’ve developed internally is too powerful and dangerous to release!”
+Sound familiar?
+Looking back to the primordial AI-era of 2019, there's something ironic about OpenAI's GPT-2 release strategy. The solemn tone, the staged rollout, the implication that what they'd built was simply too potent to unleash onto the world. While these are (and were) genuine concerns, 'hold us back!' hand-wringing also doubles as an intoxicating frontier lab hype-machine.
+Today we're hearing those same refrains around next-gen models like Anthropic's Mythos and OpenAI's Spud. Will our 2030 selves look back and think, "Huh. What cute little models… and to think, we were so scared of them!"?
+ → LINK
+
+	A screenshot from OpenAI's 2019 blog post ‘Better language models’.
+🆕 Something New
+
+Zuck poached a crack team of leading AI researchers and launched Meta Superintelligence Labs, but for eons in AI-time, the beleaguered hyperscaler has been conspicuously absent from the leaderboards and eval rankings. Meta hasn’t released an AI model that competes with the latest Claude, ChatGPT, Gemini or Grok offerings. Until now.
+
+Much to the surprise of the AI and tech community Meta actually cooked with their new LLM, Muse Spark. Now Meta is back in the game.
+
+ → LINK
+
+Arena.ai’s text model leaderboard rankings are based on blind A/B tests across thousands of users.
+
+In other news, a video of a backpack-totting 4-foot Unitree robot named Edward hogged timelines this week after doing some vigilante pest control in Poland. We just thought we'd share that with you.  → LINK
+
+An AI upscale screen-grabbed from the video in question.
+
+🤝 Something Borrowed: Dense economics maths that points to a simple brutal truth.
+“If AI displaces human workers faster than the economy can reabsorb them, it risks eroding the very consumer demand firms depend on.”
+The AI Layoff Trap; a recent paper that's trending in tech circles this week articulates a worry we all feel but no one was saying out loud: mass AI layoffs are a Prisoner's Dilemma. Every firm that automates saves money. But when the whole market automates at once, do we end up in a "deflationary death spiral" where no one has jobs, or money to buy anything?
+The competitive dynamics result in a level of agency capture. Self-awareness about the problem doesn't remove the rational reward incentive to automate as much and as fast as possible. The researchers also discuss countermeasures like UBI, upskilling, profit taxes, worker equity, retraining, and bargaining. But the most effective instrument, they argue, is a Pigouvian automation tax calibrated to the scale of resulting job disruption.
+AI communicator David Shapiro offers a sharp read: the paper isn't anti-AI. It assumes that AI will work so well it’ll force us to fundamentally rethink how economies distribute value. → LINK
+
+💙 Something Blue
+AI just had its Luigi Mangione moment.
+A 20-year-old man from Texas was charged with two counts of attempted murder after throwing a Molotov cocktail at OpenAI CEO Sam Altman's San Francisco home at 4am. He then went to OpenAI's headquarters and threatened to burn it down. He was arrested carrying kerosene, a lighter, and a manifesto warning of humanity's AI-powered extinction. Fortunately no one was injured in either attack.
+In a separate incident with similar overtones, an Indianapolis councilmember who had voted in favour of a data center project had 13 bullets fired into his home, accompanied by a note reading "No Data Centers."
+Just as the cancellation of Anthropic's Pentagon contract counterintuitively did wonders for the company's public standing, this kind of violent extremism from the anti-AI fringe is actually garnering a surge of solidarity with those driving the technology forward.  → LINK
+
+🔥 Hot take
+Renowned futurist and AI doyen Ray Kurzweil reckons AI will be conscious within 1000 days - or at least, that we'll perceive it as such. To be clear, he says that machine consciousness won't be proven, so much as simply conceded. Most people anthropomorphise AI almost instinctively. Millions of people already confide in AI therapists and companions; some have quietly started treating them as minds rather than tools.  →  LINK
+
+→ Try Pencil today for free!
+→ Know someone who'd like this? Forward it or share the subscribe link.

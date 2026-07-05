@@ -1,159 +1,238 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-root=".">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mike Whyle | Portfolio</title>
-  <meta name="description" content="Portfolio of Mike Whyle: GenAI filmmaker, creative director, copywriter, and vibe-coder. Cape Town.">
+  <title>Mike Whyle | A short conjuring</title>
+  <meta name="description" content="Mike Whyle: GenAI filmmaker, writer, designer and vibe-coder in Cape Town. A scroll journey through hand-drawn marker artwork that deals three cards: film, writing, design.">
   <meta property="og:title" content="Mike Whyle | Portfolio">
-  <meta property="og:description" content="GenAI filmmaking, graphic design, writing, and vibe-coded apps.">
+  <meta property="og:description" content="A journey into hand-drawn artwork that resolves into a tarot reading: film, writing, design.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://portfolio.mikewhyle.com/assets/journey/goddess-full-m.webp">
   <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/overhaul.css">
 </head>
-<body>
+<body class="overhaul">
 
-  <!-- ── Nav ─────────────────────────────────────────────── -->
-  <nav class="nav" id="main-nav">
-    <a href="/" class="nav-logo-link">
-      <img src="images/mikelogo.png" alt="Mike Whyle" class="nav-logo">
-    </a>
-    <button class="nav-menu-btn" id="menu-btn" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-external">
-      <a href="https://mikewhyle.com" target="_blank" rel="noopener">mikewhyle.com</a>
+  <noscript>
+    <div class="noscript-poster">
+      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;">Mike Whyle</h1>
+      <p>GenAI filmmaker, writer, designer and vibe-coder. Cape Town.</p>
+      <p>The full journey needs JavaScript. The chambers are open either way.</p>
+      <nav>
+        <a href="film/">Film</a>
+        <a href="writing/">Writing</a>
+        <a href="design/">Design</a>
+        <a href="legacy/index-v1.html">Classic site</a>
+      </nav>
     </div>
-  </nav>
+  </noscript>
 
-  <!-- ── Menu overlay ─────────────────────────────────────── -->
-  <div class="menu-overlay" id="menu-overlay">
-    <button class="menu-overlay-close" id="menu-close">Close</button>
-    <ul class="menu-list" id="menu-list">
-      <!-- injected by JS -->
-    </ul>
+  <!-- Act 0 · the Threshold -->
+  <div id="threshold">
+    <p class="threshold-line">A short conjuring. Best experienced with sound.</p>
+    <div class="threshold-moons" role="progressbar" aria-label="Loading">
+      <img class="threshold-moon" src="assets/journey/moon-1.webp" alt="">
+      <img class="threshold-moon" src="assets/journey/moon-2.webp" alt="">
+      <img class="threshold-moon" src="assets/journey/moon-3.webp" alt="">
+      <img class="threshold-moon" src="assets/journey/moon-4.webp" alt="">
+      <img class="threshold-moon" src="assets/journey/moon-5.webp" alt="">
+    </div>
+    <div class="threshold-gate">
+      <button data-sound="on">Enter with sound</button>
+      <button data-sound="off">Enter quietly</button>
+    </div>
   </div>
 
-  <!-- ── Project panels ───────────────────────────────────── -->
-  <main id="panels">
-    <!-- injected by JS -->
+  <header class="veil-nav">
+    <a href="./" class="veil-mark" aria-label="Mike Whyle, home">MW</a>
+    <button id="mute-btn" aria-label="Mute">
+      <svg class="wave" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/></svg>
+      <svg class="strike" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 8l6 8M22 8l-6 8"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- Acts I to V · the journey -->
+    <section id="journey" aria-label="The journey into the artwork">
+      <div class="stage vignette">
+        <div id="world"></div>
+
+        <div id="goddess-stage" class="solo-stage" style="display:none">
+          <div id="goddess-rig">
+            <img id="goddess-wings" src="assets/journey/goddess-wings-back.webp" alt="">
+            <img src="assets/journey/goddess-figure.webp" alt="A winged goddess, drawn in marker, arms raised">
+          </div>
+        </div>
+
+        <div id="mask-stage" class="solo-stage" style="display:none">
+          <div id="mask-box">
+            <img src="assets/journey/mask-hires.webp" alt="The goddess's mask, close up">
+            <div class="glyph-anchor" data-glyph="film" style="left:44.3%;top:71.8%">
+              <div class="bloom"></div>
+              <img src="assets/glyphs/glyph-film.webp" alt="">
+            </div>
+            <div class="glyph-anchor" data-glyph="writing" style="left:59.3%;top:71.3%">
+              <div class="bloom"></div>
+              <img src="assets/glyphs/glyph-writing.webp" alt="">
+            </div>
+            <div class="glyph-anchor" data-glyph="design" style="left:52.9%;top:85.6%">
+              <div class="bloom"></div>
+              <img src="assets/glyphs/glyph-design.webp" alt="">
+            </div>
+          </div>
+        </div>
+
+        <div id="iris" style="display:none"></div>
+      </div>
+    </section>
+
+    <!-- Act VI · the Reading -->
+    <section id="reading-wrap" aria-label="The reading">
+      <div id="reading">
+        <div id="card-table"><!-- cards dealt by cards.js --></div>
+      </div>
+    </section>
+
+    <!-- Act VII · the fourth door -->
+    <section id="fourth-door" aria-label="Coding work">
+      <p class="door-eyebrow">Past the cards, a fourth door</p>
+      <h2 class="door-title">Some things I built instead of sleeping.</h2>
+      <div class="artefacts">
+        <a class="artefact" href="https://mikewhyle.com/slumbr/" target="_blank" rel="noopener">
+          <img class="artefact-sigil" src="assets/glyphs/glyph-coding.webp" alt="">
+          <h3>SLUMBR</h3>
+          <p>A free sleep and meditation soundscape machine. The very engine humming under this page.</p>
+          <span class="artefact-cta">Drift off &rarr;</span>
+        </a>
+        <a class="artefact" href="https://mikewhyle.com/tarot/" target="_blank" rel="noopener">
+          <img class="artefact-sigil" src="assets/glyphs/glyph-coding.webp" alt="">
+          <h3>Afrikan Tarot</h3>
+          <p>Free readings rooted in African symbolism and cosmology. The cards you just drew are kin to a real deck.</p>
+          <span class="artefact-cta">Read your cards &rarr;</span>
+        </a>
+        <a class="artefact" href="https://threapchills.github.io/skybaby/" target="_blank" rel="noopener">
+          <img class="artefact-sigil" src="assets/glyphs/glyph-coding.webp" alt="">
+          <h3>Mystik Skies</h3>
+          <p>Vibe-coded browser games and solo Unreal Engine work: a one-person studio in the age of AI.</p>
+          <span class="artefact-cta">Play &rarr;</span>
+        </a>
+      </div>
+      <p class="door-credit">Soundscape by <a href="https://mikewhyle.com/slumbr/" target="_blank" rel="noopener">SLUMBR</a>.</p>
+    </section>
+
+    <!-- Act VIII · the outro -->
+    <section id="outro" aria-label="Contact">
+      <div class="outro-moons">
+        <img src="assets/journey/moon-5.webp" alt="">
+        <img src="assets/journey/moon-4.webp" alt="">
+        <img src="assets/journey/moon-3.webp" alt="">
+        <img src="assets/journey/moon-2.webp" alt="">
+        <img src="assets/journey/moon-1.webp" alt="">
+      </div>
+      <h2 class="outro-title">The reading is done.<br>The work is real.</h2>
+      <div class="outro-contact">
+        <a class="contact-pill" href="https://wa.me/27616554726" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.099-.471-.15-.668.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.668-1.612-.916-2.207-.241-.579-.486-.5-.668-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a class="contact-pill" href="mailto:mikewhyle@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          Email
+        </a>
+        <a class="contact-pill" href="https://mikewhyle.com" target="_blank" rel="noopener">mikewhyle.com</a>
+      </div>
+      <nav class="outro-links" aria-label="More">
+        <a href="film/">Film</a>
+        <a href="writing/">Writing</a>
+        <a href="design/">Design</a>
+        <a href="https://mikewhyle.com/slumbr/" target="_blank" rel="noopener">SLUMBR</a>
+        <a href="https://mikewhyle.com/tarot/" target="_blank" rel="noopener">Afrikan Tarot</a>
+        <a href="legacy/index-v1.html">Classic site</a>
+      </nav>
+      <p class="outro-credit">
+        Drawn by hand in marker. Conjured into the browser with AI.<br>
+        &copy; 2026 Mike Whyle
+      </p>
+    </section>
   </main>
 
-  <!-- ── Footer ───────────────────────────────────────────── -->
-  <footer class="site-footer">
-    <span class="footer-text">© 2026 Mike Whyle</span>
-    <div class="footer-contact">
-      <a href="https://wa.me/27616554726" target="_blank" rel="noopener" class="contact-btn" aria-label="WhatsApp" title="WhatsApp +27 61 655 4726">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.099-.471-.15-.668.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.668-1.612-.916-2.207-.241-.579-.486-.5-.668-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      </a>
-      <a href="mailto:mikewhyle@gmail.com" class="contact-btn" aria-label="Email" title="mikewhyle@gmail.com">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-      </a>
-    </div>
-    <a href="https://mikewhyle.com" target="_blank" rel="noopener" class="footer-link">mikewhyle.com →</a>
-  </footer>
+  <div id="doorway-veil"></div>
+  <div class="grain-veil"></div>
 
-  <script src="js/data.js"></script>
-  <script>
-    /* ── Menu overlay ──────────────────────────────────────── */
-    const menuList = document.getElementById('menu-list');
-    PROJECTS.forEach(p => {
-      const li = document.createElement('li');
-      li.innerHTML = `<a href="projects/${p.id}/"><span class="menu-index">${p.index}</span>${p.title}</a>`;
-      menuList.appendChild(li);
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script type="module">
+    import { initThreshold } from './js/core/loader.js';
+    import { initJourney } from './js/core/journey.js';
+    import { initReading } from './js/core/cards.js';
+    import { audio, mountMuteButton } from './js/core/audio.js';
+
+    gsap.registerPlugin(ScrollTrigger);
+    mountMuteButton();
+
+    const ACT_ONE_IMAGES = [
+      'assets/journey/land-00-base.webp',
+      'assets/journey/land-01-hills-far.webp',
+      'assets/journey/land-02-hill-main.webp',
+      'assets/journey/land-03-tower.webp',
+      'assets/journey/land-04-flora-mid.webp',
+      'assets/journey/land-05-flora-fore.webp',
+      'assets/journey/moon-1.webp',
+      'assets/journey/moon-2.webp',
+      'assets/journey/moon-3.webp',
+      'assets/journey/moon-4.webp',
+      'assets/journey/moon-5.webp',
+      'assets/journey/moth-full.webp',
+      'assets/journey/goddess-small.webp',
+    ];
+
+    // returning from a chamber: no second threshold, straight to the table
+    const returning = sessionStorage.getItem('mw-reading') === 'dealt'
+      && (location.hash === '#reading' || document.referrer.match(/\/(film|writing|design)\//));
+
+    history.scrollRestoration = 'manual';
+    document.documentElement.style.scrollBehavior = 'auto';
+    if (!returning) scrollTo(0, 0);
+
+    initJourney();
+    initReading();
+
+    if (returning) {
+      document.getElementById('threshold').remove();
+      sessionStorage.setItem('mw-return', '1');
+      // audio contexts need a fresh gesture after navigation
+      const resume = () => { audio.start(audio.muted); audio.prime(); };
+      window.addEventListener('pointerdown', resume, { once: true });
+      window.addEventListener('keydown', resume, { once: true });
+    } else {
+      document.body.style.overflow = 'hidden';
+      // late scroll restoration can land past the threshold; hold the top
+      addEventListener('load', () => scrollTo(0, 0));
+      initThreshold({
+        images: ACT_ONE_IMAGES,
+        onEnter: () => {
+          document.body.style.overflow = '';
+          window.__lenis?.scrollTo(0, { immediate: true });
+          scrollTo(0, 0);
+          ScrollTrigger.refresh();
+        },
+      });
+    }
+
+    // lazy lookahead: the later acts arrive while Act I breathes
+    addEventListener('load', () => {
+      ['assets/journey/goddess-figure.webp', 'assets/journey/goddess-wings-back.webp',
+       'assets/journey/mask-hires.webp', 'assets/glyphs/glyph-film.webp',
+       'assets/glyphs/glyph-writing.webp', 'assets/glyphs/glyph-design.webp',
+       'assets/glyphs/glyph-coding.webp', 'assets/cards/card-back.webp',
+       'assets/textures/paper-grain.webp']
+        .forEach((src) => { const i = new Image(); i.src = src; });
     });
-
-    const overlay = document.getElementById('menu-overlay');
-    document.getElementById('menu-btn').addEventListener('click', () => overlay.classList.add('open'));
-    document.getElementById('menu-close').addEventListener('click', () => overlay.classList.remove('open'));
-    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
-
-    /* ── Panels ────────────────────────────────────────────── */
-    const main = document.getElementById('panels');
-
-    PROJECTS.forEach((p, i) => {
-      // Determine hero background
-      let bgHTML = '';
-      if (p.heroVideo) {
-        bgHTML = `
-          <div class="panel-bg" id="bg-${p.id}">
-            <video autoplay muted loop playsinline preload="none" poster="${p.heroFallback || ''}">
-              <source src="${p.heroVideo}" type="video/mp4">
-            </video>
-          </div>`;
-      } else if (p.heroSlides) {
-        // First slide as static bg on landing page
-        bgHTML = `<div class="panel-bg" id="bg-${p.id}" style="background-image:url('${p.heroSlides[0]}')"></div>`;
-      } else {
-        const img = p.heroImage || p.heroFallback || '';
-        bgHTML = `<div class="panel-bg" id="bg-${p.id}" style="background-image:url('${img}')"></div>`;
-      }
-
-      const panel = document.createElement('div');
-      panel.className = 'project-panel';
-      panel.dataset.project = p.id;
-      panel.innerHTML = `
-        ${bgHTML}
-        <span class="panel-num">${p.index}</span>
-        <div class="panel-content">
-          <span class="panel-index">${p.index} / ${p.category}</span>
-          <h2 class="panel-title">${p.title}</h2>
-          <div class="panel-meta">
-            <span class="panel-category">${p.type}</span>
-            ${p.skills.slice(0, 3).map(s => `<span class="panel-tag">${s}</span>`).join('')}
-          </div>
-          <span class="panel-cta">View Project</span>
-        </div>`;
-
-      panel.addEventListener('click', () => {
-        window.location.href = `projects/${p.id}/`;
-      });
-
-      main.appendChild(panel);
-
-      // Divider between panels (not after last)
-      if (i < PROJECTS.length - 1) {
-        const div = document.createElement('div');
-        div.className = 'panel-divider';
-        main.appendChild(div);
-      }
-    });
-
-    /* ── Sticky nav on scroll ──────────────────────────────── */
-    const nav = document.getElementById('main-nav');
-    const onScroll = () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    /* ── Reveal on scroll (IntersectionObserver) ───────────── */
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    /* ── Lazy-load panel videos on approach ────────────────── */
-    const videoObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const vid = e.target.querySelector('video');
-          if (vid && vid.preload === 'none') {
-            vid.preload = 'auto';
-            vid.load();
-            vid.play().catch(() => {});
-          }
-        }
-      });
-    }, { rootMargin: '200px' });
-
-    document.querySelectorAll('.project-panel').forEach(p => videoObs.observe(p));
   </script>
-  <script src="js/cursor-glitch.js"></script>
 </body>
 </html>

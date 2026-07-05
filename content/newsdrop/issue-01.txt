@@ -1,0 +1,30 @@
+The News Drop #1 – Three AI drops in five days. Did you miss them?
+
+The Friday brief for people who make marketing move.
+Every Friday: something new, something old, something borrowed, something blue. Five minutes. No fluff. Let's go.
+
+🆕 Something New
+GPT-5.4 mini + nano dropped Monday. Mini runs 2x faster than its predecessor, with coding and reasoning close to the flagship at a fraction of the API cost. After #QuitGPT, this is OpenAI's answer. If you're running production pipelines, this changes the math today. → LINK
+Google Gemini Embedding 2 is the first unified multimodal embedding model. Text, image, video, audio, and documents in a single shared vector space. For anyone building AI-powered search or RAG pipelines, this is a meaningful architectural simplification. → LINK
+NVIDIA dropped NemoClaw at GTC earlier this week. It’s an enterprise-grade, guardrailed version of OpenClaw. The open-source AI agent framework recently became the fastest-growing project in GitHub history, but a plethora of security vulnerabilities made it untouchable for business.
+NemoClaw adds sandboxing, privacy controls, and a hybrid architecture that routes sensitive tasks to local models while tapping cloud inference for heavier reasoning. OpenClaw creator Peter Steinberger collaborated with NVIDIA on the build. →  LINK
+
+📜 Something Old
+Paul Graham, essayist and co-founder of Y Combinator, wrote this in 2021: good taste is real, it can be trained, and it's not just vibes. His argument: if you discard good taste, you also have to discard the concept of good art, and the possibility of anyone being good at making it. → LINK
+Five years later, AI is making millions of creative decisions per day. Some of them land badly. NVIDIA's DLSS 5 - a new real time AI upscaler for hi-res gaming - was widely disparaged online this week. Gamers called it "yassified slop", and game developers who spent careers crafting visual worlds regarded it as "a terrible invention".  →  LINK
+Models are getting faster, cheaper and smarter. None of that answers Graham's question. Can AI have taste? And if it can't, does it matter?
+
+🤝 Something Borrowed (from labor economics and AI benchmarking)
+Andrej Karpathy, deep learning pioneer and OpenAI co-founder, spent a Saturday vibe-coding an AI job exposure map for 342 US occupations. The twist: he deleted the GitHub repo within hours after it went viral and Elon Musk declared "all jobs will be optional." His own caveat –"this was a quick experiment, not a study"– was completely stripped away in the dissemination. A brilliant story about the speed of AI discourse eating the nuance alive. → LINK
+Meanwhile, Harvard Business Review says the real AI fear isn't job loss — it's job intensification. More outputs to review. More decisions to make. More iterations to approve. Two studies. Two fears. Neither one is wrong. → LINK
+BullshitBench tests one specific thing: whether a model will push back on a plausible-sounding but fundamentally broken question — or just go along with it. Yahoo! Most models go along with it. Claude Sonnet 4.6 pushes back 91% of the time. The only non-Anthropic model above 60% is Alibaba's Qwen. OfficeChai For marketers briefing AI every day: the model that agrees with everything isn't helping you. It's just an expensive autocomplete. → LINK
+
+💙 Something Blue (no villain, just a feeling)
+Grammarly quietly launched "Expert Review" - a feature that generated editing suggestions by mimicking the styles of real, named writers. Without their consent. They pulled it after the backlash. No lawsuit, no scandal. Just a company that borrowed someone's voice, got caught, and moved on. The creative industry barely noticed. Should it have? → LINK
+$80,000,000,000 USD. That's how much Mark Zuckerberg spent building the Meta metaverse before quietly walking away from it this week. The keynote promised a billion users by 2030. But it just never filled up. → LINK
+
+🔥 Hot take
+Three AI drops in five days. The gap between teams who iterate and teams who hesitate just got wider. The question isn't which model wins. It's whether you're testing at all.
+
+→ Try Pencil today for free!
+→ Know someone who'd like this? Forward it or share the subscribe link.

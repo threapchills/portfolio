@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="../"><!-- the one departure from verbatim: this page now lives in /legacy/ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mike Whyle | Portfolio</title>
+  <meta name="description" content="Portfolio of Mike Whyle: GenAI filmmaker, creative director, copywriter, and vibe-coder. Cape Town.">
+  <meta property="og:title" content="Mike Whyle | Portfolio">
+  <meta property="og:description" content="GenAI filmmaking, graphic design, writing, and vibe-coded apps.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── Nav ─────────────────────────────────────────────── -->
+  <nav class="nav" id="main-nav">
+    <a href="/" class="nav-logo-link">
+      <img src="images/mikelogo.png" alt="Mike Whyle" class="nav-logo">
+    </a>
+    <button class="nav-menu-btn" id="menu-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-external">
+      <a href="https://mikewhyle.com" target="_blank" rel="noopener">mikewhyle.com</a>
+    </div>
+  </nav>
+
+  <!-- ── Menu overlay ─────────────────────────────────────── -->
+  <div class="menu-overlay" id="menu-overlay">
+    <button class="menu-overlay-close" id="menu-close">Close</button>
+    <ul class="menu-list" id="menu-list">
+      <!-- injected by JS -->
+    </ul>
+  </div>
+
+  <!-- ── Project panels ───────────────────────────────────── -->
+  <main id="panels">
+    <!-- injected by JS -->
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <span class="footer-text">© 2026 Mike Whyle</span>
+    <div class="footer-contact">
+      <a href="https://wa.me/27616554726" target="_blank" rel="noopener" class="contact-btn" aria-label="WhatsApp" title="WhatsApp +27 61 655 4726">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.099-.471-.15-.668.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.668-1.612-.916-2.207-.241-.579-.486-.5-.668-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="mailto:mikewhyle@gmail.com" class="contact-btn" aria-label="Email" title="mikewhyle@gmail.com">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      </a>
+    </div>
+    <a href="https://mikewhyle.com" target="_blank" rel="noopener" class="footer-link">mikewhyle.com →</a>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script>
+    /* ── Menu overlay ──────────────────────────────────────── */
+    const menuList = document.getElementById('menu-list');
+    PROJECTS.forEach(p => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="projects/${p.id}/"><span class="menu-index">${p.index}</span>${p.title}</a>`;
+      menuList.appendChild(li);
+    });
+
+    const overlay = document.getElementById('menu-overlay');
+    document.getElementById('menu-btn').addEventListener('click', () => overlay.classList.add('open'));
+    document.getElementById('menu-close').addEventListener('click', () => overlay.classList.remove('open'));
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+
+    /* ── Panels ────────────────────────────────────────────── */
+    const main = document.getElementById('panels');
+
+    PROJECTS.forEach((p, i) => {
+      // Determine hero background
+      let bgHTML = '';
+      if (p.heroVideo) {
+        bgHTML = `
+          <div class="panel-bg" id="bg-${p.id}">
+            <video autoplay muted loop playsinline preload="none" poster="${p.heroFallback || ''}">
+              <source src="${p.heroVideo}" type="video/mp4">
+            </video>
+          </div>`;
+      } else if (p.heroSlides) {
+        // First slide as static bg on landing page
+        bgHTML = `<div class="panel-bg" id="bg-${p.id}" style="background-image:url('${p.heroSlides[0]}')"></div>`;
+      } else {
+        const img = p.heroImage || p.heroFallback || '';
+        bgHTML = `<div class="panel-bg" id="bg-${p.id}" style="background-image:url('${img}')"></div>`;
+      }
+
+      const panel = document.createElement('div');
+      panel.className = 'project-panel';
+      panel.dataset.project = p.id;
+      panel.innerHTML = `
+        ${bgHTML}
+        <span class="panel-num">${p.index}</span>
+        <div class="panel-content">
+          <span class="panel-index">${p.index} / ${p.category}</span>
+          <h2 class="panel-title">${p.title}</h2>
+          <div class="panel-meta">
+            <span class="panel-category">${p.type}</span>
+            ${p.skills.slice(0, 3).map(s => `<span class="panel-tag">${s}</span>`).join('')}
+          </div>
+          <span class="panel-cta">View Project</span>
+        </div>`;
+
+      panel.addEventListener('click', () => {
+        window.location.href = `projects/${p.id}/`;
+      });
+
+      main.appendChild(panel);
+
+      // Divider between panels (not after last)
+      if (i < PROJECTS.length - 1) {
+        const div = document.createElement('div');
+        div.className = 'panel-divider';
+        main.appendChild(div);
+      }
+    });
+
+    /* ── Sticky nav on scroll ──────────────────────────────── */
+    const nav = document.getElementById('main-nav');
+    const onScroll = () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ── Reveal on scroll (IntersectionObserver) ───────────── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ── Lazy-load panel videos on approach ────────────────── */
+    const videoObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const vid = e.target.querySelector('video');
+          if (vid && vid.preload === 'none') {
+            vid.preload = 'auto';
+            vid.load();
+            vid.play().catch(() => {});
+          }
+        }
+      });
+    }, { rootMargin: '200px' });
+
+    document.querySelectorAll('.project-panel').forEach(p => videoObs.observe(p));
+  </script>
+  <script src="js/cursor-glitch.js"></script>
+</body>
+</html>

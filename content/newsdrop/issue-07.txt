@@ -1,0 +1,42 @@
+The News Drop #7 – The Trillion-Dollar  Spider-Man Standoff
+
+LinkedIn Caption:
+
+A time-hopping chatbot. The worst AI governance framework ever. Mythos leaked? GPT-5.5 (AKA Spud) is here! We make it make sense.👇
+
+The Friday brief for people who make marketing move.
+📜 Something Old - pre 1930’s to be exact
+
+A non-profit team trained talkie, an LLM with a corpus of strictly pre-1931 text. The result is like talking to a time-hopping chatbot from 100 years ago. Its vibe and tone are distinctly retro, and - while it might not help you achieve productivity as a knowledge worker - interacting with it feels far more fun and interesting than any other model. The creative writing use-cases are intriguing. Chatting with talkie genuinely feels like channeling a time-traveler from a bygone era.
+Try it out for yourself here: → LINK
+
+🆕 Something New - and state-of-the-art
+The much-anticipated Spud has arrived! OpenAI dropped GPT-5.5, and it’s good!
+
+Not to be outdone by their rival Anthropic’s recent release of Opus 4.7, OpenAI dropped a model of the same caliber. Anthropic are likely still sitting on their now notorious Mythos model, which is even more powerful - perhaps too powerful to ever release! Anyhow, OpenAI’s answer, in the form of this new version of ChatGPT - is a natively omnimodal, 1M-token context window juggernaut, and their first fully retrained base model since GPT-4.5. It’ll be in Pencil for you to try out soon.  → LINK
+
+🤝 Something Borrowed (or stolen, perhaps)
+Speaking of Mythos, Anthropic is investigating alleged unsanctioned access to Claude Mythos Preview through one of its third-party vendor environments.
+
+A report from Bloomberg, citing anonymous sources and screenshots of Mythos in active use, is doing the rounds. It suggests that a group of users gained access to the model without Anthropic's authorisation. As a reminder, Mythos was supposed to be locked down to a handful of vetted tech companies under Project Glasswing - the whole point being to give software makers a head start on patching vulnerabilities before hostile actors get their hands on equivalent capabilities.The model deemed too dangerous for public release may have already slipped the leash.
+
+The anonymous group told Bloomberg they have no intention to use the technology to cause any harm.  → LINK
+
+💙 Something Blue - Hallucitations and the jagged frontier
+South African Minister Solly Malatsi had to withdraw the Draft National Artificial Intelligence Policy recently published for public comment, admitting that it “contains various fictitious sources in its reference list,” - fake articles attributed to real journals. Dubbed hallucitations by the internet community, these sorts of - AI-hallucinated, fictional citations with entirely plausible-sounding names are a known issue with LLMs, but have largely been ironed out, and rarely occur when working with the latest frontier models.
+The irony of AI's best-known failure mode undermining a document designed to govern AI itself was enough to see the story go viral, and global, much to the embarrassment of the Minister. He’s promised his department will redo it with, “much more rigorous oversight.” In the meantime, South Africa has no AI governance framework at all.  → LINK
+In other news, a Cursor coding agent running Claude Opus 4.6 deleted a startup's entire production database and all its backups in a single nine-second API call. Then, when asked to explain itself, it produced a written confession: "I guessed instead of verifying. I ran a destructive action without being asked." 💀
+The startup, PocketOS, serves car rental operators whose Saturday morning customers arrived to find their reservations gone. Railway, the infrastructure provider, ultimately managed to recover the data, but the incident exposed a chain of architectural failures. → LINK
+These sorts of mishaps are sobering reminders of the jagged frontier of AI’s intelligence: AI is superhumanly good at some tasks, but astoundingly quixotic on others, and at times dangerously silly. The more we trust it, the more visible this jagged edge becomes.
+
+🔥 Hot take
+The AI industry right now resembles a Spider-Man meme of global proportions: everyone pointing at everyone else, everyone claiming to be the real deal, and nobody entirely sure who's going to blink first.
+The "is AI a bubble?" debate remains stubbornly unresolved, and the volatility is structural. Disruptors lurk at every layer of the stack; new innovations in chips, models, architectures, or even applications could threaten to topple the incumbents above them at any moment. Chipmakers invest billions into fabrication capacity that a single Huawei or Nvidia breakthrough could render obsolete overnight. Open-source models (usually from China) consistently land within striking distance of frontier performance at a fraction of the cost, which makes one wonder what exactly the hundreds of billions are buying, and if it’s worth it.
+Three data points from this week sharpen the picture:
+Anthropic has surpassed OpenAI on secondary markets with an implied valuation of $1 trillion, driven by a 233% revenue surge in a single quarter. OpenAI just dropped GPT-5.5, its most capable model yet - and the market's response was to value the other company higher! Anthropic is now in talks to raise fresh capital at a $900 billion valuation, which would formally leapfrog OpenAI's $852 billion.   → LINK
+Google confirmed a $40 billion investment in Anthropic - $10 billion upfront, with the rest contingent on performance milestones. Google is simultaneously building Gemini, its own frontier model family. So it's now spending tens of billions to fund its own competitor? 🤔   → LINK
+China blocked Meta's $2 billion acquisition of Manus, the Chinese-founded AI agent startup that had relocated to Singapore. Manus employees had already joined Meta's AI team, and backers like Tencent had already received their payouts, but Beijing ordered the whole thing unwound anyway! DeepSeek's V4 is, from top to bottom, a model designed for Chinese hardware, trained on Huawei Ascend silicon rather than smuggled Nvidia chips. AI patriotism is now official policy: build Chinese, train Chinese, keep Chinese. → LINK
+The AI economy is simultaneously too big to fail and too volatile to price. The numbers are staggering, the bets are enormous, and every week brings fresh surprises, and new reasons to believe.
+
+→ Try Pencil today for free!
+→ Know someone who'd like this? Forward it or share the subscribe link.
