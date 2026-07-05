@@ -1,0 +1,61 @@
+The News Drop # 10 – Google I/O Tea
+
+A despatch from “the foothills of singularity.”
+LinkedIn Caption
+Google I/O kicks off in Silicon Valley. The mouse cursor that points back. GPT in your banking app. What is the true substrate of intelligence?👇
+
+Google, currently the world’s second biggest company by market cap (beaten only by Nvidia) hosts its annual I/O event in the heart of Silicon Valley this week.
+
+“When we look back at this time, I think we will realise that we were standing in the foothills of the singularity,” Google DeepMind founder Demis Hassabis said, speaking at the Keynote address.
+
+After their slew of game-changing announcements, and some incisive trend analysis from the keynotes, it certainly feels like some kind of takeoff is imminent.
+
+CEO Sundar Pichai dropped some bombshells as well: Several Google products now boast 3 billion users each - Chrome, Gmail, YouTube; and Android. The company’s AI systems are now collectively processing over 3 quadrillion tokens per month. That’s a 3 followed by 15 zeros.
+
+“I never imagined I'd say quadrillion in an I/O keynote, but there we are.” Pichai quipped.
+
+📜 Something Old, Reinvented for the AI-Era!
+From the laboratory of Google DeepMind: The mouse cursor re-imagined for the AI era. Imagine a smart mouse that ponders over everything you hover over.
+
+Douglas Engelbart invented the mouse in 1964 at Stanford Research Institute and demoed it publicly in December 1968 - the legendary “Mother of All Demos,” which also introduced windows, hypertext, and video conferencing, all in a single 90-minute presentation.
+
+Hassabis called the new prototype cursor “pretty magical.” The Magic Pointer will ship in three places: live demos in Google AI Studio (image editing, map search), a rollout in Gemini for Chrome, and deep integration into Googlebook - Google's new Gemini-powered laptop line that's quietly replacing Chromebooks.
+
+This could usher in a whole new paradigm of ‘ask your computer how to use your computer,’ potentially flattening learning curves for advanced technical software. → LINK
+
+🆕 Google I/O 2026 Announcements.
+
+The mouse cursor is not the only tried and tested tech about to get an overhaul. Search itself is next up for a revamp: Hema Budaraju, Senior Director of Product Management teased “agentic coding at the scale of search”.
+
+One of the big model drops was Gemini 3.5 Flash. Google's new Flash-tier model focuses heavily on speed and cost efficiency. They also unveiled a new and improved Antigravity 2 which serves as an agentic harness and IDE for the new model series.
+
+Gemini Spark is a new personal AI agent that operates continuously in the background. It can proactively manage your schedule, read your emails while you sleep, and execute multi-step actions across other apps.
+
+On the hardware front, smart eyewear and cameras are coming. Safety and transparency are also getting a commensurate boost with upgrade of features like SynthID - Google's proprietary system for labelling AI-generated images with invisible watermarks.
+
+Gemini’s new multimodal model Omni has now made a debut in Google's AI video platform, Flow. Letting users write prompts, generate cinematic clips, and edit media in a single chat overlay, this addition of an Omni model sees Google catch up with Chinese competitors like Seedance 2  and Kling 3, which already sport Omni modes. → LINK
+
+Omni modes in video generation models are a step change in fine-grained controllability and adherence, allowing multiple inputs for guiding video generation, including audio guidance and video guidance. These models unlock use cases like viral AI dance content, video to video editing via prompts, rhythmic emotional pacing, deep style transfer, and character swap-outs.
+
+But Omni models also represent something bigger - and some see them as the surest path to AGI (roughly defined as AI that can perform all economically useful work that humans do). Just as LLMs can demonstrate emergent, unexpected capabilities, these world and omni models are seemingly able to surface intuitions about physics and reality that weren’t explicitly encoded. The World Model vs Language Model debate is a quiet schism in the AI world, which we’ll touch on in today’s Hot Take.
+
+Gemini Omni is coming to Pencil soon, and Kling 3 is already live on the platform, so users can leverage this cutting-edge creative tech today!
+
+🤝 Your Loans, Your Investments, Your Financial Flows - Now with AI Assistance
+US users on higher tiers may see a banking app integration pop up in ChatGPT. Recently launched as a preview, the feature will let OpenAI’s frontier-level GPT-5.5 Thinking model assist with personal finance. This could be a game-changer - both for those who want to make strategic financial decisions, as well as those who are just bored by personal money-management, and want to automate away the admin slog.
+
+If successful, other AI companies will likely want to offer similar services. Will users trust it enough to see widespread adoption?  → LINK
+
+In related news, at Google I/O Vidhya Srinivasan, Vice President and GM of Ads and Commerce, unveiled UCP (Universal Commerce Protocol); an open-source standard that acts as a universal "plug-and-play" language for AI-driven shopping.
+
+💙 The Relentless Gravity of the Frontier
+
+For the past two years, deep learning pioneer and OpenAI co-founder Andrej Karpathy has been the intellectual soul of the independent AI community - the brilliant maverick showing us that you didn't need a multi-billion-dollar corporate badge to move the needle.
+Karpathy launched Eureka Labs to democratise AI education; he coined the era-defining term "vibe coding," and he spent his weekends building instructive "from scratch" models, which he released freely.
+This week, Karpathy announced his official return to corporate trenches. He’s joining Anthropic’s pretraining team under Nicholas Joseph. He’ll be building out a specialised unit tasked with a reality-bending meta-mission: using Claude to automate and accelerate pretraining research itself. → LINK
+Karpathy reckons he’ll return to public education in time. The subtext is what looks like a big bet from one of the godfathers of AI on LLMs as the onramp for AGI. But there's another school of thought about which 'runway' will facilitate superintelligence liftoff. More on that below.
+
+🌶️Language is Low-Bandwidth Slop
+Runway is going all-in on General World Models (GWMs), as opposed to LLMs as the future of AI. The move highlights a fundamental debate at the cutting edge of AI: Is language the ultimate abstraction layer of thought, or just a low-bandwidth communication protocol we invented to describe physical reality? Is vision any ‘closer to the truth’ than words, or - like language - is it also just an abstract representation of things? By training on video, General World Models predict the next physical state of an environment (as opposed to the next text token, like their LLM cousins).
+While OpenAI and Anthropic treat text as the matrix of intelligence, Runway, and others like Hassabis, and Meta’s Yann LeCun, argue that our understanding of physics, gravity and spatial geometry is more primal to human cognition.
+If Runway can successfully position world models as the foundational simulators for robotics and gaming, it won't need to top the video gen leaderboards (which are currently still ruled by Chinese hyperscalers ByteDance and Alibaba), as it could conceivably pivot to the backend infrastructure for AI that moves and works in the physical world. With a $5.3 billion valuation and a wildly successful series E funding round back in February to the tune of $315 million they might just have enough runway to pull it off. 😉 → LINK

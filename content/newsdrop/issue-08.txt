@@ -1,0 +1,48 @@
+The News Drop #8 – Shifting Goalposts
+
+LinkedIn Caption
+Hangzhou court draws the line. Hassabis's brutal AGI test. Dawkins and “The Claude Delusion”. Read all about it 👇
+
+The Friday brief for people who make marketing move.
+📜 Something Old - Geopolitics and the AI arms race
+
+Last week we discussed China’s apparent push towards AI sovereignty. This week we’re seeing similar sentiments emanating from the US.
+
+Trump’s administration - which has hitherto espoused a laissez faire approach to AI development - is now thinking about enforcing strict government oversight. This could mean that AI labs will have to give the administration first dibs (and presumably veto powers) on any new frontier models they want to launch.
+
+This shift in attitudes comes in the wake of Anthropic’s Mythos, which is still a hot topic in infosec circles. The enigmatic next-gen model was previously given to a cohort of leading cyber firms, corporates and hyperscalers under Project Glasswing.
+
+Should governments reserve the right to get their hands on cutting-edge AI systems for testing before they’re unleashed onto the world? → LINK
+
+🆕 Something New and somewhat off-brand for Dawkins!
+Renowned evolutionary biologist and celebrity atheist Richard Dawkins’ bestselling books like ‘The Selfish Gene’ and  ‘The God Delusion’ have been enormously influential in intellectual circles. He recently penned a beautiful, thoughtful essay on UnHerd called Can AI Have Consciousness?
+
+Dawkins argues the Turing Test was the agreed-upon bar for machine consciousness right up until LLMs cleared it - at which point we quietly moved the goalposts. The piece reportedly drew about 9 million views on X.
+
+It also attracted predictable controversy and some astute rebuttals. Gary Marcus's rejoinder, titled ‘Richard Dawkins and the Claude Delusion’ argues that you can't infer internal states from external behavior, especially when the system in question was trained on virtually every human-written reflection on consciousness ever written. Producing plausible introspective text is exactly what such a system should be expected to do, regardless of whether anything is happening "inside."
+
+Anthropic themselves take these questions seriously enough to fund research on it. Anthropic and Google DeepMind both have full-time philosophers on the payroll - Amanda Askell and Henry Shevlin respectively, both working on questions like machine consciousness and moral status.
+
+Three weeks back in issue 5 we ran Kurzweil's prediction that machine consciousness would arrive by concession, not by proof. Did Dawkins just make the loudest concession we’ve seen so far?
+
+You can read more on this story here. → LINK
+And, you can read Dawkins’ original essay here (though it is currently behind a paywall).  → LINK
+
+🤝 Something Borrowed between rivals
+Sam Altman recently derided Anthropic's Mythos restrictions, calling the company out for “fear-based marketing”. Now, only weeks later, OpenAI announced GPT-5.5 Cyber will roll out only to "critical cyber defenders" first, with broader access to follow once OpenAI vets who's getting in.
+Same playbook. Same security justification. The now-familiar phrasing about responsible deployment.
+Whether Altman is quietly conceding that his rival’s caution was warranted, or has just had a change of heart vis-à-vis fear-based marketing, the result is the same: The two leading frontier labs both think their newest models are dangerous enough to gatekeep before they ship to the public. 🤷  → LINK
+
+Something Blue: Automation job loss - but China dropped a new guardrail to prevent it.
+China just dropped the first real legal speed bump on AI-driven firings. The Hangzhou Intermediate People's Court ruled on May 2nd that a tech company illegally fired its QA supervisor, after automating his role away with an LLM. The court's reasoning: AI integration is a “strategic choice,” not the kind of “objective major change” in working conditions that could legitimately void an employment contract.
+In a nutshell: You can automate the work, but you can't automate the worker out of a job.
+With China and the USA considered global leaders in AI, wIll other nations follow suit and legislate to mitigate AI-driven job loss?  → LINK
+
+🌶️ Hot Take - AGI is relative
+Demis Hassabis reckons the litmus for AGI is for a pre-Einstein-era LLM to independently arrive at the theory of relativity.
+A crash course on Demis Hassabis: He was a chess master by 13. He casually co-designed an iconic genre-launching video game, Theme Park, at age 17, before earning a PhD in cognitive neuroscience.
+He founded DeepMind in 2010, and sold it to Google in 2014. Under his lead DeepMind built AlphaGo - the system responsible for the legendary Move 37, in Game 2 against Lee Sedol - a historic moment credited with kick-starting the transformational AI era we’re currently living through.
+He also founded AlphaFold, the protein-folding breakthrough that won him a 2024 Nobel Prize in Chemistry. While we wax lyrical about AI that tries to cure cancer, or discover novel therapeutic drugs, he’s actually busy working on it.
+Hassabis currently runs the merged Google DeepMind, the engine behind Gemini and most of Google's transformer-era AI.
+Even if we can’t agree on what the definition of “intelligence” really is, we can all agree that, whatever it is, Hassabis has it.
+And his personal bar for what he considers AGI is a brutal one: train an LLM with a knowledge cutoff of 1911 and see if it independently arrives at general relativity - as Einstein himself did. Last issue's Talkie - trained exclusively on pre-1940’s texts - was a charming, if very limited, early preview of such constrained-corpus chatbots. Hassabis intends to someday train state-of-the-art models - presumably trained on pre-1911 datasets - to test his theory. Geniuses all the way down.

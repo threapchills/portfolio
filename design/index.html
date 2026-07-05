@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-root="..">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design | Mike Whyle</title>
+  <meta name="description" content="Graphic design and brand work by Mike Whyle: the Mythopoeic luxury identity and healthtech brand systems for EduTalkz, TravelMedz and TwinTech.">
+  <meta property="og:title" content="Design | Mike Whyle">
+  <meta property="og:description" content="Full-bleed identity work: Mythopoeic, then the healthtech brands.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://portfolio.mikewhyle.com/images/mythopoeic/hero1.webp">
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    html { background: #060607; }
+    body { margin: 0; background: #060607; color: #f0ede6; }
+    #chamber-loader { position: fixed; inset: 0; z-index: 200; background: #000;
+      display: grid; place-items: center; }
+  </style>
+  <link rel="stylesheet" href="../css/overhaul.css?v=2">
+</head>
+<body class="overhaul design-page">
+
+  <noscript>
+    <div class="noscript-poster">
+      <p>The design chamber needs JavaScript. The work is also here:</p>
+      <nav><a href="../projects/mythopoeic/">Mythopoeic</a> <a href="../projects/healthtech/">Healthtech identities</a></nav>
+    </div>
+  </noscript>
+
+  <div id="chamber-loader">
+    <div class="chamber-moon">
+      <img src="../assets/journey/moon-3.webp" alt="">
+      <div class="chamber-moon-fill"><img src="../assets/journey/moon-3.webp" alt=""></div>
+    </div>
+  </div>
+
+  <header class="veil-nav">
+    <a href="../#reading" class="return-reading" id="return-reading">
+      <img src="../assets/cards/card-back.webp" alt="">
+      <span>The reading</span>
+    </a>
+    <button id="mute-btn" aria-label="Mute">
+      <svg class="wave" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/></svg>
+      <svg class="strike" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 8l6 8M22 8l-6 8"/></svg>
+    </button>
+  </header>
+
+  <main id="design-flow"><!-- pieces injected --></main>
+
+  <section class="chamber-outro">
+    <h2 class="outro-title">Identity, conjured to order.</h2>
+    <div class="outro-contact">
+      <a class="contact-pill" href="../#reading" id="outro-return">Return to the reading</a>
+      <a class="contact-pill" href="mailto:mikewhyle@gmail.com">Email</a>
+      <a class="contact-pill" href="https://wa.me/27616554726" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+    <p class="outro-credit">&copy; 2026 Mike Whyle</p>
+  </section>
+
+  <div class="grain-veil"></div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/vendor/gsap.min.js?v=2"></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=2"></script>
+  <script src="../js/vendor/lenis.min.js?v=2"></script>
+  <script type="module">
+    import { initChamberLoader } from '../js/core/loader.js?v=2';
+    import { GLPlanes } from '../js/core/gl-planes.js?v=2';
+    import { audio, mountMuteButton } from '../js/core/audio.js?v=2';
+    import { IS_MOBILE, clamp, qs, qsa } from '../js/core/util.js?v=2';
+
+    gsap.registerPlugin(ScrollTrigger);
+    mountMuteButton();
+    history.scrollRestoration = 'manual';
+    scrollTo(0, 0);
+
+    for (const a of document.querySelectorAll('#return-reading, #outro-return')) {
+      a.addEventListener('click', () => sessionStorage.setItem('mw-return', '1'));
+    }
+
+    const lenis = new Lenis({ lerp: IS_MOBILE ? 0.12 : 0.09 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    window.__lenis = lenis;
+
+    /* the flow: Mythopoeic set first, the identities after */
+    const rel = (p) => p.replace('../../', '../');
+    const myth = PROJECTS.find((p) => p.id === 'mythopoeic');
+    const health = PROJECTS.find((p) => p.id === 'healthtech');
+    const PIECES = [
+      { img: myth.gallery[0], eyebrow: 'Mythopoeic', title: 'A luxury that never existed', text: myth.tagline, link: '../projects/mythopoeic/' },
+      { img: myth.gallery[3], eyebrow: 'Mythopoeic', title: 'Editorial, ex nihilo', text: 'Campaign imagery indistinguishable from a full crew and a major budget.' },
+      { img: myth.gallery[7], eyebrow: 'Mythopoeic', title: 'Product, rendered devotional', text: 'Jewellery that exists only as light and intent.' },
+      { img: myth.gallery[14], eyebrow: 'Mythopoeic', title: 'The world around the object', text: 'The brand extends into fauna, myth and landscape.' },
+      { img: health.heroImage, eyebrow: 'EduTalkz · TravelMedz · TwinTech', title: 'Three clinics, three languages', text: health.tagline, link: '../projects/healthtech/' },
+      { img: health.gallery[1], eyebrow: 'Healthtech identities', title: 'Complex made approachable', text: 'Visual systems that do not dumb the science down.' },
+      { img: health.gallery[5], eyebrow: 'Healthtech identities', title: 'Speed as a deliverable', text: 'AI-first ideation at a fraction of traditional cost.' },
+    ];
+
+    const flow = qs('#design-flow');
+    for (const piece of PIECES) {
+      const sec = document.createElement('section');
+      sec.className = 'design-piece';
+      sec.innerHTML = `
+        <div class="piece-media"><img src="${rel(piece.img)}" alt="${piece.eyebrow}: ${piece.title}" loading="lazy"></div>
+        <div class="piece-caption">
+          <div>
+            <span class="piece-eyebrow">${piece.eyebrow}</span>
+            <h2><span class="reveal-line"><span>${piece.title}</span></span></h2>
+          </div>
+          <div>
+            <p>${piece.text}</p>
+            ${piece.link ? `<a href="${piece.link}">See the project &rarr;</a>` : ''}
+          </div>
+        </div>`;
+      flow.appendChild(sec);
+      ScrollTrigger.create({
+        trigger: sec, start: 'top 68%',
+        onEnter: () => sec.classList.add('is-revealed'),
+      });
+    }
+
+    /* GL: all three behaviours; between consecutive stills the morph
+       fires as the boundary crosses the viewport */
+    const glc = document.createElement('canvas');
+    glc.id = 'gl-canvas';
+    document.body.appendChild(glc);
+    const engine = new GLPlanes(glc);   // planes everywhere; ripple gated per plane
+    window.__engine = engine;
+    const sections = qsa('.design-piece');
+    const planes = [];
+    if (engine && engine.enabled) {
+      document.body.classList.add('gl-on');
+      sections.forEach((sec, i) => {
+        const media = sec.querySelector('.piece-media');
+        const next = PIECES[i + 1];
+        planes.push(engine.addPlane(media, {
+          srcA: rel(PIECES[i].img),
+          srcB: next ? rel(next.img) : null,
+          ripple: !IS_MOBILE,
+          bend: true,
+        }));
+      });
+    }
+
+    let last = performance.now();
+    gsap.ticker.add(() => {
+      const now = performance.now();
+      const dt = Math.min((now - last) / 1000, 0.1);
+      last = now;
+      // morph driver: as a piece scrolls off, its plane dissolves into the next
+      planes.forEach((p, i) => {
+        if (!p || !PIECES[i + 1]) return;
+        const r = p.el.getBoundingClientRect();
+        const gone = clamp((-r.top + innerHeight * 0.18) / (innerHeight * 0.9), 0, 1);
+        p.trans = gone;
+      });
+      engine?.render(now / 1000, dt);
+    });
+
+    initChamberLoader(PIECES.slice(0, 2).map((p) => rel(p.img)));
+
+    const resume = () => {
+      audio.start(audio.muted);
+      audio.setMix({ earth: 0.20, sky: 0.06, sea: 0, fire: 0 });
+    };
+    window.addEventListener('pointerdown', resume, { once: true });
+    window.addEventListener('keydown', resume, { once: true });
+  </script>
+</body>
+</html>

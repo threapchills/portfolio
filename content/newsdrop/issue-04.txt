@@ -1,0 +1,52 @@
+The News Drop #4 – The prophecy of the one-person unicorn fulfilled!
+
+LinkedIn Caption:
+
+If you blinked this week, you may have missed a lot in AI: One person built a $1B telehealth giant with AI; OpenAI’s record raise; The Glasswing moment; Rumours of ‘Spud’.
+Stay human, stay looped in 👇
+LinkedIn Caption [shorter alternative]:
+If you blinked this week, you may have missed a lot in AI.
+Stay human, stay looped in. 👇
+
+The Friday brief for people who make marketing move.
+📜 Something Old - a prophecy foretold has come to pass
+For years, tech leaders have been saying it: AI will enable one person to build a billion-dollar company. Sam Altman had a betting pool with his CEO friends over when it would happen. Dario Amodei put 70-80% odds on 2026. It was a thought experiment, a dinner-party provocation.
+But now it happened. Matthew Gallagher, a 41-year-old self-taught maverick from Los Angeles, launched Medvi - a GLP-1 telehealth startup - from his living room in September 2024 with $20,000 and a stack of AI tools.
+First full year: $401 million in sales. 250,000 customers. A 16.2% net profit margin, roughly three times that of Hims & Hers, who needed 2,442 employees to post 5.5%. Total headcount at Medvi? Two! Gallagher, and his brother, Elliot. The company is now tracking toward $1.8 billion in 2026 revenue, generating north of $3 million a day.
+The crafty duo’s tech stack consists of ChatGPT, Claude, Grok for code and copy; Midjourney and Runway for ad creative; and ElevenLabs for voice-based customer comms. They’ve also orchestrated an autonomous swarm of custom AI agents that link these disparate systems, analyse performance, and keep the operation going.
+Gallagher rents the infrastructure wholesale. Doctors, prescriptions, pharmacy fulfilment and shipping are all outsourced to licensed telehealth platforms. Medvi owns the customer-facing layer: branding, website, ads, checkout. The disruptor has out-foxed incumbents with a business model and cost structure that larger firms can’t replicate.
+ → LINK
+
+🆕 Something New and so powerful, it may never be released!
+Remember Mythos, the model Anthropic accidentally leaked last week? It's real, and it's terrifying. The model has autonomously discovered thousands of zero-day vulnerabilities in every major operating system and web browser, including a 27-year-old flaw in OpenBSD and a 16-year-old bug in FFmpeg that survived five million automated test runs undetected.
+
+Anthropic has no plans to make Mythos generally available. But they've seen what it can do, and it spooked them enough to give the titans of big tech $100M in credits to work with Mythos and tell them, “you may want to fortify everything, ASAP!”. Project Glasswing is AWS, Apple, Google, Microsoft, Nvidia, CrowdStrike - strange bedfellows all gathered around the Glasswing table because the next generation of AI is powerful enough to break the internet (possibly also the economy, and maybe even the entire world) as we know it.  → LINK
+
+Not to be outdone, OpenAI have also apparently been cooking. Rumours of their answer to Mythos - a next-gen frontier model codenamed 'Spud' - have been bubbling since Altman confirmed a new model had finished pre-training. → LINK
+Meanwhile, stealth entries on public leaderboards suggest GPT-Image-2 is poised to dethrone Google's reigning image gen champ; the Nano Banana model family. → LINK
+
+🆕 Something New that happens to be the best free AI you can use right now
+Alibaba just dropped Qwen 3.6 Plus; an agentic vibe-coding open-source behemoth with a 1M-token context window, up to 65,536 output tokens, and always-on chain-of-thought reasoning. It sports a hybrid architecture combining linear attention with sparse mixture-of-experts routing. Community benchmarks clock it at roughly 3x the speed of Claude Opus 4.6, and on SWE-bench Verified - the gold standard for real-world code repair - it scores 78.8, within striking distance of Anthropic's flagship model. It's also free.
+Alibaba is clearly making a play here. While Western labs compete on subscription tiers and enterprise contracts, Qwen is subsidising adoption and harvesting developer mindshare.
+ → LINK
+
+🤝 Something Borrowed, to the tune of $122 billion
+OpenAI has closed the largest private funding round in history. $122 billion in committed capital. An $852 billion post-money valuation. More money raised in a single round than the GDP of over 130 countries.
+The anchor investors: Amazon ($50 billion), Nvidia ($30 billion), SoftBank ($30 billion). The remaining $12 billion came from a broader pool including Andreessen Horowitz, D.E. Shaw, MGX, TPG, and, for the first time, $3 billion from individual investors via bank channels. Microsoft threw some down too, though they’re mum on the amount.
+For context: OpenAI's $40 billion round in March 2025 held the previous record. Anthropic's $30 billion raise (in February 2026) is considered the third-largest ever.
+OpenAI's CFO Sarah Friar said the deal "blows out of the water even the largest IPO that's ever been done." The company now reports $2 billion in monthly revenue, 900 million weekly ChatGPT users, and over 50 million subscribers. An IPO is widely expected before year-end. → LINK
+
+💙 Something Blue  (at least for OpenClaw users running Claude models)
+Anthropic has cut off Claude Pro and Max subscribers from using their subscription allowances with third-party AI agent frameworks, starting with OpenClaw - the viral open-source agentic harness that became the fastest-growing GitHub project in history earlier this year. As of April 4th, if you want to run OpenClaw on Claude, you're paying per token.
+The economics explain the decision, even if the timing raises eyebrows. Claude subscriptions were designed for conversational use. A single OpenClaw instance running autonomously for a day can consume $1,000–$5,000 in API-equivalent costs. Under a $200/month Max plan, that arithmetic is like "a sumo wrestler at an all-you-can-eat buffet," as one industry insider observed.
+The timing, however, is conspicuous. OpenClaw's creator Peter Steinberger joined OpenAI in February. Anthropic's restrictions landed weeks later. Steinberger says he and investor Dave Morin tried to negotiate a softer landing but only managed to delay enforcement by a single week. "First they copy some popular features into their closed harness, then they lock out open source," Steinberger fired back.
+Anthropic insists the decision is engineering, not strategy. Claude subscriptions still work with Anthropic's own products: Claude Code, Cowork, and chat. If you’re planning on Claude token-maxxing, you’ll need to do it in Anthropic’s garden. → LINK
+
+🔥 Hot takes
+🔥 Hot take option #1
+Glasswing may have some cybersecurity experts shook. But the window between "bug exists" and "bug is exploited" has already been shrinking for years; Mythos-class models compress it to near-zero. The capability isn't publicly available today, and vendor claims always carry a margin of hype. That said, the narrative is directionally right, and threats are accelerating. Bottom line: this doesn’t fundamentally change what security engineering and resilient systems look like. It does increase the importance of doing the basics consistently and rigorously.
+🔥 Hot take option #2
+The Medvi story is a Rorschach test for the entire industry. Optimists see the democratisation of entrepreneurship. Sceptics see a guy who built a slick front-end for an existing supply chain in a market with desperate buyers. Both readings are correct simultaneously. The deeper signal: the moat has moved to the strategic eye to spot gaps, the judgement to know what to own and what to rent, and the speed to execute on vision before anyone else gets there.
+
+→ Try Pencil today for free!
+→ Know someone who'd like this? Forward it or share the subscribe link.

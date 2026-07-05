@@ -1,0 +1,40 @@
+The News Drop #16 – New models, new rules, same Friday
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+New models, new rules, same Friday.
+The EU hit pause on its own AI rules. ByteDance aimed Seedance at Hollywood. Nvidia is building 35 supercomputers across Europe. Google made video editing as easy as talking. And AI walked into the engine that runs half the games you play.
+Five moves worth your week, in The News Drop #17. 👇
+Want to see what agentic marketing actually looks like in practice? Book a demo → LINK
+
+📜 Old habits, meet jagged frontier.
+
+The European Parliament recently amended the EU AI Act to delay itself. Compliance deadlines for high-risk systems were pushed back, and content-labelling timelines stretched rather than compacted. It's the regulatory equivalent of the ”this is fine” meme.  → LINK
+
+🆕 Seedance goes for Hollywood
+It’s heavy on price and compute-intensive, but ByteDance’s Seedance 2.0 is still the best video model for most use-cases. And now they’re about to extend that market lead. The company unveiled Seedance 2.5 At its Volcano Engine FORCE conference on 23 June.
+Seedance 2.5 can generate 30-second clips in one pass - both continuous takes and edited muti-shot sequences - and it accepts a whopping 50 reference inputs per generation. Since it’s an Omni model, these attachments can span images, video and audio, for precision guidance on a whole new level. → LINK
+ByteDance is big enough to rewrite the rules of an entire industry, and they’ve done it before. They rewrote music distribution through TikTok, turning the platform into the dominant engine for breaking songs and minting hits. Seedance is the same move aimed at Hollywood. Seedance 2.0 was scarily powerful, having drawn cease-and-desist letters from the likes of Disney and Paramount, among other legal challenges. Their leverage is structural: ByteDance owns the model, and through CapCut and TikTok it owns the distribution that could put the output in front of hundreds of millions.
+Meanwhile they've also added a native 4K 10-bit colour mode to the Seedance 2.0 line. While astronomically expensive to run, this 4K variant produces the most stunning AI video seen thus far, and removes the need for any upscaling in post-production.
+
+🤝Nvidia’s EU Supercomputing Centres
+Nvidia have announced 35 AI supercomputers being built across Europe this year, which they describe as the continent's largest single-year build out of AI infrastructure. Unveiled at ISC High Performance 2026, the systems will sit in national supercomputing centres, AI factories and research institutes, serving more than three million researchers across climate science, healthcare, clean energy and quantum computing.
+
+They run on Nvidia's Blackwell and Hopper architectures. Among the named projects: the Barcelona Supercomputing Center's MareNostrum 5 upgrade; Italy's IT4LIA AI factory; Germany's BavariaAI Blue Swan; and Sweden's Mimer AI Factory.
+
+The expansion plan lands while US data centre projects worth an estimated $64 billion are sitting blocked or delayed by local opposition across 24 states, raising the question of whether Europe will prove more willing to host infrastructure for digital intelligence.   → LINK
+
+💙 Just talk to it
+Google's new Gemini Omni Flash lets you edit video by describing what you want in plain language. Say "make the sculpture out of bubbles" and it does, keeping your characters consistent and the scene coherent across every edit. Each instruction builds on the last, so you refine by conversation rather than by timeline.The bigger deal isn't the capability, it's who gets it.
+
+Omni Flash rolled out free on YouTube Shorts and the Create app this week, in the tools millions already use, and it's now hitting APIs in public preview for developers and enterprises too. Where Seedance chases the frontier, this one goes wide. Filmmaking by sentence, for everyone.→ LINK
+
+🔥 Literally a game-changer
+Unreal Engine 5.8 shipped on 17 June with an experimental plugin built on MCP, Anthropic's open standard for wiring models into software. Agents like Claude Code, Codex and Gemini can now drive the editor directly: spawn actors, build scenes, generate cities procedurally, art-direct lighting and edit Blueprints, then inspect and correct the result. Epic is making it a foundational pillar of Unreal Engine 6.
+Veteran developer Mark Kern (Grummz) called it a shipping workflow, not a novelty demo, and predicted any Unreal game from now on is going to need an AI label. Epic insists the human stays in charge: the model works through the editor, everything stays editable.
+The line between AI that writes code and AI that makes things just disappeared inside the engine that runs a huge slice of the games industry. The same protocol that wires Claude into your spreadsheet now wires it into a world-builder. The gaming (and game dev) community tends to be arrayed in outrage against AI. The question isn't whether it'll be good at building worlds, it will. The tough question is, will gamers accept this? And how will AI-labelling and crediting work?
+→ LINK
+
+→ Book a Pencil Demo today!
+
+→ Know someone who'd like this? Forward it or share the subscribe link.

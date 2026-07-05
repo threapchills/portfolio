@@ -1,0 +1,60 @@
+The News Drop #3 – A Drop in the Ocean
+
+The Friday brief for people who make marketing move.
+📜 Something Old that finally got an upgrade!
+Text on websites just got legs.
+Cheng Lou, a Midjourney engineer and longtime React contributor, has unveiled Pretext: a 15KB, zero-dependency TypeScript library that bypasses the DOM entirely. It measures text once using the Canvas API, then computes layout through pure arithmetic.
+Context: For thirty years, websites have relied on the browser's DOM layout engine to figure out where text goes on screen. Every time a line breaks or a paragraph reflows, the browser has to recalculate the position of everything on the page. Almost overnight, Lou’s work has toppled an archaic dynamic interface standard bottleneck that's been hiding in plain sight all these years.
+The result is roughly 500x faster text positioning. Illuminated manuscripts where the dragons burst free from the marginalia to fluidly push body text aside. Multi-column magazine layouts where text reflows around draggable objects. Chat bubbles that calculate the tightest possible width. All of it is now within our grasp.
+Typographers and web designers are losing their minds over it. Within 48 hours, the project amassed over 14k GitHub stars and millions of views on X. Is this the bellwether for a  foundational shift in how we build the internet?
+While normal folks were struggling to wrap text around images with columns in MS word, Lou went and vibe-coded the entire solution to this decades-old problem, on his own, Claude and Codex.
+LINK
+
+🆕 Something New that could be a game-changer!
+Anthropic have something big up their sleeve. They’ve just confirmed the existence of Claude Mythos - apparently also code-named Capybara. This is a whole new model in a whole new tier, signifying a breakout from their long-running Opus > Sonnet > Haiku naming convention - presumably not something they do lightly! They’re calling it "a step change" and ‘the most capable AI model we've ever made.’
+Cyber-guardians are anxious. Anthropic warned that the model is "currently far ahead of any other AI model in cyber capabilities." Cybersecurity stocks dropped on the news.
+Early access customers are already testing it; some users claim to have spotted "Mythos 5 (experimental)" in the Claude interface. It's also reportedly very expensive to run.
+The details surfaced via a data leak. Nearly 3,000 unpublished assets were found in a publicly accessible data store, including a draft blog post describing the model. Anthropic attributed it to "human error."
+As of the time of writing this newsletter however, nothing's been confirmed at scale and there’s no officially published release timeline. → LINK
+⚡ BREAKING: It happened again. Mere days after the Mythos leak, Anthropic accidentally leaked the entire 500,000-line, 2,000-file source code of Claude Code to npm. The source code also contained further evidence that Mythos is actively being prepared for launch, with references to "fast" and "slow" variants.
+To be clear, it’s not any model source code or weights that got leaked, rather it’s the model-agnostic scaffold that holds the core agentic loops, and defines the guardrails. With Claude Code having enjoyed a massive jump in popularity over the past five months or so, some folks were surprised by how deceptively simple and elegant its harness structure turned out to be.
+Anthropic filed DMCA takedowns on over 8,000 GitHub copies. Korean developer Sigrid Jin preempted the takedowns though. Using AI agents of his own, he hastily rewrote the entire codebase from TypeScript into Python. It’s thus far proved an effective DMCA-proof loophole, as a rewrite is considered a new creative work. Jin’s sangfroid and resourcefulness have earned him the respect of the open source community, who are having a field day with the newfound knowledge. → LINK
+Among the unreleased features hidden in the code, some of their product roadmap was inadvertently revealed, including:
+Kairos is an always-on background agent that works in your interests and on your behalf around the clock.
+While everyone is talking about ‘agents that work while you sleep’, Anthropic have already moved on to ‘agents who also sleep (and dream!)’ AutoDream is an intriguing feature that will let your AI contemplate and consolidate disparate threads overnight in an unbounded, open-ended, self-directed way.
+Buddy is a planned Tamagotchi-style AI companion pet with 18 species and procedurally generated personality stats. Plus lots of other nifty-sounding stuff from a future product roadmap that nobody outside Anthropic was supposed to see yet. → LINK
+
+Meta just dropped TRIBE v2, a brain-encoding model that predicts how your neural activity responds to video, audio and text. Trained on fMRI data from over 700 volunteers, the system functions as a digital twin of perception: show it a stimulus, and it predicts which brain regions light up.
+Meta says it could accelerate neuroscience research and reduce the need for expensive brain-imaging experiments.
+Zuckerberg continues to spend billions on talent and infrastructure. While everyone watches the chatbot race, has Meta quietly hopped into a different lane entirely? Projects like TRIBE v2 suggest their ambitions might sit closer to understanding human cognition itself, rather than competing for the same AI pie as most other hyperscalers - the coding assistants, knowledge work chatbots, and creative generator space. → LINK
+
+ByteDance open-sourced DeerFlow 2.0, a "SuperAgent" framework that hit #1 on GitHub Trending and has racked up over 45,000 stars. DeerFlow breaks complex tasks up into sub-tasks, then orchestrates parallel agents which execute code in sandboxed Docker containers, and delivers a finished output, be it research reports, slide decks, data pipelines, or even full web apps.
+That said, AI think-fluencers reckon ByteDance's ownership and jurisdictional context mean organisations are wary by default. → LINK
+
+🤝 Something Borrowed from the fascinating world of AI research.
+A new study - How LLMs Distort Our Written Language - which ruffled some feathers in AI and writing circles of late revealed that LLMs often flatten the opinions of their human interlocutors, even when ostensibly only used for editing. Researchers found that heavily LLM-assisted essays were far more likely to retain a neutral stance on a given topic, as opposed to taking an emphatic position. → LINK
+
+Even when models were explicitly prompted to make grammar edits only, they still altered the semantic meaning of the text. According to one of the lead authors, Google DeepMind’s Natasha Jaques: “The LLMs are pushing the essays away from anything that a human would have ever written.” → LINK
+
+Another study published in Science, in an overlapping research field, found that sycophantic AI decreased people's willingness to take responsibility in conflicts and increased their dependence on AI for future decisions. The title: Sycophantic AI decreases prosocial intentions and promotes dependence says it all. → LINK
+
+Both of these studies point to emerging dangers and growing awareness around some of the second-order consequences of heavy AI-use! This is a complex topic, and we prefer to stay neutral on this one. 😉
+
+💙 Something Blue (red, white and blue actually)
+The White House East Room has welcomed presidents, foreign dignitaries and war heroes. This week it welcomed a Figure 03. The humanoid clanker strolled down the red carpet beside Melania Trump, addressed the room in eleven languages, before dropping the proverbial mic, and casually sauntering off.  → LINK
+The viral stunt was part of the first lady's Fostering the Future Together summit on AI and children's education, where she pitched a vision of teacher-bots in American homes. The teachers' union were less enthusiastic. → LINK
+To her credit, Melania did caution that safety is paramount when it comes to the intersection of education and robotics. But she may have understated it: Controversially, Figure AI's former head of product safety is simultaneously suing the company. He alleges he was fired after blowing the whistle to executives that their robots are powerful enough to fracture a human skull. → LINK
+
+🔥 Hot takes
+That sycophancy and opinion-flattening studies above hit different if you write for a living. Writers have long been wary of the averaging effect. Even before GenAI, language tools like Grammarly and good old MS Word pushed writers toward a safe, stylistic middle ground. But LLMs do it much harder and faster, at an unprecedented global scale.
+Ask one to "edit" your draft and it will smooth your rough edges, neutralise your strongest claims, and replace your word choices with its own. The output reads cleaner. It can also read as manufactured, or cliché. Audiences are wary now. In the marketplace of words for cash, quality alone is no longer a differentiator. A distinctive human authorial voice still is.
+That said, smart writers in 2026 do use LLMs - judiciously, and without sacrificing nuance of opinion, or signature stylistic quirks. If we’re not careful AI can wash over the written expression of our heartfelt feelings and opinions without us even noticing. The trick is to be strict about keeping the AI in its lane.
+You have to go in knowing what you want to say. AI will fill the void if you don't. By all means, use a separate session for brainstorming and reasoning if you want a thinking partner. But when it comes to the actual writing, remind the model explicitly that its wheelhouse starts and ends at typos, grammar, logic and structure. Word choices, rhythm, argument, tone? Those are yours alone.
+
+🔥 Hot take #2
+AI is now a market-moving force. Anthropic's Mythos leak tanked cybersecurity stocks. Google's TurboQuant wobbled memory chip prices. A single keynote from Jensen Huang can move more capital than most earnings calls. The stock market doesn't just react to AI news anymore. It trades on it.
+🔥 Hot take #3 - Every LLM is the worst LLM, according to that LLM’s subreddit.
+Visit any AI company's subreddit and you'll find the same conviction: their latest LLM is the worst of all available models. The grass is always greener on the other frontier. This gets post-hoc rationalised into a tidy narrative: the provider must be secretly nerfing the model to make the next release look better by comparison. To be fair, redditors aren't hallucinating either: there are genuine tradeoffs at the provider level around compute, inference time and resource allocation that can make frontier models feel inconsistent from one week to the next. This is unlikely to be a result of any deliberate ‘nerfing’ on the part of model providers, so much as simple resource management triaging.
+
+→ Try Pencil today for free!
+→ Know someone who'd like this? Forward it or share the subscribe link.

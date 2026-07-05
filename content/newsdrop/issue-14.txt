@@ -1,0 +1,62 @@
+The News Drop #14 – Jailbreaks, Starships, and Full-Body Scans
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+Trillionaire’s spacefaring megalomania. MidJourney goes medical. Fable denied.👇
+
+📜 MidJourney’s Medical AI Journey
+
+David Holz just pulled the curtain back on Midjourney Medical, and the newly announced MidJourney Scanner - a full-body medical scanner developed via a $74 million partnership with Butterfly Network.
+
+You step onto a platform and are lowered into a shallow pool of water ringed with half a million ultrasonic sensors acting like dolphin echolocation. The sensors send sound waves through the body from every angle, packing two petaflops of processing power to reconstruct those waves into detailed 3D cross-sectional maps of muscle, fat, bone, and organs in just 60 seconds.
+
+Holz reckons the image quality will eventually rival an MRI, but be way faster, and cost a fraction of the price. It would also prove less invasive, since the scan doesn't entail any radiation or heavy magnetic fields.
+
+While David Holz noted that the company - known for its highly artistic walled-garden image model series - are not yet using any AI for imaging, the long-term infrastructure play looks like a sneaky Trojan Horse of medtech.
+
+By turning full-body scanning into a casual, repeatable consumer habit (like checking a smart scale at the gym), MidJourney is set to build the largest, most continuous dataset of human internal anatomy in history. Their goal is to get 50,000 scanners doing a billion scans a month by 2031. Even if they can't legally market it as a diagnostic tool today, when a vision model trains on billions of internal body maps, it will inevitably learn to spot anomalies, quicker than a human radiologist could, potentially flagging concerns even before the patient becomes symptomatic.  → LINK
+
+🆕 Composer around the Corner
+
+Newly public SpaceX (xAI) recently acquired Cursor for $60 billion. SpaceX controls a significant portion of the world's compute power, but until now they've lacked a direct, friction-free distribution channel to enterprise software engineers.
+
+The sleeper hit agentic coding harness startup boasts an estimated $2.6 billion in annualised B2B revenue and over 50,000 enterprise teams. So, by acquiring Cursor, SpaceX instantly buys a massive, highly engaged developer ecosystem bypassing the need to onboard users into their native tools like Grok Build.
+
+Cursor promise they'll soon be dropping a potent new version of their coding-focused LLM model, Composer, in the coming weeks.  → LINK
+
+🤝 Abundance Mentality
+
+Elon Musk has become the world's first trillionaire, allegedly making more in a single day than Warren Buffett made in his entire life. Over 4,400 SpaceX employees became millionaires, some allegedly even making $100M from the event.
+
+SpaceX's recent IPO shattered records instantly. Four days after going public, it hit a ~$3 trillion valuation and became the fourth most valuable company in the world, leapfrogging Microsoft and Amazon.
+
+The conglomerate is no longer evaluated merely as an aerospace or defense contractor; it is being priced as a sovereign-level macroeconomic entity that wields more financial muscle than most nations.
+
+Peter Diamandis articulated the business logic of these manoeuvres on his Moonshots Podcast: SpaceX Reusable Rockets would lower the cost of launch to near-zero. This in turn would allow the rapid deployment of Starlink, which already corners the global telecommunications market. The massive cash flow from Starlink is then funnelled directly into the massive R&D and CAPEX bills required for xAI infrastructure and Starship development. The flywheel would effectively remove any dependence on VCs.
+
+→ LINK
+
+💙 Fable 5 is Gone
+Mere days after its ground-breaking release, access to the world’s best publicly available AI model, Anthropic’s Fable 5, was abruptly revoked, after the White House released an executive order, banning the model for non-US citizens, citing intolerable security risks in light of newly discovered jailbreaks. Since there’s no surefire way to verify the nationality of users in real time, the upshot is, it’s gone for everyone.
+
+This is the first time ever that a publicly released AI model was withdrawn, and also the first time we’ve actually seen the public-facing frontier of AI moving backwards a step. The model dropped on a Tuesday, and by Friday evening a government export-control notice landed on Anthropic's desk. → LINK
+
+Amazon CEO Andy Jassy's security team allegedly were the ones who discovered the offending jailbreak. Despite being Anthropic's largest investor and primary cloud partner, they took it straight to the US government without running things by Dario Amodei and his team first.
+
+Cynical analysts reckon the move felt personal, even petty and perhaps even the result of a personal vendetta, or a thumb on the scale of global markets. Some worry about the precedent this sets for political interference and government regulation in AI. Others are concerned that the US has hamstrung itself in the race against China for AI supremacy, as AI labs in the US may now be incentivised to keep frontier models private longer, in order to avoid being the first mover that gets punished.
+
+Anthropic swiftly complied with the directive, but clapped back with a blog post claiming the whole ordeal is likely a result of technical misunderstandings, since all AI models are on some level susceptible to narrow "non-universal" jailbreaks.
+
+In fact, notorious anonymous jailbreaker Pliny the Liberator - who has managed to hack or misalign virtually every major AI model built thus far - released a tweet detailing how he’d gotten the Mythos-class model to say some naughty things, and reveal its system prompt, only a day or two after it was released.  → LINK
+
+🔥 “Science Fiction, Without the Fiction”
+
+SpaceX is successfully converting a multi-planetary ideal into a fully capitalised corporate mandate. For the first time in history, a private entity potentially has the liquid capital necessary to independently build a self-sustaining city on another planet! Looking ahead, are Starlink and Starship planning to build the digital nervous system for a multi-planetary economy?
+
+Elon Musk argues that the compounding acceleration of humanoid robotics (Tesla Optimus), infinite solar/space energy, and artificial general intelligence (AGI) will entirely break the traditional capitalist paradigm. He has claimed the need to save up for retirement is an archaic concept, since basic human needs will soon cost next to nothing.
+
+Musk’s deeply held (slightly terrifying) philosophy suggests that, in the cosmic scheme of things, the human species is effectively the "biological bootloader" for digital superintelligence.
+
+→ Try Pencil today for free! →
+
+Know someone who'd like this? Forward it or share the subscribe link.
