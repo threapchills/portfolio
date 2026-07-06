@@ -5,9 +5,9 @@
 import { clamp, fromRoot, qs, qsa, REDUCED_MOTION } from './util.js';
 
 const CARDS = [
-  { id: 'film',    title: 'Film',    href: 'film/',    glyph: 'assets/glyphs/glyph-film.webp' },
-  { id: 'writing', title: 'Writing', href: 'writing/', glyph: 'assets/glyphs/glyph-writing.webp' },
-  { id: 'design',  title: 'Design',  href: 'design/',  glyph: 'assets/glyphs/glyph-design.webp' },
+  { id: 'film',    title: 'Human Being',    medium: 'Film',    href: 'film/',    glyph: 'assets/glyphs/glyph-film.webp' },
+  { id: 'writing', title: 'Human Thinking', medium: 'Writing', href: 'writing/', glyph: 'assets/glyphs/glyph-writing.webp' },
+  { id: 'design',  title: 'Human Doing',    medium: 'Design',  href: 'design/',  glyph: 'assets/glyphs/glyph-design.webp' },
 ];
 
 export function initReading() {
@@ -19,7 +19,7 @@ export function initReading() {
     const el = document.createElement('button');
     el.className = 'card';
     el.dataset.card = c.id;
-    el.setAttribute('aria-label', `${c.title}: enter the chamber`);
+    el.setAttribute('aria-label', `${c.title} (${c.medium}): enter the chamber`);
     el.innerHTML = `
       <span class="card-3d">
         <span class="card-face card-face-back"
@@ -29,7 +29,7 @@ export function initReading() {
           <span class="card-glint"></span>
         </span>
       </span>
-      <span class="card-title">${c.title}</span>`;
+      <span class="card-title">${c.title}<span class="card-medium">${c.medium}</span></span>`;
     table.appendChild(el);
     wireHover(el);
     el.addEventListener('click', () => openDoorway(el, c));

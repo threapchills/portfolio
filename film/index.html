@@ -115,7 +115,7 @@
     const canvas = document.getElementById('scrub-canvas');
     const scrubber = new FrameScrubber(canvas, {
       dir: IS_MOBILE ? '../video/mikey/frames-800' : '../video/mikey/frames',
-      count: 166,
+      count: 317,
     });
     const brand = document.getElementById('scrub-brand');
     const lbTop = document.getElementById('lb-top');
@@ -136,20 +136,48 @@
       .sort((a, b) => a.chamberOrder - b.chamberOrder);
     const track = document.getElementById('rack-track');
     const rel = (path) => path ? path.replace('../../', '../') : '';
+    const ext = (path) => /^https?:/i.test(path) ? path : '../' + path;
 
-    for (const f of films) {
-      const poster = rel(f.heroFallback || f.heroImage || (f.gallery && f.gallery[0]) || '');
+    const toItem = (f) => ({
+      title: f.title,
+      tag: `${f.category} · ${f.index}`,
+      poster: rel(f.heroFallback || f.heroImage || (f.gallery && f.gallery[0]) || ''),
+      loop: f.rackLoop ? `../${f.rackLoop}` : '',
+      href: `../projects/${f.id}/`,
+    });
+    const fromExtra = (x) => ({
+      title: x.title,
+      tag: x.tag,
+      poster: ext(x.poster),
+      loop: x.loop ? `../${x.loop}` : '',
+      href: x.href,
+      external: !!x.external,
+      remote: /^https?:/i.test(x.poster),
+    });
+
+    /* Mikey leads the walk; the archive door closes it */
+    const roster = [
+      fromExtra(RACK_EXTRAS[0]),
+      ...films.filter((f) => f.id !== 'video-archive').map(toItem),
+      ...RACK_EXTRAS.slice(1).map(fromExtra),
+      ...films.filter((f) => f.id === 'video-archive').map(toItem),
+    ];
+
+    roster.forEach((item, i) => {
       const el = document.createElement('a');
       el.className = 'film-plane';
-      el.href = `../projects/${f.id}/`;
+      el.href = item.href;
+      if (item.external) { el.target = '_blank'; el.rel = 'noopener'; }
+      if (item.remote) el.dataset.remote = '1';
       el.innerHTML = `
+        <span class="plane-num">${String(i + 1).padStart(2, '0')}</span>
         <span class="plane-media">
-          <img src="${poster}" alt="${f.title.replace(/<[^>]+>/g, '')} still" loading="lazy">
-          ${f.rackLoop ? `<video muted loop playsinline preload="none" src="../${f.rackLoop}"></video>` : ''}
+          <img src="${item.poster}" alt="${String(item.title).replace(/<[^>]+>/g, '')} still" loading="lazy">
+          ${item.loop ? `<video muted loop playsinline preload="none" src="${item.loop}"></video>` : ''}
         </span>
         <span class="plane-meta">
-          <h3>${f.title}</h3>
-          <span class="plane-tag">${f.category} · ${f.index}</span>
+          <h3>${item.title}</h3>
+          <span class="plane-tag">${item.tag}</span>
         </span>`;
       track.appendChild(el);
       const video = el.querySelector('video');
@@ -162,7 +190,7 @@
           video.pause();
         });
       }
-    }
+    });
 
     // pinned horizontal travel
     const rackLen = () => Math.max(track.scrollWidth - innerWidth, 0);
@@ -189,6 +217,8 @@
       if (engine.enabled) {
         document.body.classList.add('gl-on');
         for (const el of track.querySelectorAll('.film-plane')) {
+          // remote posters would taint the GL textures; those planes stay flat
+          if (el.dataset.remote) continue;
           const img = el.querySelector('img');
           const plane = engine.addPlane(el.querySelector('.plane-media'), {
             srcA: img.src, ripple: true, bend: true,
