@@ -89,35 +89,49 @@
     gsap.ticker.lagSmoothing(0);
     window.__lenis = lenis;
 
-    /* the flow: Mythopoeic set first, the identities after */
+    /* the flow: the Mythopoeic set first, the identities after. Titles
+       are gone; the work carries itself, with micro copy only where a
+       section opens or a beat wants a word */
     const rel = (p) => p.replace('../../', '../');
-    const myth = PROJECTS.find((p) => p.id === 'mythopoeic');
-    const health = PROJECTS.find((p) => p.id === 'healthtech');
+    const M = '../images/mythopoeic/';
+    const H = '../images/';
     const PIECES = [
-      { img: myth.gallery[0], eyebrow: 'Mythopoeic', title: 'A luxury that never existed', text: myth.tagline, link: '../projects/mythopoeic/' },
-      { img: myth.gallery[3], eyebrow: 'Mythopoeic', title: 'Editorial, ex nihilo', text: 'Campaign imagery indistinguishable from a full crew and a major budget.' },
-      { img: myth.gallery[7], eyebrow: 'Mythopoeic', title: 'Product, rendered devotional', text: 'Jewellery that exists only as light and intent.' },
-      { img: myth.gallery[14], eyebrow: 'Mythopoeic', title: 'The world around the object', text: 'The brand extends into fauna, myth and landscape.' },
-      { img: health.heroImage, eyebrow: 'EduTalkz · TravelMedz · TwinTech', title: 'Three clinics, three languages', text: health.tagline, link: '../projects/healthtech/' },
-      { img: health.gallery[1], eyebrow: 'Healthtech identities', title: 'Complex made approachable', text: 'Visual systems that do not dumb the science down.' },
-      { img: health.gallery[5], eyebrow: 'Healthtech identities', title: 'Speed as a deliverable', text: 'AI-first ideation at a fraction of traditional cost.' },
+      { img: M + 'hero1.webp', eyebrow: 'Mythopoeic', text: 'A luxury brand that never existed, conjured whole with AI.', link: '../projects/mythopoeic/' },
+      { img: M + 'hero3.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'hero4.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'hero6.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'bracelet-showcase.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'necklace-showcase-1.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'necklace-showcase--on-model.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'product-showcase-all-2.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'product-erf---rings.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'horses2.webp', eyebrow: 'Mythopoeic', text: 'The brand extends into fauna, myth and landscape.' },
+      { img: M + 'gangster.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'rhino.webp', eyebrow: 'Mythopoeic' },
+      { img: M + 'seabed.webp', eyebrow: 'Mythopoeic' },
+      { img: H + 'healthtech-design0B.webp', eyebrow: 'EduTalkz · TravelMedz · TwinTech', text: 'Brand identities and visual systems for three healthtech startups.', link: '../projects/healthtech/' },
+      { img: H + 'healthtech-design0C.webp', eyebrow: 'Healthtech identities' },
+      { img: H + 'healthtech-design2.webp', eyebrow: 'Healthtech identities' },
+      { img: H + 'healthtech-design3.webp', eyebrow: 'Healthtech identities' },
+      { img: H + 'healthtech-design7.webp', eyebrow: 'Healthtech identities' },
+      { img: H + 'healthtech-design9.webp', eyebrow: 'Healthtech identities', text: 'Complex science, kept approachable; AI-first, at a fraction of the cost.' },
+      { img: H + 'healthtech-design10.webp', eyebrow: 'Healthtech identities' },
+      { img: H + 'healthtech-design13.webp', eyebrow: 'Healthtech identities' },
     ];
 
     const flow = qs('#design-flow');
     for (const piece of PIECES) {
       const sec = document.createElement('section');
       sec.className = 'design-piece';
+      const hasCopy = piece.text || piece.link;
       sec.innerHTML = `
-        <div class="piece-media"><img src="${rel(piece.img)}" alt="${piece.eyebrow}: ${piece.title}" loading="lazy"></div>
+        <div class="piece-media"><img src="${rel(piece.img)}" alt="${piece.eyebrow}" loading="lazy"></div>
         <div class="piece-caption">
-          <div>
-            <span class="piece-eyebrow">${piece.eyebrow}</span>
-            <h2><span class="reveal-line"><span>${piece.title}</span></span></h2>
-          </div>
-          <div>
-            <p>${piece.text}</p>
+          <span class="piece-eyebrow">${piece.eyebrow}</span>
+          ${hasCopy ? `<div class="piece-copy">
+            ${piece.text ? `<p>${piece.text}</p>` : ''}
             ${piece.link ? `<a href="${piece.link}">See the project &rarr;</a>` : ''}
-          </div>
+          </div>` : ''}
         </div>`;
       flow.appendChild(sec);
       ScrollTrigger.create({
