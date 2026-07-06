@@ -4,14 +4,17 @@
    occasionally slicing sideways: the cursor speaking the same warped
    dialect as the image planes. Fine pointers only. */
 
-import { clamp, damp, REDUCED_MOTION } from './util.js';
+import { clamp, damp, fromRoot, REDUCED_MOTION } from './util.js';
 
 export function initCursor() {
   if (window.matchMedia('(pointer: coarse)').matches) return;
   document.documentElement.classList.add('has-custom-cursor');
 
-  const dot = document.createElement('div');
-  dot.className = 'mw-cursor-dot';
+  /* the pointer is one of the artwork's own moons, made small */
+  const dot = document.createElement('img');
+  dot.className = 'mw-cursor-moon';
+  dot.src = fromRoot('assets/journey/moon-3.webp');
+  dot.alt = '';
   const ring = document.createElement('div');
   ring.className = 'mw-cursor-ring';
   document.body.append(ring, dot);
@@ -68,7 +71,8 @@ export function initCursor() {
     ry = damp(ry, py, 14, dt);
     const vis = seen ? 1 : 0;
     dot.style.opacity = ring.style.opacity = vis;
-    dot.style.transform = `translate3d(${px - 3}px, ${py - 3}px, 0)`;
+    const spin = REDUCED_MOTION ? 0 : (now * 0.008) % 360;
+    dot.style.transform = `translate3d(${px - 11}px, ${py - 11}px, 0) rotate(${spin.toFixed(1)}deg)`;
     ring.style.transform = `translate3d(${rx - 17}px, ${ry - 17}px, 0)`;
     speed *= 0.9;
 

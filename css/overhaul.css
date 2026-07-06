@@ -51,15 +51,14 @@
 /* ---- the custom cursor and its trail ---- */
 .has-custom-cursor body.overhaul,
 .has-custom-cursor body.overhaul * { cursor: none !important; }
-.mw-cursor-dot {
+.mw-cursor-moon {
   position: fixed; top: 0; left: 0;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--moon);
+  width: 22px; height: 22px;
+  object-fit: contain;
   z-index: 300;
   pointer-events: none;
-  mix-blend-mode: difference;
   opacity: 0;
+  filter: drop-shadow(0 0 7px rgba(242, 120, 90, 0.5));
 }
 .mw-cursor-ring {
   position: fixed; top: 0; left: 0;
@@ -724,6 +723,7 @@
   opacity: 0.035;
   mix-blend-mode: overlay;
 }
+#cube-scene, #cube-scene * { user-select: none; }
 #cube {
   --size: min(54vh, 58vw);
   position: relative;

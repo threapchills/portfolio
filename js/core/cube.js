@@ -42,11 +42,11 @@ export class WritingCube {
       this.el.appendChild(d);
       return d;
     });
-    // decorative faces, top and bottom: a motif composed on paper,
-    // centred and framed, never a stray crop
+    // decorative faces, top and bottom: the whole moth composed on
+    // paper, centred and framed, never a stray crop
     for (const [rot, img, size] of [
-      ['rotateX(90deg)', 'assets/cards/card-back.webp', '52%'],
-      ['rotateX(-90deg)', 'assets/journey/moon-3.webp', '46%'],
+      ['rotateX(90deg)', 'assets/journey/moth-full-m.webp', '82%'],
+      ['rotateX(-90deg)', 'assets/journey/moth-full-m.webp', '82%'],
     ]) {
       const d = document.createElement('div');
       d.className = 'cube-face is-decor';
@@ -93,16 +93,14 @@ export class WritingCube {
       this.snap();
     });
 
-    // scroll nudges to the next face
-    let wheelLock = 0;
+    // scrolling turns the cube continuously; it settles on a face
+    // once the hand rests
     this.el.parentElement.addEventListener('wheel', (e) => {
       e.preventDefault();
       if (this.suspended) return;
-      const now = performance.now();
-      if (now < wheelLock) return;
-      wheelLock = now + 650;
-      this.targetY += e.deltaY > 0 ? -90 : 90;
-      this.snap();
+      this.targetY -= e.deltaY * 0.12;
+      clearTimeout(this._settle);
+      this._settle = setTimeout(() => this.snap(), 380);
     }, { passive: false });
 
     // click or Enter on the fronting face opens it
