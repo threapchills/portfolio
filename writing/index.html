@@ -51,7 +51,7 @@
   <main>
     <section id="cube-scene" aria-label="The writing collections">
       <div id="cube"><!-- faces built by cube.js --></div>
-      <p class="cube-hint">Drag to turn · click a face to open</p>
+      <p class="cube-hint">Drag to turn · click a tile to read, or the face for all</p>
     </section>
   </main>
 
@@ -91,6 +91,11 @@
       count: f.type === 'newsdrop'
         ? `${NEWSDROP.length} issues, growing weekly`
         : `${f.items.length} ${f.items.length === 1 ? 'piece' : 'pieces'}`,
+      // tiles for the cube face: News Drop shows its newest issues, the
+      // rest reachable through the full plane
+      entries: f.type === 'newsdrop'
+        ? NEWSDROP.map((it) => ({ label: `#${it.n}`, title: it.title, kind: 'issue', file: it.file, n: it.n, date: it.date }))
+        : f.items.map((s) => ({ title: s.title, kind: 'story', url: s.url })),
     }));
 
     /* ---- the reading plane ---- */
@@ -110,6 +115,21 @@
       plane.setAttribute('aria-hidden', 'true');
       closeBtn.hidden = true;
       cube.suspended = false;
+    }
+    /* a single tile: an issue opens straight to its reading view, a story
+       opens in its own tab */
+    function openCell(entry, face) {
+      if (entry.kind === 'issue') {
+        cube.suspended = true;
+        plane.classList.add('is-open');
+        plane.setAttribute('aria-hidden', 'false');
+        closeBtn.hidden = false;
+        plane.scrollTop = 0;
+        openIssue({ file: entry.file, n: entry.n, date: entry.date, title: entry.title });
+        closeBtn.focus();
+      } else {
+        window.open(entry.url, '_blank', 'noopener');
+      }
     }
     closeBtn.addEventListener('click', () => {
       // step back through the plane's own states before closing
@@ -194,7 +214,7 @@
     }
 
     /* ---- the cube ---- */
-    cube = new WritingCube(qs('#cube'), faces, { onSelect: openPlane });
+    cube = new WritingCube(qs('#cube'), faces, { onSelect: openPlane, onCell: openCell });
     let last = performance.now();
     const loop = (now) => {
       cube.tick(Math.min((now - last) / 1000, 0.1), now / 1000);

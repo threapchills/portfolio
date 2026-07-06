@@ -737,8 +737,9 @@
   mix-blend-mode: overlay;
 }
 #cube-scene, #cube-scene * { user-select: none; }
+#cube-scene { perspective-origin: 42% 38%; }   /* the off-centre gaze */
 #cube {
-  --size: min(54vh, 58vw);
+  --size: min(56vh, 62vw);
   position: relative;
   width: var(--size); height: var(--size);
   transform-style: preserve-3d;
@@ -748,27 +749,83 @@
   position: absolute; inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 2rem;
   border: 1px solid rgba(196, 146, 42, 0.3);
-  background-color: #171310;
-  background-image: url('../assets/textures/paper-grain.webp');
-  background-size: 420px;
-  background-blend-mode: multiply;
+  background-color: #120f0c;
   backface-visibility: hidden;
-  cursor: pointer;
+  overflow: hidden;
 }
-.cube-face .face-eyebrow { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.6rem; }
-.cube-face h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.6rem, 4.4vh, 2.6rem);
-  margin: 0;
+.cube-face.is-content { cursor: pointer; }
+/* the caption strip above each collection's grid */
+.face-head {
+  display: flex; flex-direction: column; gap: 0.2rem;
+  padding: 0.7rem 0.85rem 0.5rem;
+  flex: 0 0 auto;
+  border-bottom: 1px solid rgba(196, 146, 42, 0.16);
+}
+.face-eyebrow { font-size: 0.5rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal); }
+.face-name { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.1rem, 3vh, 1.6rem); line-height: 1; color: var(--text); }
+
+/* the grid of little cubes */
+.cube-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 3px;
+  padding: 3px;
+}
+.cube-grid.is-glyph-grid { gap: 2px; padding: 2px; }
+.cube-cell {
+  position: relative;
+  border: 0;
+  background: #171310;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035), inset 0 -10px 16px rgba(0, 0, 0, 0.45);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, color 0.2s ease, filter 0.35s ease;
+}
+.cube-cell.is-paper {
+  background-image: url('../assets/textures/paper-grain.webp');
+  background-size: 220px;
+  background-blend-mode: multiply;
+  opacity: 0.62;
+}
+.cube-cell.is-titled {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.28rem;
   color: var(--text);
-  line-height: 1.05;
+  cursor: pointer;
+  background-image: url('../assets/textures/paper-grain.webp');
+  background-size: 220px;
+  background-blend-mode: multiply;
 }
-.cube-face .face-count { font-size: 0.66rem; opacity: 0.5; margin-top: 0.7rem; letter-spacing: 0.14em; }
-.cube-face.is-decor { cursor: default; }
+.cell-label {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  line-height: 1.12;
+  text-align: center;
+  letter-spacing: 0.01em;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cell-label em { display: block; font-style: normal; font-family: var(--font-ui); font-size: 0.5rem; letter-spacing: 0.14em; color: var(--gold); opacity: 0.8; }
+.cube-cell.is-titled:hover, .cube-cell.is-titled:focus-visible {
+  transform: translateZ(22px) scale(1.04);
+  color: var(--moon);
+  box-shadow: 0 0 22px rgba(196, 146, 42, 0.4), inset 0 0 0 1px rgba(196, 146, 42, 0.4);
+  z-index: 3;
+  outline: none;
+}
+/* glyph tiles: a slice of the artwork, brightening as the hand passes */
+.cube-cell.is-glyph-cell {
+  background-size: 400% 400%;
+  background-repeat: no-repeat;
+  filter: grayscale(0.2) brightness(0.9);
+}
+.cube-cell.is-glyph-cell:hover {
+  transform: translateZ(20px) scale(1.05);
+  filter: grayscale(0) brightness(1.12);
+  box-shadow: 0 0 18px rgba(242, 226, 160, 0.35);
+  z-index: 3;
+}
 .cube-hint {
   position: absolute;
   bottom: 7vh; left: 50%;

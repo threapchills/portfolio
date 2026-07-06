@@ -323,15 +323,7 @@ const WRITING_FACES = (function () {
       type: "stories",
       items: [
         byTitle("The future of insurance in Africa"),
-        byTitle("Pioneering progress")
-      ]
-    },
-    {
-      id: "longform",
-      title: "Longform",
-      eyebrow: "Essays and other creatures",
-      type: "stories",
-      items: [
+        byTitle("Pioneering progress"),
         byTitle("Risen from the sea")
       ]
     }
