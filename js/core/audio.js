@@ -11,8 +11,8 @@ const STEMS = {
   fire:  ['fire3', 'fire5', 'fire7'],
 };
 
-const MASTER_LEVEL = 0.35;
-const SMOOTH_TAU = 2.5;            // seconds, mix easing time constant
+const MASTER_LEVEL = 0.55;
+const SMOOTH_TAU = 1.6;            // seconds, mix easing time constant
 const ROTATE_MIN = 60, ROTATE_MAX = 90;
 const XFADE = 1.5;                 // variant crossfade, seconds
 const MUTE_KEY = 'mw-muted';
@@ -122,6 +122,11 @@ export class AudioEngine {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return;
     this.ctx = new AC();
+    // some browsers hand over a suspended context even inside a gesture
+    if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+    this.ctx.onstatechange = () => {
+      if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+    };
     this.master = this.ctx.createGain();
     const comp = this.ctx.createDynamicsCompressor();
     comp.threshold.value = -18;
@@ -206,6 +211,7 @@ export class AudioEngine {
 
 /* Shared singleton + the persistent mute button. */
 export const audio = new AudioEngine();
+window.__audio = audio;
 
 export function mountMuteButton() {
   const btn = document.getElementById('mute-btn');

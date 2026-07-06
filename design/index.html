@@ -19,7 +19,7 @@
     #chamber-loader { position: fixed; inset: 0; z-index: 200; background: #000;
       display: grid; place-items: center; }
   </style>
-  <link rel="stylesheet" href="../css/overhaul.css?v=2">
+  <link rel="stylesheet" href="../css/overhaul.css?v=3">
 </head>
 <body class="overhaul design-page">
 
@@ -63,14 +63,14 @@
   <div class="grain-veil"></div>
 
   <script src="../js/data.js"></script>
-  <script src="../js/vendor/gsap.min.js?v=2"></script>
-  <script src="../js/vendor/ScrollTrigger.min.js?v=2"></script>
-  <script src="../js/vendor/lenis.min.js?v=2"></script>
+  <script src="../js/vendor/gsap.min.js?v=3"></script>
+  <script src="../js/vendor/ScrollTrigger.min.js?v=3"></script>
+  <script src="../js/vendor/lenis.min.js?v=3"></script>
   <script type="module">
-    import { initChamberLoader } from '../js/core/loader.js?v=2';
-    import { GLPlanes } from '../js/core/gl-planes.js?v=2';
-    import { audio, mountMuteButton } from '../js/core/audio.js?v=2';
-    import { IS_MOBILE, clamp, qs, qsa } from '../js/core/util.js?v=2';
+    import { initChamberLoader } from '../js/core/loader.js';
+    import { GLPlanes } from '../js/core/gl-planes.js';
+    import { audio, mountMuteButton } from '../js/core/audio.js';
+    import { IS_MOBILE, clamp, qs, qsa } from '../js/core/util.js';
 
     gsap.registerPlugin(ScrollTrigger);
     mountMuteButton();

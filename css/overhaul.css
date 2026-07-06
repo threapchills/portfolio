@@ -209,7 +209,8 @@
   position: absolute;
   top: 0; left: 0;
   transform-origin: 0 0;
-  will-change: transform;
+  will-change: transform, opacity;
+  transition: filter 0.35s ease;   /* the fuzz fades between steps, never pops */
 }
 .world-layer img { position: absolute; user-select: none; }
 .moon-glow {
@@ -218,6 +219,12 @@
   background: radial-gradient(circle, rgba(242, 120, 90, 0.5) 0%, transparent 65%);
   filter: blur(12px);
   opacity: 0.4;
+  animation: glow-pulse 15s ease-in-out infinite;
+  will-change: opacity;
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.55; }
 }
 
 /* solo stages: goddess approach and mask close-up */
@@ -226,7 +233,9 @@
   display: grid; place-items: center;
   background: #041412;
 }
-#goddess-rig { position: relative; will-change: transform; transform-origin: 50% 26%; }
+/* the figure's raised arms top the canvas; her face sits near 43% of its
+   height, and the push must pivot on the face */
+#goddess-rig { position: relative; will-change: transform; transform-origin: 50% 43%; }
 #goddess-rig img { display: block; height: 92vh; width: auto; user-select: none; }
 #goddess-wings {
   position: absolute; inset: 0; margin: auto;
@@ -236,9 +245,11 @@
 }
 #mask-stage { background: #072220; }
 #mask-box {
+  /* anchored so the mask's face lands exactly where the goddess's face
+     was pinned through Act IV: 50vw across, 43vh down */
   position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
+  left: 50%; top: 47%;
+  transform: translate(-52%, -78%);
   will-change: transform;
   transform-origin: 52% 78%;      /* the face */
 }

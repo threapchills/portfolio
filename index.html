@@ -20,7 +20,7 @@
     #threshold { position: fixed; inset: 0; z-index: 200; background: #000;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=2">
+  <link rel="stylesheet" href="css/overhaul.css?v=3">
 </head>
 <body class="overhaul">
 
@@ -171,14 +171,14 @@
   <div id="doorway-veil"></div>
   <div class="grain-veil"></div>
 
-  <script src="js/vendor/gsap.min.js?v=2"></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=2"></script>
-  <script src="js/vendor/lenis.min.js?v=2"></script>
+  <script src="js/vendor/gsap.min.js?v=3"></script>
+  <script src="js/vendor/ScrollTrigger.min.js?v=3"></script>
+  <script src="js/vendor/lenis.min.js?v=3"></script>
   <script type="module">
-    import { initThreshold } from './js/core/loader.js?v=2';
-    import { initJourney } from './js/core/journey.js?v=2';
-    import { initReading } from './js/core/cards.js?v=2';
-    import { audio, mountMuteButton } from './js/core/audio.js?v=2';
+    import { initThreshold } from './js/core/loader.js';
+    import { initJourney } from './js/core/journey.js';
+    import { initReading } from './js/core/cards.js';
+    import { audio, mountMuteButton } from './js/core/audio.js';
 
     gsap.registerPlugin(ScrollTrigger);
     mountMuteButton();

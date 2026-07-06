@@ -5,7 +5,7 @@
    Layer positions were recovered by template-matching each cutout against
    the base scan, so the reconstructed scene sits pixel-true on the artwork. */
 
-import { asset, clamp, fromRoot, IS_MOBILE, REDUCED_MOTION } from './util.js';
+import { asset, clamp, fromRoot, smoothstep, IS_MOBILE, REDUCED_MOTION } from './util.js';
 
 const BASE_AR = 4160 / 3120;
 const OVERSCAN = 1.06;          // idle drift must never reveal a world edge
@@ -24,8 +24,8 @@ const LAYERS = [
   { id: 'hills-far',  src: 'assets/journey/land-01-hills-far.webp',  x: 0,      y: 0.5167, w: 1,      depth: 0.10, drift: [4, 16] },
   { id: 'tower',      src: 'assets/journey/land-03-tower.webp',      x: 0.4298, y: 0.3077, w: 0.1918, depth: 0.15, drift: [4, 21] },
   { id: 'hill-main',  src: 'assets/journey/land-02-hill-main.webp',  x: 0,      y: 0.5462, w: 1,      depth: 0.18, drift: [4, 18] },
-  { id: 'goddess',    src: 'assets/journey/goddess-small.webp',      x: 0.464,  y: 0.562,  w: 0.028,  depth: 0.20, drift: [2, 12] },
-  { id: 'moth',       src: 'assets/journey/moth-full.webp',          x: 0.30,   y: 0.70,   w: 0.34,   depth: 0.42, drift: [5, 9], moth: true },
+  { id: 'goddess',    src: 'assets/journey/goddess-small.webp',      x: 0.435,  y: 0.600,  w: 0.028,  depth: 0.20, drift: [2, 12], goddess: true },
+  { id: 'moth',       src: 'assets/journey/moth-full.webp',          x: 0.28,   y: 0.66,   w: 0.38,   depth: 0.42, drift: [5, 9], moth: true },
   { id: 'flora-mid',  src: 'assets/journey/land-04-flora-mid.webp',  x: -0.04,  y: 0.6756, w: 0.62,   depth: 0.62, drift: [6, 13] },
   { id: 'flora-fore', src: 'assets/journey/land-05-flora-fore.webp', x: 0,      y: 0.7141, w: 1,      depth: 0.85, drift: [8, 11] },
 ];
@@ -58,6 +58,9 @@ export class World {
       if (cfg.moon) {
         const glow = document.createElement('div');
         glow.className = 'moon-glow';
+        // pulse on the compositor, never from the frame loop
+        glow.style.animationDuration = `${cfg.drift[1]}s`;
+        glow.style.animationDelay = `${-Math.random() * cfg.drift[1]}s`;
         wrap.insertBefore(glow, img);
         cfg.glowEl = glow;
       }
@@ -100,6 +103,7 @@ export class World {
 
   setFocus(depth) { this.focus = depth; }
   setMothPose(pose) { this.mothPose = pose; }
+  setGoddessOpacity(o) { this.goddessOpacity = o; }
 
   /* Called every frame. time in seconds for the idle drift. */
   render(time) {
@@ -113,18 +117,26 @@ export class World {
       .slice(0, MAX_BLURRED);
     const blurIds = new Map(wanted.map((e) => [e.l.cfg.id, e.blur]));
 
+    // near layers dissolve as the push passes them, before their scaled
+    // textures grow monstrous enough to make the GPU stutter
+    const nearFade = 1 - smoothstep(3.4, 4.6, z);
+
     for (const l of this.layers) {
       const { cfg, wrap, img } = l;
       const s = Math.pow(z, 1 + PARALLAX_BETA * cfg.depth);
       const tx = this.vw / 2 - cx * this.W * s;
       const ty = this.vh / 2 - cy * this.H * s;
 
-      // cull: hide layers scaled fully outside the viewport
+      const fade = cfg.depth >= 0.4 ? nearFade : 1;
+
+      // cull: hide layers scaled fully outside the viewport, faded out,
+      // or magnified beyond what any GPU should be asked to rasterise
       const left = tx + cfg.x * this.W * s;
       const top = ty + cfg.y * this.H * s;
       const w = cfg.w * this.W * s;
       const h = w * (img.naturalHeight / (img.naturalWidth || 1));
-      const off = left > this.vw || top > this.vh || left + w < 0 || (h > 0 && top + h < 0);
+      const off = left > this.vw || top > this.vh || left + w < 0 ||
+        (h > 0 && top + h < 0) || fade < 0.01 || s > 24;
       wrap.style.visibility = off ? 'hidden' : 'visible';
       if (off) continue;
 
@@ -138,14 +150,12 @@ export class World {
 
       if (cfg.moth && this.mothPose) {
         const { dx, dy, rot, opacity } = this.mothPose;
-        wrap.style.opacity = opacity;
+        wrap.style.opacity = (opacity * fade).toFixed(3);
         img.style.transform = `translate3d(${dx * this.W * s}px, ${dy * this.H * s}px, 0) rotate(${rot}deg)` + drift;
-      } else if (!REDUCED_MOTION) {
-        img.style.transform = drift || 'none';
-        if (cfg.moth) img.style.transform += ` rotate(${(Math.sin(time * 1.05 + l.phase) * 2).toFixed(2)}deg)`;
-      }
-      if (cfg.moon && cfg.glowEl) {
-        cfg.glowEl.style.opacity = (0.35 + 0.25 * Math.sin(time * 2 * Math.PI / cfg.drift[1] + l.phase)).toFixed(3);
+      } else {
+        const g = cfg.goddess ? (this.goddessOpacity ?? 1) : 1;
+        wrap.style.opacity = (fade * g).toFixed(3);
+        if (!REDUCED_MOTION) img.style.transform = drift || 'none';
       }
 
       wrap.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${s.toFixed(4)})`;

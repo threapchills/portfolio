@@ -11,9 +11,9 @@ import { audio } from './audio.js';
 /* Act beats as journey progress. */
 const BEATS = [0, 0.34, 0.46, 0.70, 0.86, 1];
 
-const camCX = kf([[0, 0.500], [0.16, 0.490], [0.34, 0.462], [0.46, 0.472], [0.58, 0.4775]]);
-const camCY = kf([[0, 0.520], [0.16, 0.610], [0.34, 0.810], [0.46, 0.640], [0.58, 0.5845]]);
-const camZ  = kf([[0, 1.00],  [0.16, 1.32],  [0.34, 2.60],  [0.46, 2.75],  [0.58, 7.00]]);
+const camCX = kf([[0, 0.500], [0.16, 0.488], [0.34, 0.462], [0.46, 0.455], [0.58, 0.449]]);
+const camCY = kf([[0, 0.520], [0.16, 0.605], [0.34, 0.790], [0.46, 0.660], [0.58, 0.625]]);
+const camZ  = kf([[0, 1.00],  [0.16, 1.32],  [0.34, 2.60],  [0.46, 2.80],  [0.58, 7.00]]);
 /* focus rack: the lens travels from the world plane out to the flora
    and back in to the goddess as the camera passes through the layers */
 const focusD = kf([[0, 0.05], [0.16, 0.35], [0.30, 0.55], [0.38, 0.46], [0.44, 0.20], [0.58, 0.20]]);
@@ -69,11 +69,19 @@ export function initJourney() {
     end: 'bottom bottom',
     scrub: true,
     snap: (PARAMS.get('autoscroll') === 'off' || REDUCED_MOTION) ? undefined : {
-      snapTo: BEATS,
-      duration: { min: 0.5, max: 1.1 },
+      /* a magnetic assist, not a pager: only pull in when the visitor
+         stops near a beat, so nothing between beats gets skipped */
+      snapTo: (value) => {
+        let best = value, dist = 0.05;
+        for (const b of BEATS) {
+          const d = Math.abs(value - b);
+          if (d < dist) { best = b; dist = d; }
+        }
+        return best;
+      },
+      duration: { min: 0.4, max: 0.9 },
       ease: 'power2.inOut',
       delay: 0.15,
-      directional: true,
     },
     onUpdate: (self) => { progress = self.progress; },
   });
@@ -113,8 +121,12 @@ export function initJourney() {
       /* The moth: invisible at rest, condenses out of the dark as the
          camera enters the flora, then crawls out of frame at the beat.
          Its exit reveals the goddess on the path behind it. */
-      const appear = seg(p, 0.18, 0.28);
-      const m = seg(p, 0.345, 0.46, easeInOut);
+      /* she stands in the wide shots and at her reveal; during the dive
+         through the flora a floating glimpse would break the discovery */
+      world.setGoddessOpacity(1 - seg(p, 0.16, 0.22) + seg(p, 0.40, 0.455));
+
+      const appear = seg(p, 0.20, 0.30);
+      const m = seg(p, 0.365, 0.46, easeInOut);
       const dx = 0.55 * m + 0.12 * m * m;
       const dy = -0.28 * m + 0.10 * Math.sin(m * Math.PI);
       const rot = REDUCED_MOTION ? 0 : 16 * m + Math.sin(t * 1.1) * 2 * (1 - m);
@@ -133,7 +145,7 @@ export function initJourney() {
     goddessStage.style.display = gVisible ? '' : 'none';
     if (gVisible) {
       goddessStage.style.opacity = gFade.toFixed(3);
-      const gs = 0.38 + 3.02 * seg(p, 0.53, 0.70, easeInOut);
+      const gs = 0.5 + 2.9 * seg(p, 0.53, 0.70, easeInOut);
       const breathe = REDUCED_MOTION ? 0 : Math.sin(t * 0.9) * 0.004;
       goddessRig.style.transform = `scale(${(gs + breathe).toFixed(4)})`;
       if (wingsImg) wingsImg.style.transform = `scale(${(0.94 + 0.03 * Math.sin(t * 0.5)).toFixed(4)})`;
@@ -144,9 +156,10 @@ export function initJourney() {
     maskStage.style.display = mFade > 0.001 ? '' : 'none';
     if (mFade > 0.001) {
       maskStage.style.opacity = mFade.toFixed(3);
-      const ms = 0.62 + 0.85 * seg(p, 0.70, 0.92, easeInOut);
+      /* start at the size the goddess's face reached, then push closer */
+      const ms = 1.9 + 0.7 * seg(p, 0.70, 0.92, easeInOut);
       const sway = REDUCED_MOTION ? 0 : Math.sin(t * 0.4) * 0.5;
-      maskBox.style.transform = `translate(-50%, -50%) scale(${ms.toFixed(4)}) rotate(${sway.toFixed(2)}deg)`;
+      maskBox.style.transform = `translate(-52%, -78%) scale(${ms.toFixed(4)}) rotate(${sway.toFixed(2)}deg)`;
 
       /* the ignition: three apertures light in sequence */
       igniteGlyph(glyphs.film, seg(p, 0.73, 0.775, easeOut));
