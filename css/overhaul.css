@@ -317,7 +317,7 @@
 /* ============================================================
    Act VI — the Reading
    ============================================================ */
-#reading-wrap { position: relative; height: 260vh; background: var(--ink); }
+#reading-wrap { position: relative; height: 450vh; background: var(--ink); }
 #reading {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
@@ -366,14 +366,15 @@
 .card.is-dealt { opacity: 1; }
 .card-3d {
   --tiltX: 0deg; --tiltY: 0deg; --glintX: 50%; --lift: 1;
+  --fs: 1; --fy: 0vh;              /* scroll focus: scale and rise */
   position: absolute; inset: 0;
   transform-style: preserve-3d;
-  transform: rotateX(var(--tiltX)) rotateY(var(--tiltY)) scale(var(--lift));
+  transform: translateY(var(--fy)) rotateX(var(--tiltX)) rotateY(var(--tiltY)) scale(calc(var(--lift) * var(--fs)));
   transition: transform 0.15s ease-out;
   display: block;
 }
 .card.is-turned .card-3d {
-  transform: rotateX(var(--tiltX)) rotateY(calc(180deg + var(--tiltY))) scale(var(--lift));
+  transform: translateY(var(--fy)) rotateX(var(--tiltX)) rotateY(calc(180deg + var(--tiltY))) scale(calc(var(--lift) * var(--fs)));
 }
 .card.is-turned:hover .card-3d, .card.is-turned:focus-visible .card-3d { --lift: 1.035; }
 .card.is-turning .card-3d { transition: transform 0.6s cubic-bezier(0.45, 0, 0.55, 1); }
@@ -434,7 +435,8 @@
   transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
 }
-.card:hover .card-title, .card:focus-visible .card-title { opacity: 0.9; transform: none; }
+.card:hover .card-title, .card:focus-visible .card-title,
+.card.is-focus .card-title { opacity: 0.9; transform: none; }
 .card.is-opening { z-index: 40; }
 #doorway-veil {
   position: fixed; inset: 0;

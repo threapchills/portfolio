@@ -12,6 +12,16 @@ import { audio } from './audio.js';
 /* Act beats as journey progress. */
 const BEATS = [0, 0.34, 0.46, 0.70, 0.86, 1];
 
+/* Act VI: the reading walks its three cards one by one. Each band lifts
+   a card while its siblings step back; the beats are the band centres. */
+const READING_BANDS = [
+  { in: [0.10, 0.22], out: [0.34, 0.44] },
+  { in: [0.36, 0.46], out: [0.58, 0.68] },
+  { in: [0.60, 0.70], out: [0.82, 0.92] },
+];
+const READING_CARD_BEATS = [0.28, 0.52, 0.76];
+const READING_BEATS = [0, ...READING_CARD_BEATS, 1];
+
 /* The moth beat puts the creature's centre exactly on the camera axis,
    so it lands dead-centre at every viewport aspect. The goddess beat
    frames her low: skirt running out of the bottom of the shot. */
@@ -121,6 +131,30 @@ export function initJourney() {
     onUpdate: (self) => { progress = self.progress; },
   });
 
+  /* the reading's own scrub: one band per card, snap per card */
+  let readingP = 0;
+  let cardEls = [];
+  ScrollTrigger.create({
+    trigger: '#reading-wrap',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: true,
+    snap: (PARAMS.get('autoscroll') === 'off' || REDUCED_MOTION) ? undefined : {
+      snapTo: (value) => {
+        let best = value, dist = 0.045;
+        for (const b of READING_BEATS) {
+          const d = Math.abs(value - b);
+          if (d < dist) { best = b; dist = d; }
+        }
+        return best;
+      },
+      duration: { min: 0.4, max: 0.9 },
+      ease: 'power2.inOut',
+      delay: 0.15,
+    },
+    onUpdate: (self) => { readingP = self.progress; },
+  });
+
   /* ---- per-frame render ---- */
   const start = performance.now();
   let lastNow = start;
@@ -154,6 +188,25 @@ export function initJourney() {
       lightY = damp(lightY, lightTY, 5, dt);
       readingEl.style.setProperty('--mx', `${lightX.toFixed(2)}%`);
       readingEl.style.setProperty('--my', `${lightY.toFixed(2)}%`);
+    }
+
+    /* card focus: the vars live on .card-3d so the deal (GSAP owns .card)
+       and the hover tilt keep their own lanes */
+    if (!cardEls.length) cardEls = qsa('#card-table .card');
+    if (cardEls.length) {
+      const fs = READING_BANDS.map((b) =>
+        seg(readingP, b.in[0], b.in[1]) * (1 - seg(readingP, b.out[0], b.out[1])));
+      const F = Math.max(...fs);
+      cardEls.forEach((el, i) => {
+        const fi = fs[i] ?? 0;
+        const back = F - fi;             // how far this card stands behind the chosen one
+        const inner = el.querySelector('.card-3d');
+        inner.style.setProperty('--fs', (1 + 0.24 * fi - 0.08 * back).toFixed(4));
+        inner.style.setProperty('--fy', `${(-3.2 * fi).toFixed(2)}vh`);
+        inner.style.opacity = (1 - 0.5 * back).toFixed(3);
+        inner.style.filter = back > 0.001 ? `brightness(${(1 - 0.32 * back).toFixed(3)})` : '';
+        el.classList.toggle('is-focus', fi > 0.5);
+      });
     }
 
     /* world camera (Acts I to IV handoff) */
@@ -276,7 +329,10 @@ export function initJourney() {
     const jLen = j.offsetHeight - window.innerHeight;
     const pts = BEATS.map((b) => jTop + b * jLen);
     const reading = qs('#reading-wrap');
-    if (reading) pts.push(reading.offsetTop + reading.offsetHeight * 0.4);
+    if (reading) {
+      const rLen = reading.offsetHeight - window.innerHeight;
+      for (const b of READING_CARD_BEATS) pts.push(reading.offsetTop + b * rLen);
+    }
     const fourth = qs('#fourth-door');
     if (fourth) pts.push(fourth.offsetTop - window.innerHeight * 0.1);
     const outro = qs('#outro');
@@ -302,7 +358,8 @@ export function initJourney() {
     requestAnimationFrame(() => {
       const reading = qs('#reading-wrap');
       if (reading) {
-        lenis.scrollTo(reading.offsetTop + reading.offsetHeight * 0.4, { immediate: true });
+        // land on the wide table so the visitor can walk the cards again
+        lenis.scrollTo(reading.offsetTop, { immediate: true });
         ScrollTrigger.refresh();
       }
     });
