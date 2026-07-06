@@ -182,6 +182,8 @@ export class GLPlanes {
 
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.useProgram(this.prog);
     gl.uniform2f(this.loc.uViewport, innerWidth, innerHeight);
     gl.uniform1f(this.loc.uTime, time);

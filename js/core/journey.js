@@ -4,8 +4,9 @@
    Scroll grammar: free flow with magnetic beats. A single ScrollTrigger
    scrubs act progress; snap assist eases into the beats. */
 
-import { clamp, kf, seg, easeInOut, easeOut, qs, qsa, REDUCED_MOTION, PARAMS } from './util.js';
+import { asset, clamp, damp, fromRoot, kf, seg, easeInOut, easeOut, qs, qsa, IS_MOBILE, REDUCED_MOTION, PARAMS } from './util.js';
 import { World } from './parallax.js';
+import { GLPlanes } from './gl-planes.js';
 import { audio } from './audio.js';
 
 /* Act beats as journey progress. */
@@ -66,6 +67,37 @@ export function initJourney() {
 
   let progress = 0;
 
+  /* the warp: scroll velocity stretches and shears the whole stage,
+     the CSS cousin of the planes' bend shader */
+  const stageEl = qs('#journey .stage');
+  let sVel = 0;
+
+  /* Act V: the mask becomes a live plane; it ripples under the cursor
+     while the visitor waits for the eyes to light */
+  const maskImg = qs('#mask-box > img');
+  let maskEngine = null, maskPlane = null;
+  if (!IS_MOBILE && !REDUCED_MOTION) {
+    const mglc = document.createElement('canvas');
+    maskStage.appendChild(mglc);
+    maskEngine = new GLPlanes(mglc);
+    if (maskEngine.enabled) {
+      maskPlane = maskEngine.addPlane(maskImg, {
+        srcA: fromRoot(asset('assets/journey/mask-hires.webp')),
+        ripple: true,
+        bend: false,
+      });
+    }
+  }
+
+  /* the Reading: the pool of light drifts after the visitor's hand */
+  const readingEl = qs('#reading');
+  let lightX = 50, lightY = 46, lightTX = 50, lightTY = 46;
+  readingEl?.addEventListener('pointermove', (e) => {
+    const r = readingEl.getBoundingClientRect();
+    lightTX = clamp((e.clientX - r.left) / r.width * 100, 0, 100);
+    lightTY = clamp((e.clientY - r.top) / r.height * 100, 0, 100);
+  }, { passive: true });
+
   const st = ScrollTrigger.create({
     trigger: '#journey',
     start: 'top top',
@@ -106,6 +138,23 @@ export function initJourney() {
     const t = (now - start) / 1000;
     const p = progress;
     intro += (1 - intro) * (1 - Math.exp(-0.75 * dt));
+
+    /* velocity warp on the stage */
+    if (!REDUCED_MOTION && stageEl) {
+      sVel = damp(sVel, lenis.velocity || 0, 8, dt);
+      const stretch = clamp(Math.abs(sVel) * 0.0011, 0, 0.038);
+      const shear = clamp(sVel * 0.045, -1.4, 1.4);
+      stageEl.style.transform =
+        `scaleY(${(1 + stretch).toFixed(4)}) skewX(${shear.toFixed(3)}deg)`;
+    }
+
+    /* the reading's pool of light follows, dreamily late */
+    if (readingEl) {
+      lightX = damp(lightX, lightTX, 5, dt);
+      lightY = damp(lightY, lightTY, 5, dt);
+      readingEl.style.setProperty('--mx', `${lightX.toFixed(2)}%`);
+      readingEl.style.setProperty('--my', `${lightY.toFixed(2)}%`);
+    }
 
     /* world camera (Acts I to IV handoff) */
     const worldActive = p < 0.57;
@@ -181,6 +230,14 @@ export function initJourney() {
       iris.style.background =
         `radial-gradient(circle at ${cx}% ${cy}%, transparent ${Math.max(open - 18, 0)}%, ` +
         `rgba(196, 146, 42, 0.16) ${Math.max(open - 4, 0)}%, var(--ink) ${open}%)`;
+    }
+
+    /* the live mask plane: on once fully swapped in, off for the wipe */
+    if (maskPlane) {
+      const glOn = mFade >= 0.999 && w < 0.9;
+      maskPlane.hide = !glOn;
+      maskImg.style.opacity = glOn ? '0' : '';
+      if (mFade > 0.001) maskEngine.render(t, dt);
     }
 
     /* audio: journey acts, then the page sections below the journey */

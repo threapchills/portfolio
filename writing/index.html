@@ -72,8 +72,10 @@
     import { WritingCube } from '../js/core/cube.js';
     import { audio, mountMuteButton } from '../js/core/audio.js';
     import { qs } from '../js/core/util.js';
+    import { initCursor } from '../js/core/cursor.js';
 
     mountMuteButton();
+    initCursor();
 
     for (const a of document.querySelectorAll('#return-reading')) {
       a.addEventListener('click', () => sessionStorage.setItem('mw-return', '1'));

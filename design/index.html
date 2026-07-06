@@ -71,9 +71,11 @@
     import { GLPlanes } from '../js/core/gl-planes.js';
     import { audio, mountMuteButton } from '../js/core/audio.js';
     import { IS_MOBILE, clamp, qs, qsa } from '../js/core/util.js';
+    import { initCursor } from '../js/core/cursor.js';
 
     gsap.registerPlugin(ScrollTrigger);
     mountMuteButton();
+    initCursor();
     history.scrollRestoration = 'manual';
     scrollTo(0, 0);
 
