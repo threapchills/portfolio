@@ -11,7 +11,7 @@ const STEMS = {
   fire:  ['fire3', 'fire5', 'fire7'],
 };
 
-const MASTER_LEVEL = 0.55;
+const MASTER_LEVEL = 0.4;
 const SMOOTH_TAU = 1.6;            // seconds, mix easing time constant
 const ROTATE_MIN = 60, ROTATE_MAX = 90;
 const XFADE = 1.5;                 // variant crossfade, seconds
@@ -109,13 +109,16 @@ class Channel {
 export class AudioEngine {
   constructor() {
     this.started = false;
-    this.muted = localStorage.getItem(MUTE_KEY) === '1';
+    // muted unless the visitor has previously opted in: there is no entry
+    // gate any more, so silence is the default state of the world
+    this.muted = localStorage.getItem(MUTE_KEY) !== '0';
     this.channels = {};
     this._raf = null;
     this._last = 0;
   }
 
-  /* Must be called from a user gesture (the entry gate click). */
+  /* Must be called from a user gesture (first pointerdown / keydown,
+     or the unmute click itself). */
   start(muted = this.muted) {
     if (this.started) { this.setMuted(muted, true); return; }
     this.started = true;
@@ -221,7 +224,11 @@ export function mountMuteButton() {
     btn.setAttribute('aria-label', audio.muted ? 'Unmute' : 'Mute');
     btn.setAttribute('aria-pressed', audio.muted ? 'true' : 'false');
   };
-  btn.addEventListener('click', () => { audio.toggleMute(); });
+  btn.addEventListener('click', () => {
+    // the unmute click doubles as the wake gesture when nothing else has
+    if (audio.muted && !audio.started) { audio.start(false); audio.prime(); }
+    else audio.toggleMute();
+  });
   document.addEventListener('mw:muted', paint);
   paint();
 }

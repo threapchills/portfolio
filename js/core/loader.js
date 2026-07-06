@@ -1,9 +1,8 @@
 /* loader.js — Act 0, the Threshold.
    Preloads the opening acts behind a moon-phase progress ritual, then
-   offers the entry gate. The gate click is the audio unlock gesture. */
+   dissolves on its own. Sound waits for a gesture; the mute button rules. */
 
 import { asset, fromRoot, qs, qsa } from './util.js';
-import { audio } from './audio.js';
 
 const MIN_HOLD = 1200; // the ritual reads even on fast connections
 
@@ -30,11 +29,11 @@ function preloadAudioStem(name) {
     .catch(() => console.warn('[threshold] stem failed, proceeding:', name));
 }
 
-/* The journey threshold: five moons fill left to right, then the gate. */
+/* The journey threshold: five moons fill left to right, then the world
+   opens unbidden. */
 export function initThreshold({ images, onEnter }) {
   const threshold = qs('#threshold');
   const moons = qsa('.threshold-moon', threshold);
-  const gate = qs('.threshold-gate', threshold);
   const started = performance.now();
 
   const jobs = [
@@ -57,19 +56,11 @@ export function initThreshold({ images, onEnter }) {
     const elapsed = performance.now() - started;
     if (elapsed < MIN_HOLD) await new Promise((r) => setTimeout(r, MIN_HOLD - elapsed));
     moons.forEach((m) => m.classList.add('is-filled'));
-    threshold.classList.add('is-ready');
-    gate.querySelector('button')?.focus({ preventScroll: true });
-  });
-
-  gate.addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-sound]');
-    if (!btn) return;
-    const withSound = btn.dataset.sound === 'on';
-    audio.start(!withSound);
-    audio.prime();
+    // let the fifth moon register before the dissolve
+    await new Promise((r) => setTimeout(r, 700));
     threshold.classList.add('is-leaving');
     setTimeout(() => threshold.remove(), 1400);
-    onEnter?.(withSound);
+    onEnter?.();
   });
 }
 
