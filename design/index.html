@@ -48,6 +48,8 @@
     </button>
   </header>
 
+  <span class="chamber-edge"><em>iii</em> Human Doing</span>
+
   <main id="design-flow"><!-- pieces injected --></main>
 
   <section class="chamber-outro">
@@ -135,10 +137,16 @@
         </div>`;
       flow.appendChild(sec);
       ScrollTrigger.create({
-        trigger: sec, start: 'top 68%',
+        trigger: sec, start: 'top 82%',
         onEnter: () => sec.classList.add('is-revealed'),
       });
     }
+    // failsafe: never leave a caption masked if a trigger is missed
+    addEventListener('load', () => setTimeout(() => {
+      qsa('.design-piece').forEach((s) => {
+        if (s.getBoundingClientRect().top < innerHeight) s.classList.add('is-revealed');
+      });
+    }, 800));
 
     /* GL: all three behaviours; between consecutive stills the morph
        fires as the boundary crosses the viewport */
