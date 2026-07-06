@@ -266,6 +266,9 @@
   display: grid; place-items: center;
   background: #041412;
 }
+/* the goddess rises into the standing world, so her stage stays clear;
+   the tower and moons hold behind her until the mask covers the frame */
+#goddess-stage { background: transparent; }
 /* the figure's raised arms top the canvas; her face sits near 43% of its
    height, and the push must pivot on the face */
 #goddess-rig { position: relative; will-change: transform; transform-origin: 50% 43%; }

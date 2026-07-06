@@ -9,8 +9,10 @@ import { World } from './parallax.js';
 import { GLPlanes } from './gl-planes.js';
 import { audio } from './audio.js';
 
-/* Act beats as journey progress. */
-const BEATS = [0, 0.34, 0.46, 0.70, 0.86, 1];
+/* Act beats as journey progress. The establishing shot and the beetle's
+   whole crossing play without a rest between them; the world only settles
+   once the goddess has risen. */
+const BEATS = [0, 0.52, 0.70, 0.86, 1];
 
 /* Act VI: the reading walks its three cards one by one. Each band lifts
    a card while its siblings step back; the beats are the band centres. */
@@ -22,15 +24,23 @@ const READING_BANDS = [
 const READING_CARD_BEATS = [0.28, 0.52, 0.76];
 const READING_BEATS = [0, ...READING_CARD_BEATS, 1];
 
-/* The moth beat puts the creature's centre exactly on the camera axis,
-   so it lands dead-centre at every viewport aspect. The goddess beat
-   frames her low: skirt running out of the bottom of the shot. */
-const camCX = kf([[0, 0.500], [0.16, 0.488], [0.34, 0.470], [0.46, 0.450], [0.58, 0.450]]);
-const camCY = kf([[0, 0.520], [0.16, 0.605], [0.34, 0.799], [0.46, 0.570], [0.58, 0.617]]);
-const camZ  = kf([[0, 1.00],  [0.16, 1.32],  [0.34, 2.25],  [0.46, 3.00],   [0.58, 7.00]]);
-/* focus rack: the lens travels from the world plane out to the flora
-   and back in to the goddess as the camera passes through the layers */
-const focusD = kf([[0, 0.05], [0.16, 0.35], [0.30, 0.55], [0.38, 0.46], [0.44, 0.20], [0.58, 0.20]]);
+/* Opening choreography, keyframe-guided (Mike, 2026-07-07). The camera
+   holds the wide establishing frame and only pushes in gently: no deep
+   dive. The world stays lit behind the goddess until the mask close-up
+   covers it. All constants below are tuned by eye; adjust freely. */
+const camCX = kf([[0, 0.500], [0.30, 0.506], [0.55, 0.514], [0.70, 0.520]]);
+const camCY = kf([[0, 0.520], [0.30, 0.486], [0.55, 0.452], [0.70, 0.432]]);
+const camZ  = kf([[0, 1.00],  [0.30, 1.20],  [0.55, 1.50],  [0.70, 1.90]]);
+/* a soft focus rack: the foreground flora blurs a touch as we push in */
+const focusD = kf([[0, 0.12], [0.30, 0.18], [0.70, 0.24]]);
+
+/* the beetle's flight, in base-canvas units. It enters upper-left, wings
+   flapping, sweeps right and leaves the frame before the goddess stirs. */
+const BEETLE = { in: 0.08, out: 0.40, x0: -0.48, x1: 0.36, y: -0.40, arc: 0.04, yDrift: 0.10, flapAmp: 5, flapRate: 7 };
+
+/* the goddess rises whole from below into the standing world, then her
+   face floats up as the lens closes on the mask (keyframe 4). */
+const GODDESS = { fade: [0.44, 0.54], emerge: [0.44, 0.56], zoom: [0.57, 0.685], scaleRise: 0.72, scaleFace: 3.2, dropVH: 46, restVH: 35, tyEnd: 2 };
 
 /* Audio mix vectors per journey act (spec 4.9), then per page section. */
 const MIX = {
@@ -62,6 +72,10 @@ export function initJourney() {
   window.__lenis = lenis;
 
   const world = new World(qs('#world'));
+  // opt-in calibration handle (?dbg): drive one opening frame by hand
+  if (PARAMS.has('dbg')) {
+    window.__dbg = { world, camCX, camCY, camZ, focusD, BEETLE, GODDESS, seg, easeInOut };
+  }
   const goddessStage = qs('#goddess-stage');
   const goddessRig = qs('#goddess-rig');
   const wingsImg = qs('#goddess-wings');
@@ -209,13 +223,14 @@ export function initJourney() {
       });
     }
 
-    /* world camera (Acts I to IV handoff) */
-    const worldActive = p < 0.57;
+    /* The standing world: the backdrop through the whole opening. It holds
+       a wide frame and pushes in gently, and stays lit behind the goddess
+       until the mask close-up covers everything. */
+    const worldActive = p < 0.72;
     qs('#world').style.display = worldActive ? '' : 'none';
     if (worldActive) {
       if (REDUCED_MOTION) {
-        // gentle cross-fades between act stills: hold the nearest act pose
-        const pose = p < 0.16 ? 0 : p < 0.34 ? 0.16 : p < 0.46 ? 0.34 : 0.52;
+        const pose = p < 0.30 ? 0 : p < 0.55 ? 0.30 : 0.70;
         world.setCamera(camCX(pose), camCY(pose), camZ(pose));
         world.setFocus(focusD(pose));
       } else {
@@ -223,37 +238,46 @@ export function initJourney() {
         world.setFocus(focusD(p));
       }
 
-      /* The moth: invisible at rest, condenses out of the dark as the
-         camera enters the flora, then crawls out of frame at the beat.
-         Its exit reveals the goddess on the path behind it. */
-      /* she stands in the wide shots and at her reveal; during the dive
-         through the flora a floating glimpse would break the discovery */
-      world.setGoddessOpacity(1 - seg(p, 0.16, 0.22) + seg(p, 0.40, 0.455));
+      // the small goddess on the path is retired; she now arrives whole
+      world.setGoddessOpacity(0);
 
-      const appear = seg(p, 0.20, 0.30);
-      const m = seg(p, 0.365, 0.46, easeInOut);
-      const dx = 0.55 * m + 0.12 * m * m;
-      const dy = -0.28 * m + 0.10 * Math.sin(m * Math.PI);
-      const rot = REDUCED_MOTION ? 0 : 16 * m + Math.sin(t * 1.1) * 2 * (1 - m);
-      world.setMothPose({
-        dx, dy, rot,
-        opacity: REDUCED_MOTION && m > 0 ? appear * (1 - m) : appear,
-      });
+      /* the beetle crosses the establishing frame and is gone. It enters
+         from the upper left, sweeps right and exits the right edge. */
+      const bf = seg(p, BEETLE.in, BEETLE.out, easeInOut);
+      const flying = p > BEETLE.in - 0.02 && p < BEETLE.out + 0.02;
+      const bx = REDUCED_MOTION ? 0.2 : BEETLE.x0 + (BEETLE.x1 - BEETLE.x0) * bf;
+      // a gentle descent ramp keeps the beetle level as the camera lifts
+      const by = BEETLE.y + (REDUCED_MOTION ? 0 : Math.sin(bf * Math.PI) * BEETLE.arc + BEETLE.yDrift * bf);
+      const flap = REDUCED_MOTION ? 0 : Math.sin(t * BEETLE.flapRate) * BEETLE.flapAmp;
+      const bop = flying
+        ? seg(p, BEETLE.in, BEETLE.in + 0.03) * (1 - seg(p, BEETLE.out - 0.03, BEETLE.out))
+        : 0;
+      world.setMothPose({ dx: bx, dy: by, rot: flap, opacity: bop });
       world.render(t);
     }
 
-    /* Act IV swap: world -> goddess plane. The incoming stage carries an
-       opaque backdrop, so it covers the world as it fades in; the outgoing
-       stage never dims mid-band. */
-    const gFade = seg(p, 0.525, 0.565);
+    /* The goddess rises whole from below into the standing world, wings
+       breathing, then her face floats up as the lens closes in. Her stage
+       is transparent, so the tower stands behind her (keyframe 3) until
+       the mask close-up takes the frame (keyframe 4). */
+    const gFade = seg(p, GODDESS.fade[0], GODDESS.fade[1]);
     const gVisible = gFade > 0.001 && p < 0.73;
     goddessStage.style.display = gVisible ? '' : 'none';
     if (gVisible) {
       goddessStage.style.opacity = gFade.toFixed(3);
-      const gs = 0.8 + 2.6 * seg(p, 0.53, 0.70, easeInOut);
+      const emerge = seg(p, GODDESS.emerge[0], GODDESS.emerge[1], easeInOut);
+      const zoom = seg(p, GODDESS.zoom[0], GODDESS.zoom[1], easeInOut);
+      const gs = GODDESS.scaleRise + (GODDESS.scaleFace - GODDESS.scaleRise) * zoom;
+      // rise from below to her resting pose (tower above her), then the
+      // face floats up and in toward the mask close-up
+      const ty = (GODDESS.dropVH + (GODDESS.restVH - GODDESS.dropVH) * emerge) + (GODDESS.tyEnd - GODDESS.restVH) * zoom;
       const breathe = REDUCED_MOTION ? 0 : Math.sin(t * 0.9) * 0.004;
-      goddessRig.style.transform = `scale(${(gs + breathe).toFixed(4)})`;
-      if (wingsImg) wingsImg.style.transform = `scale(${(0.94 + 0.03 * Math.sin(t * 0.5)).toFixed(4)})`;
+      goddessRig.style.transform = `translateY(${ty.toFixed(2)}vh) scale(${(gs + breathe).toFixed(4)})`;
+      if (wingsImg) {
+        const flex = REDUCED_MOTION ? 0.94 : 0.94 + 0.035 * Math.sin(t * 0.8);
+        const wr = REDUCED_MOTION ? 0 : Math.sin(t * 0.8) * 1.2;
+        wingsImg.style.transform = `scale(${flex.toFixed(4)}) rotate(${wr.toFixed(2)}deg)`;
+      }
     }
 
     /* Act V swap: goddess -> mask extreme close-up */
