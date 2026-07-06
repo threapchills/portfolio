@@ -574,7 +574,7 @@
    film chamber
    ============================================================ */
 .film-page { background: #050403; }
-#scrub-wrap { position: relative; height: 520vh; }
+#scrub-wrap { position: relative; height: 680vh; }
 #scrub-stage {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
@@ -707,7 +707,7 @@
   line-height: 1.05;
 }
 .cube-face .face-count { font-size: 0.66rem; opacity: 0.5; margin-top: 0.7rem; letter-spacing: 0.14em; }
-.cube-face.is-decor { background-size: cover; background-blend-mode: normal; cursor: default; }
+.cube-face.is-decor { cursor: default; }
 .cube-hint {
   position: absolute;
   bottom: 7vh; left: 50%;

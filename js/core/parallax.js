@@ -24,8 +24,8 @@ const LAYERS = [
   { id: 'hills-far',  src: 'assets/journey/land-01-hills-far.webp',  x: 0,      y: 0.5167, w: 1,      depth: 0.10, drift: [4, 16] },
   { id: 'tower',      src: 'assets/journey/land-03-tower.webp',      x: 0.4298, y: 0.3077, w: 0.1918, depth: 0.15, drift: [4, 21] },
   { id: 'hill-main',  src: 'assets/journey/land-02-hill-main.webp',  x: 0,      y: 0.5462, w: 1,      depth: 0.18, drift: [4, 18] },
-  { id: 'goddess',    src: 'assets/journey/goddess-small.webp',      x: 0.435,  y: 0.600,  w: 0.028,  depth: 0.20, drift: [2, 12], goddess: true },
-  { id: 'moth',       src: 'assets/journey/moth-full.webp',          x: 0.28,   y: 0.66,   w: 0.38,   depth: 0.42, drift: [5, 9], moth: true },
+  { id: 'goddess',    src: 'assets/journey/goddess-full-m.webp',     x: 0.4225, y: 0.575,  w: 0.055,  depth: 0.20, drift: [2, 12], goddess: true },
+  { id: 'moth',       src: 'assets/journey/moth-full.webp',          x: 0.385,  y: 0.72,   w: 0.17,   depth: 0.42, drift: [5, 9], moth: true },
   { id: 'flora-mid',  src: 'assets/journey/land-04-flora-mid.webp',  x: -0.04,  y: 0.6756, w: 0.62,   depth: 0.62, drift: [6, 13] },
   { id: 'flora-fore', src: 'assets/journey/land-05-flora-fore.webp', x: 0,      y: 0.7141, w: 1,      depth: 0.85, drift: [8, 11] },
 ];
@@ -54,6 +54,12 @@ export class World {
       img.src = fromRoot(asset(cfg.src));
       img.alt = '';
       img.draggable = false;
+      if (cfg.goddess) {
+        // the drawing has no feet; her hem dissolves into the hill's glow
+        // instead of ending in a cropped edge
+        img.style.webkitMaskImage = img.style.maskImage =
+          'linear-gradient(to bottom, black 84%, transparent 99%)';
+      }
       wrap.appendChild(img);
       if (cfg.moon) {
         const glow = document.createElement('div');

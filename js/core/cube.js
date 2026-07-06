@@ -42,15 +42,21 @@ export class WritingCube {
       this.el.appendChild(d);
       return d;
     });
-    // decorative marker faces, top and bottom
-    for (const [rot, img] of [
-      ['rotateX(90deg)', 'assets/journey/moth-full-m.webp'],
-      ['rotateX(-90deg)', 'assets/cards/card-back.webp'],
+    // decorative faces, top and bottom: a motif composed on paper,
+    // centred and framed, never a stray crop
+    for (const [rot, img, size] of [
+      ['rotateX(90deg)', 'assets/cards/card-back.webp', '52%'],
+      ['rotateX(-90deg)', 'assets/journey/moon-3.webp', '46%'],
     ]) {
       const d = document.createElement('div');
       d.className = 'cube-face is-decor';
       d.style.transform = `${rot} translateZ(${half()})`;
-      d.style.backgroundImage = `url('${fromRoot(img)}')`;
+      d.style.backgroundImage =
+        `url('${fromRoot(img)}'), url('${fromRoot('assets/textures/paper-grain.webp')}')`;
+      d.style.backgroundSize = `${size} auto, 420px`;
+      d.style.backgroundPosition = 'center, center';
+      d.style.backgroundRepeat = 'no-repeat, repeat';
+      d.style.backgroundBlendMode = 'normal, multiply';
       d.setAttribute('aria-hidden', 'true');
       this.el.appendChild(d);
     }

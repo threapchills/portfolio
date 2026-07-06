@@ -11,9 +11,12 @@ import { audio } from './audio.js';
 /* Act beats as journey progress. */
 const BEATS = [0, 0.34, 0.46, 0.70, 0.86, 1];
 
-const camCX = kf([[0, 0.500], [0.16, 0.488], [0.34, 0.462], [0.46, 0.455], [0.58, 0.449]]);
-const camCY = kf([[0, 0.520], [0.16, 0.605], [0.34, 0.790], [0.46, 0.660], [0.58, 0.625]]);
-const camZ  = kf([[0, 1.00],  [0.16, 1.32],  [0.34, 2.60],  [0.46, 2.80],  [0.58, 7.00]]);
+/* The moth beat puts the creature's centre exactly on the camera axis,
+   so it lands dead-centre at every viewport aspect. The goddess beat
+   frames her low: skirt running out of the bottom of the shot. */
+const camCX = kf([[0, 0.500], [0.16, 0.488], [0.34, 0.470], [0.46, 0.450], [0.58, 0.450]]);
+const camCY = kf([[0, 0.520], [0.16, 0.605], [0.34, 0.799], [0.46, 0.570], [0.58, 0.617]]);
+const camZ  = kf([[0, 1.00],  [0.16, 1.32],  [0.34, 2.25],  [0.46, 3.00],   [0.58, 7.00]]);
 /* focus rack: the lens travels from the world plane out to the flora
    and back in to the goddess as the camera passes through the layers */
 const focusD = kf([[0, 0.05], [0.16, 0.35], [0.30, 0.55], [0.38, 0.46], [0.44, 0.20], [0.58, 0.20]]);
@@ -145,7 +148,7 @@ export function initJourney() {
     goddessStage.style.display = gVisible ? '' : 'none';
     if (gVisible) {
       goddessStage.style.opacity = gFade.toFixed(3);
-      const gs = 0.5 + 2.9 * seg(p, 0.53, 0.70, easeInOut);
+      const gs = 0.8 + 2.6 * seg(p, 0.53, 0.70, easeInOut);
       const breathe = REDUCED_MOTION ? 0 : Math.sin(t * 0.9) * 0.004;
       goddessRig.style.transform = `scale(${(gs + breathe).toFixed(4)})`;
       if (wingsImg) wingsImg.style.transform = `scale(${(0.94 + 0.03 * Math.sin(t * 0.5)).toFixed(4)})`;
