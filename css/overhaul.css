@@ -721,58 +721,72 @@
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
   margin-top: 1.2rem;
 }
-#rack-wrap { position: relative; }
-#rack-stage { height: 100vh; height: 100svh; overflow: hidden; display: flex; align-items: center; }
-#rack-track {
-  display: flex;
-  gap: clamp(2rem, 6vw, 6rem);
-  padding: 0 12vw;
-  align-items: center;
-  will-change: transform;
+.scrub-cta {
+  display: inline-block;
+  margin-top: 1.8rem;
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--moon);
+  text-decoration: none;
+  border: 1px solid rgba(240, 237, 230, 0.32);
+  padding: 0.85em 1.9em;
+  border-radius: 100px;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
-.film-plane {
+.scrub-cta:hover { border-color: var(--gold); background: rgba(196, 146, 42, 0.08); }
+/* the films: full-bleed hero banners, one per screen, legacy-scale but
+   riding above the cursor trail and warped by scroll momentum */
+#film-banners { position: relative; z-index: 2; }
+.film-banner {
   position: relative;
-  flex: 0 0 auto;
-  width: clamp(300px, 58vw, 780px);
+  display: block;
+  height: 100vh; height: 100svh;
+  overflow: hidden;
   text-decoration: none;
   color: var(--text);
+  background: #050403;
 }
-/* the rack breathes: a size rhythm and vertical stagger, never a strip */
-.film-plane:first-child { width: clamp(340px, 64vw, 860px); }
-.film-plane:nth-child(3n+2) { width: clamp(240px, 40vw, 540px); transform: translateY(-6vh); }
-.film-plane:nth-child(3n) { width: clamp(280px, 48vw, 640px); transform: translateY(7vh); }
-.film-plane .plane-num {
-  position: absolute;
-  top: -1.7rem; left: 0.15rem;
-  font-size: 0.62rem;
-  letter-spacing: 0.3em;
-  color: var(--gold);
-  opacity: 0.6;
-}
-.film-plane .plane-media {
-  display: block;
-  position: relative;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: #111;
-}
-.film-plane img, .film-plane video, .film-plane canvas {
+.banner-media { position: absolute; inset: 0; will-change: transform; }
+.banner-media img, .banner-media video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  transform: scale(1.06);      /* overscan so the warp skew never shows an edge */
 }
-.film-plane video { opacity: 0; transition: opacity 0.4s ease; }
-.film-plane:hover video.is-playing { opacity: 1; }
-.film-plane .plane-meta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 1.1rem; }
-.film-plane h3 {
+.banner-media video { opacity: 0; transition: opacity 0.7s ease; }
+.banner-media video.is-playing { opacity: 1; }
+/* a scrim so the caption always reads, heaviest at the foot */
+.film-banner::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(5,4,3,0.45) 0%, transparent 24%, transparent 52%, rgba(5,4,3,0.85) 100%);
+}
+.banner-caption {
+  position: absolute;
+  left: clamp(1.4rem, 6vw, 6rem);
+  bottom: clamp(2.4rem, 8vh, 6rem);
+  z-index: 2;
+  display: flex; flex-direction: column; gap: 0.55rem;
+  max-width: 82vw;
+}
+.banner-caption.is-centre { left: 50%; bottom: 50%; transform: translate(-50%, 50%); text-align: center; align-items: center; }
+.banner-num { font-size: 0.66rem; letter-spacing: 0.34em; color: var(--gold); opacity: 0.75; }
+.banner-caption h3 {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  font-size: clamp(2.4rem, 7vw, 5.4rem);
+  line-height: 1;
   margin: 0;
-  transition: color 0.15s ease;
+  transition: color 0.2s ease;
 }
-.film-plane:hover h3 { color: var(--moon); }
-.film-plane .plane-tag { font-size: 0.64rem; letter-spacing: 0.26em; text-transform: uppercase; opacity: 0.55; }
+.film-banner:hover .banner-caption h3 { color: var(--moon); }
+.banner-tag { font-size: 0.66rem; letter-spacing: 0.26em; text-transform: uppercase; opacity: 0.62; display: flex; gap: 1.3rem; align-items: baseline; flex-wrap: wrap; }
+.banner-caption.is-centre .banner-tag { justify-content: center; }
+.banner-tag em { font-style: normal; color: var(--gold); opacity: 0.95; letter-spacing: 0.24em; }
+.film-banner.is-more { background: linear-gradient(#050403, #000); display: grid; place-items: center; }
 
 /* ============================================================
    writing chamber — the cube

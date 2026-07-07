@@ -333,14 +333,10 @@ const WRITING_FACES = (function () {
    root; the film page prefixes them. Mikey leads the rack.
    ============================================================ */
 
+/* Films shown as full-page banners that live outside PROJECTS. Each has a
+   proper hero loop; films without one fall back to the More Films archive.
+   Mikey leads the chamber as the scrub hero and has its own detail page. */
 const RACK_EXTRAS = [
-  {
-    title: "Mikey",
-    tag: "Spec film",
-    poster: "video/mikey/poster.webp",
-    href: "https://drive.google.com/file/d/13NUC-VuXQAkWlMTDl9NR6WkcG51zzfep/view?usp=sharing",
-    external: true
-  },
   {
     title: "Mythopoeic",
     tag: "Spec ad",
@@ -362,34 +358,6 @@ const RACK_EXTRAS = [
     poster: "images/vast-island/Exquisite_modern_disney_2k_202602152353-2.webp",
     loop: "video/vast-island-hero.mp4",
     href: "https://www.youtube.com/watch?v=JgBicFpTIDM",
-    external: true
-  },
-  {
-    title: "I Am Lightening",
-    tag: "From the archive",
-    poster: "images/rack/lightening.webp",
-    href: "https://www.youtube.com/watch?v=hQ7ZkjxpdIQ",
-    external: true
-  },
-  {
-    title: "Tokolosh AutoEncoder",
-    tag: "From the archive",
-    poster: "images/rack/tokolosh.webp",
-    href: "https://drive.google.com/file/d/1J_j_Z7Lu_V6eloxoYpKqr4vLmh4FG9ZB/view?usp=sharing",
-    external: true
-  },
-  {
-    title: "Gandia",
-    tag: "From the archive",
-    poster: "images/rack/gandia.webp",
-    href: "https://drive.google.com/file/d/1qkm1kRKqVQTI9aZI8P1OtqdwyfGhTXjA/view?usp=sharing",
-    external: true
-  },
-  {
-    title: "SA Life",
-    tag: "From the archive",
-    poster: "images/rack/salife.webp",
-    href: "https://youtu.be/5jpuoFmo-DY",
     external: true
   }
 ];

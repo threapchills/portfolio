@@ -59,16 +59,13 @@
         <div class="scrub-brand" id="scrub-brand">
           <img src="../assets/brand/mikey-logo.webp" alt="Mikey">
           <p>A spec film. This is what cinematic AI looks like now.</p>
+          <a class="scrub-cta" href="../projects/mikey/">Enter the film &rarr;</a>
         </div>
       </div>
     </section>
 
-    <!-- the Rack -->
-    <section id="rack-wrap" aria-label="The films">
-      <div id="rack-stage">
-        <div id="rack-track"><!-- planes injected --></div>
-      </div>
-    </section>
+    <!-- the films, full-bleed hero banners -->
+    <section id="film-banners" aria-label="The films"><!-- banners injected --></section>
 
     <section class="chamber-outro">
       <h2 class="outro-title">More where that came from.</h2>
@@ -90,7 +87,6 @@
   <script type="module">
     import { initChamberLoader } from '../js/core/loader.js';
     import { FrameScrubber } from '../js/core/sequence.js';
-    import { GLPlanes } from '../js/core/gl-planes.js';
     import { audio, mountMuteButton } from '../js/core/audio.js';
     import { IS_MOBILE, clamp, seg } from '../js/core/util.js';
     import { initCursor } from '../js/core/cursor.js';
@@ -131,15 +127,14 @@
       onUpdate: (self) => { scrubP = self.progress; },
     });
 
-    /* ---- the Rack ---- */
+    /* ---- the films, as full-bleed banners ---- */
     const films = PROJECTS
-      .filter((p) => p.chamber === 'film')
+      .filter((p) => p.chamber === 'film' && p.id !== 'video-archive')
       .sort((a, b) => a.chamberOrder - b.chamberOrder);
-    const track = document.getElementById('rack-track');
     const rel = (path) => path ? path.replace('../../', '../') : '';
     const ext = (path) => /^https?:/i.test(path) ? path : '../' + path;
 
-    const toItem = (f) => ({
+    const fromProject = (f) => ({
       title: f.title,
       tag: `${f.category} · ${f.index}`,
       poster: rel(f.heroFallback || f.heroImage || (f.gallery && f.gallery[0]) || ''),
@@ -147,95 +142,63 @@
       href: `../projects/${f.id}/`,
     });
     const fromExtra = (x) => ({
-      title: x.title,
-      tag: x.tag,
+      title: x.title, tag: x.tag,
       poster: ext(x.poster),
       loop: x.loop ? `../${x.loop}` : '',
-      href: x.href,
-      external: !!x.external,
-      remote: /^https?:/i.test(x.poster),
+      href: x.href, external: !!x.external,
     });
 
-    /* Mikey leads the walk; the archive door closes it */
-    const roster = [
-      fromExtra(RACK_EXTRAS[0]),
-      ...films.filter((f) => f.id !== 'video-archive').map(toItem),
-      ...RACK_EXTRAS.slice(1).map(fromExtra),
-      ...films.filter((f) => f.id === 'video-archive').map(toItem),
-    ];
+    const banners = [...films.map(fromProject), ...RACK_EXTRAS.map(fromExtra)];
+    const wrap = document.getElementById('film-banners');
+    const mediaEls = [];
 
-    roster.forEach((item, i) => {
+    banners.forEach((item, i) => {
       const el = document.createElement('a');
-      el.className = 'film-plane';
+      el.className = 'film-banner';
       el.href = item.href;
       if (item.external) { el.target = '_blank'; el.rel = 'noopener'; }
-      if (item.remote) el.dataset.remote = '1';
+      const clean = String(item.title).replace(/<[^>]+>/g, '');
       el.innerHTML = `
-        <span class="plane-num">${String(i + 1).padStart(2, '0')}</span>
-        <span class="plane-media">
-          <img src="${item.poster}" alt="${String(item.title).replace(/<[^>]+>/g, '')} still" loading="lazy">
+        <span class="banner-media">
+          <img src="${item.poster}" alt="${clean} still" loading="lazy">
           ${item.loop ? `<video muted loop playsinline preload="none" src="${item.loop}"></video>` : ''}
         </span>
-        <span class="plane-meta">
+        <span class="banner-caption">
+          <span class="banner-num">${String(i + 1).padStart(2, '0')}</span>
           <h3>${item.title}</h3>
-          <span class="plane-tag">${item.tag}</span>
+          <span class="banner-tag">${item.tag}<em>${item.external ? 'Watch &rarr;' : 'Open &rarr;'}</em></span>
         </span>`;
-      track.appendChild(el);
-      const video = el.querySelector('video');
-      if (video) {
-        el.addEventListener('pointerenter', () => {
-          video.play().then(() => video.classList.add('is-playing')).catch(() => {});
-        });
-        el.addEventListener('pointerleave', () => {
-          video.classList.remove('is-playing');
-          video.pause();
-        });
-      }
+      wrap.appendChild(el);
+      mediaEls.push(el.querySelector('.banner-media'));
     });
 
-    // pinned horizontal travel
-    const rackLen = () => Math.max(track.scrollWidth - innerWidth, 0);
-    gsap.to(track, {
-      x: () => -rackLen(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#rack-wrap',
-        start: 'top top',
-        end: () => `+=${rackLen()}`,
-        scrub: true,
-        pin: true,
-        invalidateOnRefresh: true,
-      },
-    });
+    // the More Films door closes the walk
+    const more = document.createElement('a');
+    more.className = 'film-banner is-more';
+    more.href = '../projects/video-archive/';
+    more.innerHTML = `
+      <span class="banner-caption is-centre">
+        <span class="banner-num">${String(banners.length + 1).padStart(2, '0')}</span>
+        <h3>More films</h3>
+        <span class="banner-tag">The rest of the reel<em>Enter &rarr;</em></span>
+      </span>`;
+    wrap.appendChild(more);
 
-    /* ---- GL: bend + ripple on the rack planes (desktop only) ---- */
-    let engine = null;
-    if (!IS_MOBILE) {
-      const glc = document.createElement('canvas');
-      glc.id = 'gl-canvas';
-      document.body.appendChild(glc);
-      engine = new GLPlanes(glc);
-      if (engine.enabled) {
-        document.body.classList.add('gl-on');
-        for (const el of track.querySelectorAll('.film-plane')) {
-          // remote posters would taint the GL textures; those planes stay flat
-          if (el.dataset.remote) continue;
-          const img = el.querySelector('img');
-          const plane = engine.addPlane(el.querySelector('.plane-media'), {
-            srcA: img.src, ripple: true, bend: true,
-          });
-          // the GL poster steps aside while a hover loop plays
-          const video = el.querySelector('video');
-          if (video && plane) {
-            video.addEventListener('playing', () => { plane.hide = true; });
-            el.addEventListener('pointerleave', () => { plane.hide = false; });
-          }
-        }
+    // clips wake when their banner holds the frame, and sleep when it leaves
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        const v = e.target.querySelector('video');
+        if (!v) continue;
+        if (e.isIntersecting) v.play().then(() => v.classList.add('is-playing')).catch(() => {});
+        else { v.pause(); v.classList.remove('is-playing'); }
       }
-    }
+    }, { threshold: 0.5 });
+    wrap.querySelectorAll('.film-banner').forEach((b) => io.observe(b));
 
-    /* ---- frame loop ---- */
+    /* ---- frame loop: the scrub, and the scroll-velocity warp that glues
+       the films to the journey ---- */
     let last = performance.now();
+    let sVel = 0;
     gsap.ticker.add(() => {
       const now = performance.now();
       const dt = Math.min((now - last) / 1000, 0.1);
@@ -243,12 +206,22 @@
       scrubber.setProgress(scrubP);
       scrubber.tick(dt);
       const bo = 1 - seg(scrubP, 0.16, 0.26);
-      brand.style.opacity = (seg(scrubP, 0.02, 0.06) * bo).toFixed(3);
-      // the letterbox breathes in for the scrub, retreats for the rack
+      const bOp = seg(scrubP, 0.02, 0.06) * bo;
+      brand.style.opacity = bOp.toFixed(3);
+      brand.style.pointerEvents = bOp > 0.15 ? 'auto' : 'none';
       const lb = seg(scrubP, 0.02, 0.12) * (1 - seg(scrubP, 0.86, 0.98));
       lbTop.style.transform = `scaleY(${lb.toFixed(3)})`;
       lbBottom.style.transform = `scaleY(${lb.toFixed(3)})`;
-      engine?.render(now / 1000, dt);
+
+      // the warp: momentum stretches and shears whichever film owns the frame
+      sVel += ((lenis.velocity || 0) - sVel) * (1 - Math.exp(-8 * dt));
+      const stretch = clamp(Math.abs(sVel) * 0.0012, 0, 0.045);
+      const shear = clamp(sVel * 0.05, -1.6, 1.6);
+      for (const m of mediaEls) {
+        const r = m.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > innerHeight) continue;
+        m.style.transform = `scaleY(${(1 + stretch).toFixed(4)}) skewX(${shear.toFixed(3)}deg)`;
+      }
     });
 
     /* ---- chamber loader: preload the frames behind the moon ---- */
