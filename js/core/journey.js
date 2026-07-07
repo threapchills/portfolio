@@ -28,9 +28,11 @@ const READING_BEATS = [0, ...READING_CARD_BEATS, 1];
    holds the wide establishing frame and only pushes in gently: no deep
    dive. The world stays lit behind the goddess until the mask close-up
    covers it. All constants below are tuned by eye; adjust freely. */
-const camCX = kf([[0, 0.500], [0.30, 0.506], [0.55, 0.514], [0.70, 0.520]]);
-const camCY = kf([[0, 0.520], [0.30, 0.486], [0.55, 0.452], [0.70, 0.432]]);
-const camZ  = kf([[0, 1.00],  [0.30, 1.20],  [0.55, 1.50],  [0.70, 1.90]]);
+const camCX = kf([[0, 0.500], [0.10, 0.502], [0.30, 0.506], [0.55, 0.514], [0.70, 0.520]]);
+const camCY = kf([[0, 0.500], [0.10, 0.505], [0.30, 0.486], [0.55, 0.452], [0.70, 0.432]]);
+/* the establishing frame opens with the whole artwork visible (z below the
+   cover scale, so the far edges show), then fills the frame and pushes in */
+const camZ  = kf([[0, 0.70],  [0.10, 1.00],  [0.30, 1.20],  [0.55, 1.50],  [0.70, 1.90]]);
 /* a soft focus rack: the foreground flora blurs a touch as we push in */
 const focusD = kf([[0, 0.12], [0.30, 0.18], [0.70, 0.24]]);
 

@@ -315,7 +315,10 @@
   position: absolute; inset: 8%;
   width: 84%; height: 84%;
   object-fit: contain;
-  opacity: var(--ignite);
+  /* the sigils soak into the mask like ink rather than sit on it as flat
+     black; the bloom behind carries the ignition light */
+  opacity: calc(var(--ignite) * 0.78);
+  mix-blend-mode: multiply;
   transform: scale(calc(1.18 - 0.18 * var(--ignite)));  /* soft scale-settle */
 }
 

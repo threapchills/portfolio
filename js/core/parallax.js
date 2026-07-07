@@ -115,10 +115,12 @@ export class World {
   render(time) {
     const { cx, cy, z } = this.cam;
     const zoomFactor = clamp(z - 0.9, 0, 3.2);
-    // pick the MAX_BLURRED most defocused layers; everything else stays sharp
+    // only the near foreground softens; the big background layers (base,
+    // hills, tower, moons) always stay sharp, so no full-frame blur ever
+    // snaps on and off under scroll — that flash was the strobe
     const wanted = this.layers
       .map((l) => ({ l, blur: FUZZ_K * Math.abs(l.cfg.depth - this.focus) * zoomFactor }))
-      .filter((e) => e.blur > 0.6)
+      .filter((e) => e.blur > 0.6 && e.l.cfg.depth >= 0.4)
       .sort((a, b) => b.blur - a.blur)
       .slice(0, MAX_BLURRED);
     const blurIds = new Map(wanted.map((e) => [e.l.cfg.id, e.blur]));
@@ -166,9 +168,12 @@ export class World {
 
       wrap.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${s.toFixed(4)})`;
 
-      // the fuzz: quantised so the GPU never animates a live blur radius
-      const blur = blurIds.get(cfg.id) || 0;
-      const step = Math.round(blur * 2) / 2;
+      // the fuzz: the target eases and is quantised, so a layer entering or
+      // leaving the focus never snaps its filter on and off (the strobe);
+      // the radius still lands on half-pixel steps, never animated live
+      const target = blurIds.get(cfg.id) || 0;
+      l.blur = (l.blur ?? 0) + (target - (l.blur ?? 0)) * 0.16;
+      const step = l.blur < 0.35 ? 0 : Math.round(l.blur * 2) / 2;
       if (this.blurSteps.get(cfg.id) !== step) {
         this.blurSteps.set(cfg.id, step);
         wrap.style.filter = step > 0 ? `blur(${step}px)` : 'none';
