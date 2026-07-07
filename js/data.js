@@ -71,7 +71,7 @@ I tried to craft something symbolic and layered: a philosophical allegory that l
       { title: "Why you can't trust Grok 4's benchmarks", url: "https://mikewhyle.com/trust-issues-with-grok-4/", excerpt: "For users in South Africa and across the continent, the stakes are particularly high. Trust is the most critical currency." },
       { title: "Risen from the sea", url: "https://mikewhyle.com/risen-from-the-sea/", excerpt: "Imagine gazing out at a sunset that cascades over the ocean, viewed from the summit of a majestic flat-topped peak that has stood as witness to the passage of time for hundreds of millions of years." },
       { title: "What in the SMR is this?!", url: "https://mikewhyle.com/what-in-the-smr-is-this/", excerpt: "Generative AI and the digital economy are advancing at breakneck pace, but looming energy shortfalls could thwart Big Tech's best-laid plans for expansion." },
-      { title: "The future of insurance in Africa", url: "https://mikewhyle.com/the-future-of-insurance-in-africa//", excerpt: "To adapt to the current circumstances and secure the longevity of their businesses, insurers must move beyond being resilient to being disruptive." },
+      { title: "The future of insurance in Africa", url: "https://mikewhyle.com/the-future-of-insurance-in-africa/", excerpt: "To adapt to the current circumstances and secure the longevity of their businesses, insurers must move beyond being resilient to being disruptive." },
       { title: "What's causing the skyrocketing demand for compute?", url: "https://mikewhyle.com/whats-causing-the-skyrocketing-demand-for-compute/", excerpt: "Data centers have evolved from repositories of information to become the operational bedrock of modern businesses." },
       { title: "Pioneering progress", url: "https://mikewhyle.com/pioneering-progress/", excerpt: "Experts are concerned about resource limits and insufficient radiology skills and services in Africa, particularly for cancer detection and treatment." },
       { title: "Blood, books and bots: the true origins of AI", url: "https://mikewhyle.com/blood-books-and-bots-the-true-origins-of-ai/", excerpt: "The first known use of AI is actually much earlier than people think. In fact it was during the Palaeolithic era, probably around 100,000 years ago." }
@@ -250,11 +250,8 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
     description: `An ongoing archive of GenAI filmmaking work: anime-influenced short films, experimental pieces, and various explorations of what AI video generation can do when given an actual aesthetic direction rather than a prompt list.`,
     heroImage: "../../images/motionfold.png",
     videos: [
-      "https://www.youtube.com/watch?v=JgBicFpTIDM",
       "https://www.youtube.com/watch?v=hQ7ZkjxpdIQ",
-      "https://drive.google.com/file/d/1r6bXQpUGQ1G8Uphgd9ugZbrKlqFH_IwH/view?usp=sharing",
       "https://drive.google.com/file/d/1t40QjErBrtredC6FVyrHR_l8RmNu-_28/view?usp=sharing",
-      "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing",
       "https://drive.google.com/file/d/1J_j_Z7Lu_V6eloxoYpKqr4vLmh4FG9ZB/view?usp=sharing",
       "https://drive.google.com/file/d/1qkm1kRKqVQTI9aZI8P1OtqdwyfGhTXjA/view?usp=sharing",
       "https://youtu.be/5jpuoFmo-DY",

@@ -184,7 +184,12 @@
   display: block;
   width: clamp(88px, 9vw, 108px);
   filter: invert(1);
+  transition: opacity 0.15s ease;
 }
+/* in the chambers the same mark leads home to the reading, a touch smaller */
+.return-mark { display: inline-flex; }
+.return-mark img { width: clamp(60px, 6vw, 80px); opacity: 0.9; }
+.return-mark:hover img { opacity: 1; }
 .return-reading {
   display: inline-flex; align-items: center; gap: 0.6rem;
   text-decoration: none;

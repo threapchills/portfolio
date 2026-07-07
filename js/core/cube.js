@@ -11,7 +11,7 @@ import { clamp, damp, fromRoot, REDUCED_MOTION } from './util.js';
 const FACE_ANGLES = [0, -90, -180, -270];
 const GRID = 4;                       // 4x4 tiles per face
 const CELLS = GRID * GRID;
-const MAX_TITLED = 9;                 // titles per content face; rest stay paper
+const MAX_TITLED = CELLS;             // fill the face; every story earns a tile
 
 const GLYPHS = {
   moon: 'assets/journey/moon-5.webp',
@@ -129,23 +129,27 @@ export class WritingCube {
   }
 
   wire() {
-    let px = 0, py = 0, moved = 0;
+    let px = 0, py = 0, sx = 0, sy = 0;
     this.el.parentElement.addEventListener('pointerdown', (e) => {
-      this.dragging = true; moved = 0; px = e.clientX; py = e.clientY;
+      this.dragging = true;
+      sx = px = e.clientX; sy = py = e.clientY;
+      this._wasDrag = false;
+      this.vel = 0;
     });
     window.addEventListener('pointermove', (e) => {
       if (!this.dragging) return;
       const dx = e.clientX - px, dy = e.clientY - py;
       px = e.clientX; py = e.clientY;
-      moved += Math.abs(dx) + Math.abs(dy);
       this.targetY += dx * 0.35;
       this.rotY += dx * 0.35;
       this.vel = dx * 0.35;
       this.targetX = clamp(this.targetX - dy * 0.12, -30, 16);
     });
-    window.addEventListener('pointerup', () => {
+    window.addEventListener('pointerup', (e) => {
       if (!this.dragging) return;
       this.dragging = false;
+      // straight-line travel decides tap vs drag; a jittery click still selects
+      this._wasDrag = Math.hypot(e.clientX - sx, e.clientY - sy) > 9;
       this.targetY = this.rotY + this.vel * 14;
       this.snap();
     });
@@ -162,7 +166,7 @@ export class WritingCube {
     // a click on a face turned away simply brings it to the front
     this.faceEls.forEach((d, i) => {
       d.addEventListener('click', (e) => {
-        if (this.dragging || moved > 12) return;
+        if (this.dragging || this._wasDrag) return;
         if (this.frontFace() !== i) { this.rotateToFace(i); return; }
         if (d.dataset.kind !== 'content') return;
         const f = this.content[i];
@@ -171,6 +175,11 @@ export class WritingCube {
         else this.onSelect?.(f, d);
       });
     });
+
+    // holding a hand over the cube stills its sway, so a cell stays put
+    // under the cursor long enough to hover and click
+    this.el.addEventListener('pointerenter', () => { this.hovering = true; });
+    this.el.addEventListener('pointerleave', () => { this.hovering = false; });
 
     window.addEventListener('keydown', (e) => {
       if (this.suspended) return;
@@ -189,7 +198,10 @@ export class WritingCube {
 
   tick(dt, time) {
     if (this.suspended) return;
-    const idle = REDUCED_MOTION || this.dragging ? 0 : Math.sin(time * 0.4) * 1.2;
+    // the sway eases away while the hand rests on the cube, and returns after
+    const swayTarget = (this.dragging || this.hovering) ? 0 : 1;
+    this.swayGain = damp(this.swayGain ?? 1, swayTarget, 5, dt);
+    const idle = REDUCED_MOTION ? 0 : Math.sin(time * 0.4) * 1.2 * this.swayGain;
     this.rotY = damp(this.rotY, this.targetY, this.dragging ? 30 : 6, dt);
     this.rotX = damp(this.rotX, this.targetX, 6, dt);
     // a small translate keeps the monolith off dead-centre
