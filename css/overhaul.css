@@ -882,7 +882,9 @@
   overflow: hidden;
 }
 .cell-label em { display: block; font-style: normal; font-family: var(--font-ui); font-size: 0.5rem; letter-spacing: 0.14em; color: var(--gold); opacity: 0.8; }
-.cube-cell.is-titled:hover, .cube-cell.is-titled:focus-visible {
+/* .is-hover is driven from JS so the glow also fires on the 90° face,
+   where the browser's own :hover cannot */
+.cube-cell.is-titled:hover, .cube-cell.is-titled:focus-visible, .cube-cell.is-titled.is-hover {
   transform: translateZ(22px) scale(1.04);
   color: var(--moon);
   box-shadow: 0 0 22px rgba(196, 146, 42, 0.4), inset 0 0 0 1px rgba(196, 146, 42, 0.4);

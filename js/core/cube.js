@@ -189,6 +189,13 @@ export class WritingCube {
     this.el.addEventListener('pointerenter', () => { this.hovering = true; });
     this.el.addEventListener('pointerleave', () => { this.hovering = false; });
 
+    // track the pointer so the tick can glow the tile beneath it; :hover
+    // cannot fire on the 90° face, so we paint the glow ourselves
+    this.el.parentElement.addEventListener('pointermove', (e) => {
+      this._px = e.clientX; this._py = e.clientY; this._inScene = true;
+    });
+    this.el.parentElement.addEventListener('pointerleave', () => { this._inScene = false; });
+
     window.addEventListener('keydown', (e) => {
       if (this.suspended) return;
       if (e.key === 'ArrowRight') { this.targetY -= 90; this.snap(); }
@@ -215,6 +222,28 @@ export class WritingCube {
     // a small translate keeps the monolith off dead-centre
     this.el.style.transform =
       `translate3d(-5%, 1%, 0) rotateX(${(this.rotX + idle * 0.4).toFixed(3)}deg) rotateY(${(this.rotY + idle).toFixed(3)}deg)`;
+    this.updateHover();
+  }
+
+  /* glow the titled tile under the pointer on the fronting collection, since
+     :hover cannot fire on the 90° face */
+  updateHover() {
+    let over = null;
+    if (this._inScene && !this.dragging) {
+      const d = this.faceEls[this.frontFace()];
+      if (d && d.dataset.kind === 'content') {
+        const x = this._px, y = this._py;
+        for (const cell of d.querySelectorAll('.cube-cell.is-titled')) {
+          const r = cell.getBoundingClientRect();
+          if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) { over = cell; break; }
+        }
+      }
+    }
+    if (over !== this._hovered) {
+      this._hovered?.classList.remove('is-hover');
+      over?.classList.add('is-hover');
+      this._hovered = over;
+    }
   }
 }
 
