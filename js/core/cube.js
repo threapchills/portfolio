@@ -212,11 +212,20 @@ export class WritingCube {
     const swayTarget = (this.dragging || this.hovering) ? 0 : 1;
     this.swayGain = damp(this.swayGain ?? 1, swayTarget, 5, dt);
     const idle = REDUCED_MOTION ? 0 : Math.sin(time * 0.4) * 1.2 * this.swayGain;
+    // cursor-follow lean: the cube tips toward the hand as it passes over, a
+    // soft morph in place of the GL warp a 3D cube cannot take
+    let lx = 0, ly = 0;
+    if (this.hovering && !this.dragging && !REDUCED_MOTION && this._px != null) {
+      ly = ((this._px / window.innerWidth) - 0.5) * 12;
+      lx = -((this._py / window.innerHeight) - 0.5) * 9;
+    }
+    this.leanX = damp(this.leanX ?? 0, lx, 6, dt);
+    this.leanY = damp(this.leanY ?? 0, ly, 6, dt);
     this.rotY = damp(this.rotY, this.targetY, this.dragging ? 30 : 6, dt);
     this.rotX = damp(this.rotX, this.targetX, 6, dt);
     // a small translate keeps the monolith off dead-centre
     this.el.style.transform =
-      `translate3d(-5%, 1%, 0) rotateX(${(this.rotX + idle * 0.4).toFixed(3)}deg) rotateY(${(this.rotY + idle).toFixed(3)}deg)`;
+      `translate3d(-5%, 1%, 0) rotateX(${(this.rotX + idle * 0.4 + this.leanX).toFixed(3)}deg) rotateY(${(this.rotY + idle + this.leanY).toFixed(3)}deg)`;
     this.updateHover();
   }
 

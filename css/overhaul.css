@@ -791,16 +791,22 @@
 /* ============================================================
    writing chamber — the cube
    ============================================================ */
-.writing-page { background: var(--ink); }
+/* the dark ground and its pool of light live on the page, beneath the
+   cursor trail; the scene above is transparent so the trail shows on the
+   background but the opaque cube covers it */
+.writing-page {
+  background:
+    radial-gradient(ellipse 62% 50% at 50% 44%, rgba(242, 226, 160, 0.06), transparent 70%),
+    var(--ink);
+}
 #cube-scene {
   position: relative;
+  z-index: 2;
   height: 100vh; height: 100svh;
   display: grid; place-items: center;
   perspective: 1200px;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 62% 50% at 50% 44%, rgba(242, 226, 160, 0.06), transparent 70%),
-    var(--ink);
+  background: transparent;
   touch-action: none;
 }
 #cube-scene::before {
