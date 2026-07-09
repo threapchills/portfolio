@@ -126,13 +126,14 @@
       { img: H + 'healthtech-design9.webp', eyebrow: 'Healthtech identities', text: 'Complex science, kept approachable; AI-first, at a fraction of the cost.' },
       { img: H + 'healthtech-design10.webp', eyebrow: 'Healthtech identities' },
       { img: H + 'healthtech-design13.webp', eyebrow: 'Healthtech identities' },
+      { img: D + 'lookbookv2.webp', eyebrow: 'Mikey · brand identity', portrait: true, text: 'Wordmark, monogram and mark system for the Mikey film brand.' },
       { img: D + 'cars.webp', eyebrow: 'Automotive', text: 'Concept showroom visualisation.' },
     ];
 
     const flow = qs('#design-flow');
     for (const piece of PIECES) {
       const sec = document.createElement('section');
-      sec.className = 'design-piece';
+      sec.className = 'design-piece' + (piece.portrait ? ' is-portrait' : '');
       const hasCopy = piece.text || piece.link;
       sec.innerHTML = `
         <div class="piece-media"><img src="${rel(piece.img)}" alt="${piece.eyebrow}" loading="lazy"></div>
