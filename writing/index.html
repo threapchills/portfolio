@@ -216,6 +216,7 @@
 
     /* ---- the cube ---- */
     cube = new WritingCube(qs('#cube'), faces, { onSelect: openPlane, onCell: openCell });
+    if (location.search.includes('dbg')) window.__cube = cube;
     let last = performance.now();
     const loop = (now) => {
       cube.tick(Math.min((now - last) / 1000, 0.1), now / 1000);

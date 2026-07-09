@@ -162,18 +162,26 @@ export class WritingCube {
       this._settle = setTimeout(() => this.snap(), 380);
     }, { passive: false });
 
-    // a click on a fronting collection opens a tile or the whole face;
-    // a click on a face turned away simply brings it to the front
-    this.faceEls.forEach((d, i) => {
-      d.addEventListener('click', (e) => {
-        if (this.dragging || this._wasDrag) return;
-        if (this.frontFace() !== i) { this.rotateToFace(i); return; }
-        if (d.dataset.kind !== 'content') return;
-        const f = this.content[i];
-        const cell = e.target.closest('.cube-cell.is-titled');
-        if (cell) this.onCell?.(f.entries[+cell.dataset.entry], f);
-        else this.onSelect?.(f, d);
-      });
+    // Resolve clicks against the tiles' projected rects rather than the
+    // browser's hit-test target: a face brought to the front by a 90° turn
+    // (Commentary, the moon) does not hit-test reliably under preserve-3d,
+    // so the click lands on the container instead of the tile. The rects
+    // stay accurate, so we pick the tile ourselves.
+    this.el.parentElement.addEventListener('click', (e) => {
+      if (this.dragging || this._wasDrag) return;
+      const d = this.faceEls[this.frontFace()];
+      if (!d || d.dataset.kind !== 'content') return;
+      const x = e.clientX, y = e.clientY;
+      const fr = d.getBoundingClientRect();
+      if (x < fr.left || x > fr.right || y < fr.top || y > fr.bottom) return;  // off the cube
+      const f = this.content[+d.dataset.index];
+      let picked = null;
+      for (const cell of d.querySelectorAll('.cube-cell.is-titled')) {
+        const r = cell.getBoundingClientRect();
+        if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) { picked = cell; break; }
+      }
+      if (picked) this.onCell?.(f.entries[+picked.dataset.entry], f);
+      else this.onSelect?.(f, d);
     });
 
     // holding a hand over the cube stills its sway, so a cell stays put
