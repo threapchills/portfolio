@@ -184,11 +184,6 @@ export class WritingCube {
       else this.onSelect?.(f, d);
     });
 
-    // holding a hand over the cube stills its sway, so a cell stays put
-    // under the cursor long enough to hover and click
-    this.el.addEventListener('pointerenter', () => { this.hovering = true; });
-    this.el.addEventListener('pointerleave', () => { this.hovering = false; });
-
     // track the pointer so the tick can glow the tile beneath it; :hover
     // cannot fire on the 90° face, so we paint the glow ourselves
     this.el.parentElement.addEventListener('pointermove', (e) => {
@@ -228,17 +223,24 @@ export class WritingCube {
   /* glow the titled tile under the pointer on the fronting collection, since
      :hover cannot fire on the 90° face */
   updateHover() {
-    let over = null;
+    let over = null, onCube = false;
     if (this._inScene && !this.dragging) {
       const d = this.faceEls[this.frontFace()];
-      if (d && d.dataset.kind === 'content') {
+      if (d) {
         const x = this._px, y = this._py;
-        for (const cell of d.querySelectorAll('.cube-cell.is-titled')) {
-          const r = cell.getBoundingClientRect();
-          if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) { over = cell; break; }
+        const fr = d.getBoundingClientRect();
+        onCube = x >= fr.left && x <= fr.right && y >= fr.top && y <= fr.bottom;
+        if (onCube && d.dataset.kind === 'content') {
+          for (const cell of d.querySelectorAll('.cube-cell.is-titled')) {
+            const r = cell.getBoundingClientRect();
+            if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) { over = cell; break; }
+          }
         }
       }
     }
+    // still the sway whenever the hand is over the cube, for any face: the
+    // ±90° face never fires pointerenter, so we judge it by the rect instead
+    this.hovering = onCube;
     if (over !== this._hovered) {
       this._hovered?.classList.remove('is-hover');
       over?.classList.add('is-hover');
