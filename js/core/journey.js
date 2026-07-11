@@ -225,11 +225,12 @@ export function initJourney() {
     if (groundInk) groundInk.style.opacity = seg(readingP, INK_IN[0], INK_IN[1]).toFixed(3);
 
     /* the table only materialises at the seam, so the film's own cards
-       never share the frame with the real ones */
+       never share the frame with the real ones; the window opens just as
+       the deal fires (top 15%), so her cards are seen rising, not risen */
     if (readingEl) {
       const rr = readingEl.getBoundingClientRect();
       const rise = 1 - clamp(rr.top / window.innerHeight, 0, 1);
-      const reveal = seg(rise, 0.9, 1);
+      const reveal = seg(rise, 0.82, 0.96);
       readingEl.style.opacity = reveal.toFixed(3);
       readingEl.style.pointerEvents = reveal > 0.5 ? '' : 'none';
     }

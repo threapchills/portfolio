@@ -1,5 +1,14 @@
 # Handover: ten-task brief (2026-07-12)
 
+STATUS: executed same-day in the same session, commit dfcf9d0, live.
+What remains for human ears and eyes on live: the SLUMBR mix (task 1
+fixes applied — all four channels primed up front, easing shortened,
+new spacey-to-fiery mapping — but nobody has listened yet; tune with
+?mixdebug), the light-room hues (my paper palette, Mike may want to
+art-direct), the artefact sigil picks (moon / card-back / moth, swap at
+will), and the loop-gate pacing. owl1.png stays untracked by design;
+only the baked owl1.webp ships. The notes below are kept for reference.
+
 Written at the close of the video-scrub session. Read this alongside the
 session memory; everything below is verified against the code as pushed
 (commits through 751851a, all live on portfolio.mikewhyle.com).
