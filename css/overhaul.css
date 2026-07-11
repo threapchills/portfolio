@@ -119,21 +119,9 @@
   font-size: clamp(2.4rem, 6vw, 4.2rem);
   letter-spacing: 0.05em;
   color: var(--text);
-  margin: 0 0 -1.6rem;
+  margin: 0;
   opacity: 0;
   animation: thresh-up 1.6s 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.threshold-line {
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2.4vw, 1.6rem);
-  font-style: italic;
-  letter-spacing: 0.04em;
-  color: var(--moon);
-  margin: 0;
-  text-align: center;
-  padding: 0 2rem;
-  opacity: 0;
-  animation: thresh-up 1.6s 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 @keyframes thresh-up {
   from { opacity: 0; transform: translateY(14px); }
@@ -217,126 +205,125 @@
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 #mute-btn:hover { border-color: var(--gold); color: var(--moon); }
-#mute-btn .wave { display: block; }
-#mute-btn .strike { display: none; }
-#mute-btn.is-muted .wave { display: none; }
-#mute-btn.is-muted .strike { display: block; }
+/* two bars while sound plays (pause); the third unfolds when it rests (wave) */
+#mute-btn rect {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.45, 0, 0.2, 1), opacity 0.3s ease;
+}
+#mute-btn .b2 { opacity: 0; transform: scaleY(0.4); }
+#mute-btn.is-muted .b1,
+#mute-btn.is-muted .b3 { transform: scaleY(0.55); }
+#mute-btn.is-muted .b2 { opacity: 1; transform: none; }
 
 /* ============================================================
    the journey stage (Acts I to V)
    ============================================================ */
-#journey { position: relative; height: 1000vh; }
+#journey { position: relative; height: 900vh; }
 .stage {
   position: sticky;
   top: 0;
   height: 100vh; height: 100svh;
   overflow: hidden;
-  background: #041412;      /* the artwork's deepest sky green */
-  will-change: transform;   /* the world warps with scroll velocity */
+  background: #000;         /* the film's own field */
+  will-change: transform;   /* the stage warps with scroll velocity */
 }
-#mask-stage canvas {
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Act I: the wordmark plate. The letters are windows into the film;
+   a moon-pale aura behind them keeps blackletter legible on ink. */
+#logo-veil {
+  position: absolute; inset: 0;
+  z-index: 3;
+  background: var(--bg);
+  display: grid; place-items: center;
+  will-change: transform;
+}
+.logo-comp {
+  position: relative;
+  width: min(82vw, 880px);
+  aspect-ratio: 900 / 506;
+}
+.logo-glow {
+  position: absolute;
+  inset: -6%;
+  width: 112%; height: 112%;
+  filter: invert(1) blur(24px);
+  opacity: 0.32;
+}
+.logo-canvas {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  z-index: 2;
-  pointer-events: none;
+  -webkit-mask-image: url('../assets/brand/mikey-logo.webp');
+          mask-image: url('../assets/brand/mikey-logo.webp');
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
 }
-#mask-box { z-index: 3; }
-.glyph-anchor { z-index: 4; }
-#world { position: absolute; inset: 0; }
-.world-layer {
+.hero-roles {
   position: absolute;
-  top: 0; left: 0;
-  transform-origin: 0 0;
-  will-change: transform, opacity;
-  transition: filter 0.35s ease;   /* the fuzz fades between steps, never pops */
+  left: 0; right: 0;
+  bottom: 16vh;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.8;
 }
-.world-layer img { position: absolute; user-select: none; }
-.moon-glow {
+.hero-hint {
   position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(242, 120, 90, 0.5) 0%, transparent 65%);
-  filter: blur(12px);
-  opacity: 0.4;
-  animation: glow-pulse 15s ease-in-out infinite;
-  will-change: opacity;
+  left: 0; right: 0;
+  bottom: 5vh;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--moon);
+  animation: hint-breathe 3.2s ease-in-out infinite;
 }
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.18; }
-  50% { opacity: 0.55; }
+@keyframes hint-breathe {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.85; }
 }
-
-/* solo stages: goddess approach and mask close-up */
-.solo-stage {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  background: #041412;
+@media (prefers-reduced-motion: reduce) {
+  .hero-hint { animation: none; opacity: 0.6; }
 }
-/* the goddess rises into the standing world, so her stage stays clear;
-   the tower and moons hold behind her until the mask covers the frame */
-#goddess-stage { background: transparent; }
-/* the figure's raised arms top the canvas; her face sits near 43% of its
-   height, and the push must pivot on the face */
-#goddess-rig { position: relative; will-change: transform; transform-origin: 50% 43%; }
-#goddess-rig img { display: block; height: 92vh; width: auto; user-select: none; }
-#goddess-wings {
-  position: absolute; inset: 0; margin: auto;
-  z-index: -1;
-  opacity: 0.9;
-  transform-origin: 50% 40%;
-}
-#mask-stage { background: #072220; }
-#mask-box {
-  /* anchored so the mask's face lands exactly where the goddess's face
-     was pinned through Act IV: 50vw across, 43vh down */
-  position: absolute;
-  left: 50%; top: 47%;
-  transform: translate(-52%, -78%);
-  will-change: transform;
-  transform-origin: 52% 78%;      /* the face */
-}
-#mask-box > img { display: block; height: 94vh; width: auto; user-select: none; }
-
-/* glyph ignition anchors: --ignite is scrubbed 0..1 by journey.js */
-.glyph-anchor {
-  --ignite: 0;
-  position: absolute;
-  width: 13%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-.glyph-anchor .bloom {
-  position: absolute; inset: -110%;
-  background: radial-gradient(circle, rgba(242, 226, 160, 0.95) 0%, rgba(242, 226, 160, 0.25) 38%, transparent 68%);
-  opacity: calc(var(--ignite) * 0.9);
-  filter: blur(2px);
-}
-.glyph-anchor img {
-  position: absolute; inset: 8%;
-  width: 84%; height: 84%;
-  object-fit: contain;
-  /* the sigils soak into the mask like ink rather than sit on it as flat
-     black; the bloom behind carries the ignition light */
-  opacity: calc(var(--ignite) * 0.78);
-  mix-blend-mode: multiply;
-  transform: scale(calc(1.18 - 0.18 * var(--ignite)));  /* soft scale-settle */
-}
-
-/* the iris wipe */
-#iris { position: absolute; inset: 0; pointer-events: none; }
 
 /* ============================================================
    Act VI — the Reading
    ============================================================ */
-#reading-wrap { position: relative; height: 450vh; background: var(--ink); }
+/* the wrap climbs 100vh under the journey so its ground pins while the
+   film's stage still holds the offering; the swap is pixel-identical */
+#reading-wrap { position: relative; height: 450vh; margin-top: -100vh; background: var(--ink); }
+/* the film's last frame (the offered hands) holds beneath the table, so
+   the seam from the scrub is invisible; the ink breathes in over it */
+#reading-ground {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  margin-bottom: -100vh;
+  overflow: hidden;
+}
+#reading-ground img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#reading-ground .ground-ink { position: absolute; inset: 0; background: var(--ink); opacity: 0; }
 #reading {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
   overflow: hidden;
   display: grid; place-items: center;
+  /* the ink ground lives on #reading-wrap, beneath the cursor trail;
+     this layer rides above it (z 2) so the cards cover the trail */
+  z-index: 2;
   background:
-    radial-gradient(ellipse 60% 48% at 50% 46%, rgba(242, 226, 160, 0.07), transparent 70%),
-    var(--ink);
+    radial-gradient(ellipse 60% 48% at 50% 46%, rgba(242, 226, 160, 0.07), transparent 70%);
 }
 #reading::before {
   content: '';
@@ -1071,6 +1058,8 @@
 
 @media (max-width: 768px) {
   #journey { height: 760vh; }
+  .logo-comp { width: 92vw; }
+  .hero-roles { font-size: 0.58rem; letter-spacing: 0.24em; padding: 0 1.2rem; }
   .card-title { opacity: 0.9; transform: none; }      /* no hover on touch */
   #card-table { gap: 0.8rem; padding: 0 0.8rem; }
   .card { width: min(27vw, 150px); }

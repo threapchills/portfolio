@@ -11,11 +11,11 @@ const STEMS = {
   fire:  ['fire3', 'fire5', 'fire7'],
 };
 
-const MASTER_LEVEL = 0.4;
+const MASTER_LEVEL = 0.3;          // low and unobtrusive: sound is on by default
 const SMOOTH_TAU = 1.6;            // seconds, mix easing time constant
 const ROTATE_MIN = 60, ROTATE_MAX = 90;
 const XFADE = 1.5;                 // variant crossfade, seconds
-const MUTE_KEY = 'mw-muted';
+const SOUND_KEY = 'mw-sound';      // 'off' | 'on', written only on an explicit choice
 
 class Channel {
   constructor(engine, name) {
@@ -109,9 +109,8 @@ class Channel {
 export class AudioEngine {
   constructor() {
     this.started = false;
-    // muted unless the visitor has previously opted in: there is no entry
-    // gate any more, so silence is the default state of the world
-    this.muted = localStorage.getItem(MUTE_KEY) !== '0';
+    // sound flows by default, kept low; only an explicit pause is remembered
+    this.muted = localStorage.getItem(SOUND_KEY) === 'off';
     this.channels = {};
     this._raf = null;
     this._last = 0;
@@ -169,7 +168,6 @@ export class AudioEngine {
 
   setMuted(muted, instant = false) {
     this.muted = muted;
-    localStorage.setItem(MUTE_KEY, muted ? '1' : '0');
     document.dispatchEvent(new CustomEvent('mw:muted', { detail: muted }));
     if (!this.master) return;
     const t = this.ctx.currentTime;
@@ -184,7 +182,10 @@ export class AudioEngine {
     }
   }
 
-  toggleMute() { this.setMuted(!this.muted); }
+  toggleMute() {
+    this.setMuted(!this.muted);
+    localStorage.setItem(SOUND_KEY, this.muted ? 'off' : 'on');
+  }
 
   /* Outro: everything to zero over six seconds. */
   fadeAll(seconds = 6) {
@@ -221,13 +222,16 @@ export function mountMuteButton() {
   if (!btn) return;
   const paint = () => {
     btn.classList.toggle('is-muted', audio.muted);
-    btn.setAttribute('aria-label', audio.muted ? 'Unmute' : 'Mute');
+    btn.setAttribute('aria-label', audio.muted ? 'Play sound' : 'Pause sound');
     btn.setAttribute('aria-pressed', audio.muted ? 'true' : 'false');
   };
   btn.addEventListener('click', () => {
-    // the unmute click doubles as the wake gesture when nothing else has
-    if (audio.muted && !audio.started) { audio.start(false); audio.prime(); }
-    else audio.toggleMute();
+    // the play click doubles as the wake gesture when nothing else has
+    if (audio.muted && !audio.started) {
+      audio.start(false);
+      audio.prime();
+      localStorage.setItem(SOUND_KEY, 'on');
+    } else audio.toggleMute();
   });
   document.addEventListener('mw:muted', paint);
   paint();

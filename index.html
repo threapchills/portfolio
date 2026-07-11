@@ -41,7 +41,6 @@
   <!-- Act 0 · the Threshold -->
   <div id="threshold">
     <p class="threshold-name">Mike Whyle</p>
-    <p class="threshold-line">A short conjuring. Best experienced with sound.</p>
     <div class="threshold-moons" role="progressbar" aria-label="Loading">
       <img class="threshold-moon" src="assets/journey/moon-1.webp" alt="">
       <img class="threshold-moon" src="assets/journey/moon-2.webp" alt="">
@@ -55,49 +54,34 @@
     <a href="./" class="veil-mark" aria-label="Mike Whyle, home">
       <img src="assets/brand/mikey-logo.webp" alt="Mikey">
     </a>
-    <button id="mute-btn" aria-label="Mute">
-      <svg class="wave" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/></svg>
-      <svg class="strike" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 8l6 8M22 8l-6 8"/></svg>
+    <button id="mute-btn" aria-label="Pause sound">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect class="b1" x="8" y="6" width="2" height="12" rx="1"/><rect class="b2" x="11" y="6" width="2" height="12" rx="1"/><rect class="b3" x="14" y="6" width="2" height="12" rx="1"/></svg>
     </button>
   </header>
 
   <main>
-    <!-- Acts I to V · the journey -->
+    <!-- Acts I to V · the story film, scrubbed by scroll -->
     <section id="journey" aria-label="The journey into the artwork">
       <div class="stage vignette">
-        <div id="world"></div>
-
-        <div id="goddess-stage" class="solo-stage" style="display:none">
-          <div id="goddess-rig">
-            <img id="goddess-wings" src="assets/journey/goddess-wings-back.webp" alt="">
-            <img src="assets/journey/goddess-figure.webp" alt="A winged goddess, drawn in marker, arms raised">
+        <canvas id="hero-canvas"></canvas>
+        <div id="logo-veil">
+          <div class="logo-comp" role="img" aria-label="Mikey">
+            <img class="logo-glow" src="assets/brand/mikey-logo.webp" alt="" aria-hidden="true">
+            <canvas class="logo-canvas"></canvas>
           </div>
+          <p class="hero-roles">GenAI filmmaker, writer, designer and vibe-coder. Cape Town.</p>
+          <p class="hero-hint">Scroll</p>
         </div>
-
-        <div id="mask-stage" class="solo-stage" style="display:none">
-          <div id="mask-box">
-            <img src="assets/journey/mask-hires.webp" alt="The goddess's mask, close up">
-            <div class="glyph-anchor" data-glyph="film" style="left:44.3%;top:71.8%">
-              <div class="bloom"></div>
-              <img src="assets/glyphs/glyph-film.webp" alt="">
-            </div>
-            <div class="glyph-anchor" data-glyph="writing" style="left:59.3%;top:71.3%">
-              <div class="bloom"></div>
-              <img src="assets/glyphs/glyph-writing.webp" alt="">
-            </div>
-            <div class="glyph-anchor" data-glyph="design" style="left:52.9%;top:85.6%">
-              <div class="bloom"></div>
-              <img src="assets/glyphs/glyph-design.webp" alt="">
-            </div>
-          </div>
-        </div>
-
-        <div id="iris" style="display:none"></div>
       </div>
     </section>
 
     <!-- Act VI · the Reading -->
     <section id="reading-wrap" aria-label="The reading">
+      <!-- the film's last frame holds under the table for a seamless seam -->
+      <div id="reading-ground" aria-hidden="true">
+        <img id="ground-frame" alt="">
+        <div class="ground-ink"></div>
+      </div>
       <div id="reading">
         <div id="card-table"><!-- cards dealt by cards.js --></div>
       </div>
@@ -185,22 +169,6 @@
     mountMuteButton();
     initCursor();
 
-    const ACT_ONE_IMAGES = [
-      'assets/journey/land-00-base.webp',
-      'assets/journey/land-01-hills-far.webp',
-      'assets/journey/land-02-hill-main.webp',
-      'assets/journey/land-03-tower.webp',
-      'assets/journey/land-04-flora-mid.webp',
-      'assets/journey/land-05-flora-fore.webp',
-      'assets/journey/moon-1.webp',
-      'assets/journey/moon-2.webp',
-      'assets/journey/moon-3.webp',
-      'assets/journey/moon-4.webp',
-      'assets/journey/moon-5.webp',
-      'assets/journey/moth-full.webp',
-      'assets/journey/goddess-small.webp',
-    ];
-
     // returning from a chamber: no second threshold, straight to the table
     const returning = sessionStorage.getItem('mw-reading') === 'dealt'
       && (location.hash === '#reading' || document.referrer.match(/\/(film|writing|design)\//));
@@ -209,7 +177,7 @@
     document.documentElement.style.scrollBehavior = 'auto';
     if (!returning) scrollTo(0, 0);
 
-    initJourney();
+    const journey = initJourney();
     initReading();
 
     // no gate means no gesture: the engine stays dormant until the first
@@ -226,7 +194,8 @@
       // late scroll restoration can land past the threshold; hold the top
       addEventListener('load', () => scrollTo(0, 0));
       initThreshold({
-        images: ACT_ONE_IMAGES,
+        images: ['assets/brand/mikey-logo.webp'],
+        jobs: [journey.firstChunk],
         onEnter: () => {
           document.body.style.overflow = '';
           window.__lenis?.scrollTo(0, { immediate: true });
@@ -237,13 +206,11 @@
       });
     }
 
-    // lazy lookahead: the later acts arrive while Act I breathes
+    // lazy lookahead: the reading's dressing arrives while the film breathes
     addEventListener('load', () => {
-      ['assets/journey/goddess-figure.webp', 'assets/journey/goddess-wings-back.webp',
-       'assets/journey/mask-hires.webp', 'assets/glyphs/glyph-film.webp',
-       'assets/glyphs/glyph-writing.webp', 'assets/glyphs/glyph-design.webp',
-       'assets/glyphs/glyph-coding.webp', 'assets/cards/card-back.webp',
-       'assets/textures/paper-grain.webp']
+      ['assets/glyphs/glyph-film.webp', 'assets/glyphs/glyph-writing.webp',
+       'assets/glyphs/glyph-design.webp', 'assets/glyphs/glyph-coding.webp',
+       'assets/cards/card-back.webp', 'assets/textures/paper-grain.webp']
         .forEach((src) => { const i = new Image(); i.src = src; });
     });
   </script>

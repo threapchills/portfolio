@@ -30,14 +30,16 @@ function preloadAudioStem(name) {
 }
 
 /* The journey threshold: five moons fill left to right, then the world
-   opens unbidden. */
-export function initThreshold({ images, onEnter }) {
+   opens unbidden. `jobs` takes extra promises to gate on, e.g. the film
+   scrubber's opening chunk of frames. */
+export function initThreshold({ images, jobs: extraJobs = [], onEnter }) {
   const threshold = qs('#threshold');
   const moons = qsa('.threshold-moon', threshold);
   const started = performance.now();
 
   const jobs = [
     ...images.map((src) => preloadImage(asset(src))),
+    ...extraJobs,
     preloadAudioStem('sea1'),
     preloadAudioStem('fire3'),
     document.fonts ? document.fonts.ready : Promise.resolve(),

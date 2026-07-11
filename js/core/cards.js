@@ -52,23 +52,27 @@ export function initReading() {
       });
       return;
     }
+    /* the goddess deals: the film beneath ends on her offered hands at the
+       bottom of the frame, so the cards gather there and rise into place */
+    const tr = table.getBoundingClientRect();
     const tl = gsap.timeline();
     cards.forEach((el, i) => {
-      const arcX = (i - 1) * 40 - 160;
+      const r = el.getBoundingClientRect();
+      const fromX = (tr.left + tr.width / 2) - (r.left + r.width / 2);
       tl.fromTo(el,
-        { x: arcX, y: -window.innerHeight * 0.62, rotation: -14 + i * 6, opacity: 0 },
+        { x: fromX, y: window.innerHeight * 0.6, scale: 0.6, rotation: (i - 1) * -12, opacity: 0 },
         {
-          x: 0, y: 0, opacity: 1,
+          x: 0, y: 0, scale: 1, opacity: 1,
           rotation: (i - 1) * 2.2,           // settle with a hint of overshoot
-          duration: 0.85,
-          ease: 'back.out(1.15)',
+          duration: 0.9,
+          ease: 'power3.out',
           onStart: () => el.classList.add('is-dealt'),
-        }, i * 0.18);
+        }, i * 0.16);
       // the turn lives in CSS so the hover tilt keeps working afterwards
       tl.call(() => {
         el.classList.add('is-turning', 'is-turned');
         setTimeout(() => el.classList.remove('is-turning'), 700);
-      }, [], 1.1 + i * 0.14);
+      }, [], 1.05 + i * 0.14);
     });
   }
 
@@ -117,9 +121,10 @@ export function initReading() {
     // returning visitor in this session: cards are already on the table
     deal(true);
   } else {
+    // fire as her offered hands settle at the seam, so she deals to you
     ScrollTrigger.create({
       trigger: '#reading-wrap',
-      start: 'top 55%',
+      start: 'top 15%',
       onEnter: () => deal(),
     });
   }

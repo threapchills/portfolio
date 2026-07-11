@@ -1,18 +1,29 @@
-/* journey.js — orchestration of Acts I to VIII on the index page.
-   One continuous push-in, never a cut, until the Reading.
+/* journey.js — orchestration of the index page.
+   Act I: the Mikey wordmark, its letters full of film, slides off west.
+   Acts II to V: the story film itself, decoded to frames at build time
+   and scrubbed by scroll — the whole world-building push-in baked into
+   pixels, so nothing can glitch.
+   Act VI: the film's last frame (the goddess offering her open hands)
+   holds beneath the reading while the ink breathes in and her three
+   cards rise out of her palms onto the table. */
 
-   Scroll grammar: free flow with magnetic beats. A single ScrollTrigger
-   scrubs act progress; snap assist eases into the beats. */
-
-import { asset, clamp, damp, fromRoot, kf, seg, easeInOut, easeOut, qs, qsa, IS_MOBILE, REDUCED_MOTION, PARAMS } from './util.js';
-import { World } from './parallax.js';
-import { GLPlanes } from './gl-planes.js';
+import { clamp, damp, seg, easeInOut, qs, qsa, IS_MOBILE, REDUCED_MOTION, PARAMS } from './util.js';
+import { FrameScrubber } from './sequence.js';
 import { audio } from './audio.js';
 
-/* Act beats as journey progress. The establishing shot and the beetle's
-   whole crossing play without a rest between them; the world only settles
-   once the goddess has risen. */
-const BEATS = [0, 0.52, 0.70, 0.86, 1];
+/* the film, decoded at build time (ffmpeg, 12fps from mainheader.mp4) */
+const FRAMES = { dir: 'video/header/frames', dirMobile: 'video/header/frames-720', count: 257 };
+const FIRST_CHUNK = 48;            // the threshold gates on these; the rest stream in behind
+
+/* scroll choreography across the journey's sticky travel */
+const VEIL = [0.02, 0.115];        // the wordmark plate slides off left
+const SCRUB = [0.115, 0.965];      // the film plays; the last band holds the offering
+const ROLES_OUT = [0.015, 0.06];   // the roles line dissolves at first scroll
+
+/* keyboard beats: the film's own moments (owl, cosmos, tower, goddess,
+   the cards, the offering) as journey progress. No scroll snapping here:
+   the scrub runs free, the way the film chamber does. */
+const BEATS = [0, 0.115, 0.30, 0.49, 0.67, 0.85, 1];
 
 /* Act VI: the reading walks its three cards one by one. Each band lifts
    a card while its siblings step back; the beats are the band centres. */
@@ -23,28 +34,9 @@ const READING_BANDS = [
 ];
 const READING_CARD_BEATS = [0.28, 0.52, 0.76];
 const READING_BEATS = [0, ...READING_CARD_BEATS, 1];
+const INK_IN = [0, 0.09];          // the room dims over the offered hands
 
-/* Opening choreography, keyframe-guided (Mike, 2026-07-07). The camera
-   holds the wide establishing frame and only pushes in gently: no deep
-   dive. The world stays lit behind the goddess until the mask close-up
-   covers it. All constants below are tuned by eye; adjust freely. */
-const camCX = kf([[0, 0.500], [0.10, 0.502], [0.30, 0.506], [0.55, 0.514], [0.70, 0.520]]);
-const camCY = kf([[0, 0.500], [0.10, 0.505], [0.30, 0.486], [0.55, 0.452], [0.70, 0.432]]);
-/* the establishing frame opens with the whole artwork visible (z below the
-   cover scale, so the far edges show), then fills the frame and pushes in */
-const camZ  = kf([[0, 0.70],  [0.10, 1.00],  [0.30, 1.20],  [0.55, 1.50],  [0.70, 1.90]]);
-/* a soft focus rack: the foreground flora blurs a touch as we push in */
-const focusD = kf([[0, 0.12], [0.30, 0.18], [0.70, 0.24]]);
-
-/* the beetle's flight, in base-canvas units. It enters upper-left, wings
-   flapping, sweeps right and leaves the frame before the goddess stirs. */
-const BEETLE = { in: 0.08, out: 0.40, x0: -0.48, x1: 0.36, y: -0.40, arc: 0.04, yDrift: 0.10, flapAmp: 5, flapRate: 7 };
-
-/* the goddess rises whole from below into the standing world, then her
-   face floats up as the lens closes on the mask (keyframe 4). */
-const GODDESS = { fade: [0.44, 0.54], emerge: [0.44, 0.56], zoom: [0.57, 0.685], scaleRise: 0.72, scaleFace: 3.2, dropVH: 46, restVH: 35, tyEnd: 2 };
-
-/* Audio mix vectors per journey act (spec 4.9), then per page section. */
+/* Audio mix vectors across the film's moments, then per page section. */
 const MIX = {
   act1:    { sea: 0.50, fire: 0.35, sky: 0.10, earth: 0.00 },
   act2:    { sea: 0.30, fire: 0.20, sky: 0.10, earth: 0.45 },
@@ -56,11 +48,11 @@ const MIX = {
   outro:   { sea: 0.00, fire: 0.00, sky: 0.00, earth: 0.00 },
 };
 const mixAt = (p) => {
-  if (p < 0.16) return MIX.act1;
-  if (p < 0.34) return MIX.act2;
-  if (p < 0.46) return MIX.act3;
-  if (p < 0.70) return MIX.act4;
-  return MIX.act5;
+  if (p < 0.24) return MIX.act1;   // the owl in the dark
+  if (p < 0.42) return MIX.act2;   // the cosmos
+  if (p < 0.58) return MIX.act3;   // the tower under red moons
+  if (p < 0.80) return MIX.act4;   // the goddess rises
+  return MIX.act5;                 // the cards, the offering
 };
 
 export function initJourney() {
@@ -73,46 +65,52 @@ export function initJourney() {
   gsap.ticker.lagSmoothing(0);
   window.__lenis = lenis;
 
-  const world = new World(qs('#world'));
-  // opt-in calibration handle (?dbg): drive one opening frame by hand
-  if (PARAMS.has('dbg')) {
-    window.__dbg = { world, camCX, camCY, camZ, focusD, BEETLE, GODDESS, seg, easeInOut };
-  }
-  const goddessStage = qs('#goddess-stage');
-  const goddessRig = qs('#goddess-rig');
-  const wingsImg = qs('#goddess-wings');
-  const maskStage = qs('#mask-stage');
-  const maskBox = qs('#mask-box');
-  const iris = qs('#iris');
-  const mouthAnchor = qs('.glyph-anchor[data-glyph="design"]');
-  const glyphs = {
-    film: qs('.glyph-anchor[data-glyph="film"]'),
-    writing: qs('.glyph-anchor[data-glyph="writing"]'),
-    design: qs('.glyph-anchor[data-glyph="design"]'),
+  /* ---- the film: one canvas full-bleed, one small canvas in the letters ---- */
+  const scrubber = new FrameScrubber(qs('#hero-canvas'), {
+    dir: IS_MOBILE ? FRAMES.dirMobile : FRAMES.dir,
+    count: FRAMES.count,
+  });
+  let chunkDone;
+  const firstChunk = new Promise((r) => { chunkDone = r; });
+  scrubber.preload((p) => { if (p * FRAMES.count >= FIRST_CHUNK) chunkDone(); })
+    .then(() => { chunkDone(); scrubber.draw(true); });
+
+  const veil = qs('#logo-veil');
+  const roles = qs('.hero-roles');
+  const hint = qs('.hero-hint');
+  const logoCanvas = qs('.logo-canvas');
+  const lctx = logoCanvas.getContext('2d');
+  let logoFrame = -2;
+  const sizeLogo = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    logoCanvas.width = logoCanvas.clientWidth * dpr;
+    logoCanvas.height = logoCanvas.clientHeight * dpr;
+    logoFrame = -2;                // a resize clears the canvas; repaint
+  };
+  sizeLogo();
+  addEventListener('resize', sizeLogo);
+  /* the same frame the big canvas shows, cover-fit to the letterforms */
+  const paintLogo = () => {
+    if (scrubber.current === logoFrame) return;
+    const img = scrubber.images[Math.max(scrubber.current, 0)];
+    if (!img || !img.naturalWidth) return;
+    logoFrame = scrubber.current;
+    const cw = logoCanvas.width, ch = logoCanvas.height;
+    const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+    const w = img.naturalWidth * s, h = img.naturalHeight * s;
+    lctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
   };
 
-  let progress = 0;
+  /* ---- the seam: the reading's ground carries the film's final frame ---- */
+  const groundFrame = qs('#ground-frame');
+  if (groundFrame) {
+    const dir = IS_MOBILE ? FRAMES.dirMobile : FRAMES.dir;
+    groundFrame.src = `${dir}/f_${String(FRAMES.count).padStart(4, '0')}.webp`;
+  }
+  const groundInk = qs('#reading-ground .ground-ink');
 
-  /* the warp: scroll velocity stretches and shears the whole stage,
-     the CSS cousin of the planes' bend shader */
-  const stageEl = qs('#journey .stage');
-  let sVel = 0;
-
-  /* Act V: the mask becomes a live plane; it ripples under the cursor
-     while the visitor waits for the eyes to light */
-  const maskImg = qs('#mask-box > img');
-  let maskEngine = null, maskPlane = null;
-  if (!IS_MOBILE && !REDUCED_MOTION) {
-    const mglc = document.createElement('canvas');
-    maskStage.appendChild(mglc);
-    maskEngine = new GLPlanes(mglc);
-    if (maskEngine.enabled) {
-      maskPlane = maskEngine.addPlane(maskImg, {
-        srcA: fromRoot(asset('assets/journey/mask-hires.webp')),
-        ripple: true,
-        bend: false,
-      });
-    }
+  if (PARAMS.has('dbg')) {
+    window.__dbg = { scrubber, VEIL, SCRUB, BEATS, READING_BANDS, seg, easeInOut };
   }
 
   /* the Reading: the pool of light drifts after the visitor's hand */
@@ -124,26 +122,13 @@ export function initJourney() {
     lightTY = clamp((e.clientY - r.top) / r.height * 100, 0, 100);
   }, { passive: true });
 
-  const st = ScrollTrigger.create({
+  /* the journey scrub runs free: no snapping, the film chamber's feel */
+  let progress = 0;
+  ScrollTrigger.create({
     trigger: '#journey',
     start: 'top top',
     end: 'bottom bottom',
     scrub: true,
-    snap: (PARAMS.get('autoscroll') === 'off' || REDUCED_MOTION) ? undefined : {
-      /* a magnetic assist, not a pager: only pull in when the visitor
-         stops near a beat, so nothing between beats gets skipped */
-      snapTo: (value) => {
-        let best = value, dist = 0.05;
-        for (const b of BEATS) {
-          const d = Math.abs(value - b);
-          if (d < dist) { best = b; dist = d; }
-        }
-        return best;
-      },
-      duration: { min: 0.4, max: 0.9 },
-      ease: 'power2.inOut',
-      delay: 0.15,
-    },
     onUpdate: (self) => { progress = self.progress; },
   });
 
@@ -172,24 +157,21 @@ export function initJourney() {
   });
 
   /* ---- per-frame render ---- */
-  const start = performance.now();
-  let lastNow = start;
-  /* the establishing shot: the world opens a breath closer and settles.
-     Armed by the entry gate so the settle happens on screen, not behind
-     the threshold. */
-  let intro = 1;
-  document.addEventListener('mw:enter', () => {
-    if (!REDUCED_MOTION) intro = 1.11;
-  });
+  const stageEl = qs('#journey .stage');
+  let sVel = 0;
+  let lastNow = performance.now();
   gsap.ticker.add(() => {
     const now = performance.now();
     const dt = Math.min((now - lastNow) / 1000, 0.1);
     lastNow = now;
-    const t = (now - start) / 1000;
     const p = progress;
-    intro += (1 - intro) * (1 - Math.exp(-0.75 * dt));
 
-    /* velocity warp on the stage */
+    /* the invisible cut: once the reading's ground has pinned (showing the
+       same offered-hands frame), the stage steps aside behind it */
+    if (stageEl) stageEl.style.visibility = readingP > 0.0001 ? 'hidden' : '';
+
+    /* velocity warp on the stage: scroll momentum stretches and shears,
+       the same dialect the film chamber's banners speak */
     if (!REDUCED_MOTION && stageEl) {
       sVel = damp(sVel, lenis.velocity || 0, 8, dt);
       const stretch = clamp(Math.abs(sVel) * 0.0011, 0, 0.038);
@@ -197,6 +179,27 @@ export function initJourney() {
       stageEl.style.transform =
         `scaleY(${(1 + stretch).toFixed(4)}) skewX(${shear.toFixed(3)}deg)`;
     }
+
+    /* the wordmark plate slides off west; its letters keep the film alive */
+    const v = seg(p, VEIL[0], VEIL[1], easeInOut);
+    const veilGone = v >= 1;
+    veil.style.display = veilGone ? 'none' : '';
+    if (!veilGone) {
+      veil.style.transform = `translate3d(${(-112 * v).toFixed(3)}%, 0, 0)`;
+      const fade = 1 - seg(p, ROLES_OUT[0], ROLES_OUT[1]);
+      if (roles) roles.style.opacity = fade.toFixed(3);
+      if (hint) hint.style.opacity = fade.toFixed(3);
+    }
+
+    /* the film under the scroll; past the end it lands exactly on the
+       offering so the seam into the reading is pixel-identical */
+    scrubber.setProgress(seg(p, SCRUB[0], SCRUB[1]));
+    if (p > 0.975) scrubber.progress = scrubber.target;
+    scrubber.tick(dt);
+    if (!veilGone) paintLogo();
+
+    /* the room dims over the offered hands as the reading takes the frame */
+    if (groundInk) groundInk.style.opacity = seg(readingP, INK_IN[0], INK_IN[1]).toFixed(3);
 
     /* the reading's pool of light follows, dreamily late */
     if (readingEl) {
@@ -225,112 +228,12 @@ export function initJourney() {
       });
     }
 
-    /* The standing world: the backdrop through the whole opening. It holds
-       a wide frame and pushes in gently, and stays lit behind the goddess
-       until the mask close-up covers everything. */
-    const worldActive = p < 0.72;
-    qs('#world').style.display = worldActive ? '' : 'none';
-    if (worldActive) {
-      if (REDUCED_MOTION) {
-        const pose = p < 0.30 ? 0 : p < 0.55 ? 0.30 : 0.70;
-        world.setCamera(camCX(pose), camCY(pose), camZ(pose));
-        world.setFocus(focusD(pose));
-      } else {
-        world.setCamera(camCX(p), camCY(p), camZ(p) * intro);
-        world.setFocus(focusD(p));
-      }
-
-      // the small goddess on the path is retired; she now arrives whole
-      world.setGoddessOpacity(0);
-
-      /* the beetle crosses the establishing frame and is gone. It enters
-         from the upper left, sweeps right and exits the right edge. */
-      const bf = seg(p, BEETLE.in, BEETLE.out, easeInOut);
-      const flying = p > BEETLE.in - 0.02 && p < BEETLE.out + 0.02;
-      const bx = REDUCED_MOTION ? 0.2 : BEETLE.x0 + (BEETLE.x1 - BEETLE.x0) * bf;
-      // a gentle descent ramp keeps the beetle level as the camera lifts
-      const by = BEETLE.y + (REDUCED_MOTION ? 0 : Math.sin(bf * Math.PI) * BEETLE.arc + BEETLE.yDrift * bf);
-      const flap = REDUCED_MOTION ? 0 : Math.sin(t * BEETLE.flapRate) * BEETLE.flapAmp;
-      const bop = flying
-        ? seg(p, BEETLE.in, BEETLE.in + 0.03) * (1 - seg(p, BEETLE.out - 0.03, BEETLE.out))
-        : 0;
-      world.setMothPose({ dx: bx, dy: by, rot: flap, opacity: bop });
-      world.render(t);
-    }
-
-    /* The goddess rises whole from below into the standing world, wings
-       breathing, then her face floats up as the lens closes in. Her stage
-       is transparent, so the tower stands behind her (keyframe 3) until
-       the mask close-up takes the frame (keyframe 4). */
-    const gFade = seg(p, GODDESS.fade[0], GODDESS.fade[1]);
-    const gVisible = gFade > 0.001 && p < 0.73;
-    goddessStage.style.display = gVisible ? '' : 'none';
-    if (gVisible) {
-      goddessStage.style.opacity = gFade.toFixed(3);
-      const emerge = seg(p, GODDESS.emerge[0], GODDESS.emerge[1], easeInOut);
-      const zoom = seg(p, GODDESS.zoom[0], GODDESS.zoom[1], easeInOut);
-      const gs = GODDESS.scaleRise + (GODDESS.scaleFace - GODDESS.scaleRise) * zoom;
-      // rise from below to her resting pose (tower above her), then the
-      // face floats up and in toward the mask close-up
-      const ty = (GODDESS.dropVH + (GODDESS.restVH - GODDESS.dropVH) * emerge) + (GODDESS.tyEnd - GODDESS.restVH) * zoom;
-      const breathe = REDUCED_MOTION ? 0 : Math.sin(t * 0.9) * 0.004;
-      goddessRig.style.transform = `translateY(${ty.toFixed(2)}vh) scale(${(gs + breathe).toFixed(4)})`;
-      if (wingsImg) {
-        const flex = REDUCED_MOTION ? 0.94 : 0.94 + 0.035 * Math.sin(t * 0.8);
-        const wr = REDUCED_MOTION ? 0 : Math.sin(t * 0.8) * 1.2;
-        wingsImg.style.transform = `scale(${flex.toFixed(4)}) rotate(${wr.toFixed(2)}deg)`;
-      }
-    }
-
-    /* Act V swap: goddess -> mask extreme close-up */
-    const mFade = seg(p, 0.685, 0.715);
-    maskStage.style.display = mFade > 0.001 ? '' : 'none';
-    if (mFade > 0.001) {
-      maskStage.style.opacity = mFade.toFixed(3);
-      /* start at the size the goddess's face reached, then push closer */
-      const ms = 1.9 + 0.7 * seg(p, 0.70, 0.92, easeInOut);
-      const sway = REDUCED_MOTION ? 0 : Math.sin(t * 0.4) * 0.5;
-      maskBox.style.transform = `translate(-52%, -78%) scale(${ms.toFixed(4)}) rotate(${sway.toFixed(2)}deg)`;
-
-      /* the ignition: three apertures light in sequence */
-      igniteGlyph(glyphs.film, seg(p, 0.73, 0.775, easeOut));
-      igniteGlyph(glyphs.writing, seg(p, 0.775, 0.82, easeOut));
-      igniteGlyph(glyphs.design, seg(p, 0.82, 0.865, easeOut));
-    }
-
-    /* the iris wipe: the camera passes through the central aperture */
-    const w = seg(p, 0.92, 1.0, easeInOut);
-    iris.style.display = w > 0.001 ? '' : 'none';
-    if (w > 0.001) {
-      const r = mouthAnchor.getBoundingClientRect();
-      const cx = ((r.left + r.width / 2) / window.innerWidth * 100).toFixed(2);
-      const cy = ((r.top + r.height / 2) / window.innerHeight * 100).toFixed(2);
-      const open = (1 - w) * 120;
-      iris.style.background =
-        `radial-gradient(circle at ${cx}% ${cy}%, transparent ${Math.max(open - 18, 0)}%, ` +
-        `rgba(196, 146, 42, 0.16) ${Math.max(open - 4, 0)}%, var(--ink) ${open}%)`;
-    }
-
-    /* the live mask plane: on once fully swapped in, off for the wipe */
-    if (maskPlane) {
-      const glOn = mFade >= 0.999 && w < 0.9;
-      maskPlane.hide = !glOn;
-      maskImg.style.opacity = glOn ? '0' : '';
-      if (mFade > 0.001) maskEngine.render(t, dt);
-    }
-
-    /* audio: journey acts, then the page sections below the journey */
+    /* audio: the film's moments, then the page sections below */
     if (audio.started) {
       const rest = sectionProgress();
       audio.setMix(rest || mixAt(p));
     }
   });
-
-  function igniteGlyph(el, v) {
-    if (!el) return;
-    el.style.setProperty('--ignite', v.toFixed(3));
-    el.classList.toggle('is-lit', v > 0.02);
-  }
 
   /* Which post-journey section owns the viewport (for the audio mix)? */
   function sectionProgress() {
@@ -378,18 +281,19 @@ export function initJourney() {
     if (next !== undefined) lenis.scrollTo(next, { duration: 1.1, easing: easeInOut });
   });
 
-  /* Returning from a chamber lands on the Reading, never back at Act 0. */
+  /* Returning from a chamber lands on the Reading, never back at Act 0.
+     Land past the ink-in so the table is already lit and wide. */
   if (location.hash === '#reading' || sessionStorage.getItem('mw-return') === '1') {
     sessionStorage.removeItem('mw-return');
     requestAnimationFrame(() => {
       const reading = qs('#reading-wrap');
       if (reading) {
-        // land on the wide table so the visitor can walk the cards again
-        lenis.scrollTo(reading.offsetTop, { immediate: true });
+        const travel = reading.offsetHeight - window.innerHeight;
+        lenis.scrollTo(reading.offsetTop + travel * INK_IN[1], { immediate: true });
         ScrollTrigger.refresh();
       }
     });
   }
 
-  return { lenis, world };
+  return { lenis, scrubber, firstChunk };
 }
