@@ -206,7 +206,7 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
     heroImage: "../../images/code2.png",
     gallery: [],
     links: [
-      { label: "Use Slumbr", url: "https://mikewhyle.com/slumbr/", primary: true }
+      { label: "Use Slumbr", url: "https://slumbr.mikewhyle.com/", primary: true }
     ]
   },
   {
@@ -221,7 +221,7 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
     heroImage: "../../images/code1.png",
     gallery: [],
     links: [
-      { label: "Read your cards", url: "https://mikewhyle.com/tarot/", primary: true }
+      { label: "Read your cards", url: "https://tarot.mikewhyle.com/", primary: true }
     ]
   },
   {
@@ -315,7 +315,7 @@ const WRITING_FACES = (function () {
     },
     {
       id: "client",
-      title: "Client work",
+      title: "Miscellaneous musings",
       eyebrow: "Commissioned writing",
       type: "stories",
       items: [

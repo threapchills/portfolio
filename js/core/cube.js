@@ -1,14 +1,16 @@
 /* cube.js — the Writing chamber's monolith, now a cube of cubes.
    Six faces, each a 4x4 grid of little tiles: three collections carry
    scattered story titles among blank paper cells, three carry sliced
-   marker artwork (moth, mask, moon). Drag rotates with inertia; scroll
-   nudges between faces; a titled tile opens its piece, a bare face opens
-   the whole collection. */
+   marker artwork (moth above, owl below, moon abeam). Drag tumbles it
+   freely on both axes; the wheel realigns it so the readable faces
+   front again; a titled tile opens its piece, a bare face opens the
+   whole collection. */
 
 import { clamp, damp, fromRoot, REDUCED_MOTION } from './util.js';
 
 /* vertical faces around Y: 0 front, 1 right, 2 back, 3 left */
 const FACE_ANGLES = [0, -90, -180, -270];
+const REST_X = -14;                   // the resting tilt: the cube reads as a cube
 const GRID = 4;                       // 4x4 tiles per face
 const CELLS = GRID * GRID;
 const MAX_TITLED = CELLS;             // fill the face; every story earns a tile
@@ -16,7 +18,7 @@ const MAX_TITLED = CELLS;             // fill the face; every story earns a tile
 const GLYPHS = {
   moon: 'assets/journey/moon-5.webp',
   moth: 'assets/journey/moth-full-m.webp',
-  mask: 'assets/cards/card-back.webp',
+  owl:  'assets/journey/owl1.webp',
 };
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -28,7 +30,7 @@ export class WritingCube {
     this.onSelect = onSelect;
     this.onCell = onCell;
     this.rotY = -16; this.targetY = -16;   // rest on a corner: the cube reads as a cube
-    this.rotX = -14; this.targetX = -14;
+    this.rotX = REST_X; this.targetX = REST_X;
     this.vel = 0;
     this.dragging = false;
     this.suspended = false;
@@ -117,10 +119,10 @@ export class WritingCube {
     const side = (a) => `rotateY(${a}deg) translateZ(${half})`;
     // three collections on the front, right and back faces
     this.content.forEach((f, i) => this.contentFace(f, i, side([0, 90, 180][i])));
-    // the moon closes the ring on the left; moth and mask cap the poles
+    // the moon closes the ring on the left; the moth and the owl cap the poles
     this.glyphFace('moon', side(270), 3);
     this.glyphFace('moth', `rotateX(90deg) translateZ(${half})`);
-    this.glyphFace('mask', `rotateX(-90deg) translateZ(${half})`);
+    this.glyphFace('owl', `rotateX(-90deg) translateZ(${half})`);
   }
 
   frontFace() {
@@ -143,7 +145,9 @@ export class WritingCube {
       this.targetY += dx * 0.35;
       this.rotY += dx * 0.35;
       this.vel = dx * 0.35;
-      this.targetX = clamp(this.targetX - dy * 0.12, -30, 16);
+      // free tumble: the poles are reachable, the wheel is the way home
+      this.targetX -= dy * 0.35;
+      this.rotX -= dy * 0.35;
     });
     window.addEventListener('pointerup', (e) => {
       if (!this.dragging) return;
@@ -158,6 +162,8 @@ export class WritingCube {
       e.preventDefault();
       if (this.suspended) return;
       this.targetY -= e.deltaY * 0.12;
+      // the wheel realigns: X eases home so the story faces read again
+      this.targetX = REST_X + Math.round((this.targetX - REST_X) / 360) * 360;
       clearTimeout(this._settle);
       this._settle = setTimeout(() => this.snap(), 380);
     }, { passive: false });
@@ -168,7 +174,7 @@ export class WritingCube {
     // so the click lands on the container instead of the tile. The rects
     // stay accurate, so we pick the tile ourselves.
     this.el.parentElement.addEventListener('click', (e) => {
-      if (this.dragging || this._wasDrag) return;
+      if (this.dragging || this._wasDrag || !this.usable()) return;
       const d = this.faceEls[this.frontFace()];
       if (!d || d.dataset.kind !== 'content') return;
       const x = e.clientX, y = e.clientY;
@@ -204,7 +210,18 @@ export class WritingCube {
     this.targetY += delta;
   }
 
-  snap() { this.targetY = Math.round(this.targetY / 90) * 90; }
+  snap() {
+    this.targetY = Math.round(this.targetY / 90) * 90;
+    // X settles flat on a pole if left there, else eases to the resting tilt
+    const nx = Math.round(this.targetX / 90) * 90;
+    this.targetX = nx % 180 === 0 ? nx + REST_X : nx;
+  }
+
+  /* the story faces are only clickable while the ring is roughly upright */
+  usable() {
+    const nx = (((this.rotX - REST_X) % 360) + 540) % 360 - 180;
+    return Math.abs(nx) < 55;
+  }
 
   tick(dt, time) {
     if (this.suspended) return;
@@ -233,7 +250,7 @@ export class WritingCube {
      :hover cannot fire on the 90° face */
   updateHover() {
     let over = null, onCube = false;
-    if (this._inScene && !this.dragging) {
+    if (this._inScene && !this.dragging && this.usable()) {
       const d = this.faceEls[this.frontFace()];
       if (d) {
         const x = this._px, y = this._py;

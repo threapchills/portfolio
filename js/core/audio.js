@@ -12,7 +12,7 @@ const STEMS = {
 };
 
 const MASTER_LEVEL = 0.3;          // low and unobtrusive: sound is on by default
-const SMOOTH_TAU = 1.6;            // seconds, mix easing time constant
+const SMOOTH_TAU = 0.7;            // seconds; short enough that a mix shift lands like a cut
 const ROTATE_MIN = 60, ROTATE_MAX = 90;
 const XFADE = 1.5;                 // variant crossfade, seconds
 const SOUND_KEY = 'mw-sound';      // 'off' | 'on', written only on an explicit choice
@@ -153,10 +153,11 @@ export class AudioEngine {
     if (PARAMS.has('mixdebug')) this.mountDebug();
   }
 
-  /* Warm the first two channels so Act I opens with sound already flowing. */
+  /* Warm every channel up front: the scroll can cross from sky into
+     earth and fire in a second, and a channel that only starts fetching
+     when first asked for arrives late and reads as the engine breaking. */
   prime() {
-    this.channels.sea?.start();
-    this.channels.fire?.start();
+    for (const ch of Object.values(this.channels)) ch.start();
   }
 
   setMix(mix) {

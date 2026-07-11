@@ -36,22 +36,24 @@ const READING_CARD_BEATS = [0.28, 0.52, 0.76];
 const READING_BEATS = [0, ...READING_CARD_BEATS, 1];
 const INK_IN = [0, 0.09];          // the room dims over the offered hands
 
-/* Audio mix vectors across the film's moments, then per page section. */
+/* Audio: spacey in the void, air and water through the cosmos, earth
+   and fire as the goddess and her reading near. The steps are deliberate
+   and the shorter easing in audio.js lets each shift land like a cut. */
 const MIX = {
-  act1:    { sea: 0.50, fire: 0.35, sky: 0.10, earth: 0.00 },
-  act2:    { sea: 0.30, fire: 0.20, sky: 0.10, earth: 0.45 },
-  act3:    { sea: 0.20, fire: 0.10, sky: 0.15, earth: 0.55 },
-  act4:    { sea: 0.05, fire: 0.00, sky: 0.40, earth: 0.35 },
-  act5:    { sea: 0.00, fire: 0.00, sky: 0.30, earth: 0.15 },
-  reading: { sea: 0.00, fire: 0.00, sky: 0.08, earth: 0.12 },
+  act1:    { sky: 0.55, sea: 0.12, earth: 0.00, fire: 0.00 },  // the owl in the void
+  act2:    { sky: 0.38, sea: 0.45, earth: 0.00, fire: 0.00 },  // the cosmos: air and water
+  act3:    { sky: 0.15, sea: 0.30, earth: 0.42, fire: 0.06 },  // the tower: land nears
+  act4:    { sky: 0.05, sea: 0.10, earth: 0.50, fire: 0.28 },  // the goddess rises
+  act5:    { sky: 0.00, sea: 0.00, earth: 0.35, fire: 0.50 },  // the cards, the offering
+  reading: { sky: 0.00, sea: 0.00, earth: 0.28, fire: 0.30 },
   coding:  { sea: 0.15, fire: 0.00, sky: 0.25, earth: 0.00 },
   outro:   { sea: 0.00, fire: 0.00, sky: 0.00, earth: 0.00 },
 };
 const mixAt = (p) => {
-  if (p < 0.24) return MIX.act1;   // the owl in the dark
-  if (p < 0.42) return MIX.act2;   // the cosmos
-  if (p < 0.58) return MIX.act3;   // the tower under red moons
-  if (p < 0.80) return MIX.act4;   // the goddess rises
+  if (p < 0.22) return MIX.act1;   // the owl in the void
+  if (p < 0.43) return MIX.act2;   // the cosmos
+  if (p < 0.57) return MIX.act3;   // the tower under red moons
+  if (p < 0.81) return MIX.act4;   // the goddess rises
   return MIX.act5;                 // the cards, the offering
 };
 
@@ -136,6 +138,48 @@ export function initJourney() {
     onUpdate: (self) => { readingP = self.progress; },
   });
 
+  /* the loop gate: the film's first frame returns behind the plate as it
+     slides back in from the east; at rest the view equals the top of the
+     page, and the scroll quietly teleports home */
+  const gatePlate = qs('#gate-plate');
+  const gateCanvas = qs('#gate-canvas');
+  const gctx = gateCanvas ? gateCanvas.getContext('2d') : null;
+  let gateP = 0, gatePainted = false, looping = false;
+  const sizeGate = () => {
+    if (!gateCanvas) return;
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    gateCanvas.width = gateCanvas.clientWidth * dpr;
+    gateCanvas.height = gateCanvas.clientHeight * dpr;
+    gatePainted = false;
+  };
+  if (gateCanvas) { sizeGate(); addEventListener('resize', sizeGate); }
+  const paintGate = () => {
+    const img = scrubber.images[0];
+    if (gatePainted || !gctx || !img || !img.naturalWidth) return;
+    const cw = gateCanvas.width, ch = gateCanvas.height;
+    const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+    const w = img.naturalWidth * s, h = img.naturalHeight * s;
+    gctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+    gatePainted = true;
+  };
+  if (gatePlate) {
+    ScrollTrigger.create({
+      trigger: '#loop-gate',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: (self) => { gateP = self.progress; },
+    });
+  }
+
+  /* the paper room: the fixed chrome flips while Vibe-Coding owns the frame */
+  ScrollTrigger.create({
+    trigger: '#fourth-door',
+    start: 'top 45%',
+    end: 'bottom 55%',
+    onToggle: (self) => document.body.classList.toggle('mode-light', self.isActive),
+  });
+
   /* ---- per-frame render ---- */
   const stageEl = qs('#journey .stage');
   let sVel = 0;
@@ -180,6 +224,31 @@ export function initJourney() {
     /* the room dims over the offered hands as the reading takes the frame */
     if (groundInk) groundInk.style.opacity = seg(readingP, INK_IN[0], INK_IN[1]).toFixed(3);
 
+    /* the table only materialises at the seam, so the film's own cards
+       never share the frame with the real ones */
+    if (readingEl) {
+      const rr = readingEl.getBoundingClientRect();
+      const rise = 1 - clamp(rr.top / window.innerHeight, 0, 1);
+      const reveal = seg(rise, 0.9, 1);
+      readingEl.style.opacity = reveal.toFixed(3);
+      readingEl.style.pointerEvents = reveal > 0.5 ? '' : 'none';
+    }
+
+    /* the loop gate: world back first, then the plate; then home */
+    if (gatePlate) {
+      paintGate();
+      gateCanvas.style.opacity = seg(gateP, 0.05, 0.3).toFixed(3);
+      const gx = 112 - 112 * seg(gateP, 0.3, 0.85, easeInOut);
+      gatePlate.style.transform = `translate3d(${gx.toFixed(3)}%, 0, 0)`;
+      if (gateP >= 0.985 && !looping) {
+        looping = true;
+        scrubber.progress = 0; scrubber.target = 0; scrubber.draw(true);
+        lenis.scrollTo(0, { immediate: true });
+        ScrollTrigger.update();
+        setTimeout(() => { looping = false; }, 300);
+      }
+    }
+
     /* the reading's pool of light follows, dreamily late */
     if (readingEl) {
       lightX = damp(lightX, lightTX, 5, dt);
@@ -223,6 +292,7 @@ export function initJourney() {
       const r = el.getBoundingClientRect();
       return r.top < vh * 0.5 && r.bottom > vh * 0.5 ? r : null;
     };
+    if (probe('#loop-gate')) return MIX.outro;
     if (probe('#outro')) return MIX.outro;
     if (probe('#fourth-door')) return MIX.coding;
     if (probe('#reading-wrap')) return MIX.reading;
@@ -245,6 +315,8 @@ export function initJourney() {
     if (fourth) pts.push(fourth.offsetTop - window.innerHeight * 0.1);
     const outro = qs('#outro');
     if (outro) pts.push(outro.offsetTop);
+    const gate = qs('#loop-gate');
+    if (gate) pts.push(gate.offsetTop + (gate.offsetHeight - window.innerHeight) * 0.95);
     return pts;
   };
   window.addEventListener('keydown', (e) => {

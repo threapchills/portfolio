@@ -234,7 +234,7 @@
 /* Act I: the wordmark stencil. The letterforms are punched clean through
    the ink plate; the film holds still behind while the plate slides off,
    its letter-shaped windows travelling across the standing image. */
-#logo-veil {
+#logo-veil, #gate-plate {
   position: absolute; inset: 0;
   z-index: 3;
   background: var(--bg);
@@ -447,9 +447,32 @@
 #fourth-door {
   position: relative;
   padding: 22vh 6vw 18vh;
-  background: linear-gradient(var(--ink), #060809 60%);
+  /* the room lightens to paper, then hands back to ink for Onwards */
+  background: linear-gradient(var(--ink) 0%, #ece7db 16%, #e8e2d3 84%, #060809 100%);
+  color: #171310;
   text-align: center;
 }
+#fourth-door .door-eyebrow { color: #2c6666; }
+#fourth-door .door-sub { color: #7c5c14; opacity: 0.85; }
+#fourth-door .artefact {
+  color: #171310;
+  border-color: rgba(23, 19, 16, 0.18);
+  background: rgba(255, 253, 246, 0.55);
+}
+#fourth-door .artefact:hover { border-color: rgba(124, 92, 20, 0.6); }
+#fourth-door .artefact .artefact-cta { color: #7c5c14; }
+/* on paper the marker sigils keep their own colours */
+#fourth-door .artefact-sigil { filter: none; opacity: 0.9; }
+#fourth-door .artefact:hover .artefact-sigil { filter: none; opacity: 1; }
+#fourth-door .door-credit a { color: #2c6666; }
+
+/* fixed chrome adapts while the paper room owns the viewport */
+.veil-mark img { transition: filter 0.5s ease; }
+body.mode-light .veil-mark img { filter: none; }
+body.mode-light #mute-btn { color: #171310; border-color: rgba(23, 19, 16, 0.35); }
+body.mode-light #mute-btn:hover { border-color: #7c5c14; color: #171310; }
+body.mode-light .mw-cursor-ring { border-color: rgba(23, 19, 16, 0.55); }
+body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 .door-eyebrow {
   font-size: 0.68rem;
   letter-spacing: 0.34em;
@@ -585,6 +608,21 @@
 .outro-links a { color: var(--text); opacity: 0.6; text-decoration: none; transition: opacity 0.15s ease, color 0.15s ease; }
 .outro-links a:hover { opacity: 1; color: var(--moon); }
 .outro-credit { font-size: 0.68rem; letter-spacing: 0.1em; opacity: 0.4; line-height: 2; }
+
+/* ============================================================
+   Act IX — the loop gate
+   The film's first frame returns; the stencil plate slides back
+   in from the east; at rest the view equals the top of the page,
+   and the scroll quietly teleports home.
+   ============================================================ */
+#loop-gate { position: relative; height: 220vh; background: #000; }
+.gate-stage {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  overflow: hidden;
+}
+#gate-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+#gate-plate { transform: translate3d(112%, 0, 0); }
 
 /* ============================================================
    chamber shared
