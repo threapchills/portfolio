@@ -231,38 +231,24 @@
 }
 #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-/* Act I: the wordmark plate. The letters are windows into the film;
-   a moon-pale aura behind them keeps blackletter legible on ink. */
+/* Act I: the wordmark stencil. The letterforms are punched clean through
+   the ink plate; the film holds still behind while the plate slides off,
+   its letter-shaped windows travelling across the standing image. */
 #logo-veil {
   position: absolute; inset: 0;
   z-index: 3;
   background: var(--bg);
-  display: grid; place-items: center;
   will-change: transform;
-}
-.logo-comp {
-  position: relative;
-  width: min(82vw, 880px);
-  aspect-ratio: 900 / 506;
-}
-.logo-glow {
-  position: absolute;
-  inset: -6%;
-  width: 112%; height: 112%;
-  filter: invert(1) blur(24px);
-  opacity: 0.32;
-}
-.logo-canvas {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  -webkit-mask-image: url('../assets/brand/mikey-logo.webp');
-          mask-image: url('../assets/brand/mikey-logo.webp');
-  -webkit-mask-size: contain;
-          mask-size: contain;
+  -webkit-mask-image: linear-gradient(#000 0 0), url('../assets/brand/mikey-logo-hi.webp');
+          mask-image: linear-gradient(#000 0 0), url('../assets/brand/mikey-logo-hi.webp');
+  -webkit-mask-size: 100% 100%, min(82vw, 880px) auto;
+          mask-size: 100% 100%, min(82vw, 880px) auto;
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
   -webkit-mask-position: center;
           mask-position: center;
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
 }
 .hero-roles {
   position: absolute;
@@ -1058,7 +1044,10 @@
 
 @media (max-width: 768px) {
   #journey { height: 760vh; }
-  .logo-comp { width: 92vw; }
+  #logo-veil {
+    -webkit-mask-size: 100% 100%, 92vw auto;
+            mask-size: 100% 100%, 92vw auto;
+  }
   .hero-roles { font-size: 0.58rem; letter-spacing: 0.24em; padding: 0 1.2rem; }
   .card-title { opacity: 0.9; transform: none; }      /* no hover on touch */
   #card-table { gap: 0.8rem; padding: 0 0.8rem; }

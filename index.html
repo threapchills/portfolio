@@ -64,11 +64,7 @@
     <section id="journey" aria-label="The journey into the artwork">
       <div class="stage vignette">
         <canvas id="hero-canvas"></canvas>
-        <div id="logo-veil">
-          <div class="logo-comp" role="img" aria-label="Mikey">
-            <img class="logo-glow" src="assets/brand/mikey-logo.webp" alt="" aria-hidden="true">
-            <canvas class="logo-canvas"></canvas>
-          </div>
+        <div id="logo-veil" role="img" aria-label="Mikey">
           <p class="hero-roles">GenAI filmmaker, writer, designer and vibe-coder. Cape Town.</p>
           <p class="hero-hint">Scroll</p>
         </div>
@@ -194,7 +190,7 @@
       // late scroll restoration can land past the threshold; hold the top
       addEventListener('load', () => scrollTo(0, 0));
       initThreshold({
-        images: ['assets/brand/mikey-logo.webp'],
+        images: ['assets/brand/mikey-logo-hi.webp'],
         jobs: [journey.firstChunk],
         onEnter: () => {
           document.body.style.overflow = '';

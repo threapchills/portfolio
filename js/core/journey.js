@@ -75,31 +75,11 @@ export function initJourney() {
   scrubber.preload((p) => { if (p * FRAMES.count >= FIRST_CHUNK) chunkDone(); })
     .then(() => { chunkDone(); scrubber.draw(true); });
 
+  /* the veil is a stencil: its letter-holes are cut in CSS (mask-composite),
+     so the film behind needs no second canvas and never moves with the plate */
   const veil = qs('#logo-veil');
   const roles = qs('.hero-roles');
   const hint = qs('.hero-hint');
-  const logoCanvas = qs('.logo-canvas');
-  const lctx = logoCanvas.getContext('2d');
-  let logoFrame = -2;
-  const sizeLogo = () => {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    logoCanvas.width = logoCanvas.clientWidth * dpr;
-    logoCanvas.height = logoCanvas.clientHeight * dpr;
-    logoFrame = -2;                // a resize clears the canvas; repaint
-  };
-  sizeLogo();
-  addEventListener('resize', sizeLogo);
-  /* the same frame the big canvas shows, cover-fit to the letterforms */
-  const paintLogo = () => {
-    if (scrubber.current === logoFrame) return;
-    const img = scrubber.images[Math.max(scrubber.current, 0)];
-    if (!img || !img.naturalWidth) return;
-    logoFrame = scrubber.current;
-    const cw = logoCanvas.width, ch = logoCanvas.height;
-    const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-    const w = img.naturalWidth * s, h = img.naturalHeight * s;
-    lctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
-  };
 
   /* ---- the seam: the reading's ground carries the film's final frame ---- */
   const groundFrame = qs('#ground-frame');
@@ -196,7 +176,6 @@ export function initJourney() {
     scrubber.setProgress(seg(p, SCRUB[0], SCRUB[1]));
     if (p > 0.975) scrubber.progress = scrubber.target;
     scrubber.tick(dt);
-    if (!veilGone) paintLogo();
 
     /* the room dims over the offered hands as the reading takes the frame */
     if (groundInk) groundInk.style.opacity = seg(readingP, INK_IN[0], INK_IN[1]).toFixed(3);
