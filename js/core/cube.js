@@ -2,8 +2,9 @@
    Six faces, each a 4x4 grid of little tiles: three collections carry
    scattered story titles among blank paper cells, three carry sliced
    marker artwork (moth above, owl below, moon abeam). Drag tumbles it
-   freely on both axes; the wheel realigns it so the readable faces
-   front again; a titled tile opens its piece, a bare face opens the
+   freely on both axes; on the journey the page's own scroll walks it
+   through a full revolution (setScrollTurn), while standalone the wheel
+   realigns it; a titled tile opens its piece, a bare face opens the
    whole collection. */
 
 import { clamp, damp, fromRoot, REDUCED_MOTION } from './util.js';
@@ -11,6 +12,7 @@ import { clamp, damp, fromRoot, REDUCED_MOTION } from './util.js';
 /* vertical faces around Y: 0 front, 1 right, 2 back, 3 left */
 const FACE_ANGLES = [0, -90, -180, -270];
 const REST_X = -14;                   // the resting tilt: the cube reads as a cube
+const REST_Y = -16;                   // rest on a corner: the cube reads as a cube
 const GRID = 4;                       // 4x4 tiles per face
 const CELLS = GRID * GRID;
 const MAX_TITLED = CELLS;             // fill the face; every story earns a tile
@@ -24,12 +26,13 @@ const GLYPHS = {
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 export class WritingCube {
-  constructor(el, faces, { onSelect, onCell }) {
+  constructor(el, faces, { onSelect, onCell, wheel = true }) {
     this.el = el;
     this.content = faces;           // 3 content faces, each with .entries
     this.onSelect = onSelect;
     this.onCell = onCell;
-    this.rotY = -16; this.targetY = -16;   // rest on a corner: the cube reads as a cube
+    this._wheelEnabled = wheel;     // off when the page's own scroll drives the turn
+    this.rotY = REST_Y; this.targetY = REST_Y;
     this.rotX = REST_X; this.targetX = REST_X;
     this.vel = 0;
     this.dragging = false;
@@ -158,15 +161,17 @@ export class WritingCube {
       this.snap();
     });
 
-    this.el.parentElement.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (this.suspended) return;
-      this.targetY -= e.deltaY * 0.12;
-      // the wheel realigns: X eases home so the story faces read again
-      this.targetX = REST_X + Math.round((this.targetX - REST_X) / 360) * 360;
-      clearTimeout(this._settle);
-      this._settle = setTimeout(() => this.snap(), 380);
-    }, { passive: false });
+    if (this._wheelEnabled) {
+      this.el.parentElement.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (this.suspended) return;
+        this.targetY -= e.deltaY * 0.12;
+        // the wheel realigns: X eases home so the story faces read again
+        this.targetX = REST_X + Math.round((this.targetX - REST_X) / 360) * 360;
+        clearTimeout(this._settle);
+        this._settle = setTimeout(() => this.snap(), 380);
+      }, { passive: false });
+    }
 
     // Resolve clicks against the tiles' projected rects rather than the
     // browser's hit-test target: a face brought to the front by a 90° turn
@@ -208,6 +213,17 @@ export class WritingCube {
     const want = FACE_ANGLES[i];
     const delta = (((want - this.targetY) % 360) + 540) % 360 - 180;
     this.targetY += delta;
+  }
+
+  /* scroll drive: f is the eased fraction of one full revolution. The
+     scroll owns the tour; any whole revolutions the hand added while
+     playing are kept, so a drag never fights the page. */
+  setScrollTurn(f) {
+    const base = REST_Y - 360 * f;
+    this.targetY = base + Math.round((this.targetY - base) / 360) * 360;
+    if (!this.dragging) {
+      this.targetX = REST_X + Math.round((this.targetX - REST_X) / 360) * 360;
+    }
   }
 
   snap() {

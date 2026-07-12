@@ -46,6 +46,9 @@ const MIX = {
   act4:    { sky: 0.05, sea: 0.10, earth: 0.50, fire: 0.28 },  // the goddess rises
   act5:    { sky: 0.00, sea: 0.00, earth: 0.35, fire: 0.50 },  // the cards, the offering
   reading: { sky: 0.00, sea: 0.00, earth: 0.28, fire: 0.30 },
+  film:    { sky: 0.00, sea: 0.08, earth: 0.00, fire: 0.20 },  // chamber i: embers
+  writing: { sky: 0.18, sea: 0.00, earth: 0.06, fire: 0.00 },  // chamber ii: thin air
+  design:  { sky: 0.06, sea: 0.00, earth: 0.20, fire: 0.00 },  // chamber iii: ground
   coding:  { sea: 0.15, fire: 0.00, sky: 0.25, earth: 0.00 },
   outro:   { sea: 0.00, fire: 0.00, sky: 0.00, earth: 0.00 },
 };
@@ -74,7 +77,7 @@ export function initJourney() {
   });
   let chunkDone;
   const firstChunk = new Promise((r) => { chunkDone = r; });
-  scrubber.preload((p) => { if (p * FRAMES.count >= FIRST_CHUNK) chunkDone(); })
+  const preloadDone = scrubber.preload((p) => { if (p * FRAMES.count >= FIRST_CHUNK) chunkDone(); })
     .then(() => { chunkDone(); scrubber.draw(true); });
 
   /* the veil is a stencil: its letter-holes are cut in CSS (mask-composite),
@@ -296,6 +299,9 @@ export function initJourney() {
     if (probe('#loop-gate')) return MIX.outro;
     if (probe('#outro')) return MIX.outro;
     if (probe('#fourth-door')) return MIX.coding;
+    if (probe('#design')) return MIX.design;
+    if (probe('#writing')) return MIX.writing;
+    if (probe('#film')) return MIX.film;
     if (probe('#reading-wrap')) return MIX.reading;
     return null;
   }
@@ -312,6 +318,19 @@ export function initJourney() {
       const rLen = reading.offsetHeight - window.innerHeight;
       for (const b of READING_CARD_BEATS) pts.push(reading.offsetTop + b * rLen);
     }
+    // document-absolute top: offsetTop lies for elements inside a
+    // positioned section, the rect never does
+    const docTop = (el) => el.getBoundingClientRect().top + window.scrollY;
+    const film = qs('#film');
+    if (film) pts.push(docTop(film));
+    const pin = qs('#cube-pin');
+    if (pin) {
+      // the cube's four dwells: one beat per fronted face
+      const cLen = pin.offsetHeight - window.innerHeight;
+      for (const b of [0, 0.255, 0.505, 0.755]) pts.push(docTop(pin) + b * cLen);
+    }
+    const design = qs('#design');
+    if (design) pts.push(docTop(design));
     const fourth = qs('#fourth-door');
     if (fourth) pts.push(fourth.offsetTop - window.innerHeight * 0.1);
     const outro = qs('#outro');
@@ -333,19 +352,26 @@ export function initJourney() {
     if (next !== undefined) lenis.scrollTo(next, { duration: 1.1, easing: easeInOut });
   });
 
-  /* Returning from a chamber lands on the Reading, never back at Act 0.
-     Land past the ink-in so the table is already lit and wide. */
-  if (location.hash === '#reading' || sessionStorage.getItem('mw-return') === '1') {
-    sessionStorage.removeItem('mw-return');
-    requestAnimationFrame(() => {
-      const reading = qs('#reading-wrap');
-      if (reading) {
-        const travel = reading.offsetHeight - window.innerHeight;
-        lenis.scrollTo(reading.offsetTop + travel * INK_IN[1], { immediate: true });
-        ScrollTrigger.refresh();
-      }
-    });
+  /* Deep links land inside the journey: the old chamber URLs redirect
+     here with a hash, and the reading link lands past the ink-in so the
+     table is already lit and wide. Returns false on an unknown hash so
+     the caller can fall back to the top. */
+  function landTo(hash) {
+    const spots = {
+      '#reading': () => {
+        const r = qs('#reading-wrap');
+        return r.offsetTop + (r.offsetHeight - window.innerHeight) * INK_IN[1];
+      },
+      '#film':    () => qs('#film')?.offsetTop,
+      '#writing': () => qs('#writing')?.offsetTop,
+      '#design':  () => qs('#design')?.offsetTop,
+    };
+    const y = spots[hash]?.();
+    if (y == null) return false;
+    lenis.scrollTo(y, { immediate: true });
+    ScrollTrigger.refresh();
+    return true;
   }
 
-  return { lenis, scrubber, firstChunk };
+  return { lenis, scrubber, firstChunk, preloadDone, landTo };
 }

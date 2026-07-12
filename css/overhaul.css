@@ -174,26 +174,6 @@
   filter: invert(1);
   transition: opacity 0.15s ease;
 }
-/* in the chambers the same mark leads home to the reading, a touch smaller */
-.return-mark { display: inline-flex; }
-.return-mark img { width: clamp(60px, 6vw, 80px); opacity: 0.9; }
-.return-mark:hover img { opacity: 1; }
-.return-reading {
-  display: inline-flex; align-items: center; gap: 0.6rem;
-  text-decoration: none;
-  color: var(--text);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  opacity: 0.75;
-  transition: opacity 0.15s ease, color 0.15s ease;
-}
-.return-reading:hover { opacity: 1; color: var(--moon); }
-.return-reading img {
-  width: 26px;
-  border-radius: 3px;
-  border: 1px solid rgba(240, 237, 230, 0.25);
-}
 #mute-btn {
   width: 40px; height: 40px;
   background: transparent;
@@ -624,41 +604,6 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 #gate-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 #gate-plate { transform: translate3d(112%, 0, 0); }
 
-/* ============================================================
-   chamber shared
-   ============================================================ */
-#chamber-loader {
-  position: fixed; inset: 0;
-  z-index: 200;
-  background: #000;
-  display: grid; place-items: center;
-  transition: opacity 0.9s ease;
-}
-#chamber-loader.is-leaving { opacity: 0; pointer-events: none; }
-.chamber-moon {
-  position: relative;
-  width: 46px;
-  overflow: hidden;
-}
-.chamber-moon img { width: 100%; display: block; filter: grayscale(1) brightness(0.35); }
-.chamber-moon-fill {
-  position: absolute; inset: 0;
-  overflow: hidden;
-  transform-origin: bottom;
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
-}
-.chamber-moon-fill img { width: 46px; display: block; }
-
-.chamber-outro {
-  padding: 18vh 6vw;
-  text-align: center;
-  display: flex; flex-direction: column; gap: 2rem; align-items: center;
-  background: #000;
-}
-.chamber-outro .outro-title { font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: 0.01em; }
-.chamber-outro .outro-eyebrow { margin-bottom: -1rem; }
-
 /* ---- indigo finesse: numbered eyebrows and edge-of-frame index ---- */
 .outro-eyebrow {
   font-family: var(--font-ui);
@@ -674,7 +619,8 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   font-style: normal;
   letter-spacing: 0.1em;
 }
-/* a quiet label pinned to the corner of the frame, indigo-fashion */
+/* a quiet label pinned to the corner of the frame, indigo-fashion;
+   each lights only while its chamber owns the viewport */
 .chamber-edge {
   position: fixed;
   left: 1.5rem; bottom: 1.3rem;
@@ -684,16 +630,18 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--text);
-  opacity: 0.42;
+  opacity: 0;
+  transition: opacity 0.6s ease;
   pointer-events: none;
   mix-blend-mode: difference;
 }
+.chamber-edge.is-on { opacity: 0.42; }
 .chamber-edge em { font-style: normal; color: var(--gold); margin-right: 0.5em; }
 
 /* ============================================================
-   film chamber
+   chamber i — film
    ============================================================ */
-.film-page { background: #050403; }
+#film { position: relative; background: #050403; }
 #scrub-wrap { position: relative; height: 1100vh; }
 #scrub-stage {
   position: sticky; top: 0;
@@ -800,25 +748,30 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 .film-banner.is-more { background: linear-gradient(#050403, #000); display: grid; place-items: center; }
 
 /* ============================================================
-   writing chamber — the cube
+   chamber ii — writing: the cube
    ============================================================ */
-/* the dark ground and its pool of light live on the page, beneath the
+/* the dark ground and its pool of light pin with the cube, beneath the
    cursor trail; the scene above is transparent so the trail shows on the
    background but the opaque cube covers it */
-.writing-page {
-  background:
-    radial-gradient(ellipse 62% 50% at 50% 44%, rgba(242, 226, 160, 0.06), transparent 70%),
-    var(--ink);
+#writing { position: relative; background: var(--ink); }
+#cube-pin { position: relative; height: 340vh; }
+.writing-ground {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  margin-bottom: -100vh;
+  background: radial-gradient(ellipse 62% 50% at 50% 44%, rgba(242, 226, 160, 0.06), transparent 70%);
+  pointer-events: none;
 }
 #cube-scene {
-  position: relative;
+  position: sticky; top: 0;
   z-index: 2;
   height: 100vh; height: 100svh;
   display: grid; place-items: center;
   perspective: 1200px;
   overflow: hidden;
   background: transparent;
-  touch-action: none;
+  /* vertical swipes keep the page travelling; sideways drags turn the cube */
+  touch-action: pan-y;
 }
 #cube-scene::before {
   content: '';
@@ -1006,9 +959,9 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 .back-to-list { margin-bottom: 3rem; }
 
 /* ============================================================
-   design chamber
+   chamber iii — design
    ============================================================ */
-.design-page { background: #060607; }
+#design { position: relative; background: #060607; }
 .design-piece { position: relative; min-height: 100vh; padding: 14vh 0; display: grid; place-items: center; }
 .design-piece .piece-media {
   position: relative;
@@ -1093,6 +1046,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   .plane-close { right: 1.1rem; top: 4.4rem; }
   .film-plane, .film-plane:first-child,
   .film-plane:nth-child(3n+2), .film-plane:nth-child(3n) { width: 84vw; transform: none; }
+  #cube-pin { height: 300vh; }
   #cube { --size: min(74vw, 58vh); }
   .plane-inner { padding-top: 16vh; }
 }

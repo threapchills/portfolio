@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mike Whyle | A short conjuring</title>
+  <title>Mike Whyle | Portfolio</title>
   <meta name="description" content="Mike Whyle: GenAI filmmaker, writer, designer and vibe-coder in Cape Town. A scroll journey through hand-drawn marker artwork that deals three cards: film, writing, design.">
   <meta property="og:title" content="Mike Whyle | Portfolio">
   <meta property="og:description" content="A journey into hand-drawn artwork that resolves into a tarot reading: film, writing, design.">
@@ -28,11 +28,8 @@
     <div class="noscript-poster">
       <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;">Mike Whyle</h1>
       <p>Cape Town based GenAI film-maker; writer, and creative.</p>
-      <p>The full journey needs JavaScript. The chambers are open either way.</p>
+      <p>The full journey needs JavaScript. The classic site asks nothing.</p>
       <nav>
-        <a href="film/">Film</a>
-        <a href="writing/">Writing</a>
-        <a href="design/">Design</a>
         <a href="legacy/index-v1.html">Classic site</a>
       </nav>
     </div>
@@ -51,7 +48,7 @@
   </div>
 
   <header class="veil-nav">
-    <a href="./" class="veil-mark" aria-label="Mike Whyle, home">
+    <a href="#top" class="veil-mark" aria-label="Mike Whyle, back to the beginning">
       <img src="assets/brand/mikey-logo.webp" alt="Mikey">
     </a>
     <button id="mute-btn" aria-label="Pause sound">
@@ -81,6 +78,41 @@
       <div id="reading">
         <div id="card-table"><!-- cards dealt by cards.js --></div>
       </div>
+    </section>
+
+    <!-- chamber i · Human Being · Film. The Mikey scrub leads, the
+         banners walk the reel; the whole act rides the one scroll now -->
+    <section id="film" aria-label="Film: the work">
+      <div id="scrub-wrap">
+        <div id="scrub-stage" class="vignette">
+          <canvas id="scrub-canvas"></canvas>
+          <div class="letterbox letterbox-top" id="lb-top"></div>
+          <div class="letterbox letterbox-bottom" id="lb-bottom"></div>
+          <div class="scrub-brand" id="scrub-brand">
+            <img src="assets/brand/mikey-logo.webp" alt="Mikey">
+            <p>A spec film. This is what cinematic AI looks like now.</p>
+            <a class="scrub-cta" href="projects/mikey/">Enter the film &rarr;</a>
+          </div>
+        </div>
+      </div>
+      <div id="film-banners" aria-label="The films"><!-- banners injected --></div>
+    </section>
+
+    <!-- chamber ii · Human Thinking · Writing. The scroll turns the cube
+         through one full revolution; drag stays free for play -->
+    <section id="writing" aria-label="Writing: the collections">
+      <div id="cube-pin">
+        <div class="writing-ground" aria-hidden="true"></div>
+        <div id="cube-scene">
+          <div id="cube"><!-- faces built by cube.js --></div>
+          <p class="cube-hint">Scroll to turn · drag to tumble · a tile opens its piece</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- chamber iii · Human Doing · Design -->
+    <section id="design" aria-label="Design: the identities">
+      <div id="design-flow"><!-- pieces injected --></div>
     </section>
 
     <!-- Act VII · the fourth door · Vibe-Coding -->
@@ -131,9 +163,9 @@
         <a class="contact-pill" href="https://mikewhyle.com" target="_blank" rel="noopener">mikewhyle.com</a>
       </div>
       <nav class="outro-links" aria-label="More">
-        <a href="film/">Film</a>
-        <a href="writing/">Writing</a>
-        <a href="design/">Design</a>
+        <a href="#film">Film</a>
+        <a href="#writing">Writing</a>
+        <a href="#design">Design</a>
         <a href="https://slumbr.mikewhyle.com/" target="_blank" rel="noopener">SLUMBR</a>
         <a href="https://tarot.mikewhyle.com/" target="_blank" rel="noopener">Afrikan Tarot</a>
         <a href="legacy/index-v1.html">Classic site</a>
@@ -153,9 +185,22 @@
     </section>
   </main>
 
+  <!-- the chambers' corner labels, lit while their act owns the frame -->
+  <span class="chamber-edge" id="edge-film"><em>i</em> Human Being</span>
+  <span class="chamber-edge" id="edge-writing"><em>ii</em> Human Thinking</span>
+  <span class="chamber-edge" id="edge-design"><em>iii</em> Human Doing</span>
+
+  <!-- the writing plane: a cube face zoomed to full screen -->
+  <div id="reading-plane" aria-hidden="true">
+    <div class="plane-inner" id="plane-inner"></div>
+  </div>
+  <button class="plane-close" id="plane-close" hidden>Close</button>
+
   <div id="doorway-veil"></div>
   <div class="grain-veil"></div>
 
+  <script src="js/data.js"></script>
+  <script src="content/newsdrop/index.js"></script>
   <script src="js/vendor/gsap.min.js?v=3"></script>
   <script src="js/vendor/ScrollTrigger.min.js?v=3"></script>
   <script src="js/vendor/lenis.min.js?v=3"></script>
@@ -163,16 +208,20 @@
     import { initThreshold } from './js/core/loader.js';
     import { initJourney } from './js/core/journey.js';
     import { initReading } from './js/core/cards.js';
+    import { initFilmSection, initWritingSection, initDesignSection } from './js/core/chambers.js';
     import { audio, mountMuteButton } from './js/core/audio.js';
     import { initCursor } from './js/core/cursor.js';
+    import { qs, easeInOut } from './js/core/util.js';
 
     gsap.registerPlugin(ScrollTrigger);
     mountMuteButton();
     initCursor();
 
-    // returning from a chamber: no second threshold, straight to the table
+    // the old chamber URLs redirect here with a hash; within a session a
+    // dealt reading means no second threshold, straight to the landing
+    const HASH_LAND = /^#(reading|film|writing|design)$/;
     const returning = sessionStorage.getItem('mw-reading') === 'dealt'
-      && (location.hash === '#reading' || document.referrer.match(/\/(film|writing|design)\//));
+      && HASH_LAND.test(location.hash);
 
     history.scrollRestoration = 'manual';
     document.documentElement.style.scrollBehavior = 'auto';
@@ -180,6 +229,27 @@
 
     const journey = initJourney();
     initReading();
+    const film = initFilmSection(journey.lenis);
+    initWritingSection(journey.lenis);
+    const design = initDesignSection();
+
+    // the chambers' corner labels light while their act owns the frame
+    for (const [sel, id] of [['#film', 'edge-film'], ['#writing', 'edge-writing'], ['#design', 'edge-design']]) {
+      const edge = document.getElementById(id);
+      ScrollTrigger.create({
+        trigger: sel, start: 'top 60%', end: 'bottom 40%',
+        onToggle: (self) => edge.classList.toggle('is-on', self.isActive),
+      });
+    }
+
+    // in-page anchors ride the smooth scroll: the outro links, the nav mark
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      e.preventDefault();
+      const el = a.hash.length > 1 ? qs(a.hash) : null;
+      journey.lenis.scrollTo(el ? el.offsetTop : 0, { duration: 1.6, easing: easeInOut });
+    });
 
     // no gate means no gesture: the engine stays dormant until the first
     // interaction, then wakes in whatever mute state the visitor last chose
@@ -189,23 +259,33 @@
 
     if (returning) {
       document.getElementById('threshold').remove();
-      sessionStorage.setItem('mw-return', '1');
+      requestAnimationFrame(() => journey.landTo(location.hash));
     } else {
       document.body.style.overflow = 'hidden';
       // late scroll restoration can land past the threshold; hold the top
-      addEventListener('load', () => scrollTo(0, 0));
+      addEventListener('load', () => { if (!HASH_LAND.test(location.hash)) scrollTo(0, 0); });
       initThreshold({
         images: ['assets/brand/mikey-logo-hi.webp'],
         jobs: [journey.firstChunk],
         onEnter: () => {
           document.body.style.overflow = '';
-          window.__lenis?.scrollTo(0, { immediate: true });
-          scrollTo(0, 0);
-          ScrollTrigger.refresh();
+          if (!journey.landTo(location.hash)) {
+            window.__lenis?.scrollTo(0, { immediate: true });
+            scrollTo(0, 0);
+            ScrollTrigger.refresh();
+          }
           document.dispatchEvent(new CustomEvent('mw:enter'));
         },
       });
     }
+
+    // the heavy assets stream in single file behind the opener: the header
+    // film first (the threshold gates its opening chunk), then the Mikey
+    // scrub, then the design flow's GL textures
+    journey.preloadDone.then(() => film.preload()).then(() => design.warm());
+    // backstops for deep links and fast scrollers: wake early on approach
+    ScrollTrigger.create({ trigger: '#film', start: 'top 200%', once: true, onEnter: () => film.preload() });
+    ScrollTrigger.create({ trigger: '#design', start: 'top 200%', once: true, onEnter: () => design.warm() });
 
     // lazy lookahead: the reading's dressing arrives while the film breathes
     addEventListener('load', () => {

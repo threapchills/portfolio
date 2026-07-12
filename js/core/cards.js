@@ -1,13 +1,15 @@
 /* cards.js — Act VI, the Reading.
    Three cards dealt face down onto the table, turned to reveal their
-   glyphs. A chosen card becomes the doorway into its chamber. */
+   glyphs. The chambers live on this same scroll now, so a chosen card
+   is a shortcut: the doorway ritual plays, and under the held black
+   the page teleports to that act. */
 
 import { clamp, fromRoot, qs, qsa, REDUCED_MOTION } from './util.js';
 
 const CARDS = [
-  { id: 'film',    title: 'Human Being',    medium: 'Film',    href: 'film/',    glyph: 'assets/glyphs/glyph-film.webp' },
-  { id: 'writing', title: 'Human Thinking', medium: 'Writing', href: 'writing/', glyph: 'assets/glyphs/glyph-writing.webp' },
-  { id: 'design',  title: 'Human Doing',    medium: 'Design',  href: 'design/',  glyph: 'assets/glyphs/glyph-design.webp' },
+  { id: 'film',    title: 'Human Being',    medium: 'Film',    target: '#film',    glyph: 'assets/glyphs/glyph-film.webp' },
+  { id: 'writing', title: 'Human Thinking', medium: 'Writing', target: '#writing', glyph: 'assets/glyphs/glyph-writing.webp' },
+  { id: 'design',  title: 'Human Doing',    medium: 'Design',  target: '#design',  glyph: 'assets/glyphs/glyph-design.webp' },
 ];
 
 export function initReading() {
@@ -96,13 +98,10 @@ export function initReading() {
   function openDoorway(el, c) {
     if (!el.classList.contains('is-turned') || qs('.is-opening', table)) return;
     el.classList.add('is-opening');
-    sessionStorage.setItem('mw-return', '0');
     const others = cards.filter((x) => x !== el);
     const r = el.getBoundingClientRect();
     const scale = Math.max(window.innerWidth / r.width, window.innerHeight / r.height) * 1.15;
-    const tl = gsap.timeline({
-      onComplete: () => { location.href = fromRoot(c.href); },
-    });
+    const tl = gsap.timeline();
     tl.to(others, { y: 90, opacity: 0, duration: 0.5, ease: 'power2.in', stagger: 0.06 }, 0);
     tl.to(el, {
       x: window.innerWidth / 2 - (r.left + r.width / 2),
@@ -112,7 +111,19 @@ export function initReading() {
       ease: 'expo.inOut',
     }, 0.1);
     tl.to(veil, { opacity: 1, duration: 0.45, ease: 'power2.in' }, REDUCED_MOTION ? 0.2 : 0.55);
-    tl.to({}, { duration: 0.3 });   // held black so the cut is invisible
+    /* under the held black the page teleports to the chamber, and the
+       table quietly resets itself for the way back */
+    tl.call(() => {
+      const dest = qs(c.target);
+      if (dest) {
+        window.__lenis?.scrollTo(dest.offsetTop, { immediate: true });
+        ScrollTrigger.update();
+      }
+      gsap.set(others, { y: 0, opacity: 1 });
+      gsap.set(el, { x: 0, y: 0, scale: 1 });
+      el.classList.remove('is-opening');
+    }, [], '+=0.25');
+    tl.to(veil, { opacity: 0, duration: 0.8, ease: 'power2.out' }, '+=0.1');
   }
 
   /* Deal when the table arrives; if the reading already happened this
@@ -121,11 +132,13 @@ export function initReading() {
     // returning visitor in this session: cards are already on the table
     deal(true);
   } else {
-    // fire as her offered hands settle at the seam, so she deals to you
+    // fire as her offered hands settle at the seam, so she deals to you;
+    // a visitor who deep-linked past the table finds it laid on the way back
     ScrollTrigger.create({
       trigger: '#reading-wrap',
       start: 'top 15%',
       onEnter: () => deal(),
+      onEnterBack: () => deal(true),
     });
   }
 
