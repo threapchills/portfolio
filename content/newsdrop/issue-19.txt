@@ -1,8 +1,6 @@
 The News Drop #19 – Thinking Out the Box
 
 The Friday brief for people who make marketing move.
-LinkedIn Caption
-Kimi K3 out now. Fable skips World Cup final to work on maths. Rogue GPT escapes the sandbox. 👇
 
 📜 Laundry bot loading
 The old fantasy was that AI would do the laundry first and leave the art to us. Turns out, machines that produce beautiful designs, poetry, music and videos were a rung on the tech ladder leading up towards robots that can function usefully in the real world.
@@ -32,7 +30,3 @@ Hugging Face CEO Clem Delangue called it an “attack unlike anything we've seen
 Neill Blomkamp released Nightborne, a 13-minute AI zombie short. The controversial director who earned critical acclaim as well as notoriety with District 9 used Seedance 2.0 to generate the footage, which he directed via meticulous prompting. He hired human concept artists and models for facial expression, pose and character references, as well as real human voice actors.
 Meanwhile Zack London, the YouTuber known as Gossip Goblin, is taking his AI anthology feature Gods Don't Give Gifts into several hundred US cinemas on 30 October.
 His 1.4 million subscribers aren’t there for the tech. They’re enthralled by an auteur whose voice and aesthetic are so distinctive, even the most ardent critics of AI art concede its craftsmanship.
-
-→ Book a Pencil Demo today!
-
-→ Know someone who'd like this? Forward it or share the subscribe link.

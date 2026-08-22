@@ -1,8 +1,6 @@
 The News Drop #17 – Sol searching
 
 The Friday brief for people who make marketing move.
-LinkedIn Caption
-Claude's silent thoughts. Sol clears customs. Who owns Tung Tung? 👇
 
 📜 The theatre of the mind
 In 1988, psychologist Bernard Baars proposed that consciousness works like a theatre: a small stage broadcasting to a crowd of unconscious specialists. Stanislas Dehaene and Lionel Naccache developed it into a leading theory in neuroscience. Anthropic have just found that the same architecture emerged, untrained, inside Claude.
@@ -25,7 +23,3 @@ Pope Leo’s clarion call for AI to be “disarmed” - freed from logics of dom
 🔥 Elevating the discipline of design together
 Figma's third annual AI report, out this week, surveyed 8,403 designers, developers and PMs across ten markets. 90% say design matters at least as much as before AI, and 60% of developers now do design work, up from 44% a year ago. Figma's core argument is that AI can build almost anything, and so the true moat - and a scarce skill of today - is deciding what's actually worth building in the first place!
 Fast prototyping means choosing what to build becomes just as important as the building itself. Abundant quality copy means that deciding what to say is now the main job. Infinite content and infinite assets mean that differentiation and taste are now prerequisites. The premium has moved from making to curating, and that’s a multiplayer sport, not a solo chat. → LINK
-
-→ Book a Pencil Demo today!
-
-→ Know someone who'd like this? Forward it or share the subscribe link.

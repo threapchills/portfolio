@@ -1,8 +1,6 @@
 The News Drop #22 – Signed, sealed and watermarked
 
 The Friday brief for people who make marketing move.
-LinkedIn Caption
-ChatGPT free for all. Hassabis steps aside at DeepMind. AI watermarking causing a stir. 👇
 
 📜 The free tier
 On 6 August, OpenAI made GPT-5.6 Luna the default model for ChatGPT Free and Go users. Text chats on those plans are now unlimited. It is the first time OpenAI have removed message caps for free users altogether. Limits still apply to file uploads, image generation and other tools. Free and Go users also get a Think button, which gives the model more time to reason on harder questions. Plus and Pro subscribers get an updated Sol with a slider controlling how much thinking goes into each response. OpenAI say the updated Sol also makes fewer factual errors. → LINK
@@ -36,7 +34,3 @@ Anthropic voluntarily applied the marking worldwide rather than only in the EU, 
 In the case of files, the marking uses C2PA, an open standard from the Coalition for Content Provenance and Authenticity, to attach a cryptographically signed record in the file’s metadata. That record can be stripped by a screenshot, a re-save, a format conversion, or any platform that rewrites metadata on upload.
 That said, the system looks set to be a robust safeguard against the problem it set out to solve: The possibility for a deluge of (increasingly persuasive) AI-generated messages manufactured wholesale without any human-in-the-loop oversight. → LINK
 The best creators are happy to disclose their use of AI, and are in fact proud to use it with craft and intention, as a force multiplier, as opposed to a shortcut, building worlds and telling stories that were simply not possible before.
-
-→ Book a Pencil Demo today!
-
-→ Know someone who'd like this? Forward it or share the subscribe link.

@@ -1,8 +1,6 @@
 The News Drop #18 – Memory Serves
 
 The Friday brief for people who make marketing move.
-LinkedIn Caption
-A physics problem solved on a whim. 11 cities asking the hard questions around AI. Apple takes OpenAI to court. 👇
 
 📜 On a whim
 Yuji Tachikawa works on quantum field theory and string theory at the University of Tokyo. One of his collaborative research problems had been stuck for six months. Last week, on a whim, he showed Claude Fable 5 his notes. The model found a calculation error, made what Tachikawa calls “a non-trivial observation” that “essentially solved” the problem, then wrote SymPy code to check its own prediction.
@@ -28,7 +26,3 @@ OpenAI denies having untoward interest in other companies' trade secrets. → LI
 🔥 Mind your language
 For eighty years we made computers legible by lending them mind-words. Memory, attention, learning, hallucination: all borrowed from human cognition, from von Neumann's 1945 "memory" onwards.
 The loan is now flowing back. A linguistic shift is happening as we increasingly use AI jargon to describe our own cognition - our attention spans become akin to context windows, and our life experiences the training data for our own internal world models. Are we humans now undergoing reinforcement learning from machine feedback?
-
-→ Book a Demo today!
-
-→ Know someone who'd like this? Forward it or share the subscribe link.

@@ -1,11 +1,7 @@
 The News Drop #6 – Category Collapse
 
-LinkedIn Caption:
-
-The Banana dethroned. A drive-by nuking by design. Exploited loopholes.
-What a week! 👇
-
 The Friday brief for people who make marketing move.
+
 📜 Something Old - Ads
 Ads in Chat is a thing. Advertising has been creeping into AI for a while. This year, ads landed in ChatGPT, and OpenAI is unmistakably tracking the Google-Meta arc: democratised at scale eventually. Enterprise-focused for now.
 OpenAI’s major shift this week was a pivot from CPM to CPC. Performance-based pricing, as opposed to the initial impressions-based one that was rolled out to some tiers of users in the USA earlier this year.
@@ -30,5 +26,3 @@ Just a Roblox cheat, an overpermissioned OAuth grant, and a checkbox left untick
 🔥 Hot take
 Categories are collapsing everywhere you look. Claude Design makes the line between code and design basically vestigial - in digital products, great design is code under the hood; the two were always the same artefact in different clothes. The ads story is the same collapse on a grander scale: content, advertising, and raw data are blurring into a single tokenised substrate.
 What's striking is what we thought AI would automate away first. The old collective fantasy was neatly technical: AI would do the dishes, the laundry, and fill out the spreadsheets - leaving humans free for art and music and meaning. The AI we got is general-purpose. It codes and it composes. It reasons and it writes. Is the boundary between creative work and technical work also dissolving?
-→ Try Pencil today for free!
-→ Know someone who'd like this? Forward it or share the subscribe link.

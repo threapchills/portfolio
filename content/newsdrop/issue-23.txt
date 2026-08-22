@@ -1,8 +1,6 @@
 The News Drop #23 – Nothing to hide
 
 The Friday brief for people who make marketing move.
-LinkedIn Caption
-Zuck reopens the weights. Grok Bot clocks in. MAD for compute. Legal changes in AI music. AGI over profit? 👇
 
 📜 Zuck capitulates on open-source AI
 Mark Zuckerberg published a 6,500-word essay on Monday 10 August, titled “The Future is for Everyone: The Path to a Positive AI Future”. Fourteen pages, with a condensed version running as a Wall Street Journal opinion column. He builds the argument for open-source on three planks: individual empowerment as the source of prosperity, invention as the purpose of superintelligence, and balance of power as the basis for safety and alignment. “There is no such thing as a singular benevolent superintelligence,” he wrote.
@@ -23,7 +21,3 @@ Suno have since announced plans to introduce mandatory audio watermarking, finge
 🔥 AGI over profit
 On 20 May Liang Wenfeng briefed DeepSeek's first outside investors behind closed doors for over three hours. The recording leaked across Chinese social media in late July, and went viral, before being largely scrubbed from the internet. DeepSeek haven’t confirmed whether the leaked audio from the briefing was authentic.
 The essence of the narrative that emerged from the leak: DeepSeek is not chasing revenue, users or market share. Liang reckons Artificial General Intelligence (AGI) is the bigger prize. DeepSeek seemingly views products and low pricing as tools to help reach AGI, not as ends in themselves. He is apparently avoiding distractions like massive user-app ecosystems, and focusing instead on core intelligence advancements, like coding agents and reasoning models. → LINK
-
-→ Book a Pencil Demo today!
-
-→ Know someone who'd like this? Forward it or share the subscribe link.

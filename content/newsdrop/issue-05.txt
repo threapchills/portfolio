@@ -1,10 +1,7 @@
 The News Drop #5 – Techno-optimism with teeth
 
-LinkedIn Caption:
-
-A Molotov cocktail hurled at Sam. A clanker chasing boars. Kurzweil’s AI consciousness prediction.  More Juicy AI tidbits! 👇
-
 The Friday brief for people who make marketing move.
+
 📜 Something Old - A repeating pattern in the AI news cycle
 “Our new model that we’ve developed internally is too powerful and dangerous to release!”
 Sound familiar?
@@ -13,6 +10,7 @@ Today we're hearing those same refrains around next-gen models like Anthropic's 
  → LINK
 
 	A screenshot from OpenAI's 2019 blog post ‘Better language models’.
+
 🆕 Something New
 
 Zuck poached a crack team of leading AI researchers and launched Meta Superintelligence Labs, but for eons in AI-time, the beleaguered hyperscaler has been conspicuously absent from the leaderboards and eval rankings. Meta hasn’t released an AI model that competes with the latest Claude, ChatGPT, Gemini or Grok offerings. Until now.
@@ -41,6 +39,3 @@ Just as the cancellation of Anthropic's Pentagon contract counterintuitively did
 
 🔥 Hot take
 Renowned futurist and AI doyen Ray Kurzweil reckons AI will be conscious within 1000 days - or at least, that we'll perceive it as such. To be clear, he says that machine consciousness won't be proven, so much as simply conceded. Most people anthropomorphise AI almost instinctively. Millions of people already confide in AI therapists and companions; some have quietly started treating them as minds rather than tools.  →  LINK
-
-→ Try Pencil today for free!
-→ Know someone who'd like this? Forward it or share the subscribe link.

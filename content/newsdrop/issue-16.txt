@@ -1,11 +1,6 @@
 The News Drop #16 – New models, new rules, same Friday
 
 The Friday brief for people who make marketing move.
-LinkedIn Caption
-New models, new rules, same Friday.
-The EU hit pause on its own AI rules. ByteDance aimed Seedance at Hollywood. Nvidia is building 35 supercomputers across Europe. Google made video editing as easy as talking. And AI walked into the engine that runs half the games you play.
-Five moves worth your week, in The News Drop #17. 👇
-Want to see what agentic marketing actually looks like in practice? Book a demo → LINK
 
 📜 Old habits, meet jagged frontier.
 
@@ -34,7 +29,3 @@ Unreal Engine 5.8 shipped on 17 June with an experimental plugin built on MCP, A
 Veteran developer Mark Kern (Grummz) called it a shipping workflow, not a novelty demo, and predicted any Unreal game from now on is going to need an AI label. Epic insists the human stays in charge: the model works through the editor, everything stays editable.
 The line between AI that writes code and AI that makes things just disappeared inside the engine that runs a huge slice of the games industry. The same protocol that wires Claude into your spreadsheet now wires it into a world-builder. The gaming (and game dev) community tends to be arrayed in outrage against AI. The question isn't whether it'll be good at building worlds, it will. The tough question is, will gamers accept this? And how will AI-labelling and crediting work?
 → LINK
-
-→ Book a Pencil Demo today!
-
-→ Know someone who'd like this? Forward it or share the subscribe link.

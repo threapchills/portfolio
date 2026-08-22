@@ -1,6 +1,7 @@
 The News Drop #3 – A Drop in the Ocean
 
 The Friday brief for people who make marketing move.
+
 📜 Something Old that finally got an upgrade!
 Text on websites just got legs.
 Cheng Lou, a Midjourney engineer and longtime React contributor, has unveiled Pretext: a 15KB, zero-dependency TypeScript library that bypasses the DOM entirely. It measures text once using the Canvas API, then computes layout through pure arithmetic.
@@ -16,6 +17,7 @@ Cyber-guardians are anxious. Anthropic warned that the model is "currently far a
 Early access customers are already testing it; some users claim to have spotted "Mythos 5 (experimental)" in the Claude interface. It's also reportedly very expensive to run.
 The details surfaced via a data leak. Nearly 3,000 unpublished assets were found in a publicly accessible data store, including a draft blog post describing the model. Anthropic attributed it to "human error."
 As of the time of writing this newsletter however, nothing's been confirmed at scale and there’s no officially published release timeline. → LINK
+
 ⚡ BREAKING: It happened again. Mere days after the Mythos leak, Anthropic accidentally leaked the entire 500,000-line, 2,000-file source code of Claude Code to npm. The source code also contained further evidence that Mythos is actively being prepared for launch, with references to "fast" and "slow" variants.
 To be clear, it’s not any model source code or weights that got leaked, rather it’s the model-agnostic scaffold that holds the core agentic loops, and defines the guardrails. With Claude Code having enjoyed a massive jump in popularity over the past five months or so, some folks were surprised by how deceptively simple and elegant its harness structure turned out to be.
 Anthropic filed DMCA takedowns on over 8,000 GitHub copies. Korean developer Sigrid Jin preempted the takedowns though. Using AI agents of his own, he hastily rewrote the entire codebase from TypeScript into Python. It’s thus far proved an effective DMCA-proof loophole, as a rewrite is considered a new creative work. Jin’s sangfroid and resourcefulness have earned him the respect of the open source community, who are having a field day with the newfound knowledge. → LINK
@@ -53,8 +55,6 @@ You have to go in knowing what you want to say. AI will fill the void if you don
 
 🔥 Hot take #2
 AI is now a market-moving force. Anthropic's Mythos leak tanked cybersecurity stocks. Google's TurboQuant wobbled memory chip prices. A single keynote from Jensen Huang can move more capital than most earnings calls. The stock market doesn't just react to AI news anymore. It trades on it.
+
 🔥 Hot take #3 - Every LLM is the worst LLM, according to that LLM’s subreddit.
 Visit any AI company's subreddit and you'll find the same conviction: their latest LLM is the worst of all available models. The grass is always greener on the other frontier. This gets post-hoc rationalised into a tidy narrative: the provider must be secretly nerfing the model to make the next release look better by comparison. To be fair, redditors aren't hallucinating either: there are genuine tradeoffs at the provider level around compute, inference time and resource allocation that can make frontier models feel inconsistent from one week to the next. This is unlikely to be a result of any deliberate ‘nerfing’ on the part of model providers, so much as simple resource management triaging.
-
-→ Try Pencil today for free!
-→ Know someone who'd like this? Forward it or share the subscribe link.

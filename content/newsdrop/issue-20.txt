@@ -1,8 +1,6 @@
 The News Drop #20 – Pax Silica
 
 The Friday brief for people who make marketing move.
-LinkedIn Caption
-Murati's stealth lab breaks cover. Opus 5 lands at half the price of Fable. Washington accuses Chinese lab Moonshot. 👇
 
 📜 A homage
 Mira Murati, ex-OpenAI CTO, now sits alongside Anthropic's Daniela Amodei and World Labs' Fei-Fei Li at the top table of women running frontier AI.
@@ -29,7 +27,3 @@ On one hand this is bringing much-needed data centres and other AI infrastructur
 Sam Altman reckons the singularity has arrived. “We are now, like, in the singularity. This is the moment,” he told the Relentless podcast last Friday. This came soon after last week’s cyber scare, in which GPT models escaped their red-team testing environment and hacked Hugging Face.
 Labs are now openly chasing recursive self-improvement (RSI), and the first open-source AI capable of accelerating AI research itself - Kimi K3 - was released a few days ago. AI execs like Altman have also glimpsed powerful internal-only models that the rest of us won't touch for months. GPT-6 is rumoured to be an entirely new class of model compared to the GPT-5 series.
 Google DeepMind’s Hassabis’ heuristic for what constitutes true AGI is stricter: He wants an LLM to independently rediscover relativity. Kurzweil - whose previous predictions have come to pass more often than not - says that consciousness will be conceded, not proven. → LINK
-
-→ Book a Demo today!
-
-→ Know someone who'd like this? Forward it or share the subscribe link.

@@ -1,14 +1,7 @@
 The News Drop #4 – The prophecy of the one-person unicorn fulfilled!
 
-LinkedIn Caption:
-
-If you blinked this week, you may have missed a lot in AI: One person built a $1B telehealth giant with AI; OpenAI’s record raise; The Glasswing moment; Rumours of ‘Spud’.
-Stay human, stay looped in 👇
-LinkedIn Caption [shorter alternative]:
-If you blinked this week, you may have missed a lot in AI.
-Stay human, stay looped in. 👇
-
 The Friday brief for people who make marketing move.
+
 📜 Something Old - a prophecy foretold has come to pass
 For years, tech leaders have been saying it: AI will enable one person to build a billion-dollar company. Sam Altman had a betting pool with his CEO friends over when it would happen. Dario Amodei put 70-80% odds on 2026. It was a thought experiment, a dinner-party provocation.
 But now it happened. Matthew Gallagher, a 41-year-old self-taught maverick from Los Angeles, launched Medvi - a GLP-1 telehealth startup - from his living room in September 2024 with $20,000 and a stack of AI tools.
@@ -43,10 +36,9 @@ The timing, however, is conspicuous. OpenClaw's creator Peter Steinberger joined
 Anthropic insists the decision is engineering, not strategy. Claude subscriptions still work with Anthropic's own products: Claude Code, Cowork, and chat. If you’re planning on Claude token-maxxing, you’ll need to do it in Anthropic’s garden. → LINK
 
 🔥 Hot takes
+
 🔥 Hot take option #1
 Glasswing may have some cybersecurity experts shook. But the window between "bug exists" and "bug is exploited" has already been shrinking for years; Mythos-class models compress it to near-zero. The capability isn't publicly available today, and vendor claims always carry a margin of hype. That said, the narrative is directionally right, and threats are accelerating. Bottom line: this doesn’t fundamentally change what security engineering and resilient systems look like. It does increase the importance of doing the basics consistently and rigorously.
+
 🔥 Hot take option #2
 The Medvi story is a Rorschach test for the entire industry. Optimists see the democratisation of entrepreneurship. Sceptics see a guy who built a slick front-end for an existing supply chain in a market with desperate buyers. Both readings are correct simultaneously. The deeper signal: the moat has moved to the strategic eye to spot gaps, the judgement to know what to own and what to rent, and the speed to execute on vision before anyone else gets there.
-
-→ Try Pencil today for free!
-→ Know someone who'd like this? Forward it or share the subscribe link.
