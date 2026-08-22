@@ -36,7 +36,6 @@ const BEATS = [0, 0.115, 0.36, 0.49, 0.67, 0.82, 1];
 const INK_IN       = [0, 0.07];      // the room dims over her lit gaze
 const SEGUE_BLOOM  = [0.05, 0.18];   // the wordmark screens out of her light
 const SEGUE_SOLID  = [0.15, 0.26];   // the panel lands opaque
-const SEGUE_GROW   = [0.24, 0.35];   // the panel grows until it owns the room
 const SEGUE_OUT    = [0.355, 0.385]; // the triptych takes it over, invisibly
 const TRI_IN       = 0.35;
 const TABLE_IN     = [0.30, 0.34];   // the table is laid under the covering plate
@@ -123,22 +122,18 @@ export function initJourney() {
      out from the same measured box rather than from viewport units: 100vw
      counts the scrollbar and a sticky child does not, and that difference
      alone is enough to make the handover visible as a jump. */
-  const SEGUE_AR = 4900 / 2108;
-  let growTo = 1;
+  const SEGUE_AR = 16 / 9;   // the shipped plate, rebaked from the 2.32:1 artwork
   const measureSegue = () => {
-    if (!triptych || !segueSolid) return;
+    if (!triptych) return;
     const cw = triptych.clientWidth;
     const ch = triptych.clientHeight;
-    const cover = Math.max(cw, ch * SEGUE_AR);
+    // a tall box sits the plate by width instead of covering, so the
+    // wordmark survives; the triptych has to reassemble the same way
+    const cover = cw >= ch ? Math.max(cw, ch * SEGUE_AR) : cw;
     triptych.style.setProperty('--iw', `${cover}px`);
     triptych.style.setProperty('--x0', `${(cw - cover) / 2}px`);
     triptych.style.setProperty('--colw', `${cw / 3}px`);
-    // the plate's own unscaled width, read back with any scale divided out
-    const scale = +segueSolid.style.getPropertyValue('--grow') || 1;
-    const natural = segueSolid.getBoundingClientRect().width / scale;
-    growTo = natural > 0 ? cover / natural : 1;
   };
-  const segueGrowTo = () => growTo;
   measureSegue();
   addEventListener('resize', measureSegue);
 
@@ -320,11 +315,6 @@ export function initJourney() {
       const solid = seg(readingP, SEGUE_SOLID[0], SEGUE_SOLID[1]);
       segueBloom.style.opacity = (bloom * (1 - handover)).toFixed(3);
       segueSolid.style.opacity = (solid * (1 - handover)).toFixed(3);
-      /* the plate grows from its frame to exactly the width the triptych
-         reassembles, so when one hands over to the other nothing moves */
-      const grow = 1 + (segueGrowTo() - 1) * seg(readingP, SEGUE_GROW[0], SEGUE_GROW[1], easeInOut);
-      segueBloom.style.setProperty('--grow', grow.toFixed(4));
-      segueSolid.style.setProperty('--grow', grow.toFixed(4));
     }
     if (triptych) {
       const live = readingP >= TRI_IN - 0.001 && readingP < 0.995;

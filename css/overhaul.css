@@ -370,9 +370,12 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 #card-table { position: relative; z-index: 10; }
 
 /* ---- the segue: her light becomes the wordmark, the wordmark the room ----
-   The plate first arrives as a framed panel, because everything in this
-   world arrives framed and because the wordmark has to be legible whole.
-   It then grows until it covers the frame, landing on exactly the geometry
+   The plate covers the frame from the outset, at the same scale the film
+   is playing at, so the blend reads as one shot becoming another rather
+   than a panel opening over it. The artwork is 2.32:1 and the wordmark
+   needs the central 86% of that width, which a 16:9 cover crop would cut,
+   so the shipped plate was rebaked to 16:9 by feathering the artwork into
+   a field matched to its own edge colour. It lands on exactly the geometry
    the triptych reassembles, so the handover between them is not a
    transition at all: the same pixels, differently owned. */
 #segue {
@@ -384,17 +387,26 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
   overflow: hidden;
 }
 .segue-plate {
-  --grow: 1;
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%) scale(var(--grow));
-  width: min(94vw, 1180px);
-  aspect-ratio: 4900 / 2108;
+  /* full frame from the first breath: the artwork is the same composition
+     as the film's last frame, so it has to arrive at the same size or the
+     transition reads as a picture of the shot rather than the shot */
+  position: absolute; inset: 0;
   background-image: url('../assets/journey/segue.webp');
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
+  /* the artwork's own field colour, so a plate that has to sit by width on
+     a tall window still reads as one continuous dark frame */
+  background-color: #1c1710;
   opacity: 0;
-  will-change: opacity, transform;
+  will-change: opacity;
+}
+/* On anything taller than it is wide, covering would crop the wordmark off
+   at both ends. There the plate sits by width instead and the field carries
+   the rest; the triptych is told to reassemble on the same basis. */
+@media (max-aspect-ratio: 1/1) {
+  .segue-plate { background-size: 100% auto; }
+  .tri-face { background-color: #1c1710; }
 }
 .segue-plate.is-bloom { mix-blend-mode: screen; }
 .segue-plate.is-solid { mix-blend-mode: normal; }
@@ -571,7 +583,14 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
   position: relative;
   padding: 22vh 6vw 18vh;
   /* the room lightens to paper, then hands back to ink for Onwards */
-  background: linear-gradient(var(--ink) 0%, #ece7db 16%, #e8e2d3 84%, var(--ground) 100%);
+  /* both ends are the live ground, so the room dissolves into whatever
+     colour the page happens to be either side of it instead of cutting
+     against a fixed one; the fades are long enough to read as light */
+  background: linear-gradient(
+    var(--page-bg, var(--ground)) 0%,
+    #ece7db 26%,
+    #e8e2d3 74%,
+    var(--page-bg, var(--ground)) 100%);
   color: #171310;
   text-align: center;
 }
@@ -1175,12 +1194,16 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
    chamber iii — design
    ============================================================ */
 #design { position: relative; }
-.design-piece { position: relative; min-height: 100vh; padding: 14vh 0; display: grid; place-items: center; }
+.design-piece { position: relative; min-height: 100vh; padding: 9vh 0; display: grid; place-items: center; }
 .design-piece { --tx: 0vw; --ty: 0vh; --sc: 1; }
 .design-piece .piece-media {
   position: relative;
-  width: min(92vw, 1500px);
-  aspect-ratio: 16 / 10;
+  /* near full-bleed: the height cap keeps the caption and the board's own
+     travel on screen together, and is what stops a wide board from being
+     cropped to a letterbox slot on a short window */
+  width: min(96vw, 2000px);
+  height: min(78vh, calc(96vw * 0.625));
+  aspect-ratio: auto;
   overflow: hidden;
   /* the pass, written per frame by chambers.js */
   transform: translate3d(var(--tx), var(--ty), 0) scale(var(--sc));
@@ -1194,11 +1217,13 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 }
 /* a tall board (a lookbook, an identity sheet) gets a portrait frame that
    matches its shape, so the whole thing shows without a crop */
-.design-piece.is-portrait .piece-media { width: min(82vw, 560px); aspect-ratio: 256 / 481; }
+.design-piece.is-portrait .piece-media {
+  width: min(52vh, 88vw); height: min(78vh, 165vw); aspect-ratio: auto;
+}
 .design-piece .piece-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* no titles: the work speaks, an eyebrow marks it, micro copy only where
    a section opens */
-.piece-caption { width: min(92vw, 1500px); margin-top: 1.1rem; display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
+.piece-caption { width: min(96vw, 2000px); margin-top: 1.1rem; display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
 .piece-caption .piece-eyebrow { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--bone); opacity: 0.72; }
 .piece-copy { max-width: 44ch; text-align: right; }
 .piece-caption p { font-size: 0.85rem; line-height: 1.6; opacity: 0.7; margin: 0 0 0.4rem; }
