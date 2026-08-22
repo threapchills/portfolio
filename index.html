@@ -21,7 +21,7 @@
     #threshold { position: fixed; inset: 0; z-index: 200; background: #150e06;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=5">
+  <link rel="stylesheet" href="css/overhaul.css?v=6">
 </head>
 <body class="overhaul">
 
@@ -190,6 +190,16 @@
       </p>
     </section>
 
+    <!-- Act IX · the mark, cast in living metal. The page has said its
+         piece; this is the name, and then the world begins again. -->
+    <section id="chrome" aria-label="Mikey">
+      <div id="chrome-stage">
+        <canvas id="chrome-canvas" aria-hidden="true"></canvas>
+        <h2 class="chrome-alt">Mikey</h2>
+      </div>
+      <p class="chrome-line">Cape Town &middot; and wherever the work goes next</p>
+    </section>
+
     <!-- Act IX · the loop gate: the world returns and the plate slides back in -->
     <section id="loop-gate" aria-hidden="true">
       <div class="gate-stage">
@@ -225,6 +235,7 @@
     import { initFilmSection, initWritingSection, initDesignSection } from './js/core/chambers.js';
     import { audio, mountMuteButton } from './js/core/audio.js';
     import { initCursor } from './js/core/cursor.js';
+    import { initChrome } from './js/core/chrome.js';
     import { qs, easeInOut } from './js/core/util.js';
 
     gsap.registerPlugin(ScrollTrigger);
@@ -246,6 +257,12 @@
     const film = initFilmSection(journey.lenis);
     initWritingSection(journey.lenis);
     const design = initDesignSection();
+    const chrome = initChrome();
+    // the mark heats as it takes the frame, and cools as the loop gate rises
+    ScrollTrigger.create({
+      trigger: '#chrome', start: 'top bottom', end: 'bottom top', scrub: true,
+      onUpdate: (self) => chrome.warm(Math.sin(self.progress * Math.PI)),
+    });
 
     // the chambers' corner labels light while their act owns the frame
     for (const [sel, id] of [['#film', 'edge-film'], ['#writing', 'edge-writing'], ['#design', 'edge-design']]) {

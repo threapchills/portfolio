@@ -68,6 +68,7 @@ const MIX = {
   writing: { sky: 0.18, sea: 0.00, earth: 0.06, fire: 0.00 },  // chamber ii: thin air
   design:  { sky: 0.06, sea: 0.00, earth: 0.20, fire: 0.00 },  // chamber iii: ground
   coding:  { sea: 0.15, fire: 0.00, sky: 0.25, earth: 0.00 },
+  chrome:  { sky: 0.16, sea: 0.00, earth: 0.00, fire: 0.00 },  // the mark: thin, cold air
   outro:   { sea: 0.00, fire: 0.00, sky: 0.00, earth: 0.00 },
 };
 const mixAt = (p) => {
@@ -398,6 +399,7 @@ export function initJourney() {
       return r.top < vh * 0.5 && r.bottom > vh * 0.5 ? r : null;
     };
     if (probe('#loop-gate')) return MIX.outro;
+    if (probe('#chrome')) return MIX.chrome;
     if (probe('#outro')) return MIX.outro;
     if (probe('#fourth-door')) return MIX.coding;
     if (probe('#design')) return MIX.design;
@@ -436,6 +438,8 @@ export function initJourney() {
     if (fourth) pts.push(fourth.offsetTop - window.innerHeight * 0.1);
     const outro = qs('#outro');
     if (outro) pts.push(outro.offsetTop);
+    const chrome = qs('#chrome');
+    if (chrome) pts.push(docTop(chrome));
     const gate = qs('#loop-gate');
     if (gate) pts.push(gate.offsetTop + (gate.offsetHeight - window.innerHeight) * 0.95);
     return pts;
