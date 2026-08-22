@@ -1,18 +1,20 @@
 /* journey.js — orchestration of the index page.
    Act I: the Mikey wordmark, its letters full of film, slides off west.
    Acts II to V: the story film itself, decoded to frames at build time
-   and scrubbed by scroll — the whole world-building push-in baked into
-   pixels, so nothing can glitch.
-   Act VI: the film's last frame (the goddess offering her open hands)
-   holds beneath the reading while the ink breathes in and her three
-   cards rise out of her palms onto the table. */
+   and scrubbed by scroll — the council, the vortex, the spirit animals,
+   the savannah, the masks, and the long push into the oracle, all baked
+   into pixels so nothing can glitch.
+   Act VI: the film's last frame (the oracle's lit gaze under the moon)
+   holds beneath the reading while the ink breathes in and three cards
+   rise into the light she is looking through. */
 
 import { clamp, damp, seg, easeInOut, qs, qsa, IS_MOBILE, REDUCED_MOTION, PARAMS } from './util.js';
 import { FrameScrubber } from './sequence.js';
 import { audio } from './audio.js';
 
-/* the film, decoded at build time (ffmpeg, 12fps from mainheader.mp4) */
-const FRAMES = { dir: 'video/header/frames', dirMobile: 'video/header/frames-720', count: 257 };
+/* the film, decoded at build time (ffmpeg, 12fps from WebsiteJourneyUpscale.mkv,
+   through a centred 16:9 window out of its 2.32:1 master) */
+const FRAMES = { dir: 'video/header/frames', dirMobile: 'video/header/frames-720', count: 317 };
 const FIRST_CHUNK = 48;            // the threshold gates on these; the rest stream in behind
 
 /* scroll choreography across the journey's sticky travel */
@@ -20,10 +22,10 @@ const VEIL = [0.02, 0.115];        // the wordmark plate slides off left
 const SCRUB = [0.115, 0.965];      // the film plays; the last band holds the offering
 const ROLES_OUT = [0.015, 0.06];   // the roles line dissolves at first scroll
 
-/* keyboard beats: the film's own moments (owl, cosmos, tower, goddess,
-   the cards, the offering) as journey progress. No scroll snapping here:
-   the scrub runs free, the way the film chamber does. */
-const BEATS = [0, 0.115, 0.30, 0.49, 0.67, 0.85, 1];
+/* keyboard beats: the film's own moments (the council, the vortex, the
+   savannah, the masks, the torches, the oracle) as journey progress. No
+   scroll snapping here: the scrub runs free, the way the film chamber does. */
+const BEATS = [0, 0.115, 0.36, 0.49, 0.67, 0.82, 1];
 
 /* Act VI: the reading walks its three cards one by one. Each band lifts
    a card while its siblings step back; the beats are the band centres. */
@@ -36,15 +38,17 @@ const READING_CARD_BEATS = [0.28, 0.52, 0.76];
 const READING_BEATS = [0, ...READING_CARD_BEATS, 1];
 const INK_IN = [0, 0.09];          // the room dims over the offered hands
 
-/* Audio: spacey in the void, air and water through the cosmos, earth
-   and fire as the goddess and her reading near. The steps are deliberate
-   and the shorter easing in audio.js lets each shift land like a cut. */
+/* Audio: the bed follows the film's own weather. It opens on ground and
+   firelight because the council is already lit; the trance lifts it into
+   air and water; the savannah puts it back on the earth; the masks and
+   the torches burn it down to fire. The steps are deliberate and the
+   shorter easing in audio.js lets each shift land like a cut. */
 const MIX = {
-  act1:    { sky: 0.55, sea: 0.12, earth: 0.00, fire: 0.00 },  // the owl in the void
-  act2:    { sky: 0.38, sea: 0.45, earth: 0.00, fire: 0.00 },  // the cosmos: air and water
-  act3:    { sky: 0.15, sea: 0.30, earth: 0.42, fire: 0.06 },  // the tower: land nears
-  act4:    { sky: 0.05, sea: 0.10, earth: 0.50, fire: 0.28 },  // the goddess rises
-  act5:    { sky: 0.00, sea: 0.00, earth: 0.35, fire: 0.50 },  // the cards, the offering
+  act1:    { sky: 0.10, sea: 0.00, earth: 0.46, fire: 0.34 },  // the council under the gold moon
+  act2:    { sky: 0.42, sea: 0.38, earth: 0.06, fire: 0.00 },  // the vortex; animals in blue light
+  act3:    { sky: 0.16, sea: 0.10, earth: 0.52, fire: 0.10 },  // the savannah, the feeding
+  act4:    { sky: 0.06, sea: 0.00, earth: 0.34, fire: 0.42 },  // the masks, the beast head
+  act5:    { sky: 0.00, sea: 0.00, earth: 0.30, fire: 0.55 },  // torches lit, the oracle
   reading: { sky: 0.00, sea: 0.00, earth: 0.28, fire: 0.30 },
   film:    { sky: 0.00, sea: 0.08, earth: 0.00, fire: 0.20 },  // chamber i: embers
   writing: { sky: 0.18, sea: 0.00, earth: 0.06, fire: 0.00 },  // chamber ii: thin air
@@ -53,11 +57,11 @@ const MIX = {
   outro:   { sea: 0.00, fire: 0.00, sky: 0.00, earth: 0.00 },
 };
 const mixAt = (p) => {
-  if (p < 0.22) return MIX.act1;   // the owl in the void
-  if (p < 0.43) return MIX.act2;   // the cosmos
-  if (p < 0.57) return MIX.act3;   // the tower under red moons
-  if (p < 0.81) return MIX.act4;   // the goddess rises
-  return MIX.act5;                 // the cards, the offering
+  if (p < 0.36) return MIX.act1;   // the council under the gold moon
+  if (p < 0.49) return MIX.act2;   // the vortex; the animals in blue light
+  if (p < 0.67) return MIX.act3;   // the savannah, the feeding
+  if (p < 0.82) return MIX.act4;   // the masks
+  return MIX.act5;                 // the torches, the oracle
 };
 
 export function initJourney() {

@@ -200,7 +200,7 @@
 /* ============================================================
    the journey stage (Acts I to V)
    ============================================================ */
-#journey { position: relative; height: 900vh; }
+#journey { position: relative; height: 1040vh; }  /* 317 frames, ~2.7vh each */
 .stage {
   position: sticky;
   top: 0;
@@ -1034,7 +1034,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 }
 
 @media (max-width: 768px) {
-  #journey { height: 760vh; }
+  #journey { height: 880vh; }
   #logo-veil {
     -webkit-mask-size: 100% 100%, 92vw auto;
             mask-size: 100% 100%, 92vw auto;

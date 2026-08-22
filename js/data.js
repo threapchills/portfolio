@@ -240,6 +240,64 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
     ]
   },
   {
+    id: "nobody-wears-it-better",
+    index: "12",
+    title: "Nobody Wears It Better",
+    category: "GenAI Filmmaking",
+    type: "Spec / Mikey",
+    skills: ["AI Prompting", "Visual Storytelling", "Film Editing", "Brand Concept"],
+    tagline: "A couture campaign for Mikey that takes its own slogan literally.",
+    description: `It opens with people wearing the line: a wide-brimmed hat against the mountain, a printed gown crossing traffic beneath an overpass, white linen among the blossom. Then the wearers leave. The suit stands in the flowers with nobody inside it. A red gown lifts off the rocks and holds its shape in the wind. A blue cloak faces the Atlantic with no head above the collar.
+
+The conceit is structural. A campaign insists that nobody wears it better, then removes everybody to prove the point. Built end to end in the GenAI stack: star frames first to fix the garments and the light, motion generated from them, the whole thing graded towards expired stock.`,
+    heroVideo: "../../video/nobody-wears-it-better-hero.mp4",
+    heroFallback: "../../images/nobody-wears-it-better/nw-02.webp",
+    gallery: [
+      "../../images/nobody-wears-it-better/nw-02.webp",
+      "../../images/nobody-wears-it-better/nw-01.webp",
+      "../../images/nobody-wears-it-better/nw-03.webp",
+      "../../images/nobody-wears-it-better/nw-04.webp",
+      "../../images/nobody-wears-it-better/nw-06.webp",
+      "../../images/nobody-wears-it-better/nw-07.webp",
+      "../../images/nobody-wears-it-better/nw-08.webp",
+      "../../images/nobody-wears-it-better/nw-09.webp",
+      "../../images/nobody-wears-it-better/nw-10.webp",
+      "../../images/nobody-wears-it-better/nw-11.webp"
+    ],
+    links: [
+      { label: "Watch with sound", url: "../../video/nobody-wears-it-better-hero.mp4", primary: true }
+    ]
+  },
+  {
+    id: "weekend-thuggery",
+    index: "13",
+    title: "Weekend Thuggery",
+    category: "GenAI Filmmaking",
+    type: "Spec / Mikey",
+    skills: ["AI Prompting", "Visual Storytelling", "Film Editing", "Brand Concept"],
+    tagline: "eMzantsi. A township braai where the guests have teeth.",
+    description: `Saturday afternoon in the yard: plastic chairs, a grid over the coals, aunties in sunglasses, and a company of lions and hyenas sitting in among the guests like the family dogs. Nobody flinches. Somebody hands a hyena a rib off the fire and carries on with the argument.
+
+Then the light goes and the film moves indoors to a shebeen. Full tables, gold, the Mikey medallion catching the lamp. Shot as though through a viewfinder on an 85mm at f/1.8, hot and a little blown out, the way weekend photographs actually come out.`,
+    heroVideo: "../../video/weekend-thuggery-hero.mp4",
+    heroFallback: "../../images/weekend-thuggery/wt-04.webp",
+    gallery: [
+      "../../images/weekend-thuggery/wt-04.webp",
+      "../../images/weekend-thuggery/wt-01.webp",
+      "../../images/weekend-thuggery/wt-02.webp",
+      "../../images/weekend-thuggery/wt-03.webp",
+      "../../images/weekend-thuggery/wt-05.webp",
+      "../../images/weekend-thuggery/wt-07.webp",
+      "../../images/weekend-thuggery/wt-08.webp",
+      "../../images/weekend-thuggery/wt-09.webp",
+      "../../images/weekend-thuggery/wt-10.webp",
+      "../../images/weekend-thuggery/wt-12.webp"
+    ],
+    links: [
+      { label: "Watch with sound", url: "../../video/weekend-thuggery-hero.mp4", primary: true }
+    ]
+  },
+  {
     id: "video-archive",
     index: "11",
     title: "More Films",
@@ -250,6 +308,7 @@ Proof, I think, that the medium is ready for genre; not just spectacle. The kind
     description: `An ongoing archive of GenAI filmmaking work: anime-influenced short films, experimental pieces, and various explorations of what AI video generation can do when given an actual aesthetic direction rather than a prompt list.`,
     heroImage: "../../images/motionfold.png",
     videos: [
+      "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing",
       "https://www.youtube.com/watch?v=hQ7ZkjxpdIQ",
       "https://drive.google.com/file/d/1t40QjErBrtredC6FVyrHR_l8RmNu-_28/view?usp=sharing",
       "https://drive.google.com/file/d/1J_j_Z7Lu_V6eloxoYpKqr4vLmh4FG9ZB/view?usp=sharing",
@@ -273,7 +332,9 @@ const CHAMBER_MAP = {
   "ramses":        { chamber: "film",    chamberOrder: 2, rackLoop: "video/ramses-hero.mp4" },
   "ice-tea":       { chamber: "film",    chamberOrder: 3, rackLoop: "video/ice-tea-hero.mp4" },
   "tale-of-twins": { chamber: "film",    chamberOrder: 4, rackLoop: "video/tale-of-twins-hero.mp4" },
-  "video-archive": { chamber: "film",    chamberOrder: 5 },
+  "nobody-wears-it-better": { chamber: "film", chamberOrder: 5, rackLoop: "video/nobody-wears-it-better-hero.mp4" },
+  "weekend-thuggery":       { chamber: "film", chamberOrder: 6, rackLoop: "video/weekend-thuggery-hero.mp4" },
+  "video-archive": { chamber: "film",    chamberOrder: 7 },
   "mythopoeic":    { chamber: "design",  chamberOrder: 1 },
   "healthtech":    { chamber: "design",  chamberOrder: 2 },
   "writing":       { chamber: "writing", chamberOrder: 1 },
@@ -343,14 +404,6 @@ const RACK_EXTRAS = [
     poster: "images/mythopoeic/hero1.webp",
     loop: "video/mythopoeic-hero.mp4",
     href: "projects/mythopoeic/"
-  },
-  {
-    title: "Vanta Black",
-    tag: "Spec ad",
-    poster: "images/vanta-hero.webp",
-    loop: "video/vanta-hero.mp4",
-    href: "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing",
-    external: true
   },
   {
     title: "Vast Island",
