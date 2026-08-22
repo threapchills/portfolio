@@ -39,7 +39,8 @@
 .overhaul *, .overhaul *::before, .overhaul *::after { box-sizing: border-box; }
 .overhaul {
   margin: 0;
-  background: var(--bg);
+  /* written per frame by ground.js; the token is the fallback */
+  background: var(--page-bg, var(--ground));
   color: var(--text);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
@@ -55,6 +56,17 @@
   outline-offset: 4px;
   border-radius: 2px;
 }
+
+/* ---- where the ground goes bright, the ink turns over ----
+   ground.js sets this when the page's own colour passes the point at which
+   parchment text stops reading on it. Only the handful of things that sit
+   directly on the ground need it; everything else is on something opaque. */
+body.ground-lit .cube-hint { color: #1c1104; opacity: 0.72; }
+body.ground-lit .chamber-edge { color: #1c1104; }
+body.ground-lit .mw-cursor-ring { border-color: rgba(28, 17, 4, 0.55); }
+body.ground-lit .mw-cursor-ring.is-active { border-color: rgba(28, 17, 4, 0.85); }
+body.ground-lit .mw-cursor-core { mix-blend-mode: multiply; }
+body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 
 /* the unifying grade: fine grain everywhere, on top of everything */
 .grain-veil {
@@ -142,7 +154,7 @@
 #threshold {
   position: fixed; inset: 0;
   z-index: 200;
-  background: var(--pitch);
+  background: #17181a;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -310,7 +322,7 @@
    ============================================================ */
 /* the wrap climbs 100vh under the journey so its ground pins while the
    film's stage still holds the offering; the swap is pixel-identical */
-#reading-wrap { position: relative; height: 640vh; margin-top: -100vh; background: var(--ink); }
+#reading-wrap { position: relative; height: 640vh; margin-top: -100vh; }
 /* the film's last frame (the offered hands) holds beneath the table, so
    the seam from the scrub is invisible; the ink breathes in over it */
 #reading-ground {
@@ -669,7 +681,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   justify-content: center;
   gap: 3rem;
   text-align: center;
-  background: linear-gradient(var(--ground), var(--pitch) 85%);
+  background: transparent;
   padding: 16vh 6vw 10vh;
 }
 .outro-moons { display: flex; gap: 1.5rem; opacity: 0.65; }
@@ -731,8 +743,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   justify-content: center;
   gap: 2.4rem;
   background:
-    radial-gradient(ellipse 70% 55% at 50% 48%, rgba(204, 145, 61, 0.10), transparent 72%),
-    var(--pitch);
+    radial-gradient(ellipse 70% 55% at 50% 48%, rgba(204, 145, 61, 0.10), transparent 72%);
   overflow: hidden;
 }
 #chrome-stage {
@@ -786,7 +797,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   .chrome-line { font-size: 0.54rem; letter-spacing: 0.3em; text-align: center; padding: 0 1.2rem; }
 }
 
-#loop-gate { position: relative; height: 220vh; background: var(--pitch); }
+#loop-gate { position: relative; height: 220vh; }
 .gate-stage {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
@@ -832,7 +843,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* ============================================================
    chamber i — film
    ============================================================ */
-#film { position: relative; background: var(--pitch); }
+#film { position: relative; }
 #scrub-wrap { position: relative; height: 1100vh; }
 #scrub-stage {
   position: sticky; top: 0;
@@ -944,7 +955,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* the dark ground and its pool of light pin with the cube, beneath the
    cursor trail; the scene above is transparent so the trail shows on the
    background but the opaque cube covers it */
-#writing { position: relative; background: var(--slate-deep); }
+#writing { position: relative; }
 #cube-pin { position: relative; height: 340vh; }
 .writing-ground {
   position: sticky; top: 0;
@@ -1156,7 +1167,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* ============================================================
    chamber iii — design
    ============================================================ */
-#design { position: relative; background: #87591f; }
+#design { position: relative; }
 .design-piece { position: relative; min-height: 100vh; padding: 14vh 0; display: grid; place-items: center; }
 .design-piece { --tx: 0vw; --ty: 0vh; --sc: 1; }
 .design-piece .piece-media {

@@ -14,14 +14,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* critical: whatever happens to the stylesheet, this page opens on
-       the same burnt gold the rest of it stands on, never on black */
-    html { background: #7a4f18; }
-    body { margin: 0; background: #7a4f18; color: #efe4cd; }
-    #threshold { position: fixed; inset: 0; z-index: 200; background: #63400f;
+    /* critical: whatever happens to the stylesheet, the page opens on the
+       charcoal ground.js starts from, so the first paint is the real one */
+    html { background: #17181a; }
+    body { margin: 0; background: #17181a; color: #efe4cd; }
+    #threshold { position: fixed; inset: 0; z-index: 200; background: #17181a;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=9">
+  <link rel="stylesheet" href="css/overhaul.css?v=11">
 </head>
 <body class="overhaul">
 
@@ -235,7 +235,8 @@
     import { initThreshold } from './js/core/loader.js';
     import { initJourney } from './js/core/journey.js';
     import { initReading } from './js/core/cards.js';
-    import { initFilmSection, initWritingSection, initDesignSection } from './js/core/chambers.js';
+    import { initFilmSection, initWritingSection, initDesignSection, PIECE_TONES } from './js/core/chambers.js';
+    import { initGround } from './js/core/ground.js';
     import { audio, mountMuteButton } from './js/core/audio.js';
     import { initCursor } from './js/core/cursor.js';
     import { initChrome } from './js/core/chrome.js';
@@ -260,6 +261,9 @@
     const film = initFilmSection(journey.lenis);
     initWritingSection(journey.lenis);
     const design = initDesignSection();
+    // the page's own light: charcoal to gold and back, the design chamber lit
+    // by whichever board is on screen
+    const ground = initGround(PIECE_TONES);
     const chrome = initChrome();
     // the mark heats as it takes the frame, and cools as the loop gate rises
     ScrollTrigger.create({

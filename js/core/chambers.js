@@ -329,6 +329,15 @@ const PIECES = [
   { img: D + 'cars.webp', eyebrow: 'Automotive', text: 'Concept showroom visualisation.' },
 ];
 
+
+/* One ground tone per board, taken at build time from that picture's most
+   chromatic mid-tone and mapped into a dark band. ground.js walks between
+   them as the boards pass, so the room is lit by whatever is hanging in it.
+   Same order as PIECES. */
+export const PIECE_TONES = [
+  '#1e2d25', '#5d3c20', '#5d3519', '#312115', '#2e2519', '#2f2017', '#1f2b2e', '#342f23', '#434a31', '#19425d', '#40482b', '#13333c', '#3a271b', '#56351c', '#1c3738', '#322d1f', '#35261c', '#433625', '#27514e', '#26564a', '#28363c', '#314940', '#2c3d41', '#273f49', '#133d3e', '#1d232c',
+];
+
 export function initDesignSection() {
   const flow = qs('#design-flow');
   for (const piece of PIECES) {
