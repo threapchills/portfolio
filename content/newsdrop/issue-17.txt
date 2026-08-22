@@ -1,0 +1,31 @@
+The News Drop #17 – Sol searching
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+Claude's silent thoughts. Sol clears customs. Who owns Tung Tung? 👇
+
+📜 The theatre of the mind
+In 1988, psychologist Bernard Baars proposed that consciousness works like a theatre: a small stage broadcasting to a crowd of unconscious specialists. Stanislas Dehaene and Lionel Naccache developed it into a leading theory in neuroscience. Anthropic have just found that the same architecture emerged, untrained, inside Claude.
+During research into AI consciousness, they spotted a small region in Claude's internal maths where it keeps ideas it isn't saying out loud. The “J-space” holds a few dozen concepts - a bit like our own transient shifting attention, or the handful of things a mind holds at any waking moment.
+Without the J-space, Claude chats fluently but loses the ability to hold a logical thread. → LINK
+
+🆕 Sol, Terra and Luna landing
+GPT-5.6 went generally available yesterday, ending a 13-day preview restricted to roughly 20 government-vetted partners. The Commerce Department cleared the launch after federal testers ran rigorous evaluations.
+Sol, the flagship, costs $5/$30 per million tokens, half of Fable 5's rate. Terra delivers GPT-5.5-class performance at half the price. Luna runs $1/$6. OpenAI's own numbers put Sol Ultra at 91.9% on Terminal-Bench 2.1, edging Mythos 5's 88%. → LINK
+
+🤝 Triple T IP Palaver
+Notorious bat-wielding wooden log of AI Brainrot fame is now being taken to federal court. Spyder Games and Speedy Simulator Gaming, makers of Steal a Brainrot - a Roblox game that peaked at 25 million concurrent players - have petitioned a California judge to declare that Mementum Lab, claiming rights to over half the "brainrot universe", holds no valid copyright.
+The game's makers argue that AI-generated characters lack the human authorship US law requires, and the character Tung Tung Tung Sahur is itself the brainchild of Indonesian TikToker Noxa. Mementum have counterclaimed on trademark grounds. The French firm has already licensed the character to Fortnite. The hearing’s happening in September. The case is seen as something of a litmus test for IP and copyright law in the brave new world of AI. → LINK
+
+💙 Sovereign superpowers increasingly gatekeeping frontier AI capability
+Beijing has spent the past month in talks with Alibaba, ByteDance and Z.ai about restricting overseas access to China's most advanced AI models, including open-source and unreleased ones. Options on the table include domestic-only deployment, no public release at all, and reclassifying model theft as a national-security offence.
+This parallels recent news from the US, around OpenAI’s staggered release of its much-anticipated new GPT-5.6 model series, at Washington's request. Apparently federal officials at first had to approve access “customer by customer”.
+Pope Leo’s clarion call for AI to be “disarmed” - freed from logics of domination and war - now seems almost prophetic. Is this nationalist, arms-race AI sovereignty thinking from geopolitical superpowers the kind of thing he was warning humanity against, or is it merely due diligence on the part of governments in the face of unprecedented technological advancement? → LINK
+
+🔥 Elevating the discipline of design together
+Figma's third annual AI report, out this week, surveyed 8,403 designers, developers and PMs across ten markets. 90% say design matters at least as much as before AI, and 60% of developers now do design work, up from 44% a year ago. Figma's core argument is that AI can build almost anything, and so the true moat - and a scarce skill of today - is deciding what's actually worth building in the first place!
+Fast prototyping means choosing what to build becomes just as important as the building itself. Abundant quality copy means that deciding what to say is now the main job. Infinite content and infinite assets mean that differentiation and taste are now prerequisites. The premium has moved from making to curating, and that’s a multiplayer sport, not a solo chat. → LINK
+
+→ Book a Pencil Demo today!
+
+→ Know someone who'd like this? Forward it or share the subscribe link.

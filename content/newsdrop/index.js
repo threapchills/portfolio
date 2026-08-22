@@ -1,4 +1,11 @@
 const NEWSDROP = [
+  { n: 23, date: "2026-08-21", title: "Nothing to hide", file: "issue-23.txt" },
+  { n: 22, date: "2026-08-14", title: "Signed, sealed and watermarked", file: "issue-22.txt" },
+  { n: 21, date: "2026-08-07", title: "Body of Work", file: "issue-21.txt" },
+  { n: 20, date: "2026-07-31", title: "Pax Silica", file: "issue-20.txt" },
+  { n: 19, date: "2026-07-24", title: "Thinking Out the Box", file: "issue-19.txt" },
+  { n: 18, date: "2026-07-17", title: "Memory Serves", file: "issue-18.txt" },
+  { n: 17, date: "2026-07-10", title: "Sol searching", file: "issue-17.txt" },
   { n: 16, date: "2026-06-26", title: "New models, new rules, same Friday", file: "issue-16.txt" },
   { n: 14, date: "2026-06-12", title: "Jailbreaks, Starships, and Full-Body Scans", file: "issue-14.txt" },
   { n: 12, date: "2026-05-29", title: "A rising tide lifts all boats", file: "issue-12.txt" },

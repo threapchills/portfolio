@@ -1,0 +1,29 @@
+The News Drop #23 – Nothing to hide
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+Zuck reopens the weights. Grok Bot clocks in. MAD for compute. Legal changes in AI music. AGI over profit? 👇
+
+📜 Zuck capitulates on open-source AI
+Mark Zuckerberg published a 6,500-word essay on Monday 10 August, titled “The Future is for Everyone: The Path to a Positive AI Future”. Fourteen pages, with a condensed version running as a Wall Street Journal opinion column. He builds the argument for open-source on three planks: individual empowerment as the source of prosperity, invention as the purpose of superintelligence, and balance of power as the basis for safety and alignment. “There is no such thing as a singular benevolent superintelligence,” he wrote.
+He made much the same case in July 2024. A year later he pivoted, pausing open-weight releases, standing up Meta Superintelligence Labs and prioritising models Meta could keep closed and charge for. Now he seems to have pivoted back to his original stance, but Meta’s reputation is controversial and hotly contested, and the internet’s reactions to Zuckerberg’s new paper have also been divided, with many observers erring on the side of scepticism. → LINK
+
+🆕 Bots that clock in
+Grok Bot landed in beta on 11 August. It’s the first joint product out of SpaceXAI, the merged xAI and Cursor group. It’s an easy entry point into agentic orchestration harnesses, and you can actually see your team of agents as little avatar icons in a familiar chat-style interface, as you summon them. Each agent has its own persistent ‘laptop in the cloud’ with a browser, file system and terminal.
+You can connect (and help it sign into) the tools you already use with your own credentials, and the agents can keep working even after you close your laptop. You can summon several at once and appoint one as boss agent to manage specialist workers like inbox triage specialist, expenses and accounting agents, and bug-fixing experts. You can talk to them much like you would to your work colleagues, and they remember how you like things done. Your Grok bots can chat to each other directly and coordinate in group chats. You can get up and running in minutes and so it’s never been easier to boast-post on LinkedIn that your “AI agents are talking to each other”. → LINK
+
+🤝 Mutually assured compute destruction
+Last month, the AI Futures Project followed up on their landmark 2025 forecast by releasing AI 2040: Plan A, offering a constructive roadmap to avoid the existential risks or techno-fascist oligarchy scenarios outlined in their earlier work, entitled AI 2027.
+The plan, in a nutshell: in 2029, the US and China agree to stop racing, labs scale within the human range until 2035, everyone pauses at top-human-expert level, and the world agrees to slow down on superintelligence until 2040. The authors recommend global transparency on AI research, so nations can actually see what other nations’ AI labs are up to, rather than taking each other’s word for it. Worryingly, the authors note that a kind of Cold War-esque status quo of “mutually assured compute destruction” is perhaps the only way to ensure this precarious equilibrium. → LINK
+
+💙 Six songs, one ruling
+On 31 July the Munich Regional Court ruled against Suno in a landmark case, spearheaded by a class action from GEMA (the German society for musical performing and mechanical reproduction rights). Judge Elke Schwager found six well-known works (among them Rasputin and Forever Young) reproducibly contained in Suno's v3.5 and v4 models and recognisable in what those models produced. The court rejected the “fair use” defence, and ordered Suno to disclose the revenue tied to the infringement, declaring them liable for damages yet to be set. The ruling places liability with the tool-maker, not the users or their prompts. Suno disagrees and are apparently considering an appeal.
+Suno have since announced plans to introduce mandatory audio watermarking, fingerprinting, transparency tools, as well as aggressively throttling downloads with a new policy that limits its Pro Plan users to download only 20 of the songs they create with Suno. Although intended as a safeguard against mass production of low-effort music for commercial purposes, the new measure has many users of the platform - still widely considered the most capable AI music generator - up in arms. → LINK
+
+🔥 AGI over profit
+On 20 May Liang Wenfeng briefed DeepSeek's first outside investors behind closed doors for over three hours. The recording leaked across Chinese social media in late July, and went viral, before being largely scrubbed from the internet. DeepSeek haven’t confirmed whether the leaked audio from the briefing was authentic.
+The essence of the narrative that emerged from the leak: DeepSeek is not chasing revenue, users or market share. Liang reckons Artificial General Intelligence (AGI) is the bigger prize. DeepSeek seemingly views products and low pricing as tools to help reach AGI, not as ends in themselves. He is apparently avoiding distractions like massive user-app ecosystems, and focusing instead on core intelligence advancements, like coding agents and reasoning models. → LINK
+
+→ Book a Pencil Demo today!
+
+→ Know someone who'd like this? Forward it or share the subscribe link.

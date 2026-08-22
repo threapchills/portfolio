@@ -1,0 +1,42 @@
+The News Drop #22 – Signed, sealed and watermarked
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+ChatGPT free for all. Hassabis steps aside at DeepMind. AI watermarking causing a stir. 👇
+
+📜 The free tier
+On 6 August, OpenAI made GPT-5.6 Luna the default model for ChatGPT Free and Go users. Text chats on those plans are now unlimited. It is the first time OpenAI have removed message caps for free users altogether. Limits still apply to file uploads, image generation and other tools. Free and Go users also get a Think button, which gives the model more time to reason on harder questions. Plus and Pro subscribers get an updated Sol with a slider controlling how much thinking goes into each response. OpenAI say the updated Sol also makes fewer factual errors. → LINK
+ChatGPT passed one billion weekly users earlier this year. How are they planning to serve unlimited text to a billion people? Part of the answer is Jalapeño, OpenAI's first custom inference chip. Innovations in chip architecture have apparently allowed Jalapeño-based systems and data centres to run inference at roughly half the cost of today’s typical AI GPUs. These chips will likely start to be deployed around the end of 2026. → LINK
+OpenAI also named their next model family on 1 August. Astra was announced inside a research post claiming ten new results on longstanding problems in maths and theoretical computer science. Axios reported on 7 August that OpenAI are deliberately slowing down the release to allow time for comprehensive preparedness work, which became all the more paramount after the autonomous Hugging Face hack discussed in last week’s Pencil News Drop.
+Additionally, rumours of an even larger model codenamed Doug have begun to surface. Research firm SemiAnalysis published the codename on 7 August, quoting a private client note from 9 July that said OpenAI had made a breakthrough in pre-training, and that a much larger model was in the works. The leaker went further on X two days later, claiming Doug will make Claude Fable 5 look “primitive” by comparison. → LINK
+
+🆕 Meta going open again
+Meta released Muse Glimmer on Monday. It is a roughly 30 billion-parameter multimodal model, distilled from Muse Spark, Meta’s closed flagship. It is built to run agentic tasks locally on a single consumer graphics card or a Mac.
+Meta have said they’ll also publish the weights for Muse Spark 1.2 in the coming weeks. Meta also announced a $1 billion fund for communities near their data centres.
+Grok 4.6 shipped on Wednesday, with a cost of $2 and $6 per million input and output tokens respectively. It goes into Cursor, Grok Build and the API, built for long-running agents and for interactive and visual work. The vendor’s own benchmarks place this model alongside other SotA offerings like GPT Sol and Claude Fable 5, although no independent evaluation has confirmed the numbers at the time of writing. → LINK
+
+🤝 Biology prompts unblocked
+Anthropic recently changed how Claude Fable 5 (their most capable public model) handles biology. It ships with classifiers, smaller automated systems that screen each request, and when a classifier fires the request is answered by Claude Opus 5 instead. Anthropic call that a fallback. The update cut biology-related fallbacks by about 85% in Anthropic’s testing. → LINK
+Their stated reason for the original restriction is that Fable 5 outperforms experts on some complex biology tasks, and that their own testing found it could give a significant boost to someone attempting to build a biological weapon.
+Big picture: Anthropic are seemingly keen for Claude models to contribute meaningfully to progress in the fields of medicine, disease and biology. A significant breakthrough from AI in one of these fields would be a win on multiple levels: a win for human health, for the company’s PR narrative, and for the global zeitgeist around AI writ large.
+
+💙 Deep blue
+On 5 August, Demis Hassabis stepped down as CEO of Google DeepMind.
+He becomes chair of Google DeepMind and chief scientist of Alphabet, and continues to run Isomorphic Labs (Alphabet’s drug discovery spinout). Koray Kavukcuoglu - until now DeepMind's chief technology officer - takes over the unit as a senior vice president reporting directly to CEO Sundar Pichai. → LINK
+The same announcement carried four more departures. Jeff Dean is leaving after 27 years to found Discovery Loop, a public benefit corporation aimed at automating scientific discovery, with Google as an investor and cloud provider. Sanjay Ghemawat, Oriol Vinyals and Quoc Le are going with him. Le co-founded Google Brain.
+Both of Gemini's co-technical leads have now gone within seven weeks. Noam Shazeer left for OpenAI in June. Shazeer is a co-author of Google’s iconic AI paper of 2017, ‘Attention Is All You Need’ - in which the transformer architecture that powers every frontier model today - was first introduced. Nobel laureate John Jumper left for Anthropic in the same June wave, along with AlphaFold researchers Jonas Adler and Alexander Pritzel. → LINK
+With Gemini 3.5 Pro still MIA, some analysts say Google are losing the AI race. That said they do wield certain infrastructure and training data advantages. Google have enjoyed moments where they’ve competed with - and even outdone - the frontier players, like when Gemini 3 made waves on its launch in November last year. But since then they’ve seemingly struggled to match the epic progress made by other labs at the frontier in both the US and China.
+
+🔥 Invisible AI watermarks spark debate
+Anthropic updated a help centre article on 11 August confirming that Claude models launched on or after 2 August will embed an imperceptible watermark in generated text. Anthropic will also attach signed provenance metadata to supported files by default, including .svg, .png and .jpg. → LINK
+The trigger is Article 50 of the EU AI Act, whose transparency obligations became enforceable on 2 August. It requires providers to mark AI-generated or manipulated content in a machine-readable format.
+Anthropic signed the Article 50(2) code of practice, as did OpenAI. Black Forest Labs, Google, Meta, Microsoft and Synthesia have also all committed to the EU code.
+For context, Google's SynthID has already marked billions of images. Suno said last week they will mark tracks made on their platform, with audio fingerprinting technology. Substack have wired Pangram's detection into the platform, in an effort to eradicate “Claudefishing”. LinkedIn are testing a button that lets a reader flag a post as AI slop. Snap have stopped promoting AI-generated video in the main feed. The list goes on.
+Anthropic voluntarily applied the marking worldwide rather than only in the EU, across claude.ai, the API, Claude Code, Claude Cowork and Claude Tag, and even to Claude models that get served through other providers like AWS and Google Cloud. This kind of text-level watermarking works via a token ‘green-list’ system with a ‘key’ for detection, and therefore only works on longer bodies of text, and doesn’t survive heavy editing and tweaking by a human writer.
+In the case of files, the marking uses C2PA, an open standard from the Coalition for Content Provenance and Authenticity, to attach a cryptographically signed record in the file’s metadata. That record can be stripped by a screenshot, a re-save, a format conversion, or any platform that rewrites metadata on upload.
+That said, the system looks set to be a robust safeguard against the problem it set out to solve: The possibility for a deluge of (increasingly persuasive) AI-generated messages manufactured wholesale without any human-in-the-loop oversight. → LINK
+The best creators are happy to disclose their use of AI, and are in fact proud to use it with craft and intention, as a force multiplier, as opposed to a shortcut, building worlds and telling stories that were simply not possible before.
+
+→ Book a Pencil Demo today!
+
+→ Know someone who'd like this? Forward it or share the subscribe link.

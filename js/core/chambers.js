@@ -350,6 +350,44 @@ export function initDesignSection() {
       onEnter: () => sec.classList.add('is-revealed'),
     });
   }
+  /* ---- the drift: no two pieces cross the frame the same way ----
+     Twenty-six boards stacked down a single column all travel in the same
+     direction at the same speed, and the eye stops reading them. Each piece
+     is given one of four passes instead, cycling on a 7-long pattern so the
+     run never falls into an obvious rhythm: two lateral sweeps in opposite
+     directions, a counter-drift that rises against the scroll, and a hold
+     that simply comes forward. The travel is scrubbed off each section's own
+     position, so it reverses cleanly and costs nothing when still.
+
+     Only translate and scale: the GL planes bind to these elements by their
+     bounding rects, and a rotation would put the texture out of register. */
+  const MOVES = [
+    { x:  22, y:  0,   s: 0.94 },   // sweeps in from the west
+    { x: -22, y:  0,   s: 0.94 },   // and the next one answers from the east
+    { x:   0, y: -9,   s: 0.97 },   // rises against the scroll
+    { x:  13, y:  5,   s: 0.92 },   // a shallow diagonal
+    { x: -30, y:  0,   s: 0.96 },   // a wider throw, the other way
+    { x:   0, y:  0,   s: 0.88 },   // holds, and comes forward instead
+    { x: -14, y: -6,   s: 0.95 },
+  ];
+  const pieceEls = qsa('.design-piece', flow);
+  if (!REDUCED_MOTION) {
+    gsap.ticker.add(() => {
+      for (let i = 0; i < pieceEls.length; i++) {
+        const sec = pieceEls[i];
+        const r = sec.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > innerHeight + 200) continue;   // off-frame, leave it
+        const m = MOVES[i % MOVES.length];
+        // -1 as the piece enters the frame, 0 at centre, +1 as it leaves
+        const t = clamp(((innerHeight - r.top) / (innerHeight + r.height)) * 2 - 1, -1, 1);
+        const ease = t * (1 - Math.abs(t) * 0.35);      // slows through the middle
+        sec.style.setProperty('--tx', `${(m.x * ease).toFixed(2)}vw`);
+        sec.style.setProperty('--ty', `${(m.y * ease).toFixed(2)}vh`);
+        sec.style.setProperty('--sc', (1 - (1 - m.s) * Math.abs(ease)).toFixed(4));
+      }
+    });
+  }
+
   // failsafe: never leave a caption masked if a trigger is missed
   addEventListener('load', () => setTimeout(() => {
     qsa('.design-piece').forEach((s) => {

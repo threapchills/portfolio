@@ -1,0 +1,35 @@
+The News Drop #20 – Pax Silica
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+Murati's stealth lab breaks cover. Opus 5 lands at half the price of Fable. Washington accuses Chinese lab Moonshot. 👇
+
+📜 A homage
+Mira Murati, ex-OpenAI CTO, now sits alongside Anthropic's Daniela Amodei and World Labs' Fei-Fei Li at the top table of women running frontier AI.
+Murati, who defected from OpenAI following the Sam Altman ouster boardroom fiasco, has since launched her own stealth startup AI lab, named Thinking Machines, after the legendary supercomputer and AI company founded by Danny Hillis in the 80s.
+On 15 July, Murati’s Thinking Machines shipped Inkling: a 975 billion parameter, open-weight multimodal system trained from scratch on 45 trillion tokens. Inkling pairs enterprise-grade architecture with fine-grained customisation via open weights. Murati has been acknowledged for her vision for intuitive, human-centric AI, meant to adapt to your specific workflow, as opposed to a cold, autonomous productivity engine. → LINK
+
+🆕 Fives alive
+Anthropic shipped Claude Opus 5 on 24 July, mere weeks after Fable 5’s controversial unbanning. While not quite as smart and intuitive as its celebrated flagship cousin according to early user reports, it is far more cost-efficient, priced at around half the price of Fable 5 per token used. → LINK
+Preliminary rankings on Arena.ai's WebDev coding leaderboard actually put Opus 5 in first place, ahead of Moonshot's Kimi K3 and Fable 5. On the Agentic work leaderboard it currently holds second place, just behind Fable 5, but ahead of OpenAI's Sol. → LINK
+Perhaps most impressively of all, Opus 5 has completely obliterated previous model records on ARC-AGI 3. → LINK
+François Chollet’s Abstraction and Reasoning Corpus for Artificial General Intelligence (ARC-AGI) test series is especially designed to be easy for humans to solve but very tough for AI. You can try your hand at these tests yourself, which can be quite insightful in that playing these games gives a sense about how our human cognition differs from machine intelligence. → LINK
+
+🤝 Phantom of the Opera
+The White House recently accused Moonshot AI of covertly distilling Anthropic's Fable to build Kimi K3. This was the first time a US official called out a specific Chinese lab for covertly extracting digital IP from an American model.
+The AI community on X proved that, when asked for its name, K3 identified itself as “Claude” at statistically significant rates.
+But thinkfluencers have pointed out that Opus 5 is itself a distillation, a student model taught by Mythos with safety baked into the weights. Every frontier lab got here by training on the open internet, and all of them distil their own models in-house. Distillation is framed as either a legitimate machine learning technique, or an “attack” depending on who’s doing it. → LINK
+
+💙 AI as political power
+The USA is considering a ban on Chinese open-weight models like Kimi K3 and DeepSeek, reportedly after being lobbied by American frontier labs. The debate has escalated into an industry-wide schism: Nvidia, Microsoft, Meta, Mistral and Hugging Face signed a letter warning against "premature restrictions", while OpenAI, Google DeepMind and SpaceX are conspicuously absent from the signatories. Anthropic, unexpectedly, have come out against a blanket origin-based ban.
+Beijing - which has also promoted national AI sovereignty - is meanwhile playing the opposite hand: AI as statecraft and soft power. China is expanding its artificial intelligence footprint across developing nations using open-source models, local data centres, and training programs, driven by initiatives like Alibaba's Qwen and the World Artificial Intelligence Conference agreements.
+On one hand this is bringing much-needed data centres and other AI infrastructure to regions like Africa and Southeast Asia, but on the other some see it as a vector for a kind of techno-imperial neocolonialism. → LINK
+
+🔥 The singularity is here
+Sam Altman reckons the singularity has arrived. “We are now, like, in the singularity. This is the moment,” he told the Relentless podcast last Friday. This came soon after last week’s cyber scare, in which GPT models escaped their red-team testing environment and hacked Hugging Face.
+Labs are now openly chasing recursive self-improvement (RSI), and the first open-source AI capable of accelerating AI research itself - Kimi K3 - was released a few days ago. AI execs like Altman have also glimpsed powerful internal-only models that the rest of us won't touch for months. GPT-6 is rumoured to be an entirely new class of model compared to the GPT-5 series.
+Google DeepMind’s Hassabis’ heuristic for what constitutes true AGI is stricter: He wants an LLM to independently rediscover relativity. Kurzweil - whose previous predictions have come to pass more often than not - says that consciousness will be conceded, not proven. → LINK
+
+→ Book a Demo today!
+
+→ Know someone who'd like this? Forward it or share the subscribe link.

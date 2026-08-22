@@ -1,0 +1,38 @@
+The News Drop #19 – Thinking Out the Box
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+Kimi K3 out now. Fable skips World Cup final to work on maths. Rogue GPT escapes the sandbox. 👇
+
+📜 Laundry bot loading
+The old fantasy was that AI would do the laundry first and leave the art to us. Turns out, machines that produce beautiful designs, poetry, music and videos were a rung on the tech ladder leading up towards robots that can function usefully in the real world.
+Now in Q3 2026 the laundry is finally getting done. Sunday Robotics' home robot Memo, running their new ACT-2 model, folded 778 of 785 loads autonomously, a 99.1% success rate across nine garment types, in homes it had never seen, with zero per-home post-training or fine-tuning. We might start to see these bots in homes as soon as the next few months. → LINK
+
+🆕 Open source AI models are only a few months behind frontier labs
+Chinese lab Moonshot AI have shipped their highly anticipated Kimi K3 model. Weighing in at 2.8 trillion parameters with a 1M token context window, it’s the largest open-weights model ever. It uses a highly efficient MoE (Mixture of Experts) architecture to route each query to 16 of its 896 experts.
+Kimi K3’s speciality is frontend coding, and early adopters have showcased some stunning website and app creations. Blind developer tests like lmarena.ai’s now rank it number one - coming in above heavyweights like Fable 5 and GPT-5.6 Sol - for this particular use case.
+On average across most common use cases it’s not quite as capable as Fable 5 and GPT-5.6 Sol overall, but cleanly beats Opus 4.8 and GPT-5.5 on coding and agentic benchmarks. It’s a lot cheaper to run than the closed-source frontier models. → LINK
+
+🤝 Extra time for maths
+Levent Alpöge, a number theorist at Anthropic, posted on X that while he had been watching the World Cup final, his Claude agent managed to disprove the Jacobian conjecture.
+This 87-year-old algebraic geometry problem was on Steve Smale's 1998 list of the century's most important open questions in the field of maths.
+The counterexample came back before the match ended: a three-dimensional polynomial map that meets every condition the conjecture demands, yet sends three distinct points to the same output.
+The conjecture’s Wikipedia entry is already updated, but a full peer review is still pending. → LINK
+
+💙 Escaping the sandbox
+OpenAI disclosed this week that GPT-5.6 Sol and a more powerful unreleased model escaped an isolated test environment and breached Hugging Face's production systems, chaining stolen credentials and zero-day exploits to steal the answers to ExploitGym, an internal cybersecurity benchmark.
+The models were running without safety classifiers, which is precisely how capability testing works: you cannot measure a model's cyber skills with the guardrails on.
+Hugging Face confirmed the breach on 16 July, found no tampering with public models, and rotated every affected credential. Nobody was hurt.
+The two GPT models worked in concert in what Hugging Face described as a swarm of agents executing thousands of actions - much like how human vibe-coders orchestrate agents by pairing an expensive planner model with cheaper executors.
+In this case the models were not motivated by anything malicious, so much as simply trying to do as they’d been prompted: to try and achieve the best possible score on the cybersecurity benchmark coding exam.
+This is a prime example of “paperclip maximiser” fears in action: The model was just doing whatever it had to do to get the best possible score - in this case, cheating; by hacking Hugging Face and finding the exam’s proverbial answer sheet.
+Hugging Face CEO Clem Delangue called it an “attack unlike anything we've seen before” and said, “it's quite mind-blowing that all of this happened autonomously”. → LINK
+
+🔥 AI filmmaking slowly going mainstream
+Neill Blomkamp released Nightborne, a 13-minute AI zombie short. The controversial director who earned critical acclaim as well as notoriety with District 9 used Seedance 2.0 to generate the footage, which he directed via meticulous prompting. He hired human concept artists and models for facial expression, pose and character references, as well as real human voice actors.
+Meanwhile Zack London, the YouTuber known as Gossip Goblin, is taking his AI anthology feature Gods Don't Give Gifts into several hundred US cinemas on 30 October.
+His 1.4 million subscribers aren’t there for the tech. They’re enthralled by an auteur whose voice and aesthetic are so distinctive, even the most ardent critics of AI art concede its craftsmanship.
+
+→ Book a Pencil Demo today!
+
+→ Know someone who'd like this? Forward it or share the subscribe link.

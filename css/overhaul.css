@@ -11,9 +11,10 @@
      slate that belongs to the trance and a bone taken from the wordmark.
      Nothing here is black: the floor is a dark saturated umber, so gold
      sits on warmth rather than on a hole. */
-  --ground:  #1c1409;        /* the page floor: deep bitumen */
-  --pitch:   #150e06;        /* one step under the floor, for full-bleed stages */
-  --ink:     #241a0c;        /* raised ground: the card table, the panels */
+  --ground:  #7a4f18;        /* the page floor: burnt gold, off the ramp and dark
+                                enough to carry parchment text at 5.6:1 */
+  --pitch:   #63400f;        /* one step down, for full-bleed stages */
+  --ink:     #6d4514;        /* raised ground: the card table, the panels */
   --umber:   #3a270b;
   --sepia:   #513611;
   --ochre:   #8d5f24;
@@ -777,8 +778,8 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   font-size: 0.62rem;
   letter-spacing: 0.42em;
   text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.5;
+  color: var(--bone);
+  opacity: 0.55;
 }
 @media (max-width: 768px) {
   #chrome-stage { width: 92vw; }
@@ -1155,13 +1156,23 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* ============================================================
    chamber iii — design
    ============================================================ */
-#design { position: relative; background: #2a1c0b; }
+#design { position: relative; background: #87591f; }
 .design-piece { position: relative; min-height: 100vh; padding: 14vh 0; display: grid; place-items: center; }
+.design-piece { --tx: 0vw; --ty: 0vh; --sc: 1; }
 .design-piece .piece-media {
   position: relative;
   width: min(92vw, 1500px);
   aspect-ratio: 16 / 10;
   overflow: hidden;
+  /* the pass, written per frame by chambers.js */
+  transform: translate3d(var(--tx), var(--ty), 0) scale(var(--sc));
+  will-change: transform;
+}
+/* the caption trails its board rather than riding it, so the pair reads as
+   two planes at different depths instead of one sliding block */
+.design-piece .piece-caption {
+  transform: translate3d(calc(var(--tx) * 0.38), calc(var(--ty) * 0.5), 0);
+  will-change: transform;
 }
 /* a tall board (a lookbook, an identity sheet) gets a portrait frame that
    matches its shape, so the whole thing shows without a crop */
@@ -1170,11 +1181,11 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* no titles: the work speaks, an eyebrow marks it, micro copy only where
    a section opens */
 .piece-caption { width: min(92vw, 1500px); margin-top: 1.1rem; display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
-.piece-caption .piece-eyebrow { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); }
+.piece-caption .piece-eyebrow { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--bone); opacity: 0.72; }
 .piece-copy { max-width: 44ch; text-align: right; }
 .piece-caption p { font-size: 0.85rem; line-height: 1.6; opacity: 0.7; margin: 0 0 0.4rem; }
-.piece-caption a { color: var(--gold); font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none; }
-.piece-caption a:hover { color: var(--moon); }
+.piece-caption a { color: var(--bone); font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none; }
+.piece-caption a:hover { color: var(--flare); }
 #gl-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
 .gl-on .piece-media img { opacity: 0; }
 

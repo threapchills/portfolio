@@ -39,6 +39,7 @@ const SEGUE_SOLID  = [0.15, 0.26];   // the panel lands opaque
 const SEGUE_GROW   = [0.24, 0.35];   // the panel grows until it owns the room
 const SEGUE_OUT    = [0.355, 0.385]; // the triptych takes it over, invisibly
 const TRI_IN       = 0.35;
+const TABLE_IN     = [0.30, 0.34];   // the table is laid under the covering plate
 /* one turn per column, each waiting for the last to finish */
 const TRI_FLIPS = [[0.40, 0.55], [0.55, 0.70], [0.70, 0.85]];
 
@@ -142,7 +143,11 @@ export function initJourney() {
   addEventListener('resize', measureSegue);
 
   if (PARAMS.has('dbg')) {
-    window.__dbg = { scrubber, VEIL, SCRUB, BEATS, READING_BANDS, seg, easeInOut };
+    window.__dbg = {
+      scrubber, VEIL, SCRUB, BEATS, READING_BANDS, seg, easeInOut,
+      loopState: () => ({ ready: loopReady, looping }),
+      arm: () => { loopReady = true; },
+    };
   }
 
   /* the Reading: the pool of light drifts after the visitor's hand */
@@ -191,6 +196,21 @@ export function initJourney() {
   /* the loop gate: the film's first frame returns behind the plate as it
      slides back in from the east; at rest the view equals the top of the
      page, and the scroll quietly teleports home */
+  /* The loop runs both ways once there is a whole page to loop through.
+     Going down, the gate closes and the scroll teleports home. Going up
+     from the very top, it teleports to the gate's far side instead, so the
+     wheel behaves like a wheel rather than like a document with an end.
+     It is off until the streamed assets are in (or until the visitor has
+     already come round once), because arriving at the bottom of a page
+     whose frames have not downloaded is a worse experience than a wall. */
+  let loopReady = false;
+  const openLoop = () => { loopReady = true; };
+  /* The streaming chain is the proper signal, but it is a promise chain over
+     two frame sets and a GL warm, and if any link never settles the loop
+     would stay shut forever. A backstop after load opens it anyway: by then
+     the page is either ready or it is not going to be. */
+  addEventListener('load', () => setTimeout(openLoop, 6000));
+
   const gatePlate = qs('#gate-plate');
   const gateCanvas = qs('#gate-canvas');
   const gctx = gateCanvas ? gateCanvas.getContext('2d') : null;
@@ -330,15 +350,17 @@ export function initJourney() {
       }
     }
 
-    /* the table only materialises at the seam, so the film's own cards
-       never share the frame with the real ones; the window opens just as
-       the deal fires (top 15%), so her cards are seen rising, not risen */
+    /* The table comes up behind the segue, never in front of it. Its old
+       rule keyed off its own rect rising into view, which under the new
+       choreography meant three card backs sat on screen through the whole
+       transition. It now rides the reading's own progress and crosses from
+       nothing to laid entirely underneath the opaque plate, in the band
+       between the plate covering the frame and the triptych taking over,
+       so the cards are simply already there when a column opens. */
     if (readingEl) {
-      const rr = readingEl.getBoundingClientRect();
-      const rise = 1 - clamp(rr.top / window.innerHeight, 0, 1);
-      const reveal = seg(rise, 0.82, 0.96);
+      const reveal = seg(readingP, TABLE_IN[0], TABLE_IN[1]);
       readingEl.style.opacity = reveal.toFixed(3);
-      readingEl.style.pointerEvents = reveal > 0.5 ? '' : 'none';
+      readingEl.style.pointerEvents = reveal > 0.9 ? '' : 'none';
     }
 
     /* the loop gate: world back first, then the plate; then home */
@@ -349,6 +371,7 @@ export function initJourney() {
       gatePlate.style.transform = `translate3d(${gx.toFixed(3)}%, 0, 0)`;
       if (gateP >= 0.985 && !looping) {
         looping = true;
+        loopReady = true;                 // they have been all the way round
         scrubber.progress = 0; scrubber.target = 0; scrubber.draw(true);
         lenis.scrollTo(0, { immediate: true });
         ScrollTrigger.update();
@@ -409,6 +432,44 @@ export function initJourney() {
     return null;
   }
 
+  /* ---- the loop, going backwards ----
+     At rest against the top, an upward gesture lands on the gate's far
+     side: the plate is closed there and the view is identical to the top
+     of the page, so the seam is invisible and the scroll simply continues
+     upward through the outro, the mark, and the rest of the work. */
+  const gateEl = qs('#loop-gate');
+  let reverseGuard = 0;
+  function reverseLoop() {
+    if (!loopReady || !gateEl || looping) return false;
+    // never off the threshold, where the page is held at zero and an upward
+    // flick would fling a first-time visitor straight to the end
+    if (document.getElementById('threshold')) return false;
+    const now = performance.now();
+    if (now < reverseGuard) return false;
+    // only from a genuine rest against the top, never mid-flick
+    if ((lenis.animatedScroll || window.scrollY) > 2) return false;
+    reverseGuard = now + 700;
+    looping = true;
+    const y = docTopOf(gateEl) + (gateEl.offsetHeight - window.innerHeight) * 0.985;
+    scrubber.progress = 0; scrubber.target = 0; scrubber.draw(true);
+    lenis.scrollTo(y, { immediate: true });
+    ScrollTrigger.update();
+    setTimeout(() => { looping = false; }, 300);
+    return true;
+  }
+  const docTopOf = (el) => el.getBoundingClientRect().top + window.scrollY;
+
+  addEventListener('wheel', (e) => {
+    if (e.deltaY < -2) reverseLoop();
+  }, { passive: true });
+
+  let touchY = 0;
+  addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; }, { passive: true });
+  addEventListener('touchmove', (e) => {
+    // a downward drag is an upward scroll
+    if (e.touches[0].clientY - touchY > 24) reverseLoop();
+  }, { passive: true });
+
   /* ---- keyboard: arrows step between beats; the mysterious register
      keeps its usability underneath ---- */
   const beatPositions = () => {
@@ -464,8 +525,9 @@ export function initJourney() {
   function landTo(hash) {
     const spots = {
       '#reading': () => {
+        // past the turn, where the three stand level and the table is wide
         const r = qs('#reading-wrap');
-        return r.offsetTop + (r.offsetHeight - window.innerHeight) * INK_IN[1];
+        return r.offsetTop + (r.offsetHeight - window.innerHeight) * 0.9;
       },
       '#film':    () => qs('#film')?.offsetTop,
       '#writing': () => qs('#writing')?.offsetTop,
@@ -478,5 +540,5 @@ export function initJourney() {
     return true;
   }
 
-  return { lenis, scrubber, firstChunk, preloadDone, landTo };
+  return { lenis, scrubber, firstChunk, preloadDone, landTo, openLoop };
 }

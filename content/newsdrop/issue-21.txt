@@ -1,0 +1,37 @@
+The News Drop #21 – Body of Work
+
+The Friday brief for people who make marketing move.
+LinkedIn Caption
+AI Video crosses the Rubicon. Chinese open-source AI race heats up. New robots, some more human-like than others. 👇
+
+📜 Back in the open
+For the last few weeks Moonshot’s Kimi K3 has been the open-source model on everyone’s lips. This week Alibaba clapped back with their new Qwen3.8-Max: it’s a 2.4 trillion parameter model, with the (now table-stakes) million-token context window.
+But Qwen3.8-Max and K3 each target slightly different market segments. Kimi K3 is positioned more as a specialist’s tool, and excels at frontend coding, multi-agent orchestration, and even perform AI research itself.
+Boasting native multimodal reasoning across documents, images and video, as well as cost- and token-efficiency, Qwen3.8-Max is aiming at the world’s enterprises. The model sits near the top of leaderboards for image-to-webdev tasks - essentially building out a front-end design based on visual guidance and design mockups.
+The model is also very capable of autonomous long-horizon agentic work. Its makers claim Qwen spent 10 days creating a self-evolving agent harness from scratch. The result, oh-my-cli, is on GitHub.
+The weights for Qwen3.8-Max and a smaller 27B checkpoint are expected to drop this week, marking Alibaba’s first open-weight model release at this scale. The company, founded by eccentric billionaire Jack Ma, saw its shares rise by 7% in Hong Kong following the release. → LINK
+
+🆕 A slew of hot new video models
+Seedance 2.5 shipped on 31 July, mere weeks after ByteDance first unveiled it at the Volcano Engine FORCE event. It can produce 30 seconds in a single native pass - and the clips can easily be stitched together via first-to-last keyframe alignment resulting in minutes of generated footage. It handles a whopping fifty reference inputs per generation: up to thirty images, ten video clips, ten audio tracks. The native 4K output has been praised as eye-catching and exquisite, with virtually none of the AI morphing, incoherence and disfigurement that plagued early generative video. Ushering in a new paradigm in fine-grained creative control, the new Seedance model also enables edits to a single frame, that then carry through to the entire clip. It also formally introduces white-model control - letting you map out a shot with untextured 3D geometry, and letting the model handle textures, lighting and post-process effects. → LINK
+FLUX 3 landed on 23 July. Black Forest Labs - founded by some of the OGs behind the original Stable Diffusion - dropped their first ever video model, and the first natively multimodal FLUX model. FLUX 3 can output 20-second clips, with video and audio. → LINK
+Not to be outdone, MiniMax - who have been making waves in the AI video world for a couple of years already - recently dropped MiniMax H3 (AKA Hailuo 3). Much to the joy and surprise of the open-source community, MiniMax released the weights freely on Hugging Face three days later. The model now ranks first in the world for video editing (video-to-video) and seems to also be remarkably strong in text-to-video and image-to-video work. It’s also very affordable to run compared to other state-of-the-art video models. → LINK
+
+🤝 Borrowing our human form
+Google DeepMind announced Gemini Robotics 2 at the end of July. Their previous model drove a humanoid's upper body including arms and hands, enabling it to automate certain tabletop tasks. This one runs the lower half too: it can walk, crouch, stretch, and balance in a cluttered room, and even bend down to retrieve fallen items from the floor.
+Gemini Robotics 2 is the vision-language-action model that turns sight and instruction into motor control, while a dedicated model - Gemini Robotics ER 2 - handles embodied reasoning (planning in physical space, as well as coordinating with humans and other robots). Gemini Robotics On-Device 2 is a complementary smaller model that runs locally - it’s like a robot meta-mind that can adapt its cognitive and spatial awareness to entirely new robot bodies within a matter of hours.
+McKinsey put the general-purpose robotics market at $370 billion by 2040, up from under a billion today.
+DeepMind's framing: the world is built for human movement, and it often requires precise, awkward or meticulous manoeuvres within tight, cluttered spaces. Teaching a machine to work in that world means teaching it our proportions, our reach, and our centre of gravity. → LINK
+
+💙 Give it horns
+Images of a chainsaw-wielding centaur-shaped robot have been going viral, inciting memes, monster jokes, some slightly uneasy chuckling at the form factor. The machine is called Threehalves. It was built in a garage in Auburn, California by a semi-anonymous engineer known only as Beau G. His company, dubbed Satyress after the mythical beast of ancient Greek lore, has had to invest in more bandwidth for its website, following the surge of attention.
+He built it to perform dangerous forestry work in wildfire country. Every season people go into the burn - where dead trees can drop limbs at any time without warning - to cut fuel breaks and clear power lines. Threehalves is intended to take this dangerous work off human hands. Designed as a quadruped - because bipeds topple too easily - the bot boasts friction brakes on every joint, and pin locks that engage if air pressure ever drops. It's teleoperated via a videogame controller. The cameras (or “eyes”) sit up in the horns. → LINK
+
+🔥 We ain't seen nothing yet
+Vera Rubin is Nvidia's next generation of AI chip, the successor to Blackwell. It reached full production on 21 July and is shipping now to OpenAI, Microsoft, Google Cloud, Meta, CoreWeave and Dell, with volume ramping through Q4.
+The chips ship as a complete rack - 72 GPUs wired together and sold as one unit. Each rack delivers 3.6 exaflops of inference, roughly 3.3 times the current Blackwell equivalent.
+They also draw far more power. A Hopper rack pulled about 40 kilowatts. Blackwell pulls 120 to 130. Vera Rubin pulls 190 to 230. Next year’s Rubin Ultra pulls 600. Wall Street research firm Bernstein estimates a one-gigawatt data centre full of Vera Rubin racks costs around $47 billion to build.
+Next year’s models will be trained on far more compute than anything we’ve seen so far. Ilya Sutskever's Safe Superintelligence is an early adopter, moving off Google's chips onto Vera Rubin. The move will see Sutskever’s enigmatic startup secure ten times their current compute over the next year. → LINK
+
+→ Book a Demo today!
+
+→ Know someone who'd like this? Forward it or share the subscribe link.
