@@ -25,6 +25,11 @@
   --slate:   #485068;        /* the trance rings: the one cool note */
   --slate-deep: #1a1d26;     /* the writing chamber's ground */
   --oxblood: #6b2a19;
+  /* the grounds above are gold now, so darkness gets its own names: --char
+     is where the page opens and closes, --void is for blackouts, letterbox
+     bars and anything that has to read as an absence of light */
+  --char:    #17181a;
+  --void:    #0e0b07;
 
   --bg: var(--ground);
   --moon: #f6e6bb;
@@ -256,7 +261,7 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
   top: 0;
   height: 100vh; height: 100svh;
   overflow: hidden;
-  background: var(--pitch);   /* the film's own field */
+  background: transparent;   /* the page's own ground is the field now */
   will-change: transform;   /* the stage warps with scroll velocity */
 }
 #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -267,7 +272,9 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 #logo-veil, #gate-plate {
   position: absolute; inset: 0;
   z-index: 3;
-  background: var(--bg);
+  /* the plate is the ground with letters cut out of it, so it has to be
+     exactly the ground; anything else and the plate reads as a panel */
+  background: var(--page-bg, var(--char));
   will-change: transform;
   -webkit-mask-image: linear-gradient(#000 0 0), url('../assets/brand/mikey-logo-hi.webp');
           mask-image: linear-gradient(#000 0 0), url('../assets/brand/mikey-logo-hi.webp');
@@ -332,7 +339,7 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
   overflow: hidden;
 }
 #reading-ground img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-#reading-ground .ground-ink { position: absolute; inset: 0; background: var(--ink); opacity: 0; }
+#reading-ground .ground-ink { position: absolute; inset: 0; background: var(--void); opacity: 0; }
 #reading {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
@@ -551,7 +558,7 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 .card.is-opening { z-index: 40; }
 #doorway-veil {
   position: fixed; inset: 0;
-  background: var(--pitch);
+  background: var(--void);
   opacity: 0;
   pointer-events: none;
   z-index: 150;
@@ -849,7 +856,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
   overflow: hidden;
-  background: var(--pitch);
+  background: transparent;
 }
 #scrub-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .scrub-brand {
@@ -867,7 +874,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   position: absolute;
   left: 0; right: 0;
   height: 9vh;
-  background: var(--pitch);
+  background: var(--void);
   z-index: 4;
   transform: scaleY(0);
   will-change: transform;
@@ -907,7 +914,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   overflow: hidden;
   text-decoration: none;
   color: var(--text);
-  background: var(--pitch);
+  background: transparent;
 }
 .banner-media { position: absolute; inset: 0; will-change: transform; }
 .banner-media img, .banner-media video {
@@ -1094,7 +1101,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 #reading-plane {
   position: fixed; inset: 0;
   z-index: 130;
-  background: var(--ink);
+  background: var(--char);
   overflow-y: auto;
   opacity: 0;
   pointer-events: none;
