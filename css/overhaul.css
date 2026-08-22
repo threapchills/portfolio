@@ -5,14 +5,31 @@
    ============================================================ */
 
 :root {
-  --bg: #080808;
-  --ink: #0d0b09;            /* warm card-table black */
-  --gold: #c4922a;
-  --moon: #f2e2a0;           /* moonlight, glyph glow */
-  --teal: #3d8a8a;
-  --moth: #d4622a;           /* moth orange, hover heat */
-  --leaf: #4a8f4f;
-  --text: #f0ede6;
+  /* Every value below was sampled out of the artwork itself (the journey
+     film's frames and the cube panels), not chosen off a colour wheel.
+     The corpus is one long warm ramp from bitumen to flare, with a cool
+     slate that belongs to the trance and a bone taken from the wordmark.
+     Nothing here is black: the floor is a dark saturated umber, so gold
+     sits on warmth rather than on a hole. */
+  --ground:  #1c1409;        /* the page floor: deep bitumen */
+  --pitch:   #150e06;        /* one step under the floor, for full-bleed stages */
+  --ink:     #241a0c;        /* raised ground: the card table, the panels */
+  --umber:   #3a270b;
+  --sepia:   #513611;
+  --ochre:   #8d5f24;
+  --gold:    #cc913d;
+  --flare:   #f6bc56;        /* the brightest gold in the film */
+  --bone:    #fef9eb;        /* the wordmark's own ink */
+  --text:    #efe4cd;        /* warm parchment */
+  --slate:   #485068;        /* the trance rings: the one cool note */
+  --slate-deep: #1a1d26;     /* the writing chamber's ground */
+  --oxblood: #6b2a19;
+
+  --bg: var(--ground);
+  --moon: #f6e6bb;
+  --teal: #5c7f86;
+  --moth: #d4622a;
+
   --font-display: 'Cormorant Garamond', 'Georgia', serif;
   --font-ui: 'Space Grotesk', system-ui, sans-serif;
 }
@@ -51,37 +68,57 @@
 /* ---- the custom cursor and its trail ---- */
 .has-custom-cursor body.overhaul,
 .has-custom-cursor body.overhaul * { cursor: none !important; }
-.mw-cursor-moon {
+.mw-cursor-core {
+  --heat: 1;
   position: fixed; top: 0; left: 0;
-  width: 22px; height: 22px;
-  object-fit: contain;
+  width: 10px; height: 10px;
+  border-radius: 50%;
   z-index: 300;
   pointer-events: none;
   opacity: 0;
-  filter: drop-shadow(0 0 7px rgba(242, 120, 90, 0.5));
+  background: radial-gradient(circle at 50% 42%,
+    rgba(254, 249, 235, 1) 0%,
+    rgba(246, 188, 86, 0.95) 34%,
+    rgba(204, 145, 61, 0.55) 62%,
+    rgba(214, 98, 42, 0) 100%);
+  box-shadow: 0 0 14px rgba(246, 188, 86, 0.65), 0 0 34px rgba(214, 98, 42, 0.35);
+  transform-origin: 50% 50%;
+  scale: var(--heat);
+  transition: scale 0.18s ease-out;
 }
 .mw-cursor-ring {
   position: fixed; top: 0; left: 0;
   width: 34px; height: 34px;
   border-radius: 50%;
-  border: 1px solid rgba(242, 226, 160, 0.55);
+  border: 1px solid rgba(246, 230, 187, 0.4);
   z-index: 300;
   pointer-events: none;
   opacity: 0;
-  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, margin 0.2s ease;
+  transition: width 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+              height 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.24s ease, margin 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.24s ease;
 }
 .mw-cursor-ring.is-active {
-  width: 52px; height: 52px;
-  margin: -9px 0 0 -9px;
-  border-color: var(--gold);
+  width: 56px; height: 56px;
+  margin: -11px 0 0 -11px;
+  border-color: var(--flare);
+  box-shadow: 0 0 22px rgba(246, 188, 86, 0.25), inset 0 0 18px rgba(246, 188, 86, 0.12);
 }
-.mw-cursor-ring.is-down { border-color: var(--moth); }
+.mw-cursor-ring.is-down {
+  width: 26px; height: 26px;
+  margin: 4px 0 0 4px;
+  border-color: var(--moth);
+}
 #mw-trail {
   position: fixed; inset: 0;
   width: 100%; height: 100%;
   z-index: 1;
   pointer-events: none;
   mix-blend-mode: screen;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mw-cursor-core { transition: none; }
 }
 /* the trail lives between the dark ground and the work: full-bleed stages
    swallow it, content blocks ride above it */
@@ -95,7 +132,7 @@
   content: '';
   position: absolute; inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 120% 105% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%);
+  background: radial-gradient(ellipse 120% 105% at 50% 45%, transparent 55%, rgba(12,8,3,0.62) 100%);
 }
 
 /* ============================================================
@@ -104,7 +141,7 @@
 #threshold {
   position: fixed; inset: 0;
   z-index: 200;
-  background: #000;
+  background: var(--pitch);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -206,7 +243,7 @@
   top: 0;
   height: 100vh; height: 100svh;
   overflow: hidden;
-  background: #000;         /* the film's own field */
+  background: var(--pitch);   /* the film's own field */
   will-change: transform;   /* the stage warps with scroll velocity */
 }
 #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -221,8 +258,11 @@
   will-change: transform;
   -webkit-mask-image: linear-gradient(#000 0 0), url('../assets/brand/mikey-logo-hi.webp');
           mask-image: linear-gradient(#000 0 0), url('../assets/brand/mikey-logo-hi.webp');
-  -webkit-mask-size: 100% 100%, min(82vw, 880px) auto;
-          mask-size: 100% 100%, min(82vw, 880px) auto;
+  /* --mask-scale drives the opening: journey.js grows it so the letterforms
+     widen past the frame and the film arrives through the word itself */
+  --mask-scale: 1;
+  -webkit-mask-size: 100% 100%, calc(min(82vw, 880px) * var(--mask-scale)) auto;
+          mask-size: 100% 100%, calc(min(82vw, 880px) * var(--mask-scale)) auto;
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
   -webkit-mask-position: center;
@@ -269,7 +309,7 @@
    ============================================================ */
 /* the wrap climbs 100vh under the journey so its ground pins while the
    film's stage still holds the offering; the swap is pixel-identical */
-#reading-wrap { position: relative; height: 450vh; margin-top: -100vh; background: var(--ink); }
+#reading-wrap { position: relative; height: 640vh; margin-top: -100vh; background: var(--ink); }
 /* the film's last frame (the offered hands) holds beneath the table, so
    the seam from the scrub is invisible; the ink breathes in over it */
 #reading-ground {
@@ -308,13 +348,98 @@
   animation: pool-breathe 9s ease-in-out infinite;
 }
 #card-table { position: relative; z-index: 10; }
+
+/* ---- the segue: her light becomes the wordmark, the wordmark the room ----
+   The plate first arrives as a framed panel, because everything in this
+   world arrives framed and because the wordmark has to be legible whole.
+   It then grows until it covers the frame, landing on exactly the geometry
+   the triptych reassembles, so the handover between them is not a
+   transition at all: the same pixels, differently owned. */
+#segue {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  margin-bottom: -100vh;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+.segue-plate {
+  --grow: 1;
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%) scale(var(--grow));
+  width: min(94vw, 1180px);
+  aspect-ratio: 4900 / 2108;
+  background-image: url('../assets/journey/segue.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.segue-plate.is-bloom { mix-blend-mode: screen; }
+.segue-plate.is-solid { mix-blend-mode: normal; }
+
+/* ---- the triptych: the room divided in three, each third turning ----
+   --iw, --x0 and --colw are written in pixels by journey.js from this
+   element's own measured box. They could be viewport units, but 100vw
+   counts the scrollbar and a sticky child does not, and a seven-pixel
+   disagreement is exactly enough to make the handover visible. */
+#triptych {
+  --iw: 100%;
+  --x0: 0px;
+  --colw: 33.3333%;
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  margin-bottom: -100vh;
+  z-index: 12;
+  pointer-events: none;
+  perspective: 2000px;
+  opacity: 0;
+}
+#triptych.is-live { opacity: 1; }
+.tri-col {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: var(--colw);
+  transform-style: preserve-3d;
+}
+.tri-col:nth-child(1) { left: 0; }
+.tri-col:nth-child(2) { left: var(--colw); }
+.tri-col:nth-child(3) { left: calc(var(--colw) * 2); }
+.tri-inner {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transform: translateZ(var(--z, 0px)) rotateY(var(--turn, 0deg));
+  will-change: transform;
+}
+.tri-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  background-image: url('../assets/journey/segue.webp');
+  background-size: var(--iw) 100%;
+  background-repeat: no-repeat;
+}
+.tri-col:nth-child(1) .tri-front { background-position: var(--x0) 50%; }
+.tri-col:nth-child(2) .tri-front { background-position: calc(var(--x0) - var(--colw)) 50%; }
+.tri-col:nth-child(3) .tri-front { background-position: calc(var(--x0) - var(--colw) * 2) 50%; }
+/* a hairline of gold down the turning edges, so the split reads as a seam
+   in something painted rather than a rectangle of nothing */
+.tri-front { box-shadow: inset 1px 0 0 rgba(204, 145, 61, 0.22), inset -1px 0 0 rgba(204, 145, 61, 0.22); }
+/* the reverse of each column is empty: turning it opens a window onto the
+   card that was standing behind it all along */
+.tri-back { transform: rotateY(180deg); background: none; }
+@media (prefers-reduced-motion: reduce) {
+  #triptych { display: none; }
+}
 @keyframes pool-breathe {
   0%, 100% { opacity: 0.35; }
   50% { opacity: 1; }
 }
 #card-table {
-  display: flex;
-  gap: clamp(1rem, 4vw, 3.2rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  width: 100%;
   perspective: 1400px;
 }
 .card {
@@ -333,12 +458,10 @@
   --fs: 1; --fy: 0vh;              /* scroll focus: scale and rise */
   position: absolute; inset: 0;
   transform-style: preserve-3d;
-  transform: translateY(var(--fy)) rotateX(var(--tiltX)) rotateY(var(--tiltY)) scale(calc(var(--lift) * var(--fs)));
+  --turn: 0deg;                    /* the turn is scrubbed, so it reverses */
+  transform: translateY(var(--fy)) rotateX(var(--tiltX)) rotateY(calc(var(--turn) + var(--tiltY))) scale(calc(var(--lift) * var(--fs)));
   transition: transform 0.15s ease-out;
   display: block;
-}
-.card.is-turned .card-3d {
-  transform: translateY(var(--fy)) rotateX(var(--tiltX)) rotateY(calc(180deg + var(--tiltY))) scale(calc(var(--lift) * var(--fs)));
 }
 .card.is-turned:hover .card-3d, .card.is-turned:focus-visible .card-3d { --lift: 1.035; }
 .card.is-turning .card-3d { transition: transform 0.6s cubic-bezier(0.45, 0, 0.55, 1); }
@@ -352,7 +475,7 @@
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 }
-.card-face-back { background-color: #10201c; }
+.card-face-back { background-color: #1d2422; }
 .card-face-front {
   transform: rotateY(180deg);
   background:
@@ -415,7 +538,7 @@
 .card.is-opening { z-index: 40; }
 #doorway-veil {
   position: fixed; inset: 0;
-  background: #000;
+  background: var(--pitch);
   opacity: 0;
   pointer-events: none;
   z-index: 150;
@@ -428,7 +551,7 @@
   position: relative;
   padding: 22vh 6vw 18vh;
   /* the room lightens to paper, then hands back to ink for Onwards */
-  background: linear-gradient(var(--ink) 0%, #ece7db 16%, #e8e2d3 84%, #060809 100%);
+  background: linear-gradient(var(--ink) 0%, #ece7db 16%, #e8e2d3 84%, var(--ground) 100%);
   color: #171310;
   text-align: center;
 }
@@ -545,7 +668,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   justify-content: center;
   gap: 3rem;
   text-align: center;
-  background: linear-gradient(#060809, #000 85%);
+  background: linear-gradient(var(--ground), var(--pitch) 85%);
   padding: 16vh 6vw 10vh;
 }
 .outro-moons { display: flex; gap: 1.5rem; opacity: 0.65; }
@@ -595,7 +718,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
    in from the east; at rest the view equals the top of the page,
    and the scroll quietly teleports home.
    ============================================================ */
-#loop-gate { position: relative; height: 220vh; background: #000; }
+#loop-gate { position: relative; height: 220vh; background: var(--pitch); }
 .gate-stage {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
@@ -641,13 +764,13 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* ============================================================
    chamber i — film
    ============================================================ */
-#film { position: relative; background: #050403; }
+#film { position: relative; background: var(--pitch); }
 #scrub-wrap { position: relative; height: 1100vh; }
 #scrub-stage {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
   overflow: hidden;
-  background: #050403;
+  background: var(--pitch);
 }
 #scrub-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .scrub-brand {
@@ -665,7 +788,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   position: absolute;
   left: 0; right: 0;
   height: 9vh;
-  background: #000;
+  background: var(--pitch);
   z-index: 4;
   transform: scaleY(0);
   will-change: transform;
@@ -705,7 +828,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   overflow: hidden;
   text-decoration: none;
   color: var(--text);
-  background: #050403;
+  background: var(--pitch);
 }
 .banner-media { position: absolute; inset: 0; will-change: transform; }
 .banner-media img, .banner-media video {
@@ -721,7 +844,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   content: '';
   position: absolute; inset: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(5,4,3,0.45) 0%, transparent 24%, transparent 52%, rgba(5,4,3,0.85) 100%);
+  background: linear-gradient(180deg, rgba(21,14,6,0.5) 0%, transparent 24%, transparent 52%, rgba(21,14,6,0.88) 100%);
 }
 .banner-caption {
   position: absolute;
@@ -745,7 +868,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 .banner-tag { font-size: 0.66rem; letter-spacing: 0.26em; text-transform: uppercase; opacity: 0.62; display: flex; gap: 1.3rem; align-items: baseline; flex-wrap: wrap; }
 .banner-caption.is-centre .banner-tag { justify-content: center; }
 .banner-tag em { font-style: normal; color: var(--gold); opacity: 0.95; letter-spacing: 0.24em; }
-.film-banner.is-more { background: linear-gradient(#050403, #000); display: grid; place-items: center; }
+.film-banner.is-more { background: linear-gradient(var(--ink), var(--pitch)); display: grid; place-items: center; }
 
 /* ============================================================
    chamber ii — writing: the cube
@@ -753,7 +876,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* the dark ground and its pool of light pin with the cube, beneath the
    cursor trail; the scene above is transparent so the trail shows on the
    background but the opaque cube covers it */
-#writing { position: relative; background: var(--ink); }
+#writing { position: relative; background: var(--slate-deep); }
 #cube-pin { position: relative; height: 340vh; }
 .writing-ground {
   position: sticky; top: 0;
@@ -794,85 +917,89 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   position: absolute; inset: 0;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(196, 146, 42, 0.3);
-  background-color: #120f0c;
+  border: 1px solid rgba(204, 145, 61, 0.34);
+  background-color: var(--ink);
   backface-visibility: hidden;
   overflow: hidden;
+  cursor: pointer;
 }
-.cube-face.is-content { cursor: pointer; }
-/* the caption strip above each collection's grid */
-.face-head {
-  display: flex; flex-direction: column; gap: 0.2rem;
-  padding: 0.7rem 0.85rem 0.5rem;
-  flex: 0 0 auto;
-  border-bottom: 1px solid rgba(196, 146, 42, 0.16);
-}
-.face-eyebrow { font-size: 0.5rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal); }
-.face-name { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.1rem, 3vh, 1.6rem); line-height: 1; color: var(--text); }
 
-/* the grid of little cubes */
+/* nine tiles to a face, each one ninth of the painting. Fewer and larger
+   than the sixteen that came before, so a face reads as one picture broken
+   into pieces rather than as a grid of chips, and a title has room to sit. */
 .cube-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  gap: 3px;
-  padding: 3px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  padding: 2px;
 }
-.cube-grid.is-glyph-grid { gap: 2px; padding: 2px; }
 .cube-cell {
   position: relative;
   border: 0;
-  background: #171310;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035), inset 0 -10px 16px rgba(0, 0, 0, 0.45);
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, color 0.2s ease, filter 0.35s ease;
+  padding: 0;
+  background-color: var(--umber);
+  background-size: 300% 300%;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(255, 245, 220, 0.05);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.32s ease, filter 0.35s ease;
+  filter: brightness(0.94) saturate(0.96);
 }
-.cube-cell.is-paper {
-  background-image: url('../assets/textures/paper-grain.webp');
-  background-size: 220px;
-  background-blend-mode: multiply;
-  opacity: 0.62;
-}
+/* a titled tile darkens under its own text, so a title stays readable over
+   whatever part of the painting it happens to have landed on */
 .cube-cell.is-titled {
-  display: flex; align-items: center; justify-content: center;
-  padding: 0.28rem;
+  display: flex; align-items: flex-end;
+  padding: 0.42rem 0.42rem 0.46rem;
   color: var(--text);
   cursor: pointer;
-  background-image: url('../assets/textures/paper-grain.webp');
-  background-size: 220px;
-  background-blend-mode: multiply;
+  text-align: left;
+  font: inherit;
+}
+.cube-cell.is-titled::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(14, 9, 3, 0.92) 0%, rgba(14, 9, 3, 0.72) 38%, rgba(14, 9, 3, 0.12) 78%, transparent 100%);
+  transition: opacity 0.32s ease;
 }
 .cell-label {
+  position: relative;
   font-family: var(--font-display);
-  font-size: 0.62rem;
-  line-height: 1.12;
-  text-align: center;
+  font-size: clamp(0.58rem, 1.4vh, 0.86rem);
+  line-height: 1.16;
   letter-spacing: 0.01em;
   display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
   overflow: hidden;
+  text-shadow: 0 1px 6px rgba(10, 6, 2, 0.9);
 }
-.cell-label em { display: block; font-style: normal; font-family: var(--font-ui); font-size: 0.5rem; letter-spacing: 0.14em; color: var(--gold); opacity: 0.8; }
-/* .is-hover is driven from JS so the glow also fires on the 90° face,
+.cell-label em {
+  display: block;
+  font-style: normal;
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  color: var(--flare);
+  opacity: 0.9;
+  margin-bottom: 0.14em;
+}
+/* .is-hover is driven from JS so the glow also fires on the 90 degree face,
    where the browser's own :hover cannot */
 .cube-cell.is-titled:hover, .cube-cell.is-titled:focus-visible, .cube-cell.is-titled.is-hover {
-  transform: translateZ(22px) scale(1.04);
-  color: var(--moon);
-  box-shadow: 0 0 22px rgba(196, 146, 42, 0.4), inset 0 0 0 1px rgba(196, 146, 42, 0.4);
+  transform: translateZ(26px) scale(1.045);
+  filter: brightness(1.16) saturate(1.06);
+  box-shadow: 0 0 26px rgba(204, 145, 61, 0.45), inset 0 0 0 1px rgba(246, 188, 86, 0.55);
   z-index: 3;
   outline: none;
 }
-/* glyph tiles: a slice of the artwork, brightening as the hand passes */
-.cube-cell.is-glyph-cell {
-  background-size: 400% 400%;
-  background-repeat: no-repeat;
-  filter: grayscale(0.2) brightness(0.9);
-}
-.cube-cell.is-glyph-cell:hover {
-  transform: translateZ(20px) scale(1.05);
-  filter: grayscale(0) brightness(1.12);
-  box-shadow: 0 0 18px rgba(242, 226, 160, 0.35);
-  z-index: 3;
-}
+.cube-cell.is-titled:hover::before,
+.cube-cell.is-titled.is-hover::before { opacity: 0.72; }
+/* the bare tiles warm a little as the hand crosses the face, so the whole
+   panel feels loose rather than printed on */
+.cube-face:hover .cube-cell:not(.is-titled) { filter: brightness(1.02) saturate(1.02); }
+
+
 .cube-hint {
   position: absolute;
   bottom: 7vh; left: 50%;
@@ -961,7 +1088,7 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* ============================================================
    chamber iii — design
    ============================================================ */
-#design { position: relative; background: #060607; }
+#design { position: relative; background: #2a1c0b; }
 .design-piece { position: relative; min-height: 100vh; padding: 14vh 0; display: grid; place-items: center; }
 .design-piece .piece-media {
   position: relative;
@@ -1036,12 +1163,12 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 @media (max-width: 768px) {
   #journey { height: 880vh; }
   #logo-veil {
-    -webkit-mask-size: 100% 100%, 92vw auto;
-            mask-size: 100% 100%, 92vw auto;
+    -webkit-mask-size: 100% 100%, calc(92vw * var(--mask-scale)) auto;
+            mask-size: 100% 100%, calc(92vw * var(--mask-scale)) auto;
   }
   .hero-roles { font-size: 0.58rem; letter-spacing: 0.24em; padding: 0 1.2rem; }
   .card-title { opacity: 0.9; transform: none; }      /* no hover on touch */
-  #card-table { gap: 0.8rem; padding: 0 0.8rem; }
+  #card-table { padding: 0 0.4rem; }
   .card { width: min(27vw, 150px); }
   .plane-close { right: 1.1rem; top: 4.4rem; }
   .film-plane, .film-plane:first-child,

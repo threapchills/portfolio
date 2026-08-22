@@ -148,27 +148,24 @@ export function initWritingSection(lenis) {
   const closeBtn = qs('#plane-close');
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
-  const faces = WRITING_FACES.map((f) => ({
-    ...f,
-    count: f.type === 'newsdrop'
-      ? `${NEWSDROP.length} issues, growing weekly`
-      : `${f.items.length} ${f.items.length === 1 ? 'piece' : 'pieces'}`,
-    entries: f.type === 'newsdrop'
+  /* One flat index of everything written, genre and order discarded. The
+     cube deals it round its six faces; the plane lists it in full. */
+  const ENTRIES = WRITING_FACES.flatMap((f) => (
+    f.type === 'newsdrop'
       ? NEWSDROP.map((it) => ({ label: `#${it.n}`, title: it.title, kind: 'issue', file: it.file, n: it.n, date: it.date }))
-      : f.items.map((s) => ({ title: s.title, kind: 'story', url: s.url })),
-  }));
+      : f.items.map((st) => ({ title: st.title, kind: 'story', url: st.url, excerpt: st.excerpt }))
+  ));
 
   /* ---- the reading plane; the page's scroll rests while it is open ---- */
   let cube;
-  function openPlane(face) {
+  function openPlane() {
     cube.suspended = true;
     lenis.stop();
     plane.classList.add('is-open');
     plane.setAttribute('aria-hidden', 'false');
     closeBtn.hidden = false;
     plane.scrollTop = 0;
-    if (face.type === 'newsdrop') renderIssueList(face);
-    else renderStories(face);
+    renderIndex();
     closeBtn.focus();
   }
   function closePlane() {
@@ -180,7 +177,7 @@ export function initWritingSection(lenis) {
   }
   /* a single tile: an issue opens straight to its reading view, a story
      opens in its own tab */
-  function openCell(entry, face) {
+  function openCell(entry) {
     if (entry.kind === 'issue') {
       cube.suspended = true;
       lenis.stop();
@@ -196,45 +193,39 @@ export function initWritingSection(lenis) {
   }
   closeBtn.addEventListener('click', () => {
     // step back through the plane's own states before closing
-    if (inner.dataset.view === 'issue') renderIssueList(faces[0]);
+    if (inner.dataset.view === 'issue') renderIndex();
     else closePlane();
   });
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && plane.classList.contains('is-open')) closeBtn.click();
   });
 
-  function renderStories(face) {
+  /* the whole index in one list: issues and articles together, newest
+     writing first, because the division into genres was never the reader's
+     problem */
+  function renderIndex() {
     inner.dataset.view = 'list';
     inner.innerHTML = `
-      <p class="plane-eyebrow">${face.eyebrow}</p>
+      <p class="plane-eyebrow">Everything written &middot; ${ENTRIES.length} pieces</p>
       <ul class="issue-list">
-        ${face.items.map((s) => `
+        ${ENTRIES.map((e, i) => (e.kind === 'issue' ? `
           <li>
-            <a href="${s.url}" target="_blank" rel="noopener">
-              <span class="issue-title">${esc(s.title)}</span>
+            <button data-i="${i}">
+              <span class="issue-num">#${e.n}</span>
+              <span class="issue-title">${esc(e.title)}</span>
+              <span class="issue-date">${e.date}</span>
+            </button>
+          </li>` : `
+          <li>
+            <a href="${e.url}" target="_blank" rel="noopener">
+              <span class="issue-title">${esc(e.title)}</span>
               <span class="issue-date">read &rarr;</span>
             </a>
-            <p class="issue-excerpt">${esc(s.excerpt)}</p>
-          </li>`).join('')}
+            ${e.excerpt ? `<p class="issue-excerpt">${esc(e.excerpt)}</p>` : ''}
+          </li>`)).join('')}
       </ul>`;
-  }
-
-  function renderIssueList() {
-    inner.dataset.view = 'list';
-    inner.innerHTML = `
-      <p class="plane-eyebrow">The News Drop · the weekly AI dispatch</p>
-      <ul class="issue-list">
-        ${NEWSDROP.map((it) => `
-          <li>
-            <button data-file="${it.file}" data-n="${it.n}" data-date="${it.date}" data-title="${esc(it.title)}">
-              <span class="issue-num">#${it.n}</span>
-              <span class="issue-title">${esc(it.title)}</span>
-              <span class="issue-date">${it.date}</span>
-            </button>
-          </li>`).join('')}
-      </ul>`;
-    inner.querySelectorAll('button[data-file]').forEach((b) => {
-      b.addEventListener('click', () => openIssue(b.dataset));
+    inner.querySelectorAll('button[data-i]').forEach((b) => {
+      b.addEventListener('click', () => openIssue(ENTRIES[+b.dataset.i]));
     });
   }
 
@@ -272,13 +263,13 @@ export function initWritingSection(lenis) {
         <p class="issue-meta">The News Drop #${n} · ${date}</p>
         ${html}
       </div>`;
-    inner.querySelector('.back-to-list').addEventListener('click', renderIssueList);
+    inner.querySelector('.back-to-list').addEventListener('click', renderIndex);
     plane.scrollTop = 0;
   }
 
   /* ---- the cube: the scroll walks it through one full revolution,
      dwelling on each face; drag stays free for play ---- */
-  cube = new WritingCube(qs('#cube'), faces, {
+  cube = new WritingCube(qs('#cube'), ENTRIES, {
     onSelect: openPlane, onCell: openCell, wheel: false,
   });
   if (location.search.includes('dbg')) window.__cube = cube;

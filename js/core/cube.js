@@ -1,11 +1,13 @@
-/* cube.js — the Writing chamber's monolith, now a cube of cubes.
-   Six faces, each a 4x4 grid of little tiles: three collections carry
-   scattered story titles among blank paper cells, three carry sliced
-   marker artwork (moth above, owl below, moon abeam). Drag tumbles it
-   freely on both axes; on the journey the page's own scroll walks it
-   through a full revolution (setScrollTurn), while standalone the wheel
-   realigns it; a titled tile opens its piece, a bare face opens the
-   whole collection. */
+/* cube.js — the Writing chamber's monolith.
+   Six faces, each one of the painted panels cut into nine tiles. The
+   writing is scattered across all six without regard to genre or order:
+   a piece can be anywhere, which is how you actually find things in a
+   body of work. Drag tumbles it freely on both axes; on the journey the
+   page's own scroll walks it through a full revolution (setScrollTurn),
+   while standalone the wheel realigns it. A tile carrying a title opens
+   that piece; bare tiles open the whole index.
+   Reads the classic-script global WRITING_FACES via the entries handed
+   in by chambers.js. */
 
 import { clamp, damp, fromRoot, REDUCED_MOTION } from './util.js';
 
@@ -13,22 +15,33 @@ import { clamp, damp, fromRoot, REDUCED_MOTION } from './util.js';
 const FACE_ANGLES = [0, -90, -180, -270];
 const REST_X = -14;                   // the resting tilt: the cube reads as a cube
 const REST_Y = -16;                   // rest on a corner: the cube reads as a cube
-const GRID = 4;                       // 4x4 tiles per face
+/* Nine tiles, not sixteen. Fewer and larger, so each face reads as one
+   painting broken into pieces rather than as a grid of chips, and so a
+   title has room to sit without shrinking to nothing. */
+const GRID = 3;
 const CELLS = GRID * GRID;
-const MAX_TITLED = CELLS;             // fill the face; every story earns a tile
 
-const GLYPHS = {
-  moon: 'assets/journey/moon-5.webp',
-  moth: 'assets/journey/moth-full-m.webp',
-  owl:  'assets/journey/owl1.webp',
-};
+/* the six panels, in turn order: four around the ring, then the poles */
+const PANELS = [
+  'assets/cube/council.webp',
+  'assets/cube/goat.webp',
+  'assets/cube/deities.webp',
+  'assets/cube/anubis.webp',
+  'assets/cube/baobab.webp',   // the lid
+  'assets/cube/eclipse.webp',  // the floor
+];
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 export class WritingCube {
-  constructor(el, faces, { onSelect, onCell, wheel = true }) {
+  constructor(el, entries, { onSelect, onCell, wheel = true }) {
     this.el = el;
-    this.content = faces;           // 3 content faces, each with .entries
+    this.all = entries;             // every piece of writing, one flat list
+    /* Dealt round the six faces in turn, so no face is empty and no face
+       is crowded. Which face a piece lands on carries no meaning; that is
+       the point. Finding one is a matter of turning the thing over. */
+    this.byFace = Array.from({ length: 6 }, () => []);
+    entries.forEach((e, i) => this.byFace[i % 6].push(e));
     this.onSelect = onSelect;
     this.onCell = onCell;
     this._wheelEnabled = wheel;     // off when the page's own scroll drives the turn
@@ -52,80 +65,54 @@ export class WritingCube {
     return d;
   }
 
-  /* a content face: a caption strip above a grid of tiles, some carrying
-     titles scattered through the paper */
-  contentFace(f, index, transform) {
+  /* Every face is one of the panels cut into nine. A tile either carries a
+     piece of writing or is left as bare painting; the bare ones are the
+     breathing room that lets the titled ones read. */
+  panelFace(index, transform) {
     const d = this.makeFace(transform);
-    d.classList.add('is-content');
-    d.dataset.kind = 'content';
+    d.classList.add('is-panel');
+    d.dataset.kind = 'panel';
     d.dataset.index = index;
-    d.innerHTML = `
-      <span class="face-head">
-        <span class="face-eyebrow">${esc(f.eyebrow)}</span>
-        <span class="face-name">${esc(f.title)}</span>
-      </span>`;
     const grid = document.createElement('div');
     grid.className = 'cube-grid';
-    const entries = f.entries || [];
-    const titled = shuffleTake(CELLS, Math.min(entries.length, MAX_TITLED));
-    let e = 0;
+    const url = fromRoot(PANELS[index]);
+    const mine = this.byFace[index] || [];
+    let taken = 0;
+    const slots = shuffleTake(CELLS, mine.length, index);
     for (let i = 0; i < CELLS; i++) {
-      if (titled.has(i) && entries[e]) {
-        const entry = entries[e];
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'cube-cell is-titled';
-        b.dataset.entry = e;
-        b.setAttribute('aria-label', entry.title);
-        b.style.setProperty('--d', `${(i % GRID + (i / GRID | 0)) * 0.02}s`);
-        b.innerHTML = `<span class="cell-label">${entry.label ? `<em>${esc(entry.label)}</em> ` : ''}${esc(entry.title)}</span>`;
-        grid.appendChild(b);
-        e += 1;
+      const col = i % GRID, row = (i / GRID) | 0;
+      const entry = slots.has(i) ? mine[taken++] : null;
+      const cell = document.createElement(entry ? 'button' : 'div');
+      cell.className = 'cube-cell' + (entry ? ' is-titled' : '');
+      // the panel is sliced across the nine, so the face reassembles whole
+      cell.style.backgroundImage = `url('${url}')`;
+      cell.style.backgroundPosition =
+        `${(col / (GRID - 1)) * 100}% ${(row / (GRID - 1)) * 100}%`;
+      cell.style.setProperty('--d', `${(col + row) * 0.035}s`);
+      if (entry) {
+        cell.type = 'button';
+        cell.dataset.entry = this.all.indexOf(entry);
+        cell.setAttribute('aria-label', entry.title);
+        cell.innerHTML =
+          `<span class="cell-label">${entry.label ? `<em>${esc(entry.label)}</em> ` : ''}${esc(entry.title)}</span>`;
       } else {
-        const p = document.createElement('div');
-        p.className = 'cube-cell is-paper';
-        p.setAttribute('aria-hidden', 'true');
-        grid.appendChild(p);
+        cell.setAttribute('aria-hidden', 'true');
       }
+      grid.appendChild(cell);
     }
     d.appendChild(grid);
     this.faceEls[index] = d;
     return d;
   }
 
-  /* a glyph face: the artwork sliced across sixteen tiles, reassembled
-     with hairline gaps and a hover shimmer */
-  glyphFace(key, transform, index) {
-    const d = this.makeFace(transform);
-    d.classList.add('is-glyph');
-    d.dataset.kind = 'glyph';
-    d.setAttribute('aria-hidden', 'true');
-    if (index != null) { d.dataset.index = index; this.faceEls[index] = d; }
-    const grid = document.createElement('div');
-    grid.className = 'cube-grid is-glyph-grid';
-    const url = fromRoot(GLYPHS[key]);
-    for (let i = 0; i < CELLS; i++) {
-      const col = i % GRID, row = i / GRID | 0;
-      const cell = document.createElement('div');
-      cell.className = 'cube-cell is-glyph-cell';
-      cell.style.backgroundImage = `url('${url}')`;
-      cell.style.backgroundPosition = `${(col / (GRID - 1)) * 100}% ${(row / (GRID - 1)) * 100}%`;
-      cell.style.setProperty('--d', `${(col + row) * 0.03}s`);
-      grid.appendChild(cell);
-    }
-    d.appendChild(grid);
-    return d;
-  }
-
   build() {
     const half = 'calc(var(--size) / 2)';
     const side = (a) => `rotateY(${a}deg) translateZ(${half})`;
-    // three collections on the front, right and back faces
-    this.content.forEach((f, i) => this.contentFace(f, i, side([0, 90, 180][i])));
-    // the moon closes the ring on the left; the moth and the owl cap the poles
-    this.glyphFace('moon', side(270), 3);
-    this.glyphFace('moth', `rotateX(90deg) translateZ(${half})`);
-    this.glyphFace('owl', `rotateX(-90deg) translateZ(${half})`);
+    // four panels around the ring, in the order the scroll turns them
+    [0, 90, 180, 270].forEach((a, i) => this.panelFace(i, side(a)));
+    // and two more capping the poles, reachable by dragging up or down
+    this.panelFace(4, `rotateX(90deg) translateZ(${half})`);
+    this.panelFace(5, `rotateX(-90deg) translateZ(${half})`);
   }
 
   frontFace() {
@@ -181,18 +168,17 @@ export class WritingCube {
     this.el.parentElement.addEventListener('click', (e) => {
       if (this.dragging || this._wasDrag || !this.usable()) return;
       const d = this.faceEls[this.frontFace()];
-      if (!d || d.dataset.kind !== 'content') return;
+      if (!d) return;
       const x = e.clientX, y = e.clientY;
       const fr = d.getBoundingClientRect();
       if (x < fr.left || x > fr.right || y < fr.top || y > fr.bottom) return;  // off the cube
-      const f = this.content[+d.dataset.index];
       let picked = null;
       for (const cell of d.querySelectorAll('.cube-cell.is-titled')) {
         const r = cell.getBoundingClientRect();
         if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) { picked = cell; break; }
       }
-      if (picked) this.onCell?.(f.entries[+picked.dataset.entry], f);
-      else this.onSelect?.(f, d);
+      if (picked) this.onCell?.(this.all[+picked.dataset.entry]);
+      else this.onSelect?.(d);
     });
 
     // track the pointer so the tick can glow the tile beneath it; :hover
@@ -272,7 +258,7 @@ export class WritingCube {
         const x = this._px, y = this._py;
         const fr = d.getBoundingClientRect();
         onCube = x >= fr.left && x <= fr.right && y >= fr.top && y <= fr.bottom;
-        if (onCube && d.dataset.kind === 'content') {
+        if (onCube) {
           for (const cell of d.querySelectorAll('.cube-cell.is-titled')) {
             const r = cell.getBoundingClientRect();
             if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) { over = cell; break; }
@@ -291,12 +277,19 @@ export class WritingCube {
   }
 }
 
-/* a scattered set of k distinct tile indices out of n */
-function shuffleTake(n, k) {
+/* A scattered set of k distinct tile indices out of n, seeded so a face
+   keeps the same arrangement between builds: the scatter should look
+   arbitrary, not be different every time you come back to it. */
+function shuffleTake(n, k, seed = 0) {
+  let t = seed * 2654435761 + 12345;
+  const rnd = () => {
+    t = (t * 1103515245 + 12345) & 0x7fffffff;
+    return t / 0x7fffffff;
+  };
   const a = Array.from({ length: n }, (_, i) => i);
   for (let i = n - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rnd() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
-  return new Set(a.slice(0, k));
+  return new Set(a.slice(0, Math.min(k, n)));
 }

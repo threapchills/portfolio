@@ -14,13 +14,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* critical: whatever happens to the stylesheet, this page opens black */
-    html { background: #080808; }
-    body { margin: 0; background: #080808; color: #f0ede6; }
-    #threshold { position: fixed; inset: 0; z-index: 200; background: #000;
+    /* critical: whatever happens to the stylesheet, this page opens on
+       the same bitumen the rest of it stands on, never on black */
+    html { background: #1c1409; }
+    body { margin: 0; background: #1c1409; color: #efe4cd; }
+    #threshold { position: fixed; inset: 0; z-index: 200; background: #150e06;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=4">
+  <link rel="stylesheet" href="css/overhaul.css?v=5">
 </head>
 <body class="overhaul">
 
@@ -75,8 +76,21 @@
         <img id="ground-frame" alt="">
         <div class="ground-ink"></div>
       </div>
+      <!-- the segue: the oracle gives up the wordmark, which blooms out of
+           her own light and then settles into a panel of its own -->
+      <div id="segue" aria-hidden="true">
+        <div class="segue-plate is-bloom"></div>
+        <div class="segue-plate is-solid"></div>
+      </div>
       <div id="reading">
         <div id="card-table"><!-- cards dealt by cards.js --></div>
+      </div>
+      <!-- the triptych: that panel is divided in three and each column
+           turns on its own axis, so the painting becomes the reading -->
+      <div id="triptych" aria-hidden="true">
+        <div class="tri-col"><div class="tri-inner"><span class="tri-face tri-front"></span><span class="tri-face tri-back"></span></div></div>
+        <div class="tri-col"><div class="tri-inner"><span class="tri-face tri-front"></span><span class="tri-face tri-back"></span></div></div>
+        <div class="tri-col"><div class="tri-inner"><span class="tri-face tri-front"></span><span class="tri-face tri-back"></span></div></div>
       </div>
     </section>
 

@@ -1,32 +1,40 @@
-/* cursor.js — the custom cursor and its glitch trail.
-   A moon dot rides the pointer; a slower ring hunts it; behind them a
-   canvas trail decays, splitting into gold and teal at speed and
-   occasionally slicing sideways: the cursor speaking the same warped
-   dialect as the image planes. Fine pointers only. */
+/* cursor.js — the pointer as a carried light.
+   The old cursor spoke in RGB split and horizontal tearing, which was the
+   right dialect when the image planes were being warped by GL. This world
+   is lit by torches, so the pointer carries one: a small ember core, a
+   ring that opens over anything that answers, and a wake of sparks that
+   fall behind the hand, drift upward and go out. Fine pointers only. */
 
-import { clamp, damp, fromRoot, REDUCED_MOTION } from './util.js';
+import { clamp, damp, REDUCED_MOTION } from './util.js';
+
+/* the fire's own range, sampled off the film: deep ember through to flare */
+const EMBER = [
+  [246, 188, 86],
+  [204, 145, 61],
+  [214, 98, 42],
+  [254, 249, 235],
+];
 
 export function initCursor() {
   if (window.matchMedia('(pointer: coarse)').matches) return;
   document.documentElement.classList.add('has-custom-cursor');
 
-  /* the pointer is one of the artwork's own moons, made small */
-  const dot = document.createElement('img');
-  dot.className = 'mw-cursor-moon';
-  dot.src = fromRoot('assets/journey/moon-3.webp');
-  dot.alt = '';
+  const core = document.createElement('div');
+  core.className = 'mw-cursor-core';
   const ring = document.createElement('div');
   ring.className = 'mw-cursor-ring';
-  document.body.append(ring, dot);
+  document.body.append(ring, core);
 
-  let px = innerWidth / 2, py = innerHeight / 2;   // pointer
-  let rx = px, ry = py;                            // ring, damped
+  let px = innerWidth / 2, py = innerHeight / 2;   // the hand
+  let rx = px, ry = py;                            // the ring, trailing
+  let lx = px, ly = py;                            // last emission point
   let speed = 0;
   let seen = false;
 
-  /* the trail */
   let canvas, ctx, dpr = 1;
-  const points = [];
+  const sparks = [];
+  const MAX = 220;
+
   if (!REDUCED_MOTION) {
     canvas = document.createElement('canvas');
     canvas.id = 'mw-trail';
@@ -41,21 +49,43 @@ export function initCursor() {
     addEventListener('resize', size);
   }
 
+  /* Sparks are struck along the path rather than at the pointer, so a fast
+     sweep leaves a continuous wake instead of a dotted line. */
+  function strike(x0, y0, x1, y1) {
+    const d = Math.hypot(x1 - x0, y1 - y0);
+    const n = clamp(Math.round(d / 7), 1, 14);
+    for (let i = 0; i < n; i++) {
+      if (sparks.length >= MAX) sparks.shift();
+      const t = (i + 1) / n;
+      const c = EMBER[(Math.random() * EMBER.length) | 0];
+      sparks.push({
+        x: x0 + (x1 - x0) * t + (Math.random() - 0.5) * 6,
+        y: y0 + (y1 - y0) * t + (Math.random() - 0.5) * 6,
+        // thrown loosely along the direction of travel, then buoyant
+        vx: (x1 - x0) * 0.06 + (Math.random() - 0.5) * 22,
+        vy: (y1 - y0) * 0.06 + (Math.random() - 0.5) * 22,
+        life: 0.55 + Math.random() * 0.85,
+        age: 0,
+        r: 0.7 + Math.random() * 1.7,
+        c,
+        phase: Math.random() * 6.283,
+      });
+    }
+  }
+
   addEventListener('pointermove', (e) => {
     const nx = e.clientX, ny = e.clientY;
     speed = Math.min(Math.hypot(nx - px, ny - py), 90);
     px = nx; py = ny;
+    if (!seen) { lx = nx; ly = ny; }
     seen = true;
-    if (ctx) {
-      points.push({ x: nx, y: ny });
-      if (points.length > 36) points.shift();
-    }
+    if (ctx) { strike(lx, ly, nx, ny); lx = nx; ly = ny; }
   }, { passive: true });
 
   document.addEventListener('pointerleave', () => { seen = false; });
 
-  /* the ring answers interactive things */
-  const HOT = 'a, button, [role="button"], .card, .cube-face, .film-plane, .artefact';
+  /* the ring opens over anything that answers to a click */
+  const HOT = 'a, button, [role="button"], .card, .cube-face, .cube-cell.is-titled, .film-banner, .artefact';
   document.addEventListener('pointerover', (e) => {
     ring.classList.toggle('is-active', !!e.target.closest(HOT));
   });
@@ -63,55 +93,46 @@ export function initCursor() {
   document.addEventListener('pointerup', () => ring.classList.remove('is-down'));
 
   let last = performance.now();
-  let glitchClock = 0;
   const loop = (now) => {
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
-    rx = damp(rx, px, 14, dt);
-    ry = damp(ry, py, 14, dt);
+
+    rx = damp(rx, px, 13, dt);
+    ry = damp(ry, py, 13, dt);
     const vis = seen ? 1 : 0;
-    dot.style.opacity = ring.style.opacity = vis;
-    const spin = REDUCED_MOTION ? 0 : (now * 0.008) % 360;
-    dot.style.transform = `translate3d(${px - 11}px, ${py - 11}px, 0) rotate(${spin.toFixed(1)}deg)`;
-    ring.style.transform = `translate3d(${rx - 17}px, ${ry - 17}px, 0)`;
+    core.style.opacity = ring.style.opacity = vis;
+    core.style.transform = `translate3d(${px - 5}px, ${py - 5}px, 0)`;
+    ring.style.transform = `translate3d(${rx - 17}px, ${ry - 17}px, 0) rotate(${(now * 0.02).toFixed(1)}deg)`;
+    // the core swells with pace, the way a carried flame leans and brightens
+    core.style.setProperty('--heat', (1 + clamp(speed * 0.012, 0, 0.7)).toFixed(3));
     speed *= 0.9;
 
     if (ctx) {
-      // decay what came before
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.16)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = 'lighter';
-      if (points.length > 2 && seen) {
-        const split = clamp(speed * 0.06, 0, 4);   // rgb split grows with pace
-        const passes = split > 0.4
-          ? [['rgba(196, 146, 42, 0.35)', -split, 0],
-             ['rgba(61, 138, 138, 0.32)', split, split * 0.5],
-             ['rgba(242, 226, 160, 0.28)', 0, -split * 0.4]]
-          : [['rgba(242, 226, 160, 0.3)', 0, 0]];
-        for (const [colour, ox, oy] of passes) {
-          ctx.strokeStyle = colour;
-          ctx.lineWidth = 1.4 * dpr;
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          points.forEach((pt, i) => {
-            const jx = (Math.random() - 0.5) * split * 0.8;
-            const x = (pt.x + ox + jx) * dpr;
-            const y = (pt.y + oy) * dpr;
-            i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-          });
-          ctx.stroke();
-        }
-        // the slice: at pace, a band of the trail tears sideways
-        glitchClock -= dt;
-        if (speed > 26 && glitchClock <= 0) {
-          glitchClock = 0.35 + Math.random() * 0.5;
-          const bh = (8 + Math.random() * 22) * dpr;
-          const by = clamp((py + (Math.random() - 0.5) * 120) * dpr, 0, canvas.height - bh);
-          const shove = (Math.random() - 0.5) * 46 * dpr;
-          ctx.globalCompositeOperation = 'source-over';
-          ctx.drawImage(canvas, 0, by, canvas.width, bh, shove, by, canvas.width, bh);
-        }
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i];
+        s.age += dt;
+        if (s.age >= s.life) { sparks.splice(i, 1); continue; }
+        const k = s.age / s.life;
+        // buoyancy: embers slow, then rise, wandering as they cool
+        s.vy += (-46 - s.vy * 1.5) * dt;
+        s.vx += (-s.vx * 1.6 + Math.sin(s.phase + s.age * 5) * 14) * dt;
+        s.x += s.vx * dt;
+        s.y += s.vy * dt;
+        const flicker = 0.72 + 0.28 * Math.sin(s.phase + s.age * 22);
+        const a = (1 - k) * (1 - k) * flicker;
+        const rad = s.r * (1 - k * 0.45) * dpr;
+        const [r, g, b] = s.c;
+        const gx = s.x * dpr, gy = s.y * dpr;
+        const grad = ctx.createRadialGradient(gx, gy, 0, gx, gy, rad * 5);
+        grad.addColorStop(0, `rgba(${r},${g},${b},${(a * 0.85).toFixed(3)})`);
+        grad.addColorStop(0.35, `rgba(${r},${g},${b},${(a * 0.22).toFixed(3)})`);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(gx, gy, rad * 5, 0, 6.283);
+        ctx.fill();
       }
     }
     requestAnimationFrame(loop);

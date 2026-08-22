@@ -1,8 +1,10 @@
 /* cards.js — Act VI, the Reading.
-   Three cards dealt face down onto the table, turned to reveal their
-   glyphs. The chambers live on this same scroll now, so a chosen card
-   is a shortcut: the doorway ritual plays, and under the held black
-   the page teleports to that act. */
+   Three cards stand face down on the table behind the triptych. They are
+   laid without ceremony, because the ceremony now belongs to the panel:
+   as each of its three columns turns, the card behind it turns with it
+   (journey.js scrubs --turn from the same band). The chambers live on
+   this same scroll, so a chosen card is a shortcut: the doorway ritual
+   plays, and under the held black the page teleports to that act. */
 
 import { clamp, fromRoot, qs, qsa, REDUCED_MOTION } from './util.js';
 
@@ -43,39 +45,27 @@ export function initReading() {
     if (dealt) return;
     dealt = true;
     sessionStorage.setItem('mw-reading', 'dealt');
-    if (instant || REDUCED_MOTION) {
-      // reduced motion: the deal becomes a fade-in
-      cards.forEach((el, i) => {
-        el.classList.add('is-dealt', 'is-turned');
-        if (!instant) {
-          el.style.opacity = 0;
-          gsap.to(el, { opacity: 1, duration: 0.9, delay: i * 0.15, ease: 'power2.out' });
-        }
-      });
-      return;
-    }
-    /* the goddess deals: the film beneath ends on her offered hands at the
-       bottom of the frame, so the cards gather there and rise into place */
-    const tr = table.getBoundingClientRect();
-    const tl = gsap.timeline();
+    /* The cards are simply there, face down, behind the panel. Where the
+       triptych cannot run (reduced motion, or a visitor arriving from
+       below) they are turned up front, so the table is never a row of
+       blanks with no way to open them. */
+    const showTurned = instant || REDUCED_MOTION;
     cards.forEach((el, i) => {
-      const r = el.getBoundingClientRect();
-      const fromX = (tr.left + tr.width / 2) - (r.left + r.width / 2);
-      tl.fromTo(el,
-        { x: fromX, y: window.innerHeight * 0.6, scale: 0.6, rotation: (i - 1) * -12, opacity: 0 },
-        {
-          x: 0, y: 0, scale: 1, opacity: 1,
-          rotation: (i - 1) * 2.2,           // settle with a hint of overshoot
-          duration: 0.9,
-          ease: 'power3.out',
-          onStart: () => el.classList.add('is-dealt'),
-        }, i * 0.16);
-      // the turn lives in CSS so the hover tilt keeps working afterwards
-      tl.call(() => {
-        el.classList.add('is-turning', 'is-turned');
-        setTimeout(() => el.classList.remove('is-turning'), 700);
-      }, [], 1.05 + i * 0.14);
+      el.classList.add('is-dealt');
+      if (showTurned) turn(el, 1);
+      if (!instant && REDUCED_MOTION) {
+        el.style.opacity = 0;
+        gsap.to(el, { opacity: 1, duration: 0.9, delay: i * 0.15, ease: 'power2.out' });
+      }
     });
+  }
+
+  /* t is 0..1 across the card's own half-revolution; past the halfway
+     point it counts as face up, which is what gates hover and opening */
+  function turn(el, t) {
+    const inner = el.querySelector('.card-3d');
+    inner.style.setProperty('--turn', `${(180 * t).toFixed(2)}deg`);
+    el.classList.toggle('is-turned', t > 0.5);
   }
 
   function wireHover(el) {
@@ -142,5 +132,5 @@ export function initReading() {
     });
   }
 
-  return { deal };
+  return { deal, turn, cards };
 }

@@ -18,25 +18,39 @@ const FRAMES = { dir: 'video/header/frames', dirMobile: 'video/header/frames-720
 const FIRST_CHUNK = 48;            // the threshold gates on these; the rest stream in behind
 
 /* scroll choreography across the journey's sticky travel */
-const VEIL = [0.02, 0.115];        // the wordmark plate slides off left
-const SCRUB = [0.115, 0.965];      // the film plays; the last band holds the offering
-const ROLES_OUT = [0.015, 0.06];   // the roles line dissolves at first scroll
+const VEIL = [0.03, 0.135];        // the wordmark opens and the film comes through it
+const SCRUB = [0.115, 0.965];      // the film plays; the last band holds the oracle
+const ROLES_OUT = [0.006, 0.042];  // the roles line dissolves at first scroll
+const OPEN_ZOOM = 15;              // how far the letterforms widen before they clear
+const PUSH_IN = 0.055;             // the film sits a touch large and settles as you enter
 
 /* keyboard beats: the film's own moments (the council, the vortex, the
    savannah, the masks, the torches, the oracle) as journey progress. No
    scroll snapping here: the scrub runs free, the way the film chamber does. */
 const BEATS = [0, 0.115, 0.36, 0.49, 0.67, 0.82, 1];
 
-/* Act VI: the reading walks its three cards one by one. Each band lifts
-   a card while its siblings step back; the beats are the band centres. */
+/* Act VI: the reading. The oracle's face gives up the wordmark, which
+   blooms out of her own light, settles into a painted panel, and is then
+   divided in three. Each column turns on its axis and the card that was
+   always standing behind it comes into the room. */
+const INK_IN       = [0, 0.07];      // the room dims over her lit gaze
+const SEGUE_BLOOM  = [0.05, 0.18];   // the wordmark screens out of her light
+const SEGUE_SOLID  = [0.15, 0.26];   // the panel lands opaque
+const SEGUE_GROW   = [0.24, 0.35];   // the panel grows until it owns the room
+const SEGUE_OUT    = [0.355, 0.385]; // the triptych takes it over, invisibly
+const TRI_IN       = 0.35;
+/* one turn per column, each waiting for the last to finish */
+const TRI_FLIPS = [[0.40, 0.55], [0.55, 0.70], [0.70, 0.85]];
+
+/* the card behind each column comes forward as its panel opens, and steps
+   back when its neighbour's turn comes; by the end the three stand level */
 const READING_BANDS = [
-  { in: [0.10, 0.22], out: [0.34, 0.44] },
-  { in: [0.36, 0.46], out: [0.58, 0.68] },
-  { in: [0.60, 0.70], out: [0.82, 0.92] },
+  { in: [0.44, 0.56], out: [0.60, 0.70] },
+  { in: [0.59, 0.71], out: [0.75, 0.85] },
+  { in: [0.74, 0.86], out: [0.92, 1.0] },
 ];
-const READING_CARD_BEATS = [0.28, 0.52, 0.76];
-const READING_BEATS = [0, ...READING_CARD_BEATS, 1];
-const INK_IN = [0, 0.09];          // the room dims over the offered hands
+const READING_CARD_BEATS = [0.48, 0.63, 0.78];
+const READING_BEATS = [0, 0.26, ...READING_CARD_BEATS, 1];
 
 /* Audio: the bed follows the film's own weather. It opens on ground and
    firelight because the council is already lit; the trance lifts it into
@@ -97,6 +111,34 @@ export function initJourney() {
     groundFrame.src = `${dir}/f_${String(FRAMES.count).padStart(4, '0')}.webp`;
   }
   const groundInk = qs('#reading-ground .ground-ink');
+  const segueBloom = qs('#segue .is-bloom');
+  const segueSolid = qs('#segue .is-solid');
+  const triptych = qs('#triptych');
+  const triInners = qsa('#triptych .tri-inner');
+  const heroCanvas = qs('#hero-canvas');
+
+  /* The segue and the triptych have to agree to the pixel, so both are laid
+     out from the same measured box rather than from viewport units: 100vw
+     counts the scrollbar and a sticky child does not, and that difference
+     alone is enough to make the handover visible as a jump. */
+  const SEGUE_AR = 4900 / 2108;
+  let growTo = 1;
+  const measureSegue = () => {
+    if (!triptych || !segueSolid) return;
+    const cw = triptych.clientWidth;
+    const ch = triptych.clientHeight;
+    const cover = Math.max(cw, ch * SEGUE_AR);
+    triptych.style.setProperty('--iw', `${cover}px`);
+    triptych.style.setProperty('--x0', `${(cw - cover) / 2}px`);
+    triptych.style.setProperty('--colw', `${cw / 3}px`);
+    // the plate's own unscaled width, read back with any scale divided out
+    const scale = +segueSolid.style.getPropertyValue('--grow') || 1;
+    const natural = segueSolid.getBoundingClientRect().width / scale;
+    growTo = natural > 0 ? cover / natural : 1;
+  };
+  const segueGrowTo = () => growTo;
+  measureSegue();
+  addEventListener('resize', measureSegue);
 
   if (PARAMS.has('dbg')) {
     window.__dbg = { scrubber, VEIL, SCRUB, BEATS, READING_BANDS, seg, easeInOut };
@@ -211,15 +253,30 @@ export function initJourney() {
         `scaleY(${(1 + stretch).toFixed(4)}) skewX(${shear.toFixed(3)}deg)`;
     }
 
-    /* the wordmark plate slides off west; its letters keep the film alive */
+    /* The wordmark opens rather than leaving. Its letterforms are holes in
+       the plate, so widening the mask widens the holes: the strokes travel
+       outward past the edge of the frame and the film arrives through the
+       word. The plate fades over the back half so the exit is clean no
+       matter which counter the centre lands in. */
     const v = seg(p, VEIL[0], VEIL[1], easeInOut);
     const veilGone = v >= 1;
     veil.style.display = veilGone ? 'none' : '';
-    if (!veilGone) {
-      veil.style.transform = `translate3d(${(-112 * v).toFixed(3)}%, 0, 0)`;
+    if (veilGone) {
+      veil.style.opacity = '0';      // never come back holding a stale value
+    } else {
+      // held still, the word breathes; once it goes, it rushes
+      const idle = REDUCED_MOTION ? 0 : Math.sin(now * 0.0011) * 0.004;
+      const zoom = 1 + idle + (v * v) * OPEN_ZOOM;
+      veil.style.setProperty('--mask-scale', zoom.toFixed(4));
+      veil.style.opacity = (1 - seg(v, 0.62, 1)).toFixed(3);
       const fade = 1 - seg(p, ROLES_OUT[0], ROLES_OUT[1]);
       if (roles) roles.style.opacity = fade.toFixed(3);
       if (hint) hint.style.opacity = fade.toFixed(3);
+    }
+    /* the film sits fractionally large behind the word and settles as the
+       word opens: the frame you fall into meets you halfway */
+    if (heroCanvas && !REDUCED_MOTION) {
+      heroCanvas.style.transform = `scale(${(1 + PUSH_IN * (1 - v)).toFixed(4)})`;
     }
 
     /* the film under the scroll; past the end it lands exactly on the
@@ -228,8 +285,49 @@ export function initJourney() {
     if (p > 0.975) scrubber.progress = scrubber.target;
     scrubber.tick(dt);
 
-    /* the room dims over the offered hands as the reading takes the frame */
+    if (!cardEls.length) cardEls = qsa('#card-table .card');
+
+    /* the room dims over her lit gaze as the reading takes the frame */
     if (groundInk) groundInk.style.opacity = seg(readingP, INK_IN[0], INK_IN[1]).toFixed(3);
+
+    /* the segue: screen first, so the wordmark is lit by her and not laid
+       on top of her; then the solid copy lands it; then the triptych takes
+       the panel over at identical geometry, which reads as no change at all */
+    if (segueBloom) {
+      const handover = seg(readingP, SEGUE_OUT[0], SEGUE_OUT[1]);
+      const bloom = seg(readingP, SEGUE_BLOOM[0], SEGUE_BLOOM[1]);
+      const solid = seg(readingP, SEGUE_SOLID[0], SEGUE_SOLID[1]);
+      segueBloom.style.opacity = (bloom * (1 - handover)).toFixed(3);
+      segueSolid.style.opacity = (solid * (1 - handover)).toFixed(3);
+      /* the plate grows from its frame to exactly the width the triptych
+         reassembles, so when one hands over to the other nothing moves */
+      const grow = 1 + (segueGrowTo() - 1) * seg(readingP, SEGUE_GROW[0], SEGUE_GROW[1], easeInOut);
+      segueBloom.style.setProperty('--grow', grow.toFixed(4));
+      segueSolid.style.setProperty('--grow', grow.toFixed(4));
+    }
+    if (triptych) {
+      const live = readingP >= TRI_IN - 0.001 && readingP < 0.995;
+      triptych.classList.toggle('is-live', live);
+      if (live) {
+        triInners.forEach((el, i) => {
+          const t = seg(readingP, TRI_FLIPS[i][0], TRI_FLIPS[i][1], easeInOut);
+          // the board leans out toward the room as it turns, then lies back
+          const lean = Math.sin(t * Math.PI);
+          el.style.setProperty('--turn', `${(-180 * t).toFixed(2)}deg`);
+          el.style.setProperty('--z', `${(lean * 90).toFixed(1)}px`);
+          // the card behind turns with its panel, a little later, so the
+          // glyph is arriving just as the painting finishes getting out of
+          // the way. Same band, eased late; scrubbed, so it reverses.
+          const card = cardEls[i];
+          if (card) {
+            const ct = clamp((t - 0.3) / 0.7, 0, 1);
+            card.querySelector('.card-3d')
+              ?.style.setProperty('--turn', `${(180 * ct).toFixed(2)}deg`);
+            card.classList.toggle('is-turned', ct > 0.5);
+          }
+        });
+      }
+    }
 
     /* the table only materialises at the seam, so the film's own cards
        never share the frame with the real ones; the window opens just as
@@ -267,7 +365,6 @@ export function initJourney() {
 
     /* card focus: the vars live on .card-3d so the deal (GSAP owns .card)
        and the hover tilt keep their own lanes */
-    if (!cardEls.length) cardEls = qsa('#card-table .card');
     if (cardEls.length) {
       const fs = READING_BANDS.map((b) =>
         seg(readingP, b.in[0], b.in[1]) * (1 - seg(readingP, b.out[0], b.out[1])));
