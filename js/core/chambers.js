@@ -303,6 +303,12 @@ const M = 'images/mythopoeic/';
 const H = 'images/';
 const D = 'images/design/';
 const PIECES = [
+  { img: D + 'desert-swag/withcar.webp', eyebrow: 'Desert Swag' },
+  { img: D + 'desert-swag/all-tied-up-beige.webp', eyebrow: 'Desert Swag', portrait: true },
+  { img: D + 'desert-swag/beige-space.webp', eyebrow: 'Desert Swag', portrait: true },
+  { img: D + 'desert-swag/double-view.webp', eyebrow: 'Desert Swag' },
+  { img: D + 'desert-swag/hill-grmen-beige.webp', eyebrow: 'Desert Swag', portrait: true },
+  { img: D + 'desert-swag/rearview-beige.webp', eyebrow: 'Desert Swag' },
   { img: M + 'hero1.webp', eyebrow: 'Mythopoeic', text: 'A luxury brand that never existed, conjured whole with AI.', link: 'projects/mythopoeic/' },
   { img: D + 'mythmood.webp', eyebrow: 'Mythopoeic', text: 'Editorial worlds, dreamed from salt flats and moonlight.' },
   { img: D + 'myh.webp', eyebrow: 'Mythopoeic' },
@@ -337,6 +343,7 @@ const PIECES = [
    them as the boards pass, so the room is lit by whatever is hanging in it.
    Same order as PIECES. */
 export const PIECE_TONES = [
+  '#39342a', '#352b20', '#3c3228', '#433e3b', '#28201b', '#3c3226',
   '#1e2d25', '#5d3c20', '#5d3519', '#312115', '#2e2519', '#2f2017', '#1f2b2e', '#342f23', '#434a31', '#19425d', '#40482b', '#13333c', '#3a271b', '#56351c', '#1c3738', '#322d1f', '#35261c', '#433625', '#27514e', '#26564a', '#28363c', '#314940', '#2c3d41', '#273f49', '#133d3e', '#1d232c',
 ];
 
