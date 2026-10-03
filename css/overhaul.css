@@ -1298,3 +1298,5 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
   #cube { --size: min(74vw, 58vh); }
   .plane-inner { padding-top: 16vh; }
 }
+
+.artefact > p { max-width: 24rem; margin: 1rem auto; font-size: .85rem; line-height: 1.6; opacity: .8; }

@@ -4,6 +4,30 @@
    ============================================================ */
 
 const PROJECTS = [
+{
+  "id": "wishfish",
+  "index": "14",
+  "title": "WishFish",
+  "category": "GenAI Filmmaking",
+  "type": "Short film",
+  "skills": [
+    "AI Filmmaking",
+    "Writing",
+    "Sound Design",
+    "Film Editing"
+  ],
+  "tagline": "A fairy tale for the AI age.",
+  "description": "A fairy tale for the AI age about a down-on-his-luck fisherman in Cat Village who meets a magic wish-granting fish. As he tests the literal-minded genie's power, he inadvertently sets off a cascade of chaotic events that threaten to unravel the very fabric of cat society.\n\nTools used: MidJourney + GPT Image 2 + Photoshop (imagery, colour grade), ElevenLabs (dialogue), FL Studio (sound design, music), Seedance 2.5 R2V (video gen), Premiere Pro (edit/grade).\n\nCreated by Mike Whyle.",
+  "heroImage": "../../images/wishfish-poster.webp",
+  "gallery": [],
+  "links": [
+    {
+      "label": "Watch the film in full HD",
+      "url": "https://drive.google.com/file/d/1zlrxc1I8f1DI0zQJlctxAuXIvWBrKB0C/view?usp=drive_link",
+      "primary": true
+    }
+  ]
+},
   {
     id: "kalimba",
     index: "01",
@@ -328,6 +352,7 @@ Then the light goes and the film moves indoors to a shebeen. Full tables, gold, 
    ============================================================ */
 
 const CHAMBER_MAP = {
+  "wishfish": { chamber: "film", chamberOrder: 0 },
   "kalimba":       { chamber: "film",    chamberOrder: 1, rackLoop: "video/kalimba-hero.mp4" },
   "ramses":        { chamber: "film",    chamberOrder: 2, rackLoop: "video/ramses-hero.mp4" },
   "ice-tea":       { chamber: "film",    chamberOrder: 3, rackLoop: "video/ice-tea-hero.mp4" },

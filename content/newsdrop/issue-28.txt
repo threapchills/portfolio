@@ -1,0 +1,41 @@
+What's in a name?
+
+The Friday brief for people who make marketing move.
+AI bio lab discovery. Mogged on DevDay. Musk trolls Altman over Dot. Long-awaited IPO filed. 👇
+
+
+
+📜 Claude’s wet lab
+Anthropic’s secretive foray into biology, the Claude Science bioinformatics platform, has revealed that its AI models - guided by human researchers who work at the lab – recently discovered a CRISPR-like enzyme system: a specific pattern of repeating, symmetrical DNA sequences inside bacteria.
+The announcement marks a massive shift in how medicines, cures, and technologies of tomorrow will be created, hinting at a future in which we’ll be able to design custom molecules from scratch to fight specific cancers, and create new vaccines. The methodology could potentially also be used for other domains like materials science and humanity’s ongoing quest for clean energy. →  LINK 
+
+
+
+🆕 Stolen thunder
+Just one day before OpenAI’s much-anticipated 2026 DevDay, Anthropic released Sonnet 5.5, a smaller sibling to Opus 5.5. The model series is widely regarded as a return to top form for Anthropic. 
+
+Previous iterations of the Claude model family (ever since their beloved Opus 4.6), although highly capable, have been criticised for their contrarian writing style and obtuse, inscrutable prose. 
+
+The 5.5 series, on the other hand, is garnering near-universal praise. The models seem to hit all three points of the good + fast + cheap trifecta, as opposed to the usual trade-off, and Anthropic have seemingly ironed out the tone of voice quirks to boot.
+
+The Opus 5.5 release came hot on the heels of OpenAI’s GPT-6 Astra flagship, and this week’s Sonnet 5.5 release seems deliberately timed to disrupt the rival lab’s DevDay fanfare. That said, OpenAI’s new GPT-6.1 Sol, which they launched on DevDay, has been getting rave reviews. Apparently, the launch of the latest flagship model - GPT-6.1 Astra - also slated for launch on the day, had to be postponed over safety concerns. 
+
+Analysts have noted that Sonnet 5.5 is now the most capable model available for free, and is the first free model powerful enough to warrant strict frontier-style cyber safeguards. → LINK 
+
+
+🤝 Domain expertise
+Taking a leaf out of SpaceXAI’s book, OpenAI unveiled Dots at its 2026 DevDay this week. Dot is a new multi-agent harness system reminiscent of Grok Bot, which we covered a few weeks back. 
+The move confirms an intense industry shift toward persistent, always-on multi-agent execution systems, and rumour has it that Anthropic are also about to drop a similar product.
+Musk’s conglomerate, which owns the domain dot.com, set the URL to redirect to Grok Bot’s homepage, x.ai/bot. Was this a petty act of corporate rivalry, or a stroke of marketing mastery by Musk? → LINK
+
+
+💙 P(doom) and X risk
+Earlier this year, Anthropic confidentially filed their long-awaited IPO. This week the private 261-page prospectus was leaked to Reuters, revealing that the wildly successful (albeit controversial) AI company is seeking an unprecedented valuation of $2 trillion.
+The filing reports a net loss of $42 billion in 2025 and planned spending of $518 billion on cloud, computing and infrastructure. 
+Paradoxically, the prospectus, which compellingly motivates for the record-breaking valuation, also devotes some 80 pages to known risk factors. The document doesn’t shy away from the possibility of advanced AI models developing dangerous autonomous behaviours, including resisting shutdown, blackmailing humans and gaming safety evaluations.  → LINK
+
+
+🔥 A rebrand 
+US President Donald Trump wants to change the name of what has fast become one of the biggest and most important technologies and industries of our era, from “artificial intelligence” to “super intelligence”.
+On Tuesday, Trump signed an executive order titled “Inaugurating The Era Of Super Intelligence”. Every federal agency must now refer to the tech as “super intelligence” instead of the old “AI” moniker. → LINK
+

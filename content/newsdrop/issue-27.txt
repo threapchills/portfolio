@@ -1,0 +1,36 @@
+Speed limits
+
+The Friday brief for people who make marketing move.
+Jev skips prose. Opus and Sol ship hours apart. Rogue Geminis. The slowdown goes to court. 👇
+
+
+📜 Decisions, not words
+TypeSafe AI’s new Jev model predicts outcomes instead of composing a chatbot-style answer. Give it a question with set possible answers, and it returns a choice or score with a confidence estimate that software can use directly. 
+For example, an app could ask whether a message looks like spam and get a scored yes-or-no answer instead of a paragraph to interpret. 
+TypeSafe says responses take 70–500 milliseconds and input costs $0.042 per million tokens, making it far cheaper and faster than traditional LLMs. → LINK
+
+
+
+
+🆕Two models, one Tuesday
+Anthropic released Claude Opus 5.5 on Tuesday, and OpenAI followed mere hours later with GPT-6’s Sol and Luna. 
+
+Both labs seem to have targeted lower pricing for state-of-the-art capability on the toughest challenges, as well as long-horizon work involving multi-agent orchestration. Anthropic says Opus 5.5 costs 40% less to run on typical tasks than its predecessor from the Opus tier, version 5. OpenAI halved Sol’s API token prices compared with GPT-5.6 Sol.
+
+The launches came only ten days after influential AI executives expressed support for labs coordinating (at least in theory) a slower pace of AI development, in order to allow more time for safety work. → LINK → LINK
+
+
+🤝 Claude helps build Claude
+It’s now commonly understood that top AI labs are now using their own AI systems to help build the next version of those AI systems. 
+Anthropic says Claude now leads 26% of its own future model research and development work, up from under 1% at the start of this year. That said, they also stress that there are always humans in the loop, and that none of the work done is fully autonomous. → LINK
+
+
+💙 A resignation and three intrusions
+Anthropic researcher Jacob Coxon resigned earlier this month, warning about the risks of racing toward self-improving AI. 
+Days later, Google confirmed three separate incidents from earlier this year: during a cybersecurity test, a Gemini model accessed systems at three real companies. The exercise was meant to take place inside a fictional company, but internet access had mistakenly been left open. 
+“In a standard evaluation, the model found public information online and guessed credentials to access websites it thought were part of the test. …All three of these instances, the model stopped,” said Google’s vice president of security engineering Heather Adkins. → LINK
+
+
+🔥The slowdown lawsuit
+The complaint seeks damages and an order blocking such an agreement. → LINK
+

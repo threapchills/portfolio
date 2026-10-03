@@ -1,0 +1,32 @@
+Jagged
+
+The Friday brief for people who make marketing move.
+AI solves Navier-Stokes. Suno signs with the labels. Fruit-flies in the cloud 👇
+
+
+📜 The great AI slowdown debate
+OpenAI claim one of their internal models has solved the Navier-Stokes problem. One of seven Millennium Prize Problems, Navier-Stokes is an equation in advanced mathematics that has perplexed the world’s top mathematicians, including iconic figures like Terence Tao, for around 90 years. 
+An unreleased internal model ‘significantly more capable than GPT-6 Astra’ (more on that below), conceivably “Doug”, ran 10,000 agents in parallel for 88 hours, spending millions of dollars in compute to arrive at the ground-breaking proof.
+But soon after the news was announced, another mathematical powerhouse pushed back against the win. NYU's Tristan Buckmaster, in collaboration with Anthropic’s Levent Alpöge, had previously made great strides on the problem. The duo publicly accused OpenAI of ‘piggy-backing’ on their unreleased work. The researcher pair had been using OpenAI's Codex to log their work, and are suggesting that OpenAI caught wind of the breakthrough, and then rushed a massive, $10+ million compute run to leapfrog them and hit the finish line first. OpenAI denies this, although they remain vague on whether the rival duo’s work could have been fed into their next-gen model by way of anonymised training data. → LINK
+
+
+
+🆕 Three new bench-topping models
+Anthropic released Claude Fable 5.1 on 1 September. OpenAI countered with GPT-6 Astra three days later. Astra in particular has made waves, with some even calling it the first AGI-shaped model. Astra aced François Chollet's ARC-AGI-3 benchmark - designed to be easy for humans but tough for AI - albeit using a specialised harness. → LINK
+Astra has been praised for its computer-use capabilities, and can essentially do anything on a computer that we humans can. It particularly excels at 3D work, and viral showcases have been doing the rounds in which it works autonomously over hours to drive complex software like Blender, creating beautiful worlds and scenes based on simple input images, or plain-language direction from users.
+Around the same time, OpenAI also launched GPT Image 2.5. It comes five months after GPT Image 2 which, along with Google’s Nano Banana Pro, is still the reigning daily driver for professional creative image generation workloads. → LINK
+
+
+🤝 Suno and the Big Three
+Suno launched v6 on Tuesday. There’s also a new free lite version, v6-mini. This is their first model family built and trained with the blessing of Warner Music Group (considered one of the ‘big three’ who dominate the music industry), BMG and Believe. Their CEO Mikey Shulman calls it the first model made in partnership with the music industry. The move sets new legal precedents as, for the first time, Suno will share revenue with rightsholders - presumably giving artists whose works appear in training data a share of the profits.
+
+💙 Fruit fly in the cloud
+On Thursday 3rd September, after nearly two decades of work, scientists at HHMI's Janelia Research Campus, together with Google Research and the University of Cambridge, published four landmark papers in the prestigious journal Cell detailing the completion of an ambitious project: mapping the complete central nervous system of a male fruit fly. It's the largest brain map (also called a connectome) ever made, containing 166 700 neurons, and the 125 million connections between them.
+A fruit fly is a long way from a human though, as we carry around 86 billion neurons. Nevertheless this is the first time we've had the full wiring diagram of a creature with complex social behaviours like courtship and aggression.
+In another first, earlier this year a San Francisco startup called Eon Systems took the female fly connectome, simulated every neuron and synapse, and plugged the result into a physics-simulated body. Neuroscientists are quick to point out the model is heavily simplified: no plasticity, no memory formation, approximated synaptic weights. → LINK
+
+
+🔥The other jagged frontier
+AI is superhumanly smart in some domains, and more silly than a toddler in others. That’s the “jagged frontier” of machine intelligence. That edge seems to be becoming less jagged this week: François Chollet built ARC-AGI as the benchmark that would tell us when general digital  intelligence arrived. GPT-6 Astra beats the human efficiency baseline on 96% of its levels. Chollet won't call it AGI, but he has adjusted his forecast forward because progress is running twice as fast as he expected. 
+The frontier of AI adoption and fluency, however, is still very jagged. Some organisations, people and countries are already very sophisticated in their use of AI. Many others haven't touched it at all yet. Perhaps AGI is already here, just not evenly distributed. 
+

@@ -1,0 +1,42 @@
+Proof of Life
+
+The Friday brief for people who make marketing move.
+Robots outrun Bolt. Mystery model unmasked. Nvidia bags Hugging Face. 👇
+
+
+📜 The AI race made visible
+The Olympics dates back to ancient Greece circa 1000 years BCE. The World Humanoid Robot Games, AKA the Robot Olympics, dates back to Beijing in August last year, and was launched as part of China’s big push into AI and robotics. Last month’s shenanigans at the Robot Olympics, now in its second year in Beijing, broke the internet with a show of staggering tech sophistication. The State-of-the-art robots on display are truly impressive - and sometimes terrifying, making America’s clankers look somewhat rudimentary by comparison. And other nations aren’t really even in the runnings.   
+Viral highlights include the Chinese-made robot Tiangong Ultra clocking a jaw-dropping 8.64 seconds in the 100-metre sprint final, comfortably beating Usain Bolt’s longstanding human world record of 9.58 seconds. 
+For flat-ground running events, the competing bots were never taught how to run. They were simply told to get to the finish line as fast as possible. In the 400 metre dash, the Tiangong Omni robot discovered an emergent running posture - running with its hands up in front of its face, instead of striding with arms at the sides like a human runner. 
+Some speculate this could be analogous to the famous "Move 37" moment, but for the actual physical world, which is far more complex than the game of Go. Move 37 is often seen as a historical symbol for when humanity transcended Machine Learning and conceived of truly Generative AI. Similarly, the ‘26 Robot Games seems to have been the moment where machines bypassed human athletic intuitions, and started to explore a wider possibility space bounded only by the laws of physics.
+Another bipedal bot cleared 2.88 metres in the standing high jump - 43 centimetres higher than the human world record. One soccer droid even flawlessly imitated Ronaldo’s iconic "Siuuu" victory-dance. There were some spectacular fails, but even when flailing chaotically or haphazardly collapsing, the ultra-high tech robots demonstrated remarkable dynamism and fluidity of motion. 
+The uncanny agility of robots on display at the games may surprise those unfamiliar with the current state of humanoid robotics technology. The Olympic Games-but-for-robots format is charming, enthralling and frequently outright hilarious. But it’s also a stroke of marketing genius. The Robot Games quietly serve as a highly effective media hypersigil for Chinese soft power; a viral demonstration of the country's tech supremacy and industrial prowess, brought to life with embodied AI. → LINK
+
+
+
+🆕 Mystery model revealed
+A mysterious model codenamed Ox Alpha appeared on agentic coding platform wrappers and services like OpenRouter and OpenCode recently, with the mystery enterprise vendor offering the massive AI system completely free, and with massive rate limits. The anonymously launched stealth model took the developer community by storm, resulting in a week-long developer gold rush, as makers enthusiastically took advantage of the unprecedented offer for free compute, and the chance to try a brand new model. OpenCode recorded over 8 million completed sessions in the first four days alone.
+The move turned out to be a brilliant marketing stunt and a massive technical stress test. Serving that much free compute takes serious hardware, so the community reckoned a deep-pocketed US or Chinese lab had to be behind it. They were right. 
+The Ox Alpha who-dunnit was officially solved when the Beijing-based AI lab Zhipu AI (better known as Z.ai) unmasked it as GLM-5.3-Flash. To serve that much compute, Z.ai claim they ran every single request on a cluster of roughly 100,000 Chinese-made chips, with no Nvidia hardware at all. The move suggests China-based labs have overcome the trade ban on Nvidia GPUs, and can now comfortably serve frontier AI at global scale on purely homegrown hardware and infrastructure stacks. 
+ → LINK
+
+
+🤝 Raking in a billion a day
+Following its blowout Q2 earnings report, Nvidia is now earning over $1 billion on average in revenue every day. Most of this revenue ($89 billion) comes purely from its data center business, with tech giants and AI labs still aggressively clamouring to buy up its Blackwells and other GPUs.  → LINK
+In a historic acquisition, the AI compute infrastructure giant has apparently agreed to buy HuggingFace, the open source AI hub platform, for $13 Billion. The startup - beloved by the open-source AI community - was previously valued at around $4.5 billion, and was the subject of the notorious autonomous hack carried out by a rogue agent swarm a month ago, which we covered in News Drop #19.  → LINK
+
+💙 Swimming across the CUDA moat
+OpenAI is using internal models running on Nvidia chips to automate certain key aspects of the research and development for new chips that will compete with (and complement) Nvidia’s market dominance and near-monopoly over said chips. 
+
+OpenAI’s custom Application-Specific Integrated Circuit (ASIC), named Jalapeño, is targeting the inference side as opposed to the training side of compute demand, and when deployed could obviate the need for Nvidia’s CUDA - the software layer that translates high level code into the kernel-level instructions that ultimately move electrons around the silicon on their ubiquitous GPU chipsets. 
+Co-developed alongside Broadcom (and fabricated using TSMC's advanced 3-nanometer process), Jalapeño was created with the aid of OpenAI’s internal reasoning and coding models to optimise hardware structures and shorten verification loops. This allowed the teams to compress its engineering-to-manufacturing timeline down to about nine months. 
+ → LINK
+
+
+🔥Watermark the humans
+The issue of AI provenance, disclosure and watermarking have been making waves of late. Anthropic’s new Fable and Mythos 5.1 models officially usher in the era of invisible marks in every Claude text output, as well as C2PA metadata on generated files. 
+Will.i.am, speaking to Mishal Husain on Bloomberg, argued that human creativity should count for more than raw compute output. He asked, ‘How can you validate the human effort and lived experience that went into the making of something?’ 
+The multihyphenate pop legend, turned tech entrepreneur and AI evangelist is reportedly considering a new file format called .plp, or Proof of Life. The idea is to embed metadata into music files that records who played it, where and when. That proof is locked in and travels with the song forever. 
+Everyone else is trying to flag purely machine-generated works (presumably to weed out low-effort content). His idea is to let humans watermark their own work as a signifier of value instead. 
+There's something slightly dystopian in the idea, though. Right now there’s a growing consensus that machine-generated works must mark themselves so we humans can spot them. Is there a future in which human-made works must carry the mark, so that computers can spot them?
+

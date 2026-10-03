@@ -1,4 +1,9 @@
 const NEWSDROP = [
+  { n: 28, date: "2026-09-25", title: "What's in a name?", file: "issue-28.txt" },
+  { n: 27, date: "2026-09-18", title: "Speed limits", file: "issue-27.txt" },
+  { n: 26, date: "2026-09-11", title: "Pace of Change", file: "issue-26.txt" },
+  { n: 25, date: "2026-09-04", title: "Jagged", file: "issue-25.txt" },
+  { n: 24, date: "2026-08-28", title: "Proof of Life", file: "issue-24.txt" },
   { n: 23, date: "2026-08-21", title: "Nothing to hide", file: "issue-23.txt" },
   { n: 22, date: "2026-08-14", title: "Signed, sealed and watermarked", file: "issue-22.txt" },
   { n: 21, date: "2026-08-07", title: "Body of Work", file: "issue-21.txt" },
