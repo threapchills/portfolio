@@ -1,58 +1,59 @@
-/* loader.js — Act 0, the Threshold.
-   Preloads the opening acts behind a moon-phase progress ritual, then
-   dissolves on its own. Sound waits for a gesture; the mute button rules. */
-
-import { asset, fromRoot, qs, qsa } from './util.js';
-
-const MIN_HOLD = 1200; // the ritual reads even on fast connections
-
+/* The threshold reports bytes received, then names any remaining preparation.
+   It never equates a tiny file with an entire film sequence. */
+import { asset, qs, qsa } from './util.js';
 import { loadImage as preloadImage } from './readiness.js';
 
-function preloadAudioStem(name) {
-  return fetch(fromRoot(`audio/stems/${name}.ogg`))
-    .then((r) => r.arrayBuffer())
-    .catch(() => console.warn('[threshold] stem failed, proceeding:', name));
-}
-
-/* The journey threshold: five moons fill left to right, then the world
-   opens unbidden. `jobs` takes extra promises to gate on, e.g. the film
-   scrubber's opening chunk of frames. */
-export function initThreshold({ images, jobs: extraJobs = [], onEnter }) {
+export function initThreshold({ run, onEnter }) {
   const threshold = qs('#threshold');
   const moons = qsa('.threshold-moon', threshold);
-  const started = performance.now();
-
-  const jobs = [
-    ...images.map((src) => preloadImage(asset(src))),
-    ...extraJobs,
-    preloadAudioStem('sea1'),
-    preloadAudioStem('fire3'),
-    document.fonts ? document.fonts.ready : Promise.resolve(),
-  ];
-
-  let done = 0;
-  const paint = () => {
-    const p = done / jobs.length;
-    moons.forEach((m, i) => {
-      m.classList.toggle('is-filled', p >= (i + 1) / moons.length - 0.001);
-    });
+  const meter = qs('[role="progressbar"]', threshold);
+  const stage = qs('#load-stage', threshold);
+  const detail = qs('#load-detail', threshold);
+  const mb = value => (value / 1e6).toFixed(1);
+  meter.setAttribute('aria-valuemin', '0');
+  meter.setAttribute('aria-valuemax', '100');
+  let lastPaint = 0;
+  const preparing = (title, description) => {
+    stage.textContent = title;
+    detail.textContent = description;
+    meter.setAttribute('aria-label', title);
+    meter.removeAttribute('aria-valuenow');
+    threshold.classList.add('is-preparing');
   };
-  jobs.forEach((j) => j.then(() => { done += 1; paint(); }, () => {}));
-
-  Promise.all(jobs).then(async () => {
-    const elapsed = performance.now() - started;
-    if (elapsed < MIN_HOLD) await new Promise((r) => setTimeout(r, MIN_HOLD - elapsed));
-    moons.forEach((m) => m.classList.add('is-filled'));
-    // let the fifth moon register before the dissolve
-    await new Promise((r) => setTimeout(r, 700));
+  const paint = ({ receivedBytes, totalBytes, ready, count, retrying }) => {
+    const now = performance.now();
+    if (now - lastPaint < 100 && receivedBytes < totalBytes && !retrying) return;
+    lastPaint = now;
+    const fraction = totalBytes ? receivedBytes / totalBytes : 0;
+    const percent = Math.floor(fraction * 100);
+    meter.setAttribute('aria-label', 'Portfolio files received');
+    meter.setAttribute('aria-valuenow', String(percent));
+    meter.setAttribute('aria-valuetext', `${mb(receivedBytes)} of ${mb(totalBytes)} megabytes received`);
+    moons.forEach((moon, i) => {
+      const fill = Math.max(0, Math.min(1, fraction * moons.length - i));
+      moon.style.filter = `grayscale(${1 - fill}) brightness(${0.3 + fill * 0.7})`;
+    });
+    threshold.classList.remove('is-preparing');
+    stage.textContent = retrying ? 'Reconnecting and retrying a file' : `Receiving portfolio files · ${percent}%`;
+    detail.textContent = `${mb(receivedBytes)} / ${mb(totalBytes)} MB · ${ready} / ${count} files prepared`;
+    if (receivedBytes === totalBytes) {
+      preparing('Files received · preparing the visuals', `${ready} / ${count} files prepared`);
+    }
+  };
+  return run(paint, preparing).then(() => {
+    stage.textContent = 'The journey is ready';
+    detail.textContent = 'All visuals and film previews are loaded.';
     threshold.classList.add('is-leaving');
+    onEnter();
     setTimeout(() => threshold.remove(), 1400);
-    onEnter?.();
-  }).catch((error) => {
+  }).catch(error => {
     console.error('[threshold]', error);
-    const status = threshold.querySelector('[role="status"]');
-    if (status) status.textContent = 'Some content could not load. Please retry; the page is not ready yet.';
+    threshold.classList.remove('is-preparing');
+    stage.textContent = 'The journey could not finish loading';
+    detail.textContent = 'A file failed after three attempts. Please retry when your connection is ready.';
+    meter.removeAttribute('aria-valuenow');
     const retry = document.createElement('button');
+    retry.className = 'threshold-retry';
     retry.textContent = 'Retry loading';
     retry.onclick = () => location.reload();
     threshold.appendChild(retry);

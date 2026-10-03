@@ -67,7 +67,7 @@ export function initFilmSection(lenis) {
     el.innerHTML = `
       <span class="banner-media">
         <img src="${item.poster}" alt="${clean} still" loading="lazy">
-        ${item.loop ? `<video muted loop playsinline preload="none" src="${item.loop}"></video>` : ''}
+        ${item.loop ? `<video muted loop playsinline preload="none" data-src="${item.loop}"></video>` : ''}
       </span>
       <span class="banner-caption">
         <span class="banner-num">${String(i + 1).padStart(2, '0')}</span>
@@ -90,16 +90,28 @@ export function initFilmSection(lenis) {
     </span>`;
   wrap.appendChild(more);
 
-  // clips wake when their banner holds the frame, and sleep when it leaves
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      const v = e.target.querySelector('video');
-      if (!v) continue;
-      if (e.isIntersecting) v.play().then(() => v.classList.add('is-playing')).catch(() => {});
-      else { v.pause(); v.classList.remove('is-playing'); }
+  // A banner can only play after its complete local movie has passed the gate.
+  let entered = false;
+  const visible = new Set();
+  const updatePlayback = () => {
+    for (const video of wrap.querySelectorAll('video')) {
+      if (entered && visible.has(video)) {
+        video.play().then(() => {
+          if (visible.has(video)) video.classList.add('is-playing');
+          else video.pause();
+        }).catch(() => video.classList.remove('is-playing'));
+      } else { video.pause(); video.classList.remove('is-playing'); }
     }
-  }, { threshold: 0.5 });
-  wrap.querySelectorAll('.film-banner').forEach((b) => io.observe(b));
+  };
+  const io = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const video = entry.target.querySelector('video');
+      if (video) entry.isIntersecting ? visible.add(video) : visible.delete(video);
+    }
+    updatePlayback();
+  }, { threshold: 0.25 });
+  wrap.querySelectorAll('.film-banner').forEach(banner => io.observe(banner));
+  document.addEventListener('mw:enter', () => { entered = true; updatePlayback(); }, { once: true });
 
   /* ---- frame loop: the scrub, and the scroll-velocity warp that glues
      the films to the journey ---- */
@@ -158,6 +170,7 @@ export function initWritingSection(lenis) {
 
   /* ---- the reading plane; the page's scroll rests while it is open ---- */
   let cube;
+  let issueText = new Map();
   function openPlane() {
     cube.suspended = true;
     lenis.stop();
@@ -235,9 +248,12 @@ export function initWritingSection(lenis) {
     inner.innerHTML = `<p class="plane-eyebrow">Fetching issue ${n}&hellip;</p>`;
     let text = '';
     try {
-      const response = await fetch(`content/newsdrop/${file}`);
-      if (!response.ok) throw new Error(response.status);
-      text = await response.text();
+      text = issueText.get(file);
+      if (text == null) {
+        const response = await fetch(`content/newsdrop/${file}`);
+        if (!response.ok) throw new Error(response.status);
+        text = await response.text();
+      }
     } catch {
       inner.innerHTML = `<p class="plane-eyebrow">This issue would not be summoned. Try again.</p>`;
       return;
@@ -293,7 +309,9 @@ export function initWritingSection(lenis) {
     last = now;
   });
 
-  return { cube };
+  return { cube, setIssueText(batch) {
+    issueText = new Map(NEWSDROP.map(({ file }) => [file, batch.get(`content/newsdrop/${file}`)]));
+  } };
 }
 
 /* ============================================================
@@ -416,14 +434,14 @@ export function initDesignSection() {
   /* GL wakes on approach: until then the plain images stand in, so a
      fast scroller or a deep link never meets an empty frame */
   let engine = null, warming = null;
-  function warm() {
+  function warm(imageLoader) {
     if (warming) return warming;
     if (engine) return Promise.resolve();
     const sections = qsa('.design-piece');
     const glc = document.createElement('canvas');
     glc.id = 'gl-canvas';
     document.body.appendChild(glc);
-    engine = new GLPlanes(glc);
+    engine = new GLPlanes(glc, imageLoader);
     window.__engine = engine;
     if (!engine.enabled) { glc.remove(); return; }
 

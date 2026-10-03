@@ -36,6 +36,14 @@ export class FrameScrubber {
       .then((images) => { this.images = images; });
   }
 
+  sources() { return Array.from({ length: this.count }, (_, i) => this.src(i)); }
+
+  usePrepared(batch) {
+    this.images = this.sources().map(src => batch.get(src));
+    if (this.images.some(image => !image?.naturalWidth)) throw new Error('Frame sequence is incomplete');
+    this.draw(true);
+  }
+
   setProgress(p) { this.target = clamp(p, 0, 1); }
 
   /* Per-frame tick: eases toward the target so the scrub feels weighted. */

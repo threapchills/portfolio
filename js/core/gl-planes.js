@@ -72,7 +72,9 @@ function compile(gl, type, src) {
 }
 
 export class GLPlanes {
-  constructor(canvas) {
+  constructor(canvas, imageLoader = loadImage) {
+    this.loadImage = imageLoader;
+    this.textureCache = new Map();
     this.enabled = HAS_WEBGL;
     if (!this.enabled) return;
     this.canvas = canvas;
@@ -135,12 +137,13 @@ export class GLPlanes {
   }
 
   texture(src, onload) {
+    if (this.textureCache.has(src)) return this.textureCache.get(src);
     const gl = this.gl;
     const tex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, tex);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
       new Uint8Array([8, 8, 8, 255]));
-    tex.ready = loadImage(src).then((img) => {
+    tex.ready = this.loadImage(src).then((img) => {
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -151,6 +154,7 @@ export class GLPlanes {
       onload?.();
     });
     tex.iw = 1; tex.ih = 1;
+    this.textureCache.set(src, tex);
     return tex;
   }
 

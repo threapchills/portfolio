@@ -1300,3 +1300,15 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 }
 
 .artefact > p { max-width: 24rem; margin: 1rem auto; font-size: .85rem; line-height: 1.6; opacity: .8; }
+
+/* Measured download progress, followed by an explicitly named preparation stage. */
+#threshold { gap: 2rem; }
+.threshold-progress { text-align: center; max-width: 32rem; padding: 0 1.5rem; }
+#load-stage { font-family: var(--font-display); font-size: 1.6rem; margin: 0 0 .75rem; }
+#load-detail { font-size: .76rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; min-height: 1.3em; }
+.threshold-expectation { margin-top: 2rem; font-size: .8rem; line-height: 1.7; opacity: .65; }
+.threshold-moon { transition: filter .12s linear; }
+.is-preparing .threshold-moons { animation: preparation-breathe 1.8s ease-in-out infinite alternate; }
+.threshold-retry { background: transparent; color: var(--text); border: 1px solid currentColor; padding: .8rem 1.5rem; }
+@keyframes preparation-breathe { to { opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .is-preparing .threshold-moons { animation: none; } }

@@ -39,13 +39,18 @@
   <!-- Act 0 · the Threshold -->
   <div id="threshold">
     <p class="threshold-name">Mike Whyle</p>
-    <p role="status" aria-live="polite" style="max-width:32rem;text-align:center;padding:0 1rem">Loading the full visual journey, films and design gallery. This may take a few minutes on a slower connection.</p>
+
     <div class="threshold-moons" role="progressbar" aria-label="Loading">
       <img class="threshold-moon" src="assets/journey/moon-1.webp" alt="">
       <img class="threshold-moon" src="assets/journey/moon-2.webp" alt="">
       <img class="threshold-moon" src="assets/journey/moon-3.webp" alt="">
       <img class="threshold-moon" src="assets/journey/moon-4.webp" alt="">
       <img class="threshold-moon" src="assets/journey/moon-5.webp" alt="">
+    </div>
+    <div class="threshold-progress">
+      <p id="load-stage" role="status" aria-live="polite">Measuring the journey&hellip;</p>
+      <p id="load-detail"></p>
+      <p class="threshold-expectation">The complete visual journey loads before you enter.<br>Films, artwork and writing. Please allow a moment.</p>
     </div>
   </div>
 
@@ -58,7 +63,7 @@
     </button>
   </header>
 
-  <main>
+  <main inert>
     <!-- Acts I to V · the story film, scrubbed by scroll -->
     <section id="journey" aria-label="The journey into the artwork">
       <div class="stage vignette">
@@ -244,7 +249,29 @@
   <script src="js/vendor/gsap.min.js?v=3"></script>
   <script src="js/vendor/ScrollTrigger.min.js?v=3"></script>
   <script src="js/vendor/lenis.min.js?v=3"></script>
+  <!-- One release map keeps every module, including shared audio, on the same revision. -->
+  <script type="importmap">
+    {"imports": {
+      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261004-load1",
+      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261004-load1",
+      "./js/core/audio.js": "./js/core/audio.js?v=20261004-load1",
+      "./js/core/cards.js": "./js/core/cards.js?v=20261004-load1",
+      "./js/core/chambers.js": "./js/core/chambers.js?v=20261004-load1",
+      "./js/core/chrome.js": "./js/core/chrome.js?v=20261004-load1",
+      "./js/core/cube.js": "./js/core/cube.js?v=20261004-load1",
+      "./js/core/cursor.js": "./js/core/cursor.js?v=20261004-load1",
+      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261004-load1",
+      "./js/core/ground.js": "./js/core/ground.js?v=20261004-load1",
+      "./js/core/journey.js": "./js/core/journey.js?v=20261004-load1",
+      "./js/core/loader.js": "./js/core/loader.js?v=20261004-load1",
+      "./js/core/readiness.js": "./js/core/readiness.js?v=20261004-load1",
+      "./js/core/sequence.js": "./js/core/sequence.js?v=20261004-load1",
+      "./js/core/util.js": "./js/core/util.js?v=20261004-load1"
+    }}
+  </script>
   <script type="module">
+    import { AssetBatch } from './js/core/asset-batch.js';
+    import assetSizes from './js/core/asset-sizes.js';
     import { initThreshold } from './js/core/loader.js';
     import { initJourney } from './js/core/journey.js';
     import { initReading } from './js/core/cards.js';
@@ -272,7 +299,7 @@
     const journey = initJourney();
     initReading();
     const film = initFilmSection(journey.lenis);
-    initWritingSection(journey.lenis);
+    const writing = initWritingSection(journey.lenis);
     const design = initDesignSection();
     // the page's own light: charcoal to gold and back, the design chamber lit
     // by whichever board is on screen
@@ -308,31 +335,49 @@
     window.addEventListener('pointerdown', resume, { once: true });
     window.addEventListener('keydown', resume, { once: true });
 
-    // Every entry, including deep links, waits for all scroll content.
     document.body.style.overflow = 'hidden';
     journey.lenis.stop();
-    document.querySelectorAll('img[loading="lazy"]').forEach((img) => img.loading = 'eager');
-    const pageReady = Promise.all([
-      journey.preloadDone,
-      film.preload(),
-      ...NEWSDROP.map(async ({ file }) => {
-        const response = await fetch(`content/newsdrop/${file}`);
-        if (!response.ok) throw new Error(`Issue failed: ${file}`);
-        return response.text();
-      }),
-    ]).then(async () => {
-      const { loadImages } = await import('./js/core/readiness.js');
-      const urls = [...document.images].map((img) => img.currentSrc || img.src);
-      urls.push('assets/textures/paper-grain.webp', 'assets/cards/card-back.webp');
-      await loadImages([...new Set(urls)]);
-      await design.warm();
-      journey.openLoop();
-    });
     initThreshold({
-      images: ['assets/brand/mikey-logo-hi.webp'],
-      jobs: [pageReady],
+      run: async (onProgress, preparing) => {
+        const batch = new AssetBatch(assetSizes, { onProgress });
+        for (const src of [...journey.scrubber.sources(), ...film.scrubber.sources()]) batch.add(src);
+        for (const img of document.images) {
+          img.loading = 'eager';
+          batch.add(img.currentSrc || img.src, 'image', img);
+        }
+        // Include the cube panels, masks, paper and other CSS-only artwork.
+        const cssArtwork = [];
+        for (const element of document.querySelectorAll('body *')) {
+          const style = getComputedStyle(element);
+          for (const name of ['backgroundImage', 'maskImage']) {
+            for (const match of style[name].matchAll(/url\((?:"([^"]*)"|'([^']*)'|([^)]*))\)/g)) {
+              const src = match[1] || match[2] || match[3];
+              if (!src.startsWith('data:')) {
+                batch.add(src);
+                cssArtwork.push({ element, name, token: match[0], src });
+              }
+            }
+          }
+        }
+        for (const video of document.querySelectorAll('#film-banners video[data-src]')) {
+          batch.add(video.dataset.src, 'video', video);
+        }
+        for (const { file } of NEWSDROP) batch.add(`content/newsdrop/${file}`, 'text');
+        await batch.load();
+        for (const { element, name, token, src } of cssArtwork) {
+          element.style[name] = getComputedStyle(element)[name].replace(token, `url("${batch.get(src).src}")`);
+        }
+        preparing('Preparing the gallery', 'All files received. Applying the final visual effects.');
+        journey.scrubber.usePrepared(batch);
+        film.scrubber.usePrepared(batch);
+        writing.setIssueText(batch);
+        await design.warm(src => Promise.resolve(batch.get(src)));
+        await document.fonts.ready;
+        journey.openLoop();
+      },
       onEnter: () => {
         document.body.style.overflow = '';
+        document.querySelector('main').inert = false;
         journey.lenis.start();
         ScrollTrigger.refresh();
         if (!journey.landTo(location.hash)) {

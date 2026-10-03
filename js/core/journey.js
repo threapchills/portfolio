@@ -15,7 +15,6 @@ import { audio } from './audio.js';
 /* the film, decoded at build time (ffmpeg, 12fps from WebsiteJourneyUpscale.mkv,
    through a centred 16:9 window out of its 2.32:1 master) */
 const FRAMES = { dir: 'video/header/frames', dirMobile: 'video/header/frames-720', count: 317 };
-const FIRST_CHUNK = 48;            // the threshold gates on these; the rest stream in behind
 
 /* scroll choreography across the journey's sticky travel */
 const VEIL = [0.03, 0.135];        // the wordmark opens and the film comes through it
@@ -94,10 +93,6 @@ export function initJourney() {
     dir: IS_MOBILE ? FRAMES.dirMobile : FRAMES.dir,
     count: FRAMES.count,
   });
-  let chunkDone;
-  const firstChunk = new Promise((r) => { chunkDone = r; });
-  const preloadDone = scrubber.preload((p) => { if (p * FRAMES.count >= FIRST_CHUNK) chunkDone(); })
-    .then(() => { chunkDone(); scrubber.draw(true); });
 
   /* the veil is a stencil: its letter-holes are cut in CSS (mask-composite),
      so the film behind needs no second canvas and never moves with the plate */
@@ -496,6 +491,7 @@ export function initJourney() {
     return pts;
   };
   window.addEventListener('keydown', (e) => {
+    if (qs('#threshold') || qs('#reading-plane')?.classList.contains('is-open')) return;
     if (e.target.closest('input, textarea, [contenteditable]')) return;
     if (!['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp'].includes(e.key)) return;
     e.preventDefault();
@@ -530,5 +526,5 @@ export function initJourney() {
     return true;
   }
 
-  return { lenis, scrubber, firstChunk, preloadDone, landTo, openLoop };
+  return { lenis, scrubber, landTo, openLoop };
 }
