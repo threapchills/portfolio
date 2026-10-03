@@ -3,6 +3,7 @@
    time and drawn to canvas keyed to smoothed scroll progress. */
 
 import { clamp, damp } from './util.js';
+import { loadImages } from './readiness.js';
 
 export class FrameScrubber {
   constructor(canvas, { dir, count, pad = 4 }) {
@@ -31,22 +32,8 @@ export class FrameScrubber {
 
   /* Loads every frame; reports progress 0..1 to the micro-loader. */
   preload(onProgress) {
-    let done = 0;
-    const jobs = [];
-    for (let i = 0; i < this.count; i++) {
-      jobs.push(new Promise((resolve) => {
-        const img = new Image();
-        const fin = () => { done += 1; onProgress?.(done / this.count); resolve(); };
-        img.onload = fin;
-        img.onerror = fin;   // a missing frame must not stall the chamber
-        img.src = this.src(i);
-        this.images[i] = img;
-      }));
-    }
-    return Promise.all(jobs).then(() => {
-      // decode the opening frames so the first paint is instant
-      return Promise.allSettled(this.images.slice(0, 6).map((im) => im.decode?.() ?? 0));
-    });
+    return loadImages(Array.from({ length: this.count }, (_, i) => this.src(i)), onProgress)
+      .then((images) => { this.images = images; });
   }
 
   setProgress(p) { this.target = clamp(p, 0, 1); }

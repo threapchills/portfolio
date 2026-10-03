@@ -8,6 +8,7 @@
    Fallback: pages keep their <img>; without WebGL nothing breaks. */
 
 import { clamp, damp, HAS_WEBGL } from './util.js';
+import { loadImage } from './readiness.js';
 
 const GRID = 48;
 
@@ -78,6 +79,12 @@ export class GLPlanes {
     const gl = canvas.getContext('webgl', { alpha: true, antialias: false });
     if (!gl) { this.enabled = false; return; }
     this.gl = gl;
+    canvas.addEventListener('webglcontextlost', (event) => {
+      event.preventDefault();
+      this.enabled = false;
+      document.body.classList.remove('gl-on');
+      canvas.style.display = 'none';
+    });
     this.planes = [];
     this.velocity = 0;
     this._scrollPrev = window.scrollY;
@@ -133,8 +140,7 @@ export class GLPlanes {
     gl.bindTexture(gl.TEXTURE_2D, tex);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
       new Uint8Array([8, 8, 8, 255]));
-    const img = new Image();
-    img.onload = () => {
+    tex.ready = loadImage(src).then((img) => {
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -143,8 +149,7 @@ export class GLPlanes {
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       tex.iw = img.naturalWidth; tex.ih = img.naturalHeight;
       onload?.();
-    };
-    img.src = src;
+    });
     tex.iw = 1; tex.ih = 1;
     return tex;
   }
@@ -189,7 +194,7 @@ export class GLPlanes {
     gl.uniform1f(this.loc.uTime, time);
 
     for (const p of this.planes) {
-      if (p.hide) continue;
+      if (p.hide || p.texA.iw === 1) continue;
       const r = p.el.getBoundingClientRect();
       if (r.bottom < -80 || r.top > innerHeight + 80) continue;
       if (r.right < -80 || r.left > innerWidth + 80) continue;

@@ -6,22 +6,7 @@ import { asset, fromRoot, qs, qsa } from './util.js';
 
 const MIN_HOLD = 1200; // the ritual reads even on fast connections
 
-function preloadImage(src) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    let tried = 0;
-    const attempt = () => {
-      tried += 1;
-      img.onload = () => resolve(true);
-      img.onerror = () => {
-        if (tried < 2) attempt();
-        else { console.warn('[threshold] failed twice, proceeding:', src); resolve(false); }
-      };
-      img.src = src + (tried > 1 ? `?retry=1` : '');
-    };
-    attempt();
-  });
-}
+import { loadImage as preloadImage } from './readiness.js';
 
 function preloadAudioStem(name) {
   return fetch(fromRoot(`audio/stems/${name}.ogg`))
@@ -52,7 +37,7 @@ export function initThreshold({ images, jobs: extraJobs = [], onEnter }) {
       m.classList.toggle('is-filled', p >= (i + 1) / moons.length - 0.001);
     });
   };
-  jobs.forEach((j) => j.then(() => { done += 1; paint(); }));
+  jobs.forEach((j) => j.then(() => { done += 1; paint(); }, () => {}));
 
   Promise.all(jobs).then(async () => {
     const elapsed = performance.now() - started;
@@ -63,6 +48,14 @@ export function initThreshold({ images, jobs: extraJobs = [], onEnter }) {
     threshold.classList.add('is-leaving');
     setTimeout(() => threshold.remove(), 1400);
     onEnter?.();
+  }).catch((error) => {
+    console.error('[threshold]', error);
+    const status = threshold.querySelector('[role="status"]');
+    if (status) status.textContent = 'Some content could not load. Please retry; the page is not ready yet.';
+    const retry = document.createElement('button');
+    retry.textContent = 'Retry loading';
+    retry.onclick = () => location.reload();
+    threshold.appendChild(retry);
   });
 }
 

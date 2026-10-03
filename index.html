@@ -21,7 +21,7 @@
     #threshold { position: fixed; inset: 0; z-index: 200; background: #17181a;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=15">
+  <link rel="stylesheet" href="css/overhaul.css?v=16">
 </head>
 <body class="overhaul">
 
@@ -39,6 +39,7 @@
   <!-- Act 0 · the Threshold -->
   <div id="threshold">
     <p class="threshold-name">Mike Whyle</p>
+    <p role="status" aria-live="polite" style="max-width:32rem;text-align:center;padding:0 1rem">Loading the full visual journey, films and design gallery. This may take a few minutes on a slower connection.</p>
     <div class="threshold-moons" role="progressbar" aria-label="Loading">
       <img class="threshold-moon" src="assets/journey/moon-1.webp" alt="">
       <img class="threshold-moon" src="assets/journey/moon-2.webp" alt="">
@@ -149,6 +150,18 @@
           <h3>Mystik Skies</h3>
           <span class="artefact-cta">Play &rarr;</span>
         </a>
+        <a class="artefact" href="https://threapchills.github.io/MagicCarpetWizard/" target="_blank" rel="noopener">
+          <img class="artefact-sigil" src="assets/journey/moth-full.webp" alt="">
+          <h3>Magic Carpet Wizard</h3>
+          <p>My first ever GitHub repo to earn stars and forks. Hella proud of that!</p>
+          <span class="artefact-cta">Play &rarr;</span>
+        </a>
+        <a class="artefact" href="https://threapchills.github.io/ManuscriptMaker/" target="_blank" rel="noopener">
+          <img class="artefact-sigil" src="assets/cards/card-back.webp" alt="">
+          <h3>Manuscript Maker</h3>
+          <p>A game in the making. Work in progress.</p>
+          <span class="artefact-cta">Explore the WIP &rarr;</span>
+        </a>
       </div>
       <p class="door-credit">Soundscape by <a href="https://slumbr.mikewhyle.com/" target="_blank" rel="noopener">SLUMBR</a>.</p>
     </section>
@@ -226,8 +239,8 @@
   <div id="doorway-veil"></div>
   <div class="grain-veil"></div>
 
-  <script src="js/data.js"></script>
-  <script src="content/newsdrop/index.js"></script>
+  <script src="js/data.js?v=20261004"></script>
+  <script src="content/newsdrop/index.js?v=20261004"></script>
   <script src="js/vendor/gsap.min.js?v=3"></script>
   <script src="js/vendor/ScrollTrigger.min.js?v=3"></script>
   <script src="js/vendor/lenis.min.js?v=3"></script>
@@ -295,47 +308,39 @@
     window.addEventListener('pointerdown', resume, { once: true });
     window.addEventListener('keydown', resume, { once: true });
 
-    if (returning) {
-      document.getElementById('threshold').remove();
-      requestAnimationFrame(() => journey.landTo(location.hash));
-    } else {
-      document.body.style.overflow = 'hidden';
-      // late scroll restoration can land past the threshold; hold the top
-      addEventListener('load', () => { if (!HASH_LAND.test(location.hash)) scrollTo(0, 0); });
-      initThreshold({
-        images: ['assets/brand/mikey-logo-hi.webp'],
-        jobs: [journey.firstChunk],
-        onEnter: () => {
-          document.body.style.overflow = '';
-          if (!journey.landTo(location.hash)) {
-            window.__lenis?.scrollTo(0, { immediate: true });
-            scrollTo(0, 0);
-            ScrollTrigger.refresh();
-          }
-          document.dispatchEvent(new CustomEvent('mw:enter'));
-        },
-      });
-    }
-
-    // the heavy assets stream in single file behind the opener: the header
-    // film first (the threshold gates its opening chunk), then the Mikey
-    // scrub, then the design flow's GL textures
-    journey.preloadDone
-      .then(() => film.preload())
-      .then(() => design.warm())
-      // with everything streamed in there is a whole page behind the top,
-      // so the wheel is allowed to run backwards off it
-      .then(() => journey.openLoop());
-    // backstops for deep links and fast scrollers: wake early on approach
-    ScrollTrigger.create({ trigger: '#film', start: 'top 200%', once: true, onEnter: () => film.preload() });
-    ScrollTrigger.create({ trigger: '#design', start: 'top 200%', once: true, onEnter: () => design.warm() });
-
-    // lazy lookahead: the reading's dressing arrives while the film breathes
-    addEventListener('load', () => {
-      ['assets/glyphs/glyph-film.webp', 'assets/glyphs/glyph-writing.webp',
-       'assets/glyphs/glyph-design.webp', 'assets/glyphs/glyph-coding.webp',
-       'assets/cards/card-back.webp', 'assets/textures/paper-grain.webp']
-        .forEach((src) => { const i = new Image(); i.src = src; });
+    // Every entry, including deep links, waits for all scroll content.
+    document.body.style.overflow = 'hidden';
+    journey.lenis.stop();
+    document.querySelectorAll('img[loading="lazy"]').forEach((img) => img.loading = 'eager');
+    const pageReady = Promise.all([
+      journey.preloadDone,
+      film.preload(),
+      ...NEWSDROP.map(async ({ file }) => {
+        const response = await fetch(`content/newsdrop/${file}`);
+        if (!response.ok) throw new Error(`Issue failed: ${file}`);
+        return response.text();
+      }),
+    ]).then(async () => {
+      const { loadImages } = await import('./js/core/readiness.js');
+      const urls = [...document.images].map((img) => img.currentSrc || img.src);
+      urls.push('assets/textures/paper-grain.webp', 'assets/cards/card-back.webp');
+      await loadImages([...new Set(urls)]);
+      await design.warm();
+      journey.openLoop();
+    });
+    initThreshold({
+      images: ['assets/brand/mikey-logo-hi.webp'],
+      jobs: [pageReady],
+      onEnter: () => {
+        document.body.style.overflow = '';
+        journey.lenis.start();
+        ScrollTrigger.refresh();
+        if (!journey.landTo(location.hash)) {
+          journey.lenis.scrollTo(0, { immediate: true });
+          scrollTo(0, 0);
+        }
+        document.dispatchEvent(new CustomEvent('mw:enter'));
+      },
     });
   </script>
 </body>

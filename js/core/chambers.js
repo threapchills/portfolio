@@ -235,7 +235,9 @@ export function initWritingSection(lenis) {
     inner.innerHTML = `<p class="plane-eyebrow">Fetching issue ${n}&hellip;</p>`;
     let text = '';
     try {
-      text = await (await fetch(`content/newsdrop/${file}`)).text();
+      const response = await fetch(`content/newsdrop/${file}`);
+      if (!response.ok) throw new Error(response.status);
+      text = await response.text();
     } catch {
       inner.innerHTML = `<p class="plane-eyebrow">This issue would not be summoned. Try again.</p>`;
       return;
@@ -406,9 +408,10 @@ export function initDesignSection() {
 
   /* GL wakes on approach: until then the plain images stand in, so a
      fast scroller or a deep link never meets an empty frame */
-  let engine = null;
+  let engine = null, warming = null;
   function warm() {
-    if (engine) return;
+    if (warming) return warming;
+    if (engine) return Promise.resolve();
     const sections = qsa('.design-piece');
     const glc = document.createElement('canvas');
     glc.id = 'gl-canvas';
@@ -416,7 +419,7 @@ export function initDesignSection() {
     engine = new GLPlanes(glc);
     window.__engine = engine;
     if (!engine.enabled) { glc.remove(); return; }
-    document.body.classList.add('gl-on');
+
     const planes = [];
     sections.forEach((sec, i) => {
       const media = sec.querySelector('.piece-media');
@@ -442,6 +445,15 @@ export function initDesignSection() {
       });
       engine.render(now / 1000, dt);
     });
+    warming = Promise.all(planes.flatMap((p) => [p.texA.ready, p.texB?.ready]))
+      .then(() => { if (engine.enabled) document.body.classList.add('gl-on'); })
+      .catch((error) => {
+        console.warn('[design] Using complete image fallback', error);
+        engine.enabled = false;
+        glc.remove();
+        document.body.classList.remove('gl-on');
+      });
+    return warming;
   }
 
   return { warm };
