@@ -338,6 +338,7 @@ export class WritingCube {
     // still the sway whenever the hand is over the cube, for any face
     this.hovering = onCube;
     this.el.parentElement.classList.toggle('is-over-tile', !!over);
+    this.el.parentElement.classList.toggle('is-over-cube', onCube);
     if (over !== this._hovered) {
       this._hovered?.classList.remove('is-hover');
       over?.classList.add('is-hover');

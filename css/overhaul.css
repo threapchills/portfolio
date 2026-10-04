@@ -68,9 +68,11 @@
    directly on the ground need it; everything else is on something opaque. */
 body.ground-lit .cube-hint { color: #1c1104; opacity: 0.72; }
 body.ground-lit .chamber-edge { color: #1c1104; }
-body.ground-lit .mw-cursor-ring { border-color: rgba(28, 17, 4, 0.55); }
-body.ground-lit .mw-cursor-ring.is-active { border-color: rgba(28, 17, 4, 0.85); }
-body.ground-lit .mw-cursor-core { mix-blend-mode: multiply; }
+/* the cursor keeps two tones on a lit ground, ink with a pale halo, so it
+   reads on the gold and on the dark paintings that hang against it alike */
+body.ground-lit .mw-cursor-ring { border-color: rgba(28, 17, 4, 0.6); box-shadow: 0 0 0 1px rgba(254, 249, 235, 0.42); }
+body.ground-lit .mw-cursor-ring.is-active { border-color: rgba(28, 17, 4, 0.85); box-shadow: 0 0 0 1px rgba(254, 249, 235, 0.55), 0 0 18px rgba(254, 249, 235, 0.2); }
+body.ground-lit .mw-cursor-core { box-shadow: 0 0 0 1px rgba(28, 17, 4, 0.55), 0 0 14px rgba(246, 188, 86, 0.65); }
 body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 
 /* the unifying grade: fine grain everywhere, on top of everything */
@@ -134,6 +136,12 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
   z-index: 1;
   pointer-events: none;
   mix-blend-mode: screen;
+}
+#mw-burst {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 299;
+  pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .mw-cursor-core { transition: none; }
@@ -679,7 +687,8 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 body.mode-light .veil-mark img { filter: none; }
 body.mode-light #mute-btn { color: #171310; border-color: rgba(23, 19, 16, 0.35); }
 body.mode-light #mute-btn:hover { border-color: #7c5c14; color: #171310; }
-body.mode-light .mw-cursor-ring { border-color: rgba(23, 19, 16, 0.55); }
+body.mode-light .mw-cursor-ring { border-color: rgba(23, 19, 16, 0.55); box-shadow: 0 0 0 1px rgba(254, 249, 235, 0.42); }
+body.mode-light .mw-cursor-core { box-shadow: 0 0 0 1px rgba(23, 19, 16, 0.5), 0 0 14px rgba(246, 188, 86, 0.65); }
 body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 .door-eyebrow {
   font-size: 0.68rem;
@@ -1339,9 +1348,9 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 
 /* the reader is always dark: whatever the ground behind it was doing, the
    carried light goes back to burning bright */
-body.plane-open .mw-cursor-ring { border-color: rgba(246, 230, 187, 0.45) !important; }
-body.plane-open .mw-cursor-ring.is-active { border-color: var(--flare) !important; }
-body.plane-open .mw-cursor-core { mix-blend-mode: normal !important; }
+body.plane-open .mw-cursor-ring { border-color: rgba(246, 230, 187, 0.45) !important; box-shadow: none !important; }
+body.plane-open .mw-cursor-ring.is-active { border-color: var(--flare) !important; box-shadow: 0 0 22px rgba(246, 188, 86, 0.25) !important; }
+body.plane-open .mw-cursor-core { box-shadow: 0 0 14px rgba(246, 188, 86, 0.65), 0 0 34px rgba(214, 98, 42, 0.35) !important; }
 body.plane-open #mw-trail { mix-blend-mode: screen !important; opacity: 1 !important; }
 
 /* a bare tile struck: the face's titled tiles glint, pointing the way */
@@ -1485,3 +1494,93 @@ body.plane-open #mw-trail { mix-blend-mode: screen !important; opacity: 1 !impor
 .writing-access button:focus-visible { outline: 2px solid var(--moon); outline-offset: 6px; }
 body.ground-lit .writing-access button { color: #1c1104; }
 @media (max-width: 600px) { .writing-access { bottom: calc(7vh + 4.4rem); } .writing-access button { font-size: .66rem; } }
+
+/* ============================================================
+   finish: the small courtesies
+   ============================================================ */
+
+/* the open ring names its click, in a caption that trails beneath it */
+.mw-cursor-label {
+  position: fixed; top: 0; left: 0;
+  z-index: 300;
+  pointer-events: none;
+  translate: -50% 0;
+  padding: 0.42em 0.62em 0.42em 0.94em;   /* the tail of the tracking, balanced */
+  border-radius: 100px;
+  font: 500 0.54rem/1 var(--font-ui);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--moon);
+  background: rgba(23, 24, 26, 0.5);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  scale: 0.82;
+  transition: opacity 0.22s ease, scale 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mw-cursor-label.is-on { opacity: 1; scale: 1; }
+body.ground-lit .mw-cursor-label,
+body.mode-light .mw-cursor-label { color: #1c1104; background: rgba(254, 249, 235, 0.6); }
+body.plane-open .mw-cursor-label { color: var(--moon); background: rgba(23, 24, 26, 0.5); }
+/* when it carries a word, the ring opens as a halo rather than a target */
+.mw-cursor-ring.is-labelled { border-style: dashed; }
+
+/* the fourth door: five tiles on a three-wide row, so the second row is
+   centred under the first rather than left hanging at the margin */
+.artefacts {
+  --gap: clamp(1.2rem, 3vw, 2.6rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+}
+.artefacts > .artefact {
+  flex: 0 1 calc((100% - 2 * var(--gap)) / 3);
+  min-width: min(280px, 100%);
+}
+@media (max-width: 600px) { .artefacts > .artefact { flex-basis: 100%; } }
+
+/* the films lean in under the hand: a slow push into the frame, and the
+   call to action stretches toward the click */
+.banner-media img, .banner-media video { transition: scale 1.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease; }
+.film-banner:hover .banner-media img,
+.film-banner:hover .banner-media video { scale: 1.035; }
+.banner-tag em { transition: letter-spacing 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease; }
+.film-banner:hover .banner-tag em { letter-spacing: 0.36em; color: var(--flare); }
+
+/* the pills answer the hand with a glow as well as a colour */
+.contact-pill { transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.35s ease, background-color 0.35s ease; }
+.contact-pill:hover { box-shadow: 0 0 22px rgba(246, 188, 86, 0.18), inset 0 0 12px rgba(246, 188, 86, 0.08); background-color: rgba(204, 145, 61, 0.06); }
+.outro-links a { position: relative; }
+.outro-links a::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -0.35em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.outro-links a:hover::after { transform: scaleX(1); transform-origin: 0 50%; }
+
+/* the page's own scrollbar, in the house metal */
+html:has(body.overhaul) {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(204, 145, 61, 0.45) #17181a;
+}
+html::-webkit-scrollbar { width: 8px; }
+html::-webkit-scrollbar-track { background: #17181a; }
+html::-webkit-scrollbar-thumb { background: rgba(204, 145, 61, 0.45); border-radius: 8px; }
+
+/* pictures are for looking at, not for dragging off as ghosts */
+.overhaul .film-banner img, .overhaul .card img, .overhaul .design-piece img,
+.overhaul .artefact img, .overhaul .outro-moons img, .overhaul .veil-mark img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-media img, .banner-media video { transition: opacity 0.7s ease; }
+  .film-banner:hover .banner-media img, .film-banner:hover .banner-media video { scale: none; }
+}

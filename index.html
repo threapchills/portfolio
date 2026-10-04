@@ -10,6 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://portfolio.mikewhyle.com/assets/brand/og-card.jpg">
   <link rel="icon" href="favicon.png" type="image/png">
+  <meta name="theme-color" content="#17181a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
@@ -21,7 +22,7 @@
     #threshold { position: fixed; inset: 0; z-index: 200; background: #17181a;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=17">
+  <link rel="stylesheet" href="css/overhaul.css?v=18">
 </head>
 <body class="overhaul">
 
@@ -255,21 +256,22 @@
   <!-- One release map keeps every module, including shared audio, on the same revision. -->
   <script type="importmap">
     {"imports": {
-      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261004-writing",
-      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261004-writing",
-      "./js/core/audio.js": "./js/core/audio.js?v=20261004-writing",
-      "./js/core/cards.js": "./js/core/cards.js?v=20261004-writing",
-      "./js/core/chambers.js": "./js/core/chambers.js?v=20261004-writing",
-      "./js/core/chrome.js": "./js/core/chrome.js?v=20261004-writing",
-      "./js/core/cube.js": "./js/core/cube.js?v=20261004-writing",
-      "./js/core/cursor.js": "./js/core/cursor.js?v=20261004-writing",
-      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261004-writing",
-      "./js/core/ground.js": "./js/core/ground.js?v=20261004-writing",
-      "./js/core/journey.js": "./js/core/journey.js?v=20261004-writing",
-      "./js/core/loader.js": "./js/core/loader.js?v=20261004-writing",
-      "./js/core/readiness.js": "./js/core/readiness.js?v=20261004-writing",
-      "./js/core/sequence.js": "./js/core/sequence.js?v=20261004-writing",
-      "./js/core/util.js": "./js/core/util.js?v=20261004-writing"
+      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261004-polish1",
+      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261004-polish1",
+      "./js/core/audio.js": "./js/core/audio.js?v=20261004-polish1",
+      "./js/core/cards.js": "./js/core/cards.js?v=20261004-polish1",
+      "./js/core/chambers.js": "./js/core/chambers.js?v=20261004-polish1",
+      "./js/core/chrome.js": "./js/core/chrome.js?v=20261004-polish1",
+      "./js/core/cube.js": "./js/core/cube.js?v=20261004-polish1",
+      "./js/core/cursor.js": "./js/core/cursor.js?v=20261004-polish1",
+      "./js/core/delight.js": "./js/core/delight.js?v=20261004-polish1",
+      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261004-polish1",
+      "./js/core/ground.js": "./js/core/ground.js?v=20261004-polish1",
+      "./js/core/journey.js": "./js/core/journey.js?v=20261004-polish1",
+      "./js/core/loader.js": "./js/core/loader.js?v=20261004-polish1",
+      "./js/core/readiness.js": "./js/core/readiness.js?v=20261004-polish1",
+      "./js/core/sequence.js": "./js/core/sequence.js?v=20261004-polish1",
+      "./js/core/util.js": "./js/core/util.js?v=20261004-polish1"
     }}
   </script>
   <script type="module">
@@ -282,12 +284,14 @@
     import { initGround } from './js/core/ground.js';
     import { audio, mountMuteButton } from './js/core/audio.js';
     import { initCursor } from './js/core/cursor.js';
+    import { initDelight } from './js/core/delight.js';
     import { initChrome } from './js/core/chrome.js';
     import { qs, easeInOut } from './js/core/util.js';
 
     gsap.registerPlugin(ScrollTrigger);
     mountMuteButton();
     initCursor();
+    initDelight();
 
     // the old chamber URLs redirect here with a hash; within a session a
     // dealt reading means no second threshold, straight to the landing
