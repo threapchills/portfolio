@@ -37,7 +37,6 @@ Omni modes in video generation models are a step change in fine-grained controll
 
 But Omni models also represent something bigger - and some see them as the surest path to AGI (roughly defined as AI that can perform all economically useful work that humans do). Just as LLMs can demonstrate emergent, unexpected capabilities, these world and omni models are seemingly able to surface intuitions about physics and reality that weren’t explicitly encoded. The World Model vs Language Model debate is a quiet schism in the AI world, which we’ll touch on in today’s Hot Take.
 
-Gemini Omni is coming to Pencil soon, and Kling 3 is already live on the platform, so users can leverage this cutting-edge creative tech today!
 
 🤝 Your Loans, Your Investments, Your Financial Flows - Now with AI Assistance
 US users on higher tiers may see a banking app integration pop up in ChatGPT. Recently launched as a preview, the feature will let OpenAI’s frontier-level GPT-5.5 Thinking model assist with personal finance. This could be a game-changer - both for those who want to make strategic financial decisions, as well as those who are just bored by personal money-management, and want to automate away the admin slog.

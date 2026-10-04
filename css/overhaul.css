@@ -608,6 +608,72 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 #fourth-door .artefact:hover .artefact-sigil { filter: none; opacity: 1; }
 #fourth-door .door-credit a { color: #2c6666; }
 
+/* The coding projects are a constellation of small tools: a quiet orbiting
+   field gives the rack one visual language while every card keeps its own
+   sigil and hover response. */
+#fourth-door { overflow: hidden; isolation: isolate; }
+#fourth-door::before {
+  content: '';
+  position: absolute;
+  inset: 9% 7%;
+  border: 1px solid rgba(44, 102, 102, 0.12);
+  border-radius: 50%;
+  transform: rotate(-8deg) scaleX(1.15);
+  pointer-events: none;
+}
+#fourth-door::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .22;
+  background: repeating-conic-gradient(from 18deg at 50% 42%, transparent 0 11deg, rgba(196,146,42,.14) 11.5deg 12deg, transparent 12.5deg 28deg);
+  mask-image: radial-gradient(ellipse at 50% 42%, #000 0 18%, transparent 67%);
+  animation: constellation-turn 38s linear infinite;
+}
+#fourth-door .door-eyebrow,
+#fourth-door .door-title,
+#fourth-door .artefacts,
+#fourth-door .door-credit { position: relative; z-index: 1; }
+.artefacts { perspective: 1200px; }
+.artefact {
+  --mx: 0deg;
+  --my: 0deg;
+  --lift: 0px;
+  transform: translate3d(0, var(--lift), 0) rotateX(var(--my)) rotateY(var(--mx));
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: border-color .35s ease, box-shadow .45s ease, transform .45s cubic-bezier(.22,1,.36,1), opacity .7s ease;
+  opacity: 0;
+  translate: 0 18px;
+}
+.artefact.is-visible { opacity: 1; translate: 0 0; }
+.artefact::after {
+  content: '';
+  position: absolute;
+  width: 150%;
+  aspect-ratio: 1;
+  left: -25%;
+  top: -58%;
+  border: 1px solid rgba(44,102,102,.16);
+  border-radius: 50%;
+  transform: rotate(24deg);
+  animation: sigil-orbit 18s linear var(--orbit-delay, 0s) infinite;
+  pointer-events: none;
+}
+#fourth-door .artefact:hover { transform: translate3d(0, var(--lift), 0) rotateX(var(--my)) rotateY(var(--mx)); box-shadow: 0 18px 45px rgba(44,102,102,.12), inset 0 0 0 1px rgba(196,146,42,.16); }
+.artefact[data-symbol="moon"] .artefact-sigil { filter: sepia(.15) hue-rotate(165deg) saturate(.75); }
+.artefact[data-symbol="mask"] .artefact-sigil { filter: sepia(.25) hue-rotate(285deg) saturate(.72); }
+.artefact[data-symbol="moth"] .artefact-sigil { filter: sepia(.2) hue-rotate(65deg) saturate(.8); }
+.artefact[data-symbol="tower"] .artefact-sigil { filter: sepia(.35) hue-rotate(165deg) saturate(.9); }
+.artefact[data-symbol="owl"] .artefact-sigil { filter: sepia(.35) hue-rotate(35deg) saturate(.7); }
+@keyframes constellation-turn { to { transform: rotate(360deg); } }
+@keyframes sigil-orbit { to { transform: rotate(384deg); } }
+@media (prefers-reduced-motion: reduce) {
+  #fourth-door::after, .artefact::after { animation: none; }
+  .artefact { opacity: 1; translate: 0 0; transform: none; }
+}
+
 /* fixed chrome adapts while the paper room owns the viewport */
 .veil-mark img { transition: filter 0.5s ease; }
 body.mode-light .veil-mark img { filter: none; }
@@ -1306,9 +1372,14 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 .threshold-progress { text-align: center; max-width: 32rem; padding: 0 1.5rem; }
 #load-stage { font-family: var(--font-display); font-size: 1.6rem; margin: 0 0 .75rem; }
 #load-detail { font-size: .76rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; min-height: 1.3em; }
-.threshold-expectation { margin-top: 2rem; font-size: .8rem; line-height: 1.7; opacity: .65; }
 .threshold-moon { transition: filter .12s linear; }
 .is-preparing .threshold-moons { animation: preparation-breathe 1.8s ease-in-out infinite alternate; }
 .threshold-retry { background: transparent; color: var(--text); border: 1px solid currentColor; padding: .8rem 1.5rem; }
 @keyframes preparation-breathe { to { opacity: .5; } }
 @media (prefers-reduced-motion: reduce) { .is-preparing .threshold-moons { animation: none; } }
+.writing-access { position: absolute; z-index: 4; bottom: 13vh; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 1.5rem; white-space: nowrap; }
+.writing-access button { border: 0; border-bottom: 1px solid currentColor; background: none; color: var(--text); padding: .7rem 0; font: 500 .75rem var(--font-body); letter-spacing: .07em; cursor: pointer; }
+.writing-access button span { margin-left: .6em; }
+.writing-access button:focus-visible { outline: 2px solid var(--moon); outline-offset: 6px; }
+body.ground-lit .writing-access button { color: #1c1104; }
+@media (max-width: 600px) { .writing-access { bottom: 12vh; flex-direction: column; gap: .3rem; } .writing-access button { font-size: .7rem; } }

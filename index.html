@@ -50,7 +50,6 @@
     <div class="threshold-progress">
       <p id="load-stage" role="status" aria-live="polite">Measuring the journey&hellip;</p>
       <p id="load-detail"></p>
-      <p class="threshold-expectation">The complete visual journey loads before you enter.<br>Films, artwork and writing. Please allow a moment.</p>
     </div>
   </div>
 
@@ -125,6 +124,10 @@
         <div class="writing-ground" aria-hidden="true"></div>
         <div id="cube-scene">
           <div id="cube"><!-- faces built by cube.js --></div>
+          <div class="writing-access">
+            <button id="browse-writing">Browse all writing <span aria-hidden="true">↗</span></button>
+            <button id="latest-writing">Latest News Drop · #28 <span aria-hidden="true">→</span></button>
+          </div>
           <p class="cube-hint">Scroll to turn · drag to tumble · a tile opens its piece</p>
         </div>
       </div>
@@ -140,29 +143,29 @@
       <p class="door-eyebrow"><span class="eb-num">iv</span>Past the cards, a fourth door</p>
       <h2 class="door-title">Vibe-Coding</h2>
       <div class="artefacts">
-        <a class="artefact" href="https://slumbr.mikewhyle.com/" target="_blank" rel="noopener">
+        <a class="artefact" data-symbol="moon" href="https://slumbr.mikewhyle.com/" target="_blank" rel="noopener">
           <img class="artefact-sigil" src="assets/journey/moon-5.webp" alt="">
           <h3>SLUMBR</h3>
           <span class="artefact-cta">Drift off &rarr;</span>
         </a>
-        <a class="artefact" href="https://tarot.mikewhyle.com/" target="_blank" rel="noopener">
-          <img class="artefact-sigil" src="assets/cards/card-back.webp" alt="">
+        <a class="artefact" data-symbol="mask" href="https://tarot.mikewhyle.com/" target="_blank" rel="noopener">
+          <img class="artefact-sigil" src="assets/journey/mask-hires.webp" alt="">
           <h3>Afrikan Tarot</h3>
           <span class="artefact-cta">Read your cards &rarr;</span>
         </a>
-        <a class="artefact" href="https://threapchills.github.io/skybaby/" target="_blank" rel="noopener">
+        <a class="artefact" data-symbol="moth" href="https://threapchills.github.io/skybaby/" target="_blank" rel="noopener">
           <img class="artefact-sigil" src="assets/journey/moth-full.webp" alt="">
           <h3>Mystik Skies</h3>
           <span class="artefact-cta">Play &rarr;</span>
         </a>
-        <a class="artefact" href="https://threapchills.github.io/MagicCarpetWizard/" target="_blank" rel="noopener">
-          <img class="artefact-sigil" src="assets/journey/moth-full.webp" alt="">
+        <a class="artefact" data-symbol="tower" href="https://threapchills.github.io/MagicCarpetWizard/" target="_blank" rel="noopener">
+          <img class="artefact-sigil" src="assets/journey/land-03-tower.webp" alt="">
           <h3>Magic Carpet Wizard</h3>
           <p>My first ever GitHub repo to earn stars and forks. Hella proud of that!</p>
           <span class="artefact-cta">Play &rarr;</span>
         </a>
-        <a class="artefact" href="https://threapchills.github.io/ManuscriptMaker/" target="_blank" rel="noopener">
-          <img class="artefact-sigil" src="assets/cards/card-back.webp" alt="">
+        <a class="artefact" data-symbol="owl" href="https://threapchills.github.io/ManuscriptMaker/" target="_blank" rel="noopener">
+          <img class="artefact-sigil" src="assets/journey/owl1.webp" alt="">
           <h3>Manuscript Maker</h3>
           <p>A game in the making. Work in progress.</p>
           <span class="artefact-cta">Explore the WIP &rarr;</span>
@@ -236,7 +239,7 @@
   <span class="chamber-edge" id="edge-design"><em>iii</em> Human Doing</span>
 
   <!-- the writing plane: a cube face zoomed to full screen -->
-  <div id="reading-plane" aria-hidden="true">
+  <div id="reading-plane" role="dialog" aria-modal="true" aria-label="Writing archive" aria-hidden="true" data-lenis-prevent>
     <div class="plane-inner" id="plane-inner"></div>
   </div>
   <button class="plane-close" id="plane-close" hidden>Close</button>
@@ -301,6 +304,36 @@
     const film = initFilmSection(journey.lenis);
     const writing = initWritingSection(journey.lenis);
     const design = initDesignSection();
+    // The coding door behaves like a small constellation: every project has
+    // its own sigil, and the card follows the visitor's pointer in 3D.
+    const artefacts = [...document.querySelectorAll('.artefact')];
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      artefacts.forEach((card, index) => {
+        card.style.setProperty('--orbit-delay', `${index * -1.8}s`);
+        card.addEventListener('pointermove', (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width - 0.5;
+          const y = (event.clientY - rect.top) / rect.height - 0.5;
+          card.style.setProperty('--mx', `${(x * 8).toFixed(2)}deg`);
+          card.style.setProperty('--my', `${(-y * 8).toFixed(2)}deg`);
+          card.style.setProperty('--lift', '-8px');
+        });
+        card.addEventListener('pointerleave', () => {
+          card.style.setProperty('--mx', '0deg');
+          card.style.setProperty('--my', '0deg');
+          card.style.setProperty('--lift', '0px');
+        });
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      const artefactObserver = new IntersectionObserver((entries) => {
+        entries.forEach(({ target, isIntersecting }) => target.classList.toggle('is-visible', isIntersecting));
+      }, { threshold: 0.2 });
+      artefacts.forEach((card) => artefactObserver.observe(card));
+    } else {
+      artefacts.forEach((card) => card.classList.add('is-visible'));
+    }
     // the page's own light: charcoal to gold and back, the design chamber lit
     // by whichever board is on screen
     const ground = initGround(PIECE_TONES);
@@ -343,7 +376,11 @@
         for (const src of [...journey.scrubber.sources(), ...film.scrubber.sources()]) batch.add(src);
         for (const img of document.images) {
           img.loading = 'eager';
-          batch.add(img.currentSrc || img.src, 'image', img);
+          // Some chambers keep an empty <img> as a frame target and fill it
+          // later. An empty source is not an asset and must not resolve to
+          // the document URL (which would poison the strict manifest gate).
+          const source = img.currentSrc || img.getAttribute('src');
+          if (source) batch.add(source, 'image', img);
         }
         // Include the cube panels, masks, paper and other CSS-only artwork.
         const cssArtwork = [];

@@ -171,13 +171,20 @@ export function initWritingSection(lenis) {
   /* ---- the reading plane; the page's scroll rests while it is open ---- */
   let cube;
   let issueText = new Map();
-  function openPlane() {
+  let returnFocus;
+  function showPlane() {
+    returnFocus = document.activeElement;
+    document.querySelector('main').inert = true;
+    document.body.style.overflow = 'hidden';
     cube.suspended = true;
     lenis.stop();
     plane.classList.add('is-open');
     plane.setAttribute('aria-hidden', 'false');
     closeBtn.hidden = false;
     plane.scrollTop = 0;
+  }
+  function openPlane() {
+    showPlane();
     renderIndex();
     closeBtn.focus();
   }
@@ -185,19 +192,17 @@ export function initWritingSection(lenis) {
     plane.classList.remove('is-open');
     plane.setAttribute('aria-hidden', 'true');
     closeBtn.hidden = true;
+    document.querySelector('main').inert = false;
+    document.body.style.overflow = '';
     cube.suspended = false;
     lenis.start();
+    returnFocus?.focus({ preventScroll: true });
   }
   /* a single tile: an issue opens straight to its reading view, a story
      opens in its own tab */
   function openCell(entry) {
     if (entry.kind === 'issue') {
-      cube.suspended = true;
-      lenis.stop();
-      plane.classList.add('is-open');
-      plane.setAttribute('aria-hidden', 'false');
-      closeBtn.hidden = false;
-      plane.scrollTop = 0;
+      showPlane();
       openIssue({ file: entry.file, n: entry.n, date: entry.date, title: entry.title });
       closeBtn.focus();
     } else {
@@ -211,13 +216,22 @@ export function initWritingSection(lenis) {
   });
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && plane.classList.contains('is-open')) closeBtn.click();
+    if (e.key === 'Tab' && plane.classList.contains('is-open')) {
+      const controls = [...inner.querySelectorAll('button, a[href]'), closeBtn];
+      const index = controls.indexOf(document.activeElement);
+      e.preventDefault();
+      controls[(index + (e.shiftKey ? -1 : 1) + controls.length) % controls.length]?.focus();
+    }
   });
+  qs('#browse-writing').addEventListener('click', openPlane);
+  qs('#latest-writing').addEventListener('click', () => openCell(ENTRIES.find(e => e.kind === 'issue')));
 
   /* the whole index in one list: issues and articles together, newest
      writing first, because the division into genres was never the reader's
      problem */
   function renderIndex() {
     inner.dataset.view = 'list';
+    closeBtn.textContent = 'Close';
     inner.innerHTML = `
       <p class="plane-eyebrow">Everything written &middot; ${ENTRIES.length} pieces</p>
       <ul class="issue-list">
@@ -240,11 +254,13 @@ export function initWritingSection(lenis) {
     inner.querySelectorAll('button[data-i]').forEach((b) => {
       b.addEventListener('click', () => openIssue(ENTRIES[+b.dataset.i]));
     });
+    plane.scrollTop = 0;
   }
 
   /* an issue opens as a clean typographic reading view from plain text */
   async function openIssue({ file, n, date, title }) {
     inner.dataset.view = 'issue';
+    closeBtn.textContent = 'All writing';
     inner.innerHTML = `<p class="plane-eyebrow">Fetching issue ${n}&hellip;</p>`;
     let text = '';
     try {

@@ -10,7 +10,7 @@ Try it out for yourself here: → LINK
 🆕 Something New - and state-of-the-art
 The much-anticipated Spud has arrived! OpenAI dropped GPT-5.5, and it’s good!
 
-Not to be outdone by their rival Anthropic’s recent release of Opus 4.7, OpenAI dropped a model of the same caliber. Anthropic are likely still sitting on their now notorious Mythos model, which is even more powerful - perhaps too powerful to ever release! Anyhow, OpenAI’s answer, in the form of this new version of ChatGPT - is a natively omnimodal, 1M-token context window juggernaut, and their first fully retrained base model since GPT-4.5. It’ll be in Pencil for you to try out soon.  → LINK
+Not to be outdone by their rival Anthropic’s recent release of Opus 4.7, OpenAI dropped a model of the same caliber. Anthropic are likely still sitting on their now notorious Mythos model, which is even more powerful - perhaps too powerful to ever release! Anyhow, OpenAI’s answer, in the form of this new version of ChatGPT - is a natively omnimodal, 1M-token context window juggernaut, and their first fully retrained base model since GPT-4.5.  → LINK
 
 🤝 Something Borrowed (or stolen, perhaps)
 Speaking of Mythos, Anthropic is investigating alleged unsanctioned access to Claude Mythos Preview through one of its third-party vendor environments.

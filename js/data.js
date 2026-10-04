@@ -352,7 +352,7 @@ Then the light goes and the film moves indoors to a shebeen. Full tables, gold, 
    ============================================================ */
 
 const CHAMBER_MAP = {
-  "wishfish": { chamber: "film", chamberOrder: 0 },
+  "wishfish": { chamber: "film", chamberOrder: 0, rackLoop: "video/wishfish-hero.mp4" },
   "kalimba":       { chamber: "film",    chamberOrder: 1, rackLoop: "video/kalimba-hero.mp4" },
   "ramses":        { chamber: "film",    chamberOrder: 2, rackLoop: "video/ramses-hero.mp4" },
   "ice-tea":       { chamber: "film",    chamberOrder: 3, rackLoop: "video/ice-tea-hero.mp4" },

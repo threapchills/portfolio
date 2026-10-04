@@ -32,5 +32,7 @@ Days later, Google confirmed three separate incidents from earlier this year: du
 
 
 🔥The slowdown lawsuit
+The slowdown debate is now in court. Four paying subscribers filed a class-action lawsuit on 18 September against Anthropic, OpenAI, SpaceXAI and Google.
+They allege that the slowdown plan is tantamount to corporate collusion, and that any intentional pacing of model improvements leaves ChatGPT, Claude, Grok and Gemini subscribers paying for intentionally inferior products.
 The complaint seeks damages and an order blocking such an agreement. → LINK
 

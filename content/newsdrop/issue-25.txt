@@ -19,6 +19,7 @@ Around the same time, OpenAI also launched GPT Image 2.5. It comes five months a
 
 🤝 Suno and the Big Three
 Suno launched v6 on Tuesday. There’s also a new free lite version, v6-mini. This is their first model family built and trained with the blessing of Warner Music Group (considered one of the ‘big three’ who dominate the music industry), BMG and Believe. Their CEO Mikey Shulman calls it the first model made in partnership with the music industry. The move sets new legal precedents as, for the first time, Suno will share revenue with rightsholders - presumably giving artists whose works appear in training data a share of the profits.
+Suno has become the most popular AI music system to date, boasting around 2 million paid subscribers and a Discord channel with 400 000 members, but has been mired in ongoing legal and ethical controversies for years. The other two of the ‘big three’, Universal and Sony, are engaging Suno in ongoing legal challenges. → LINK
 
 💙 Fruit fly in the cloud
 On Thursday 3rd September, after nearly two decades of work, scientists at HHMI's Janelia Research Campus, together with Google Research and the University of Cambridge, published four landmark papers in the prestigious journal Cell detailing the completion of an ambitious project: mapping the complete central nervous system of a male fruit fly. It's the largest brain map (also called a connectome) ever made, containing 166 700 neurons, and the 125 million connections between them.
