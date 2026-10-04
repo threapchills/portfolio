@@ -22,7 +22,7 @@
     #threshold { position: fixed; inset: 0; z-index: 200; background: #17181a;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=19">
+  <link rel="stylesheet" href="css/overhaul.css?v=20">
 </head>
 <body class="overhaul">
 
@@ -103,6 +103,26 @@
     <!-- chamber i · Human Being · Film. The Mikey scrub leads, the
          banners walk the reel; the whole act rides the one scroll now -->
     <section id="film" aria-label="Film: the work">
+      <!-- the showreel opens the chamber: twelve worlds in ninety seconds -->
+      <div id="showreel" aria-label="Showreel">
+        <p class="reel-eyebrow"><span class="eb-num">i</span>Showreel &middot; 2026</p>
+        <h2 class="reel-title">Twelve worlds. <em>One imagination.</em></h2>
+        <div class="reel-frame" id="reel-frame">
+          <video id="reel-video" preload="none" playsinline controls>
+            <source src="showreel/mike-whyle-showreel-2026.mp4" type="video/mp4">
+          </video>
+          <button class="reel-poster" id="reel-play" aria-label="Play the showreel, with sound">
+            <img src="images/showreel-poster.jpg" alt="">
+            <span class="reel-play-icon" aria-hidden="true"></span>
+            <span class="reel-play-label">Play with sound &middot; 1:27</span>
+          </button>
+        </div>
+        <nav class="reel-links" aria-label="The showreel">
+          <a href="showreel/mike-whyle-showreel-2026.mp4" download>Download HD</a>
+          <a href="showreel/mike-whyle-showreel-2026-vertical.mp4" download>Vertical cut</a>
+          <a href="showreel/">Share page &rarr;</a>
+        </nav>
+      </div>
       <div id="scrub-wrap">
         <div id="scrub-stage" class="vignette">
           <canvas id="scrub-canvas"></canvas>
@@ -256,22 +276,22 @@
   <!-- One release map keeps every module, including shared audio, on the same revision. -->
   <script type="importmap">
     {"imports": {
-      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261004-polish2",
-      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261004-polish2",
-      "./js/core/audio.js": "./js/core/audio.js?v=20261004-polish2",
-      "./js/core/cards.js": "./js/core/cards.js?v=20261004-polish2",
-      "./js/core/chambers.js": "./js/core/chambers.js?v=20261004-polish2",
-      "./js/core/chrome.js": "./js/core/chrome.js?v=20261004-polish2",
-      "./js/core/cube.js": "./js/core/cube.js?v=20261004-polish2",
-      "./js/core/cursor.js": "./js/core/cursor.js?v=20261004-polish2",
-      "./js/core/delight.js": "./js/core/delight.js?v=20261004-polish2",
-      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261004-polish2",
-      "./js/core/ground.js": "./js/core/ground.js?v=20261004-polish2",
-      "./js/core/journey.js": "./js/core/journey.js?v=20261004-polish2",
-      "./js/core/loader.js": "./js/core/loader.js?v=20261004-polish2",
-      "./js/core/readiness.js": "./js/core/readiness.js?v=20261004-polish2",
-      "./js/core/sequence.js": "./js/core/sequence.js?v=20261004-polish2",
-      "./js/core/util.js": "./js/core/util.js?v=20261004-polish2"
+      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261004-reel",
+      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261004-reel",
+      "./js/core/audio.js": "./js/core/audio.js?v=20261004-reel",
+      "./js/core/cards.js": "./js/core/cards.js?v=20261004-reel",
+      "./js/core/chambers.js": "./js/core/chambers.js?v=20261004-reel",
+      "./js/core/chrome.js": "./js/core/chrome.js?v=20261004-reel",
+      "./js/core/cube.js": "./js/core/cube.js?v=20261004-reel",
+      "./js/core/cursor.js": "./js/core/cursor.js?v=20261004-reel",
+      "./js/core/delight.js": "./js/core/delight.js?v=20261004-reel",
+      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261004-reel",
+      "./js/core/ground.js": "./js/core/ground.js?v=20261004-reel",
+      "./js/core/journey.js": "./js/core/journey.js?v=20261004-reel",
+      "./js/core/loader.js": "./js/core/loader.js?v=20261004-reel",
+      "./js/core/readiness.js": "./js/core/readiness.js?v=20261004-reel",
+      "./js/core/sequence.js": "./js/core/sequence.js?v=20261004-reel",
+      "./js/core/util.js": "./js/core/util.js?v=20261004-reel"
     }}
   </script>
   <script type="module">
@@ -280,7 +300,7 @@
     import { initThreshold } from './js/core/loader.js';
     import { initJourney } from './js/core/journey.js';
     import { initReading } from './js/core/cards.js';
-    import { initFilmSection, initWritingSection, initDesignSection, PIECE_TONES } from './js/core/chambers.js';
+    import { initFilmSection, initWritingSection, initDesignSection, initShowreel, PIECE_TONES } from './js/core/chambers.js';
     import { initGround } from './js/core/ground.js';
     import { audio, mountMuteButton } from './js/core/audio.js';
     import { initCursor } from './js/core/cursor.js';
@@ -306,6 +326,7 @@
     const journey = initJourney();
     initReading();
     const film = initFilmSection(journey.lenis);
+    initShowreel(audio);
     const writing = initWritingSection(journey.lenis);
     const design = initDesignSection();
     // The coding door behaves like a small constellation: every project has

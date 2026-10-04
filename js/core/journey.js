@@ -472,6 +472,8 @@ export function initJourney() {
     const docTop = (el) => el.getBoundingClientRect().top + window.scrollY;
     const film = qs('#film');
     if (film) pts.push(docTop(film));
+    const scrub = qs('#scrub-wrap');
+    if (scrub) pts.push(docTop(scrub));
     const pin = qs('#cube-pin');
     if (pin) {
       // the cube's four dwells: one beat per fronted face
@@ -492,7 +494,7 @@ export function initJourney() {
   };
   window.addEventListener('keydown', (e) => {
     if (qs('#threshold') || qs('#reading-plane')?.classList.contains('is-open')) return;
-    if (e.target.closest('input, textarea, [contenteditable]')) return;
+    if (e.target.closest('input, textarea, video, [contenteditable]')) return;
     if (!['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp'].includes(e.key)) return;
     e.preventDefault();
     const pts = beatPositions();

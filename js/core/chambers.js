@@ -151,6 +151,30 @@ export function initFilmSection(lenis) {
   return { scrubber, preload };
 }
 
+/* ---- the showreel: a poster that plays with sound, the room's own
+   score ducking beneath it, and a pause whenever it leaves the frame ---- */
+export function initShowreel(audio) {
+  const frame = qs('#reel-frame'), video = qs('#reel-video'), play = qs('#reel-play');
+  if (!frame || !video || !play) return;
+  play.addEventListener('click', () => {
+    frame.classList.add('is-playing');
+    video.muted = false;
+    // a browser that refuses sound still gets the picture
+    video.play().catch(() => { video.muted = true; video.play().catch(() => {}); });
+    video.focus({ preventScroll: true });
+  });
+  video.addEventListener('play', () => { frame.classList.add('is-playing'); audio.duck(true); });
+  video.addEventListener('pause', () => audio.duck(false));
+  video.addEventListener('ended', () => {
+    audio.duck(false);
+    frame.classList.remove('is-playing');
+    video.currentTime = 0;
+  });
+  new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting && !video.paused) video.pause();
+  }, { threshold: 0.2 }).observe(frame);
+}
+
 /* ============================================================
    chamber ii — writing: the cube, turned by the scroll
    ============================================================ */

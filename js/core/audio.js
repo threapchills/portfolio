@@ -172,7 +172,7 @@ export class AudioEngine {
     document.dispatchEvent(new CustomEvent('mw:muted', { detail: muted }));
     if (!this.master) return;
     const t = this.ctx.currentTime;
-    const target = muted ? 0.0001 : MASTER_LEVEL;
+    const target = (muted || this.ducked) ? 0.0001 : MASTER_LEVEL;
     this.master.gain.cancelScheduledValues(t);
     if (instant) {
       this.master.gain.setValueAtTime(target, t);
@@ -181,6 +181,17 @@ export class AudioEngine {
       this.master.gain.setValueAtTime(Math.max(this.master.gain.value, 0.0001), t);
       this.master.gain.exponentialRampToValueAtTime(target, t + 0.4);
     }
+  }
+
+  /* a film playing with its own sound: the room falls quiet beneath it,
+     and comes back up, slowly, when the film stops */
+  duck(on) {
+    this.ducked = on;
+    if (!this.master || this.muted) return;
+    const t = this.ctx.currentTime;
+    this.master.gain.cancelScheduledValues(t);
+    this.master.gain.setValueAtTime(Math.max(this.master.gain.value, 0.0001), t);
+    this.master.gain.exponentialRampToValueAtTime(on ? 0.0001 : MASTER_LEVEL, t + (on ? 0.6 : 2.2));
   }
 
   toggleMute() {

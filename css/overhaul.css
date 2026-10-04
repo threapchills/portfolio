@@ -1589,3 +1589,110 @@ html::-webkit-scrollbar-thumb { background: rgba(204, 145, 61, 0.45); border-rad
   .banner-media img, .banner-media video { transition: opacity 0.7s ease; }
   .film-banner:hover .banner-media img, .film-banner:hover .banner-media video { scale: none; }
 }
+
+/* ============================================================
+   the showreel: twelve worlds, opening the film chamber
+   ============================================================ */
+#showreel {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(1.1rem, 2.6vh, 1.8rem);
+  padding: clamp(6rem, 16vh, 10rem) clamp(1rem, 4vw, 3rem) clamp(5rem, 13vh, 8rem);
+  text-align: center;
+}
+.reel-eyebrow {
+  margin: 0;
+  font-size: 0.68rem; letter-spacing: 0.34em; text-transform: uppercase;
+  color: var(--flare);
+}
+.reel-eyebrow .eb-num { color: var(--gold); margin-right: 0.9em; font-family: var(--font-display); font-style: italic; letter-spacing: 0.1em; text-transform: none; font-size: 1.15em; }
+.reel-title {
+  margin: 0 0 clamp(0.6rem, 2vh, 1.4rem);
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(2.3rem, 5.6vw, 4.4rem); line-height: 1.02;
+  color: var(--bone);
+  text-wrap: balance;
+}
+.reel-title em { font-weight: 400; color: var(--moon); }
+.reel-frame {
+  position: relative;
+  width: min(100%, 1320px);
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid rgba(204, 145, 61, 0.3);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.55), 0 0 70px rgba(246, 188, 86, 0.07);
+  overflow: hidden;
+}
+.reel-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; }
+.reel-poster {
+  position: absolute; inset: 0;
+  /* the call sits beneath the wordmark, never across it */
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 0.8rem;
+  padding-bottom: clamp(0.9rem, 4.5%, 2.6rem);
+  border: 0; padding: 0; background: #000;
+  color: var(--moon);
+  cursor: pointer;
+  transition: opacity 0.6s ease, visibility 0s linear 0.6s;
+}
+.reel-poster img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+.reel-poster::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 62%, rgba(8, 6, 4, 0.55));
+}
+.reel-poster:hover img, .reel-poster:focus-visible img { transform: scale(1.03); filter: brightness(1.1); }
+.reel-play-icon {
+  position: relative; z-index: 1;
+  width: clamp(48px, 4.6vw, 66px); aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--flare);
+  background: rgba(23, 24, 26, 0.45);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  box-shadow: 0 0 34px rgba(246, 188, 86, 0.3), inset 0 0 22px rgba(246, 188, 86, 0.14);
+  animation: reel-breathe 2.4s ease-in-out infinite;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease;
+}
+.reel-play-icon::before {
+  content: ''; position: absolute; left: 54%; top: 50%;
+  translate: -50% -50%;
+  border-style: solid; border-width: 0.62em 0 0.62em 1.05em;
+  border-color: transparent transparent transparent var(--moon);
+  font-size: clamp(11px, 1vw, 14px);
+}
+.reel-poster:hover .reel-play-icon { transform: scale(1.08); background-color: rgba(204, 145, 61, 0.22); }
+.reel-play-label {
+  position: relative; z-index: 1;
+  font-size: 0.64rem; letter-spacing: 0.32em; text-transform: uppercase;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+}
+@keyframes reel-breathe {
+  50% { box-shadow: 0 0 52px rgba(246, 188, 86, 0.5), inset 0 0 26px rgba(246, 188, 86, 0.2); }
+}
+.reel-frame.is-playing .reel-poster { opacity: 0; visibility: hidden; pointer-events: none; }
+.reel-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem 2rem; margin-top: 0.4rem; }
+.reel-links a {
+  position: relative;
+  color: var(--text); opacity: 0.72;
+  text-decoration: none;
+  font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.reel-links a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -0.45em; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: 100% 50%;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reel-links a:hover { opacity: 1; color: var(--moon); }
+.reel-links a:hover::after { transform: scaleX(1); transform-origin: 0 50%; }
+@media (prefers-reduced-motion: reduce) {
+  .reel-play-icon { animation: none; }
+  .reel-poster img { transition: filter 0.6s ease; }
+  .reel-poster:hover img { transform: none; }
+}
+/* a phone's frame is small: the play mark stands alone */
+@media (max-width: 600px) {
+  .reel-play-label { display: none; }
+  .reel-poster { padding-bottom: 7%; }
+}
