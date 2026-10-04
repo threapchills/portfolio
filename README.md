@@ -7,7 +7,24 @@ GitHub refuses any single file over 100 MB, so the master is stored here in
 
 ## Download
 
-On github.com, on this branch: **Code → Download ZIP**, then unzip it.
+Either on github.com, on this branch: **Code → Download ZIP**, then unzip it.
+
+Or download the pieces one by one (each link downloads directly), into one folder:
+
+1. [mike-whyle-showreel-2026-4k.mp4.part00](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part00)
+2. [mike-whyle-showreel-2026-4k.mp4.part01](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part01)
+3. [mike-whyle-showreel-2026-4k.mp4.part02](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part02)
+4. [mike-whyle-showreel-2026-4k.mp4.part03](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part03)
+5. [mike-whyle-showreel-2026-4k.mp4.part04](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part04)
+6. [mike-whyle-showreel-2026-4k.mp4.part05](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part05)
+7. [mike-whyle-showreel-2026-4k.mp4.part06](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part06)
+8. [mike-whyle-showreel-2026-4k.mp4.part07](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part07)
+9. [mike-whyle-showreel-2026-4k.mp4.part08](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part08)
+10. [mike-whyle-showreel-2026-4k.mp4.part09](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part09)
+11. [mike-whyle-showreel-2026-4k.mp4.part10](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part10)
+12. [mike-whyle-showreel-2026-4k.mp4.part11](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part11)
+13. [mike-whyle-showreel-2026-4k.mp4.part12](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part12)
+14. [mike-whyle-showreel-2026-4k.mp4.part13](https://github.com/threapchills/portfolio/raw/showreel-master/mike-whyle-showreel-2026-4k.mp4.part13)
 
 ## Rejoin
 
