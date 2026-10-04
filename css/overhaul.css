@@ -1466,6 +1466,11 @@ body.plane-open #mw-trail { mix-blend-mode: screen !important; opacity: 1 !impor
   .film-plane, .film-plane:first-child,
   .film-plane:nth-child(3n+2), .film-plane:nth-child(3n) { width: 84vw; transform: none; }
   #cube-pin { height: 300vh; }
+  /* the boards hang closer together on a phone, a little in from the glass
+     so their lean never clips them */
+  .design-piece { min-height: 74vh; padding: 5vh 0; }
+  .design-piece .piece-media, .design-piece .piece-caption { width: 92vw; }
+  .design-piece .piece-media { height: calc(92vw * 0.625); }
   /* narrower, and gazed at square-on: the off-centre gaze that suits a
      wide screen pushes the cube's left column off a phone */
   #cube { --size: min(60vw, 50vh); top: -5vh; }

@@ -436,6 +436,9 @@ export function initDesignSection() {
   const pieceEls = qsa('.design-piece', flow);
   if (!REDUCED_MOTION) {
     gsap.ticker.add(() => {
+      // a phone has no margin to sweep through: the lateral passes shrink to
+      // a lean, so no board or caption is ever pushed off the glass
+      const xk = innerWidth < 700 ? 0.12 : 1;
       for (let i = 0; i < pieceEls.length; i++) {
         const sec = pieceEls[i];
         const r = sec.getBoundingClientRect();
@@ -444,7 +447,7 @@ export function initDesignSection() {
         // -1 as the piece enters the frame, 0 at centre, +1 as it leaves
         const t = clamp(((innerHeight - r.top) / (innerHeight + r.height)) * 2 - 1, -1, 1);
         const ease = t * (1 - Math.abs(t) * 0.35);      // slows through the middle
-        sec.style.setProperty('--tx', `${(m.x * ease).toFixed(2)}vw`);
+        sec.style.setProperty('--tx', `${(m.x * xk * ease).toFixed(2)}vw`);
         sec.style.setProperty('--ty', `${(m.y * ease).toFixed(2)}vh`);
         sec.style.setProperty('--sc', (1 - (1 - m.s) * Math.abs(ease)).toFixed(4));
       }
