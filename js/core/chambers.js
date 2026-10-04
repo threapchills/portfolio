@@ -158,110 +158,95 @@ export function initWritingSection(lenis) {
   const plane = qs('#reading-plane');
   const inner = qs('#plane-inner');
   const closeBtn = qs('#plane-close');
+  const progress = qs('#plane-progress');
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
   /* One flat index of everything written, genre and order discarded. The
-     cube deals it round its six faces; the plane lists it in full. */
+     cube deals it round its six faces. */
   const ENTRIES = WRITING_FACES.flatMap((f) => (
     f.type === 'newsdrop'
       ? NEWSDROP.map((it) => ({ label: `#${it.n}`, title: it.title, kind: 'issue', file: it.file, n: it.n, date: it.date }))
       : f.items.map((st) => ({ title: st.title, kind: 'story', url: st.url, excerpt: st.excerpt }))
   ));
+  const ISSUES = ENTRIES.filter((e) => e.kind === 'issue');   // newest first
 
-  /* ---- the reading plane; the page's scroll rests while it is open ---- */
+  /* ---- the reading plane ----
+     There are exactly two places to be: at the cube, choosing, or inside a
+     piece, reading it. The plane holds one issue at a time; closing it
+     always returns to the cube, never to a list. */
   let cube;
   let issueText = new Map();
   let returnFocus;
   function showPlane() {
+    if (plane.classList.contains('is-open')) return;
     returnFocus = document.activeElement;
     document.querySelector('main').inert = true;
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('plane-open');
     cube.suspended = true;
     lenis.stop();
     plane.classList.add('is-open');
     plane.setAttribute('aria-hidden', 'false');
     closeBtn.hidden = false;
-    plane.scrollTop = 0;
-  }
-  function openPlane() {
-    showPlane();
-    renderIndex();
-    closeBtn.focus();
   }
   function closePlane() {
+    if (!plane.classList.contains('is-open')) return;
     plane.classList.remove('is-open');
     plane.setAttribute('aria-hidden', 'true');
     closeBtn.hidden = true;
     document.querySelector('main').inert = false;
     document.body.style.overflow = '';
+    document.body.classList.remove('plane-open');
     cube.suspended = false;
     lenis.start();
     returnFocus?.focus({ preventScroll: true });
   }
-  /* a single tile: an issue opens straight to its reading view, a story
-     opens in its own tab */
+  /* a single tile: an issue opens straight into its reading view, a story
+     (published elsewhere) opens where it lives, in its own tab */
   function openCell(entry) {
+    if (!entry) return;
     if (entry.kind === 'issue') {
       showPlane();
-      openIssue({ file: entry.file, n: entry.n, date: entry.date, title: entry.title });
-      closeBtn.focus();
+      openIssue(entry);
+      closeBtn.focus({ preventScroll: true });
     } else {
       window.open(entry.url, '_blank', 'noopener');
     }
   }
-  closeBtn.addEventListener('click', () => {
-    // step back through the plane's own states before closing
-    if (inner.dataset.view === 'issue') renderIndex();
-    else closePlane();
-  });
+  closeBtn.addEventListener('click', closePlane);
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && plane.classList.contains('is-open')) closeBtn.click();
-    if (e.key === 'Tab' && plane.classList.contains('is-open')) {
-      const controls = [...inner.querySelectorAll('button, a[href]'), closeBtn];
+    if (!plane.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closePlane();
+    if (e.key === 'Tab') {
+      const controls = [closeBtn, ...inner.querySelectorAll('button, a[href]')];
       const index = controls.indexOf(document.activeElement);
       e.preventDefault();
       controls[(index + (e.shiftKey ? -1 : 1) + controls.length) % controls.length]?.focus();
     }
   });
-  qs('#browse-writing').addEventListener('click', openPlane);
-  qs('#latest-writing').addEventListener('click', () => openCell(ENTRIES.find(e => e.kind === 'issue')));
+  const latest = qs('#latest-writing');
+  latest.innerHTML = `Latest News Drop · #${ISSUES[0].n} <span aria-hidden="true">→</span>`;
+  latest.addEventListener('click', () => openCell(ISSUES[0]));
 
-  /* the whole index in one list: issues and articles together, newest
-     writing first, because the division into genres was never the reader's
-     problem */
-  function renderIndex() {
-    inner.dataset.view = 'list';
-    closeBtn.textContent = 'Close';
-    inner.innerHTML = `
-      <p class="plane-eyebrow">Everything written &middot; ${ENTRIES.length} pieces</p>
-      <ul class="issue-list">
-        ${ENTRIES.map((e, i) => (e.kind === 'issue' ? `
-          <li>
-            <button data-i="${i}">
-              <span class="issue-num">#${e.n}</span>
-              <span class="issue-title">${esc(e.title)}</span>
-              <span class="issue-date">${e.date}</span>
-            </button>
-          </li>` : `
-          <li>
-            <a href="${e.url}" target="_blank" rel="noopener">
-              <span class="issue-title">${esc(e.title)}</span>
-              <span class="issue-date">read &rarr;</span>
-            </a>
-            ${e.excerpt ? `<p class="issue-excerpt">${esc(e.excerpt)}</p>` : ''}
-          </li>`)).join('')}
-      </ul>`;
-    inner.querySelectorAll('button[data-i]').forEach((b) => {
-      b.addEventListener('click', () => openIssue(ENTRIES[+b.dataset.i]));
-    });
-    plane.scrollTop = 0;
-  }
+  // a hairline of gold measures how far through the piece the reader is
+  plane.addEventListener('scroll', () => {
+    const max = plane.scrollHeight - plane.clientHeight;
+    progress.style.transform = `scaleX(${max > 0 ? (plane.scrollTop / max).toFixed(4) : 0})`;
+  }, { passive: true });
+
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December'];
+  const longDate = (iso) => {
+    const [y, m, d] = iso.split('-').map(Number);
+    return `${d} ${MONTHS[m - 1]} ${y}`;
+  };
 
   /* an issue opens as a clean typographic reading view from plain text */
   async function openIssue({ file, n, date, title }) {
     inner.dataset.view = 'issue';
-    closeBtn.textContent = 'All writing';
-    inner.innerHTML = `<p class="plane-eyebrow">Fetching issue ${n}&hellip;</p>`;
+    plane.scrollTop = 0;
+    progress.style.transform = 'scaleX(0)';
+    inner.innerHTML = `<p class="plane-eyebrow plane-fetching">Summoning issue ${n}&hellip;</p>`;
     let text = '';
     try {
       text = issueText.get(file);
@@ -269,42 +254,68 @@ export function initWritingSection(lenis) {
         const response = await fetch(`content/newsdrop/${file}`);
         if (!response.ok) throw new Error(response.status);
         text = await response.text();
+        issueText.set(file, text);
       }
     } catch {
-      inner.innerHTML = `<p class="plane-eyebrow">This issue would not be summoned. Try again.</p>`;
+      inner.innerHTML = `<p class="plane-eyebrow">This issue would not be summoned. Close it and try once more.</p>`;
       return;
     }
-    const lines = text.split('\n');
-    const bodyLines = lines.slice(1);
+    const bodyLines = text.split('\n').slice(1);
     const paras = bodyLines.join('\n').split(/\n\s*\n/).map((s) => s.trim()).filter(Boolean);
     const emojiLead = /^[^\w\s"'‘“(]/u;
-    const html = paras.map((p) => {
-      const clean = esc(p).replace(/\s*(→|->) ?LINK\.?/g, '');
+    const html = paras.map((p, pi) => {
+      // the source marks its outbound links with a bare "→ LINK"; there is
+      // nothing behind them here, so the marker goes
+      const clean = esc(p).replace(/\s*(→|->)\s*LINK\b\.?/g, '').trim();
+      if (!clean) return '';
       const lines = clean.split('\n');
       const first = lines[0].trim();
       let out = '';
       if (first.length < 80 && emojiLead.test(p) && !/^[.…]/.test(p)) {
-        out += `<p class="drop-heading">${first}</p>`;
+        // "📜 Claude's wet lab": the emoji stands apart as the section's mark
+        const m = first.match(/^(\S+)\s+(.*)$/u);
+        out += m
+          ? `<h2 class="drop-heading"><span class="drop-mark" aria-hidden="true">${m[1]}</span>${m[2]}</h2>`
+          : `<h2 class="drop-heading">${first}</h2>`;
         lines.shift();
       }
-      if (lines.length) out += `<p>${lines.join('<br>')}</p>`;
+      if (lines.length) out += `<p${pi === 0 && !out ? ' class="issue-lede"' : ''}>${lines.join('<br>')}</p>`;
       return out;
     }).join('');
+
+    const at = ISSUES.findIndex((e) => e.n === n);
+    const newer = ISSUES[at - 1], older = ISSUES[at + 1];
+    const step = (e, dir) => e ? `
+      <button class="issue-step is-${dir}" data-n="${e.n}">
+        <span class="step-dir">${dir === 'older' ? '&larr; Previous issue' : 'Next issue &rarr;'}</span>
+        <span class="step-title">#${e.n} &middot; ${esc(e.title)}</span>
+      </button>` : '<span></span>';
     inner.innerHTML = `
-      <div class="issue-body">
-        <button class="plane-close back-to-list" style="position:static">&larr; All issues</button>
+      <article class="issue-body">
+        <p class="issue-kicker">The News Drop <span>#${n}</span></p>
         <h1>${esc(title)}</h1>
-        <p class="issue-meta">The News Drop #${n} · ${date}</p>
+        <p class="issue-meta">${longDate(date)}</p>
+        <div class="issue-rule" aria-hidden="true"></div>
         ${html}
-      </div>`;
-    inner.querySelector('.back-to-list').addEventListener('click', renderIndex);
+        <p class="issue-end" aria-hidden="true">&#9790;</p>
+      </article>
+      <nav class="issue-nav" aria-label="More issues">
+        ${step(older, 'older')}
+        ${step(newer, 'newer')}
+      </nav>
+      <button class="issue-return">Back to the cube</button>`;
+    inner.querySelectorAll('.issue-step').forEach((b) => b.addEventListener('click', () => {
+      openIssue(ISSUES.find((e) => e.n === +b.dataset.n));
+      closeBtn.focus({ preventScroll: true });
+    }));
+    inner.querySelector('.issue-return').addEventListener('click', closePlane);
     plane.scrollTop = 0;
   }
 
   /* ---- the cube: the scroll walks it through one full revolution,
      dwelling on each face; drag stays free for play ---- */
   cube = new WritingCube(qs('#cube'), ENTRIES, {
-    onSelect: openPlane, onCell: openCell, wheel: false,
+    onCell: openCell, wheel: false,
   });
   if (location.search.includes('dbg')) window.__cube = cube;
 
