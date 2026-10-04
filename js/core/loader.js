@@ -42,10 +42,34 @@ export function initThreshold({ run, onEnter }) {
   };
   return run(paint, preparing).then(() => {
     stage.textContent = 'The journey is ready';
-    detail.textContent = 'All visuals and film previews are loaded.';
-    threshold.classList.add('is-leaving');
-    onEnter();
-    setTimeout(() => threshold.remove(), 1400);
+    detail.textContent = 'Best with the sound on.';
+    meter.setAttribute('aria-valuenow', '100');
+    threshold.classList.remove('is-preparing');
+    threshold.classList.add('is-ready');
+    /* One click to enter. A browser will not let a page make sound until the
+       visitor clicks, taps or presses a key, so the way in is that gesture:
+       whoever enters, enters with the sound actually playing. */
+    const enter = document.createElement('button');
+    enter.className = 'threshold-enter';
+    enter.innerHTML = 'Enter <span aria-hidden="true">&rarr;</span>';
+    threshold.appendChild(enter);
+    enter.focus({ preventScroll: true });
+    let gone = false;
+    const go = () => {
+      if (gone) return;
+      gone = true;
+      removeEventListener('keydown', onKey);
+      threshold.classList.add('is-leaving');
+      onEnter();
+      setTimeout(() => threshold.remove(), 1400);
+    };
+    // anywhere on the threshold will do, and so will the keys a reader
+    // reaches for to begin
+    const onKey = (e) => {
+      if (['Enter', ' ', 'ArrowDown', 'PageDown'].includes(e.key)) { e.preventDefault(); go(); }
+    };
+    threshold.addEventListener('click', go);
+    addEventListener('keydown', onKey);
   }).catch(error => {
     console.error('[threshold]', error);
     threshold.classList.remove('is-preparing');

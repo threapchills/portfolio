@@ -104,6 +104,7 @@ export function initCursor() {
      to report the pointer itself. */
   const HOT = 'a, button, [role="button"], .card, .film-banner, .artefact';
   const LABELS = [
+    ['#threshold.is-ready', 'Enter'],
     ['.reel-poster', 'Play'],
     ['.film-banner.is-more', 'Enter'],
     ['.film-banner', 'Watch'],

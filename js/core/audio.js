@@ -17,6 +17,18 @@ const ROTATE_MIN = 60, ROTATE_MAX = 90;
 const XFADE = 1.5;                 // variant crossfade, seconds
 const SOUND_KEY = 'mw-sound';      // 'off' | 'on', written only on an explicit choice
 
+/* A browser will not let a page make sound before the visitor's first click,
+   tap or key, and scrolling does not count. The first variant of each stem
+   is fetched during the threshold, so when the Enter click wakes the room
+   only the decode stands between the gesture and the sound. */
+const RAW = new Map();             // variant -> Promise<ArrayBuffer>
+export function prefetchStems() {
+  for (const variants of Object.values(STEMS)) {
+    const v = variants[0];
+    if (!RAW.has(v)) RAW.set(v, fetch(fromRoot(`audio/stems/${v}.ogg`)).then((r) => r.arrayBuffer()));
+  }
+}
+
 class Channel {
   constructor(engine, name) {
     this.engine = engine;
@@ -35,8 +47,9 @@ class Channel {
 
   async buffer(variant) {
     if (this.buffers[variant]) return this.buffers[variant];
-    const res = await fetch(fromRoot(`audio/stems/${variant}.ogg`));
-    const raw = await res.arrayBuffer();
+    const early = RAW.get(variant);
+    RAW.delete(variant);             // decoding detaches the bytes: use them once
+    const raw = await (early || fetch(fromRoot(`audio/stems/${variant}.ogg`)).then((r) => r.arrayBuffer()));
     const buf = await this.engine.ctx.decodeAudioData(raw);
     this.buffers[variant] = buf;
     return buf;
@@ -128,6 +141,7 @@ export class AudioEngine {
     if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
     this.ctx.onstatechange = () => {
       if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+      document.dispatchEvent(new CustomEvent('mw:audiostate'));
     };
     this.master = this.ctx.createGain();
     const comp = this.ctx.createDynamicsCompressor();
@@ -151,6 +165,20 @@ export class AudioEngine {
     };
     this._raf = requestAnimationFrame(loop);
     if (PARAMS.has('mixdebug')) this.mountDebug();
+  }
+
+  /* Inside a gesture: make the room audible, whatever state it was left in
+     (never started, or suspended by a phone that took the audio away). */
+  wake() {
+    if (!this.started) this.start(this.muted);
+    if (!this.ctx) return;
+    this.prime();
+    if (this.ctx.state !== 'running') this.ctx.resume().catch(() => {});
+  }
+
+  /* true only when sound is really reaching the speakers */
+  get audible() {
+    return !this.muted && !!this.ctx && this.ctx.state === 'running';
   }
 
   /* Warm every channel up front: the scroll can cross from sky into
@@ -232,19 +260,28 @@ window.__audio = audio;
 export function mountMuteButton() {
   const btn = document.getElementById('mute-btn');
   if (!btn) return;
+  /* the button tells the truth: on, off, or on-but-waiting for the browser
+     to allow it, which glows until a click lets the sound through */
   const paint = () => {
+    const waiting = !audio.muted && !audio.audible;
     btn.classList.toggle('is-muted', audio.muted);
-    btn.setAttribute('aria-label', audio.muted ? 'Play sound' : 'Pause sound');
-    btn.setAttribute('aria-pressed', audio.muted ? 'true' : 'false');
+    btn.classList.toggle('is-waiting', waiting);
+    btn.setAttribute('aria-label', audio.muted ? 'Play sound' : waiting ? 'Start sound' : 'Pause sound');
+    btn.setAttribute('aria-pressed', audio.audible ? 'false' : 'true');
   };
   btn.addEventListener('click', () => {
-    // the play click doubles as the wake gesture when nothing else has
-    if (audio.muted && !audio.started) {
-      audio.start(false);
-      audio.prime();
+    if (audio.muted) {
+      audio.setMuted(false);
       localStorage.setItem(SOUND_KEY, 'on');
+      audio.wake();
+    } else if (!audio.audible) {
+      // shown as on, but held silent by the browser: this click releases it,
+      // it must never be the click that turns the sound off
+      audio.wake();
     } else audio.toggleMute();
+    paint();
   });
   document.addEventListener('mw:muted', paint);
+  document.addEventListener('mw:audiostate', paint);
   paint();
 }

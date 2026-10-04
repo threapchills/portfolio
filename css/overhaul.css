@@ -1591,7 +1591,9 @@ html::-webkit-scrollbar-thumb { background: rgba(204, 145, 61, 0.45); border-rad
 }
 
 /* ============================================================
-   the showreel: twelve worlds, opening the film chamber
+   the showreel: twelve worlds, opening the film chamber.
+   Its markup is off the page while the reel is re-cut (see the
+   showreel-master branch); these styles wait for its return.
    ============================================================ */
 #showreel {
   position: relative; z-index: 2;
@@ -1695,4 +1697,39 @@ html::-webkit-scrollbar-thumb { background: rgba(204, 145, 61, 0.45); border-rad
 @media (max-width: 600px) {
   .reel-play-label { display: none; }
   .reel-poster { padding-bottom: 7%; }
+}
+
+/* the way in: one click, which is also what lets the sound play */
+#threshold.is-ready { cursor: pointer; }
+.threshold-enter {
+  display: inline-flex; align-items: center; gap: 0.9em;
+  padding: 1em 2.4em 1em 2.7em;
+  border: 1px solid var(--flare);
+  border-radius: 100px;
+  background: rgba(204, 145, 61, 0.06);
+  color: var(--moon);
+  font: 500 0.78rem var(--font-ui);
+  letter-spacing: 0.36em; text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 34px rgba(246, 188, 86, 0.18), inset 0 0 18px rgba(246, 188, 86, 0.08);
+  animation: enter-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both, enter-breathe 2.6s 0.9s ease-in-out infinite;
+  transition: background-color 0.3s ease, color 0.3s ease, letter-spacing 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.threshold-enter span { display: inline-block; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+.threshold-enter:hover, .threshold-enter:focus-visible { background-color: rgba(204, 145, 61, 0.16); color: var(--bone); letter-spacing: 0.42em; }
+.threshold-enter:hover span, .threshold-enter:focus-visible span { transform: translateX(5px); }
+.threshold-enter:focus-visible { outline: 1px solid rgba(246, 230, 187, 0.55); outline-offset: 6px; border-radius: 100px; }
+@keyframes enter-rise { from { opacity: 0; transform: translateY(12px); } }
+@keyframes enter-breathe { 50% { box-shadow: 0 0 52px rgba(246, 188, 86, 0.34), inset 0 0 22px rgba(246, 188, 86, 0.14); } }
+#threshold.is-ready .threshold-moon { filter: none; }
+
+/* sound set to on, but the browser is still holding it: the button glows
+   until a click lets it through */
+#mute-btn.is-waiting { border-color: var(--flare); animation: sound-waiting 1.8s ease-in-out infinite; }
+@keyframes sound-waiting {
+  50% { box-shadow: 0 0 0 6px rgba(246, 188, 86, 0.12), 0 0 22px rgba(246, 188, 86, 0.35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .threshold-enter { animation: enter-rise 0.01s both; }
+  #mute-btn.is-waiting { animation: none; box-shadow: 0 0 0 4px rgba(246, 188, 86, 0.2); }
 }
