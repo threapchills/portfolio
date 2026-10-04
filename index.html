@@ -21,7 +21,7 @@
     #threshold { position: fixed; inset: 0; z-index: 200; background: #17181a;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=16">
+  <link rel="stylesheet" href="css/overhaul.css?v=17">
 </head>
 <body class="overhaul">
 
@@ -125,10 +125,9 @@
         <div id="cube-scene">
           <div id="cube"><!-- faces built by cube.js --></div>
           <div class="writing-access">
-            <button id="browse-writing">Browse all writing <span aria-hidden="true">↗</span></button>
             <button id="latest-writing">Latest News Drop · #28 <span aria-hidden="true">→</span></button>
           </div>
-          <p class="cube-hint">Scroll to turn · drag to tumble · a tile opens its piece</p>
+          <p class="cube-hint">Scroll to turn · drag to tumble · a titled tile opens its piece</p>
         </div>
       </div>
     </section>
@@ -239,10 +238,11 @@
   <span class="chamber-edge" id="edge-design"><em>iii</em> Human Doing</span>
 
   <!-- the writing plane: a cube face zoomed to full screen -->
-  <div id="reading-plane" role="dialog" aria-modal="true" aria-label="Writing archive" aria-hidden="true" data-lenis-prevent>
+  <div id="reading-plane" role="dialog" aria-modal="true" aria-label="Reading" aria-hidden="true" data-lenis-prevent>
+    <div class="plane-progress" id="plane-progress" aria-hidden="true"></div>
     <div class="plane-inner" id="plane-inner"></div>
   </div>
-  <button class="plane-close" id="plane-close" hidden>Close</button>
+  <button class="plane-close" id="plane-close" aria-label="Close and return to the cube" hidden>Close <span aria-hidden="true">&times;</span></button>
 
   <div id="doorway-veil"></div>
   <div class="grain-veil"></div>
@@ -255,21 +255,21 @@
   <!-- One release map keeps every module, including shared audio, on the same revision. -->
   <script type="importmap">
     {"imports": {
-      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261004-load2",
-      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261004-load2",
-      "./js/core/audio.js": "./js/core/audio.js?v=20261004-load2",
-      "./js/core/cards.js": "./js/core/cards.js?v=20261004-load2",
-      "./js/core/chambers.js": "./js/core/chambers.js?v=20261004-load2",
-      "./js/core/chrome.js": "./js/core/chrome.js?v=20261004-load2",
-      "./js/core/cube.js": "./js/core/cube.js?v=20261004-load2",
-      "./js/core/cursor.js": "./js/core/cursor.js?v=20261004-load2",
-      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261004-load2",
-      "./js/core/ground.js": "./js/core/ground.js?v=20261004-load2",
-      "./js/core/journey.js": "./js/core/journey.js?v=20261004-load2",
-      "./js/core/loader.js": "./js/core/loader.js?v=20261004-load2",
-      "./js/core/readiness.js": "./js/core/readiness.js?v=20261004-load2",
-      "./js/core/sequence.js": "./js/core/sequence.js?v=20261004-load2",
-      "./js/core/util.js": "./js/core/util.js?v=20261004-load2"
+      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261004-writing",
+      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261004-writing",
+      "./js/core/audio.js": "./js/core/audio.js?v=20261004-writing",
+      "./js/core/cards.js": "./js/core/cards.js?v=20261004-writing",
+      "./js/core/chambers.js": "./js/core/chambers.js?v=20261004-writing",
+      "./js/core/chrome.js": "./js/core/chrome.js?v=20261004-writing",
+      "./js/core/cube.js": "./js/core/cube.js?v=20261004-writing",
+      "./js/core/cursor.js": "./js/core/cursor.js?v=20261004-writing",
+      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261004-writing",
+      "./js/core/ground.js": "./js/core/ground.js?v=20261004-writing",
+      "./js/core/journey.js": "./js/core/journey.js?v=20261004-writing",
+      "./js/core/loader.js": "./js/core/loader.js?v=20261004-writing",
+      "./js/core/readiness.js": "./js/core/readiness.js?v=20261004-writing",
+      "./js/core/sequence.js": "./js/core/sequence.js?v=20261004-writing",
+      "./js/core/util.js": "./js/core/util.js?v=20261004-writing"
     }}
   </script>
   <script type="module">
