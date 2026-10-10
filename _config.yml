@@ -1,0 +1,6 @@
+# GitHub Pages builds this repo with Jekyll. The site itself is static
+# HTML; these working notes stay in the repo but off the published site.
+exclude:
+  - CLAUDE.md
+  - HANDOVER.md
+  - HANDOVER-SHOWREEL.md
