@@ -2228,3 +2228,53 @@ body.mode-light .pill-nav .pill-cv { background: var(--paper-ink); color: var(--
 #outro .outro-links a:hover { color: var(--paper-ink); opacity: 1; }
 #outro .outro-credit { color: var(--paper-muted); opacity: 0.9; }
 @media (max-width: 640px) { #outro.paper { border-radius: 0 0 24px 24px; } }
+
+/* ---- the writing chamber's ground: the essay, in the margin, turning
+   with the cube. It pins with the cube and sits beneath the scene, so the
+   cube, its drag and its tiles are untouched; the text is only ever seen
+   through a band that is brightest at the middle of the frame ---- */
+.essay-ground {
+  position: sticky; top: 0;
+  height: 100vh; height: 100svh;
+  margin-bottom: -100vh;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent 6%, rgba(0, 0, 0, 0.45) 22%, #000 46%, #000 56%, rgba(0, 0, 0, 0.45) 76%, transparent 88%);
+          mask-image: linear-gradient(transparent 6%, rgba(0, 0, 0, 0.45) 22%, #000 46%, #000 56%, rgba(0, 0, 0, 0.45) 76%, transparent 88%);
+}
+.essay-text {
+  position: absolute;
+  /* the right-hand margin: the cube is gazed at from left of centre, so
+     its silhouette leans left and the wider margin is on this side */
+  right: clamp(1.2rem, 3.5vw, 5rem);
+  top: 0;
+  width: min(24vw, 420px);
+  will-change: transform;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.12vw, 1.18rem);
+  line-height: 1.62;
+  color: rgba(239, 228, 205, 0.44);
+}
+.essay-text p { margin: 0 0 1.05em; }
+.essay-eyebrow {
+  font: 500 0.6rem var(--font-ui) !important;
+  letter-spacing: 0.36em; text-transform: uppercase;
+  color: var(--flare);
+  opacity: 0.75;
+}
+.essay-title {
+  margin: 0.4rem 0 0.2rem;
+  font-weight: 500;
+  font-size: clamp(2rem, 2.8vw, 2.8rem);
+  line-height: 1.02;
+  color: rgba(254, 249, 235, 0.82);
+}
+.essay-sub { font-style: italic; color: rgba(239, 228, 205, 0.55); margin-bottom: 2.2em !important; }
+.essay-key { font-style: normal; color: rgba(246, 188, 86, 0.92); }
+/* a phone has no margin beside the cube: the essay becomes the texture
+   behind it, the gold lines still catching the eye */
+@media (max-width: 768px) {
+  .essay-text { left: 6vw; right: auto; width: 88vw; font-size: 1rem; color: rgba(239, 228, 205, 0.15); }
+  .essay-key { color: rgba(246, 188, 86, 0.6); }
+}

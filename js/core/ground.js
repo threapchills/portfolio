@@ -1,9 +1,9 @@
 /* ground.js — the page's own light, changing as you descend.
    A flat background colour under a scroll this long reads as a wall. This
    one is a gradient in time rather than in space: charcoal under the reel,
-   warming through burnt umber across the films, arriving at gold by the time
-   the writing cube turns, back to charcoal for the council's coda and the
-   metal mark, and down to black at the loop, where it begins again.
+   warming through burnt umber under the Mikey film, charcoal again for the
+   cube and its essay, lit by the design boards' own tones, charcoal for the
+   council's coda and the metal mark, and down to black at the loop.
 
    Through the design chamber the fixed stops hand over to the work itself.
    Each board carries a tone taken from its own dominant mid-tone at build
@@ -24,9 +24,9 @@ const STOPS = [
   ['#about',        0.60, '#1b1612'],   // the paper covers it; the oracle waits beneath
   ['#reading-wrap', 0.30, '#33200f'],
   ['#film',         0.02, '#4a2c12'],   // burnt umber through the reel
-  ['#film',         0.65, '#8f6118'],
-  ['#writing',      0.10, '#c9922a'],   // gold by the time the cube turns
-  ['#writing',      0.92, '#b88423'],
+  ['#film',         0.65, '#1b1a19'],   // the rail is paper; its corners open onto the dark
+  ['#writing',      0.10, '#17181a'],   // charcoal for the cube and the essay beneath it
+  ['#writing',      0.92, '#17181a'],
   // #design is not listed: the work itself owns the ground there
   ['#fourth-door',  0.04, '#23201c'],   // warm charcoal, lightening into the paper room
   ['#outro',        0.10, '#17181a'],   // charcoal behind the paper's lifting edge

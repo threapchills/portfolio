@@ -543,3 +543,34 @@ export function initDesignSection() {
 
   return { warm };
 }
+
+/* ============================================================
+   the essay beneath the cube: Blood, Books and Bots travels up the
+   margin as the scroll turns the cube, from its title entering the
+   lit band to its last line leaving it. Its own trigger on the same
+   pin, so the cube's scrub and snapping are not touched.
+   ============================================================ */
+export function initEssayGround() {
+  const text = qs('#essay-text');
+  const pin = qs('#cube-pin');
+  if (!text || !pin) return;
+  let p = 0, y = 0, last = performance.now();
+  ScrollTrigger.create({
+    trigger: pin, start: 'top top', end: 'bottom bottom', scrub: true,
+    onUpdate: (self) => { p = self.progress; },
+  });
+  gsap.ticker.add(() => {
+    const now = performance.now();
+    const dt = Math.min((now - last) / 1000, 0.1);
+    last = now;
+    const r = pin.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;   // off-frame: rest
+    const vh = innerHeight;
+    // from the title sitting just under the lit band to the last line
+    // passing above it
+    const from = vh * 0.62, to = vh * 0.3 - text.offsetHeight;
+    const want = from + (to - from) * p;
+    y = REDUCED_MOTION ? want : damp(y || want, want, 8, dt);
+    text.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+  });
+}
