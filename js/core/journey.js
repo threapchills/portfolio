@@ -6,10 +6,11 @@
    of his light, the panel divides in three, and the three cards that were
    standing behind it turn: film, writing, design.
    The full council film is now the page's coda, after the work and the
-   outro: the Mikey wordmark, its letters full of film, opens, and the
-   council, the vortex, the spirit animals, the savannah and the masks
-   play out under the scroll before the mark is cast in metal and the
-   page goes dark and begins again at the reel. */
+   outro, and it plays backwards: the paper lifts off the oracle's gaze,
+   the masks, the savannah, the spirit animals and the vortex unwind to
+   the council, and the Mikey wordmark closes round it. The film inside
+   the letters then turns to liquid chrome in place, the same letterforms
+   to the pixel, and the page goes dark and begins again at the reel. */
 
 import { clamp, damp, seg, easeInOut, qs, qsa, IS_MOBILE, REDUCED_MOTION, PARAMS } from './util.js';
 import { FrameScrubber } from './sequence.js';
@@ -139,6 +140,10 @@ export function initJourney() {
     gctxR.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
   };
   const wakeReady = () => { wakeOk = true; wakeIdx = -1; drawWake(wakeP); };
+  let chromeApi = null;
+  const chromeStage = qs('#chrome-stage');
+  const chromeLine = qs('.chrome-line');
+  const useChrome = (api) => { chromeApi = api; };
   const readingIntro = qs('.reading-intro');
   const readingHint = qs('.reading-hint');
   const groundInk = qs('#reading-ground .ground-ink');
@@ -184,11 +189,14 @@ export function initJourney() {
     lightTY = clamp((e.clientY - r.top) / r.height * 100, 0, 100);
   }, { passive: true });
 
-  /* the journey scrub runs free: no snapping, the film chamber's feel */
+  /* the coda's scrub runs free: no snapping, the film chamber's feel. It
+     starts once the outro's paper has lifted clear of the stage (the
+     section climbs a screen under the outro), so the oracle holds while
+     the paper goes. */
   let progress = 0;
   ScrollTrigger.create({
     trigger: '#journey',
-    start: 'top top',
+    start: 'top -100%',
     end: 'bottom bottom',
     scrub: true,
     onUpdate: (self) => { progress = self.progress; },
@@ -254,8 +262,9 @@ export function initJourney() {
   /* the paper room: the fixed chrome flips while Vibe-Coding owns the frame */
   ScrollTrigger.create({
     trigger: '#fourth-door',
+    endTrigger: '#outro',
     start: 'top 45%',
-    end: 'bottom 55%',
+    end: 'bottom 6%',
     onToggle: (self) => document.body.classList.toggle('mode-light', self.isActive),
   });
 
@@ -267,11 +276,10 @@ export function initJourney() {
     const now = performance.now();
     const dt = Math.min((now - lastNow) / 1000, 0.1);
     lastNow = now;
-    const p = progress;
+    // film time runs backwards against the scroll: 1 is the oracle's gaze,
+    // 0 the council inside the closed wordmark
+    const p = 1 - progress;
 
-    /* the coda goes dark as the oracle settles, so the mark is cast in a
-       black room rather than cut in over a painting */
-    if (stageEl) stageEl.style.opacity = (1 - seg(p, 0.972, 1)).toFixed(3);
 
     /* velocity warp on the stage: scroll momentum stretches and shears,
        the same dialect the film chamber's banners speak */
@@ -312,7 +320,18 @@ export function initJourney() {
     /* the film under the scroll; past the end it lands exactly on the
        offering so the seam into the reading is pixel-identical */
     scrubber.setProgress(seg(p, SCRUB[0], SCRUB[1]));
-    if (p > 0.975) scrubber.progress = scrubber.target;
+    if (p > 0.975 || p < 0.1) scrubber.progress = scrubber.target;
+
+    /* the closed word turns to metal: the chrome is masked by the same
+       alpha the stencil punches its holes with, at the same size and
+       centre, so the film in the letters simply becomes chrome */
+    if (chromeApi) {
+      const cm = seg(progress, 0.955, 0.992, easeInOut);
+      if (chromeStage) chromeStage.style.opacity = cm.toFixed(3);
+      if (chromeLine) chromeLine.style.opacity = (seg(progress, 0.985, 1) * 0.55).toFixed(3);
+      chromeApi.setActive?.(cm > 0.001);
+      chromeApi.warm(seg(progress, 0.96, 1) * (1 - gateP));
+    }
     scrubber.tick(dt);
 
     if (!cardEls.length) cardEls = qsa('#card-table .card');
@@ -426,8 +445,7 @@ export function initJourney() {
       return r.top < vh * 0.5 && r.bottom > vh * 0.5 ? r : null;
     };
     if (probe('#loop-gate')) return MIX.outro;
-    if (probe('#chrome')) return MIX.chrome;
-    if (probe('#journey')) return mixAt(p);
+    if (probe('#journey')) return (1 - p) > 0.955 ? MIX.chrome : mixAt(p);
     if (probe('#outro')) return MIX.outro;
     if (probe('#fourth-door')) return MIX.coding;
     if (probe('#design')) return MIX.design;
@@ -475,11 +493,11 @@ export function initJourney() {
     if (outro) pts.push(docTop(outro));
     const j = qs('#journey');
     if (j) {
-      const jLen = j.offsetHeight - window.innerHeight;
-      for (const b of BEATS) pts.push(docTop(j) + b * jLen);
+      // the coda runs backwards, from a screen in (where the paper clears)
+      const vh = window.innerHeight;
+      const jLen = j.offsetHeight - 2 * vh;
+      for (const b of [...BEATS].reverse()) pts.push(docTop(j) + vh + (1 - b) * jLen);
     }
-    const chrome = qs('#chrome');
-    if (chrome) pts.push(docTop(chrome));
     return [...new Set(pts.map(Math.round))].sort((a, b) => a - b);
   };
   window.addEventListener('keydown', (e) => {
@@ -524,5 +542,5 @@ export function initJourney() {
     return true;
   }
 
-  return { lenis, scrubber, landTo, spotFor, openLoop, onLoop, wakeReady };
+  return { lenis, scrubber, landTo, spotFor, openLoop, onLoop, wakeReady, useChrome };
 }

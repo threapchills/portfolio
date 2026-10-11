@@ -28,11 +28,10 @@ const STOPS = [
   ['#writing',      0.10, '#c9922a'],   // gold by the time the cube turns
   ['#writing',      0.92, '#b88423'],
   // #design is not listed: the work itself owns the ground there
-  ['#fourth-door',  0.04, '#9c6a1e'],
-  ['#outro',        0.10, '#3c2711'],
-  ['#journey',      0.04, '#17181a'],   // the coda opens on charcoal, as the page once did
-  ['#journey',      0.62, '#241a12'],   // the first warmth, under the vortex
-  ['#chrome',       0.20, '#17181a'],   // back to charcoal behind the mark
+  ['#fourth-door',  0.04, '#23201c'],   // warm charcoal, lightening into the paper room
+  ['#outro',        0.10, '#17181a'],   // charcoal behind the paper's lifting edge
+  ['#journey',      0.04, '#17181a'],   // the coda: charcoal, so the stencil plate reads as the ground
+  ['#journey',      0.96, '#17181a'],   // and the metal is cast in the same room
   ['#loop-gate',    0.50, '#0e0b07'],   // and down into the dark, home to the reel
 ];
 

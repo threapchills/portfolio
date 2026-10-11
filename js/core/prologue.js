@@ -127,6 +127,10 @@ export function initPrologue({ audio, lenis }) {
     trigger: '#proof', endTrigger: '#about', start: 'top 6%', end: 'bottom 6%',
     onToggle: (self) => document.body.classList.toggle('mode-light', self.isActive),
   });
+  ScrollTrigger.create({
+    trigger: '#film-rail', start: 'top 6%', end: 'bottom 6%',
+    onToggle: (self) => document.body.classList.toggle('mode-light', self.isActive),
+  });
 
   /* the nav knows where you are */
   const navLinks = qsa('.pill-nav [data-nav]');

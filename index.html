@@ -22,7 +22,7 @@
     #threshold { position: fixed; inset: 0; z-index: 200; background: #17181a;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=22">
+  <link rel="stylesheet" href="css/overhaul.css?v=23">
 </head>
 <body class="overhaul">
 
@@ -108,11 +108,11 @@
         <h2 class="paper-title" id="proof-title"><span class="scribbled">Kind<svg class="scribble scribble-under" viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 17c26-6 58-9 90-8 34 1 62 4 94 1 5-.5 8-1 11-2M20 25c34-4 82-6 128-3"/></svg></span> words</h2>
         <div class="testimonials">
           <div class="t-col">
-            <figure class="t-card is-feature" style="--tilt:-1.1deg">
+            <figure class="t-card" style="--tilt:-1.1deg">
               <span class="t-cursor" style="--c:#3d7f86;--d:0s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Tim</b></span>
               <blockquote>
-                <p>&ldquo;Mike&rsquo;s an excellent writer with a clear and knowledgeable passion for all things AI - this has enabled him to step up fast to take over and build on jobs like help center management - on which he is fast and produces great quality work. He&rsquo;s also keen to chat AI and to build knowledge across the team.</p>
-                <p>Mike&rsquo;s output is fantastic and increasingly wide-ranging - the quality is always great&hellip;<br>&hellip;Mike&rsquo;s a great communicator and a really thoughtful human presence in the team. His eagerness to be involved and to talk with passion about AI is infectious. Moreover, he&rsquo;s a fast worker who is <mark class="hl">able to distill complex subject matter to simple outputs.</mark>&rdquo;</p>
+                <p>&ldquo;Mike&rsquo;s an excellent writer with a clear and knowledgeable passion for all things AI&hellip;</p>
+                <p>Mike&rsquo;s output is fantastic and increasingly wide-ranging - the quality is always great&hellip;<br>&hellip;Moreover, he&rsquo;s a fast worker who is <mark class="hl">able to distill complex subject matter to simple outputs.</mark>&rdquo;</p>
               </blockquote>
               <figcaption><strong>Tim Bowers</strong><span>Head of Education &amp; Enablement, Pencil</span></figcaption>
             </figure>
@@ -141,7 +141,8 @@
 
         <div class="clients">
           <p class="paper-eyebrow">Clients</p>
-          <p class="clients-copy">Some of the awesome companies and brands who&rsquo;ve entrusted me with their storytelling include <span class="circled">Pencil<svg class="scribble scribble-ring" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M150 9C112 1 52 3 22 18 2 28 3 50 26 61c32 15 104 16 145 3 24-8 30-26 12-41-10-8-30-13-52-15"/></svg></span>, Virgin Active, Radisson RED hotels, Kearney, Scatec, Africa Health Conference, Table Mountain Aerial Cableway Company (TMACC), as well as nimble start-ups like Lula, Deep Atomic, and Twintech.</p>
+          <p class="clients-copy">Some of the awesome companies and brands who&rsquo;ve entrusted me with their storytelling include <span class="circled">Pencil<svg class="scribble scribble-ring" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M150 9C112 1 52 3 22 18 2 28 3 50 26 61c32 15 104 16 145 3 24-8 30-26 12-41-10-8-30-13-52-15"/></svg></span><sup class="fn-mark" aria-describedby="fn-pencil">*</sup>, Virgin Active, Radisson RED hotels, Kearney, Scatec, Africa Health Conference, Table Mountain Aerial Cableway Company (TMACC), as well as nimble start-ups like Lula, Deep Atomic, and Twintech.</p>
+          <p class="clients-note" id="fn-pencil"><span aria-hidden="true">*</span> Currently full time at Pencil.</p>
           <div class="client-strip">
             <ul class="client-track" aria-label="Clients">
             <li><img src="images/clients/pencil.webp" alt="Pencil" width="113" height="32" style="--w:113px"></li>
@@ -227,7 +228,7 @@
           </div>
         </div>
       </div>
-      <div id="film-rail" aria-label="The films">
+      <div id="film-rail" class="paper" aria-label="The films">
         <div class="rail-stage">
           <div id="film-track">
             <div class="rail-intro">
@@ -298,7 +299,7 @@
     </section>
 
     <!-- Act VIII · the outro -->
-    <section id="outro" aria-label="Contact">
+    <section id="outro" class="paper" aria-label="Contact">
       <div class="outro-moons">
         <img src="assets/journey/moon-5.webp" alt="">
         <img src="assets/journey/moon-4.webp" alt="">
@@ -339,32 +340,27 @@
       </p>
     </section>
 
-    <!-- Coda · the council: the story film, scrubbed by scroll, now the
-         page's closing ritual before the mark -->
+    <!-- Coda · the council, played backwards: from the oracle's gaze to the
+         council and into the wordmark, whose letters then turn to chrome -->
     <section id="journey" aria-label="The journey into the artwork">
       <div class="stage vignette">
         <canvas id="hero-canvas"></canvas>
+        <!-- the mark, cast in living metal: the stencil's letters exactly,
+             so the film inside the word turns to chrome in place -->
+        <div id="chrome-stage">
+          <canvas id="chrome-canvas" aria-hidden="true"></canvas>
+          <h2 class="chrome-alt">Mikey</h2>
+        </div>
+        <p class="chrome-line">Cape Town</p>
         <div id="logo-veil" role="img" aria-label="Mikey">
-          <p class="hero-roles"><span class="eb-num">vi</span>Coda &middot; The council</p>
-          <p class="hero-hint">Scroll</p>
+
         </div>
       </div>
-    </section>
-
-    <!-- Act IX · the mark, cast in living metal. The page has said its
-         piece; this is the name, and then the world begins again. -->
-    <section id="chrome" aria-label="Mikey">
-      <div id="chrome-stage">
-        <canvas id="chrome-canvas" aria-hidden="true"></canvas>
-        <h2 class="chrome-alt">Mikey</h2>
-      </div>
-      <p class="chrome-line">Cape Town</p>
     </section>
 
     <!-- the loop gate: the dark comes down, and the page begins again at the reel -->
     <section id="loop-gate" aria-hidden="true">
       <div class="gate-stage">
-        <p class="gate-line">And so, back to the beginning.<span>The reel</span></p>
         <div id="gate-plate"></div>
       </div>
     </section>
@@ -385,7 +381,7 @@
   <div id="doorway-veil"></div>
   <div class="grain-veil"></div>
 
-  <script src="js/data.js?v=20261011"></script>
+  <script src="js/data.js?v=20261011b"></script>
   <script src="content/newsdrop/index.js?v=20261011"></script>
   <script src="js/vendor/gsap.min.js?v=3"></script>
   <script src="js/vendor/ScrollTrigger.min.js?v=3"></script>
@@ -393,23 +389,23 @@
   <!-- One release map keeps every module, including shared audio, on the same revision. -->
   <script type="importmap">
     {"imports": {
-      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261011-reel",
-      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261011-reel",
-      "./js/core/audio.js": "./js/core/audio.js?v=20261011-reel",
-      "./js/core/cards.js": "./js/core/cards.js?v=20261011-reel",
-      "./js/core/chambers.js": "./js/core/chambers.js?v=20261011-reel",
-      "./js/core/chrome.js": "./js/core/chrome.js?v=20261011-reel",
-      "./js/core/cube.js": "./js/core/cube.js?v=20261011-reel",
-      "./js/core/cursor.js": "./js/core/cursor.js?v=20261011-reel",
-      "./js/core/delight.js": "./js/core/delight.js?v=20261011-reel",
-      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261011-reel",
-      "./js/core/ground.js": "./js/core/ground.js?v=20261011-reel",
-      "./js/core/journey.js": "./js/core/journey.js?v=20261011-reel",
-      "./js/core/loader.js": "./js/core/loader.js?v=20261011-reel",
-      "./js/core/prologue.js": "./js/core/prologue.js?v=20261011-reel",
-      "./js/core/readiness.js": "./js/core/readiness.js?v=20261011-reel",
-      "./js/core/sequence.js": "./js/core/sequence.js?v=20261011-reel",
-      "./js/core/util.js": "./js/core/util.js?v=20261011-reel"
+      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261011-polish",
+      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261011-polish",
+      "./js/core/audio.js": "./js/core/audio.js?v=20261011-polish",
+      "./js/core/cards.js": "./js/core/cards.js?v=20261011-polish",
+      "./js/core/chambers.js": "./js/core/chambers.js?v=20261011-polish",
+      "./js/core/chrome.js": "./js/core/chrome.js?v=20261011-polish",
+      "./js/core/cube.js": "./js/core/cube.js?v=20261011-polish",
+      "./js/core/cursor.js": "./js/core/cursor.js?v=20261011-polish",
+      "./js/core/delight.js": "./js/core/delight.js?v=20261011-polish",
+      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261011-polish",
+      "./js/core/ground.js": "./js/core/ground.js?v=20261011-polish",
+      "./js/core/journey.js": "./js/core/journey.js?v=20261011-polish",
+      "./js/core/loader.js": "./js/core/loader.js?v=20261011-polish",
+      "./js/core/prologue.js": "./js/core/prologue.js?v=20261011-polish",
+      "./js/core/readiness.js": "./js/core/readiness.js?v=20261011-polish",
+      "./js/core/sequence.js": "./js/core/sequence.js?v=20261011-polish",
+      "./js/core/util.js": "./js/core/util.js?v=20261011-polish"
     }}
   </script>
   <script type="module">
@@ -484,11 +480,8 @@
     // by whichever board is on screen
     const ground = initGround(PIECE_TONES);
     const chrome = initChrome();
-    // the mark heats as it takes the frame, and cools as the loop gate rises
-    ScrollTrigger.create({
-      trigger: '#chrome', start: 'top bottom', end: 'bottom top', scrub: true,
-      onUpdate: (self) => chrome.warm(Math.sin(self.progress * Math.PI)),
-    });
+    // the coda hands the mark to the metal and heats it as it takes the frame
+    journey.useChrome(chrome);
 
     // the chambers' corner labels light while their act owns the frame
     for (const [sel, id] of [['#film', 'edge-film'], ['#writing', 'edge-writing'], ['#design', 'edge-design']]) {

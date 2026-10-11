@@ -263,7 +263,7 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 /* ============================================================
    the journey stage (Acts I to V)
    ============================================================ */
-#journey { position: relative; height: 1040vh; }  /* 317 frames, ~2.7vh each */
+#journey { position: relative; height: 1140vh; margin-top: -100vh; }  /* 317 frames, ~2.7vh each */
 .stage {
   position: sticky;
   top: 0;
@@ -597,11 +597,13 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
   /* both ends are the live ground, so the room dissolves into whatever
      colour the page happens to be either side of it instead of cutting
      against a fixed one; the fades are long enough to read as light */
-  background: linear-gradient(
-    var(--page-bg, var(--ground)) 0%,
-    #ece7db 26%,
-    #e8e2d3 74%,
-    var(--page-bg, var(--ground)) 100%);
+  /* the room lightens out of the live ground into paper, and stays paper:
+     Onwards is the same sheet, so the page's last word is said in the same
+     light as the kind words at the top */
+  background:
+    url('../assets/textures/paper-grain-soft.webp') 0 0 / 420px,
+    linear-gradient(#1c1e22 0%, var(--paper) 22%, var(--paper) 100%);
+  background-blend-mode: multiply, normal;
   color: #171310;
   text-align: center;
 }
@@ -622,7 +624,7 @@ body.ground-lit #mw-trail { mix-blend-mode: multiply; opacity: 0.5; }
 /* The coding projects are a constellation of small tools: a quiet orbiting
    field gives the rack one visual language while every card keeps its own
    sigil and hover response. */
-#fourth-door { overflow: hidden; isolation: isolate; }
+#fourth-door { overflow: hidden; isolation: isolate; z-index: 20; }
 #fourth-door::before {
   content: '';
   position: absolute;
@@ -838,23 +840,18 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 /* ============================================================
    Act IX — the mark, cast in living metal
    ============================================================ */
-#chrome {
-  position: relative;
-  min-height: 100vh; min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2.4rem;
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 48%, rgba(204, 145, 61, 0.10), transparent 72%);
-  overflow: hidden;
-}
+/* the stage sits exactly where the coda's stencil cuts its letters: the
+   same width (the veil's mask is min(82vw, 880px) wide, 92vw on a phone),
+   the same centre, the wordmark's own proportion; so the metal arrives in
+   the very holes the film was showing through */
 #chrome-stage {
-  position: relative;
-  width: min(84vw, 1120px);
-  aspect-ratio: 1800 / 1012;      /* the wordmark's own proportion */
-  z-index: 2;
+  position: absolute;
+  left: 50%; top: 50%;
+  width: min(82vw, 880px);
+  aspect-ratio: 1800 / 1012;
+  translate: -50% -50%;
+  z-index: 4;
+  opacity: 0;
 }
 /* the metal is only ever seen through the letterforms: the same alpha the
    opening plate punches its holes with, used here the other way up */
@@ -887,14 +884,16 @@ body.mode-light #mw-trail { mix-blend-mode: multiply; opacity: 0.45; }
 #chrome-stage.is-flat #chrome-canvas { display: none; }
 #chrome-stage.is-flat .chrome-alt { opacity: 0.92; }
 .chrome-line {
-  position: relative; z-index: 2;
+  position: absolute; z-index: 4;
+  left: 0; right: 0; bottom: 14vh;
+  text-align: center;
   margin: 0;
   font-family: var(--font-ui);
   font-size: 0.62rem;
   letter-spacing: 0.42em;
   text-transform: uppercase;
   color: var(--bone);
-  opacity: 0.55;
+  opacity: 0;
 }
 @media (max-width: 768px) {
   #chrome-stage { width: 92vw; }
@@ -1425,9 +1424,9 @@ body.plane-open #mw-trail { mix-blend-mode: screen !important; opacity: 1 !impor
   /* near full-bleed: the height cap keeps the caption and the board's own
      travel on screen together, and is what stops a wide board from being
      cropped to a letterbox slot on a short window */
-  width: min(96vw, 2000px);
-  height: min(78vh, calc(96vw * 0.625));
-  aspect-ratio: auto;
+  width: min(96vw, 2000px, calc(78vh * var(--ar, 1.7778)));
+  height: auto;
+  aspect-ratio: var(--ar, 1.7778);
   overflow: hidden;
   /* the pass, written per frame by chambers.js */
   transform: translate3d(var(--tx), var(--ty), 0) scale(var(--sc));
@@ -1441,13 +1440,11 @@ body.plane-open #mw-trail { mix-blend-mode: screen !important; opacity: 1 !impor
 }
 /* a tall board (a lookbook, an identity sheet) gets a portrait frame that
    matches its shape, so the whole thing shows without a crop */
-.design-piece.is-portrait .piece-media {
-  width: min(52vh, 88vw); height: min(78vh, 165vw); aspect-ratio: auto;
-}
+
 .design-piece .piece-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* no titles: the work speaks, an eyebrow marks it, micro copy only where
    a section opens */
-.piece-caption { width: min(96vw, 2000px); margin-top: 1.1rem; display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
+.piece-caption { width: min(96vw, 2000px, max(calc(78vh * var(--ar, 1.7778)), min(96vw, 560px))); margin-top: 1.1rem; display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
 .piece-caption .piece-eyebrow { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--bone); opacity: 0.72; }
 .piece-copy { max-width: 44ch; text-align: right; }
 .piece-caption p { font-size: 0.85rem; line-height: 1.6; opacity: 0.7; margin: 0 0 0.4rem; }
@@ -1522,8 +1519,8 @@ body.plane-open #mw-trail { mix-blend-mode: screen !important; opacity: 1 !impor
   /* the boards hang closer together on a phone, a little in from the glass
      so their lean never clips them */
   .design-piece { min-height: 74vh; padding: 5vh 0; }
-  .design-piece .piece-media, .design-piece .piece-caption { width: 92vw; }
-  .design-piece .piece-media { height: calc(92vw * 0.625); }
+  .design-piece .piece-media { width: min(92vw, calc(70vh * var(--ar, 1.7778))); }
+  .design-piece .piece-caption { width: 92vw; }
   /* narrower, and gazed at square-on: the off-centre gaze that suits a
      wide screen pushes the cube's left column off a phone */
   #cube { --size: min(60vw, 50vh); top: -5vh; }
@@ -2176,3 +2173,58 @@ body.mode-light .pill-nav .pill-cv { background: var(--paper-ink); color: var(--
   #about { border-radius: 0 0 24px 24px; }
   .veil-nav { padding: 0.9rem 1rem; }
 }
+
+/* ============================================================
+   polish · October 2026: the films and Onwards on paper, the
+   footnote, the coda's hand-off to the metal
+   ============================================================ */
+
+/* the asterisk beside the ringed Pencil, and its quiet footnote */
+.fn-mark {
+  font: 600 0.5em var(--font-ui);
+  color: #b07a2a;
+  margin-left: 0.08em;
+  vertical-align: super;
+  line-height: 0;
+}
+.clients-note {
+  margin: 1.2rem 0 0;
+  font: 400 0.72rem var(--font-ui);
+  letter-spacing: 0.08em;
+  color: var(--paper-muted);
+}
+.clients-note span { color: #b07a2a; margin-right: 0.3em; }
+
+/* the films: a sheet of paper slides over the end of the Mikey film, and
+   the cards travel across it like prints laid out on a table */
+#film-rail.paper {
+  margin-top: -40vh;
+  border-radius: 34px;
+  box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.3), 0 40px 90px rgba(0, 0, 0, 0.35);
+}
+#film-rail .rail-title { color: var(--paper-ink); }
+#film-rail .rail-sub { color: var(--paper-muted); opacity: 1; }
+#film-rail .rail-sub span { color: #b07a2a; }
+#film-rail .rail-intro .door-eyebrow { color: #2c6666; opacity: 1; }
+#film-rail .rail-progress { background: rgba(28, 17, 4, 0.12); }
+#film-rail .rail-progress span { background: #b07a2a; box-shadow: none; }
+#film-rail .film-banner { box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 26px 60px rgba(60, 38, 10, 0.28); }
+#film-rail .film-banner:hover { box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 34px 80px rgba(60, 38, 10, 0.38); }
+@media (max-width: 640px) { #film-rail.paper { border-radius: 24px; } }
+
+/* Onwards: the paper room's last sheet, its lower edge lifting off the
+   oracle as the coda begins */
+#outro.paper {
+  background-color: var(--paper);
+  border-radius: 0 0 34px 34px;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
+  padding-bottom: 14vh;
+}
+#outro .outro-eyebrow { color: #2c6666; }
+#outro .outro-title { color: var(--paper-ink); }
+#outro .contact-pill { color: var(--paper-ink); border-color: rgba(28, 17, 4, 0.22); }
+#outro .contact-pill:hover { color: var(--paper-ink); border-color: var(--paper-ink); box-shadow: none; background-color: rgba(28, 17, 4, 0.05); }
+#outro .outro-links a { color: var(--paper-ink); opacity: 0.62; }
+#outro .outro-links a:hover { color: var(--paper-ink); opacity: 1; }
+#outro .outro-credit { color: var(--paper-muted); opacity: 0.9; }
+@media (max-width: 640px) { #outro.paper { border-radius: 0 0 24px 24px; } }

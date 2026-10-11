@@ -374,38 +374,38 @@ const M = 'images/mythopoeic/';
 const H = 'images/';
 const D = 'images/design/';
 const PIECES = [
-  { img: D + 'desert-swag/withcar.webp', eyebrow: 'Desert Swag' },
-  { img: D + 'desert-swag/all-tied-up-beige.webp', eyebrow: 'Desert Swag', portrait: true },
-  { img: D + 'desert-swag/beige-space.webp', eyebrow: 'Desert Swag', portrait: true },
-  { img: D + 'desert-swag/double-view.webp', eyebrow: 'Desert Swag' },
-  { img: D + 'desert-swag/hill-grmen-beige.webp', eyebrow: 'Desert Swag', portrait: true },
-  { img: D + 'desert-swag/rearview-beige.webp', eyebrow: 'Desert Swag' },
-  { img: M + 'hero1.webp', eyebrow: 'Mythopoeic', text: 'A luxury brand that never existed, conjured whole with AI.', link: 'projects/mythopoeic/' },
-  { img: D + 'mythmood.webp', eyebrow: 'Mythopoeic', text: 'Editorial worlds, dreamed from salt flats and moonlight.' },
-  { img: D + 'myh.webp', eyebrow: 'Mythopoeic' },
-  { img: M + 'hero3.webp', eyebrow: 'Mythopoeic' },
-  { img: M + 'hero4.webp', eyebrow: 'Mythopoeic' },
-  { img: D + 'doubleview.webp', eyebrow: 'Mythopoeic' },
-  { img: M + 'hero6.webp', eyebrow: 'Mythopoeic' },
-  { img: M + 'bracelet-showcase.webp', eyebrow: 'Mythopoeic' },
-  { img: D + 'mytho12.webp', eyebrow: 'Mythopoeic', text: 'Copper and labradorite; the house materials.' },
-  { img: M + 'necklace-showcase-1.webp', eyebrow: 'Mythopoeic' },
-  { img: M + 'necklace-showcase--on-model.webp', eyebrow: 'Mythopoeic' },
-  { img: M + 'product-showcase-all-2.webp', eyebrow: 'Mythopoeic' },
-  { img: M + 'product-erf---rings.webp', eyebrow: 'Mythopoeic' },
-  { img: D + 'rhino-rider.webp', eyebrow: 'Mythopoeic', text: 'The brand extends into fauna, myth and landscape.' },
-  { img: M + 'rhino.webp', eyebrow: 'Mythopoeic' },
-  { img: H + 'healthtech-design0B.webp', eyebrow: 'EduTalkz · TravelMedz · TwinTech', text: 'Brand identities and visual systems for three healthtech startups.', link: 'projects/healthtech/' },
-  { img: D + 'herobanner.webp', eyebrow: 'EduTalkz' },
-  { img: H + 'healthtech-design0C.webp', eyebrow: 'Healthtech identities' },
-  { img: H + 'healthtech-design2.webp', eyebrow: 'Healthtech identities' },
-  { img: H + 'healthtech-design3.webp', eyebrow: 'Healthtech identities' },
-  { img: H + 'healthtech-design7.webp', eyebrow: 'Healthtech identities' },
-  { img: H + 'healthtech-design9.webp', eyebrow: 'Healthtech identities', text: 'Complex science, kept approachable; AI-first, at a fraction of the cost.' },
-  { img: H + 'healthtech-design10.webp', eyebrow: 'Healthtech identities' },
-  { img: H + 'healthtech-design13.webp', eyebrow: 'Healthtech identities' },
-  { img: D + 'lookbookv2.webp', eyebrow: 'Mikey · brand identity', portrait: true, text: 'Wordmark, monogram and mark system for the Mikey film brand.' },
-  { img: D + 'cars.webp', eyebrow: 'Automotive', text: 'Concept showroom visualisation.' },
+  { img: D + 'desert-swag/withcar.webp', ar: 1.7773, eyebrow: 'Desert Swag' },
+  { img: D + 'desert-swag/all-tied-up-beige.webp', ar: 0.9036, eyebrow: 'Desert Swag' },
+  { img: D + 'desert-swag/beige-space.webp', ar: 0.7999, eyebrow: 'Desert Swag' },
+  { img: D + 'desert-swag/double-view.webp', ar: 1.7778, eyebrow: 'Desert Swag' },
+  { img: D + 'desert-swag/hill-grmen-beige.webp', ar: 0.8000, eyebrow: 'Desert Swag' },
+  { img: D + 'desert-swag/rearview-beige.webp', ar: 1.7768, eyebrow: 'Desert Swag' },
+  { img: M + 'hero1.webp', ar: 1.7778, eyebrow: 'Mythopoeic', text: 'A luxury brand that never existed, conjured whole with AI.', link: 'projects/mythopoeic/' },
+  { img: D + 'mythmood.webp', ar: 1.7778, eyebrow: 'Mythopoeic', text: 'Editorial worlds, dreamed from salt flats and moonlight.' },
+  { img: D + 'myh.webp', ar: 1.7877, eyebrow: 'Mythopoeic' },
+  { img: M + 'hero3.webp', ar: 1.7778, eyebrow: 'Mythopoeic' },
+  { img: M + 'hero4.webp', ar: 1.7844, eyebrow: 'Mythopoeic' },
+  { img: D + 'doubleview.webp', ar: 2.0000, eyebrow: 'Mythopoeic' },
+  { img: M + 'hero6.webp', ar: 1.5190, eyebrow: 'Mythopoeic' },
+  { img: M + 'bracelet-showcase.webp', ar: 1.7778, eyebrow: 'Mythopoeic' },
+  { img: D + 'mytho12.webp', ar: 1.7877, eyebrow: 'Mythopoeic', text: 'Copper and labradorite; the house materials.' },
+  { img: M + 'necklace-showcase-1.webp', ar: 1.7778, eyebrow: 'Mythopoeic' },
+  { img: M + 'necklace-showcase--on-model.webp', ar: 1.0000, eyebrow: 'Mythopoeic' },
+  { img: M + 'product-showcase-all-2.webp', ar: 1.2414, eyebrow: 'Mythopoeic' },
+  { img: M + 'product-erf---rings.webp', ar: 1.7897, eyebrow: 'Mythopoeic' },
+  { img: D + 'rhino-rider.webp', ar: 1.7778, eyebrow: 'Mythopoeic', text: 'The brand extends into fauna, myth and landscape.' },
+  { img: M + 'rhino.webp', ar: 1.7778, eyebrow: 'Mythopoeic' },
+  { img: H + 'healthtech-design0B.webp', ar: 2.0000, eyebrow: 'EduTalkz · TravelMedz · TwinTech', text: 'Brand identities and visual systems for three healthtech startups.', link: 'projects/healthtech/' },
+  { img: D + 'herobanner.webp', ar: 1.6961, eyebrow: 'EduTalkz' },
+  { img: H + 'healthtech-design0C.webp', ar: 0.7459, eyebrow: 'Healthtech identities' },
+  { img: H + 'healthtech-design2.webp', ar: 0.6667, eyebrow: 'Healthtech identities' },
+  { img: H + 'healthtech-design3.webp', ar: 0.6667, eyebrow: 'Healthtech identities' },
+  { img: H + 'healthtech-design7.webp', ar: 1.7844, eyebrow: 'Healthtech identities' },
+  { img: H + 'healthtech-design9.webp', ar: 1.7778, eyebrow: 'Healthtech identities', text: 'Complex science, kept approachable; AI-first, at a fraction of the cost.' },
+  { img: H + 'healthtech-design10.webp', ar: 1.5947, eyebrow: 'Healthtech identities' },
+  { img: H + 'healthtech-design13.webp', ar: 1.7844, eyebrow: 'Healthtech identities' },
+  { img: D + 'lookbookv2.webp', ar: 0.5320, eyebrow: 'Mikey · brand identity', text: 'Wordmark, monogram and mark system for the Mikey film brand.' },
+  { img: D + 'cars.webp', ar: 3.3333, eyebrow: 'Automotive', text: 'Concept showroom visualisation.' },
 ];
 
 
@@ -422,7 +422,11 @@ export function initDesignSection() {
   const flow = qs('#design-flow');
   for (const piece of PIECES) {
     const sec = document.createElement('section');
-    sec.className = 'design-piece' + (piece.portrait ? ' is-portrait' : '');
+    sec.className = 'design-piece';
+    /* every board is framed at its own proportion (measured at build time
+       and written into PIECES), so neither the plain image nor the GL plane
+       ever has to crop it to fit a slot */
+    sec.style.setProperty('--ar', String(piece.ar));
     const hasCopy = piece.text || piece.link;
     sec.innerHTML = `
       <div class="piece-media"><img src="${piece.img}" alt="${piece.eyebrow}" loading="lazy"></div>

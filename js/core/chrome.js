@@ -77,12 +77,12 @@ void main(){ gl_Position = vec4(p, 0.0, 1.0); }`;
 export function initChrome() {
   const stage = qs('#chrome-stage');
   const canvas = qs('#chrome-canvas');
-  if (!stage || !canvas) return { warm: () => {} };
+  if (!stage || !canvas) return { warm: () => {}, setActive: () => {} };
 
   const fallback = () => {
     // never a blank rectangle: the wordmark stands in flat bone instead
     stage.classList.add('is-flat');
-    return { warm: () => {} };
+    return { warm: () => {}, setActive: () => {} };
   };
 
   const gl = canvas.getContext('webgl2', {
@@ -160,6 +160,9 @@ export function initChrome() {
 
   let warmth = 0.34;
   let visible = false;
+  // the stage now lives inside the coda's pinned frame, so being on screen
+  // is not enough: the shader runs only while the metal is showing
+  let active = false;
   new IntersectionObserver((es) => {
     // the shader is only ever running while it can be seen
     visible = es[0].isIntersecting;
@@ -171,7 +174,7 @@ export function initChrome() {
   let raf = 0;
   const frame = (now) => {
     raf = requestAnimationFrame(frame);
-    if (!visible) return;
+    if (!visible || !active) return;
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
     if (!tracking) {
@@ -193,6 +196,10 @@ export function initChrome() {
     /* the scroll heats the metal: cool silver on arrival, full flare as the
        wordmark takes the frame, so the last beat of the page has a peak */
     warm: (v) => { warmth = 0.16 + clamp(v, 0, 1) * 0.5; },
+    setActive: (on) => {
+      if (on && !active) { size(); start = start || performance.now(); last = performance.now(); }
+      active = on;
+    },
     stop: () => cancelAnimationFrame(raf),
   };
 }

@@ -50,9 +50,12 @@ Showreel (`#prologue`, `js/core/prologue.js`) → the paper: testimonials and
 clients (`#proof`), photo and CV (`#about`) → the reading (`#reading-wrap`:
 the oracle wakes on the last council frames, then the bloom, the triptych
 and the three cards) → film (Mikey scrub, then `#film-rail`, the films
-travelling sideways) → writing → design → vibe-coding → outro → the council
-film as the coda (`#journey`) → the chrome mark → the loop gate, which fades
-to black and returns to the reel.
+travelling sideways, on paper) → writing → design → vibe-coding and the
+outro (one continuous paper room) → the council film as the coda
+(`#journey`, played backwards from the oracle into the closed wordmark,
+whose letters then turn to liquid chrome in place: `#chrome-stage` lives in
+the coda's stage, at the stencil's exact size) → the loop gate, which fades
+to black in silence and returns to the reel.
 
 - The reel ships as two cuts in `showreel/`; `prologue.js` picks one by the
   screen's shape and the threshold batch downloads only that one. Its six
@@ -65,6 +68,9 @@ to black and returns to the reel.
 - The CV is `cv/Mike-Whyle-CV-2026.pdf`; the nav's CV pill and the about
   section both download it.
 - The More Films archive and Vanta Black are gone for good.
+- Design boards are framed at their own aspect ratio (`ar` in `PIECES`,
+  measured from the files). A new board needs its `ar`, or it will be shown
+  at 16:9.
 
 ## Handovers
 
