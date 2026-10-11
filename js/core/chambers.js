@@ -7,7 +7,7 @@
    Reads the classic-script globals PROJECTS, RACK_EXTRAS, WRITING_FACES
    and NEWSDROP, the same way the chamber pages did. */
 
-import { clamp, seg, easeInOut, qs, qsa, IS_MOBILE, REDUCED_MOTION } from './util.js';
+import { clamp, damp, seg, easeInOut, qs, qsa, IS_MOBILE, REDUCED_MOTION } from './util.js';
 import { FrameScrubber } from './sequence.js';
 import { WritingCube } from './cube.js';
 import { GLPlanes } from './gl-planes.js';
@@ -34,28 +34,33 @@ export function initFilmSection(lenis) {
     onUpdate: (self) => { scrubP = self.progress; },
   });
 
-  /* ---- the films, as full-bleed banners ---- */
+  /* ---- the films, as a rail that travels sideways under the scroll ---- */
   const films = PROJECTS
-    .filter((p) => p.chamber === 'film' && p.id !== 'video-archive')
+    .filter((p) => p.chamber === 'film')
     .sort((a, b) => a.chamberOrder - b.chamberOrder);
   const rel = (path) => path ? path.replace('../../', '') : '';
+  // phones get the lighter cut of each loop; the rail card is a third the width
+  const loopFor = (path) => (path && IS_MOBILE) ? path.replace('video/loops/', 'video/loops-m/') : path;
 
   const fromProject = (f) => ({
     title: f.title,
-    tag: `${f.category} · ${f.index}`,
+    tag: f.type || f.category,
     poster: rel(f.heroFallback || f.heroImage || (f.gallery && f.gallery[0]) || ''),
-    loop: f.rackLoop || '',
+    loop: loopFor(f.rackLoop || ''),
     href: `projects/${f.id}/`,
   });
   const fromExtra = (x) => ({
     title: x.title, tag: x.tag,
     poster: x.poster,
-    loop: x.loop || '',
+    loop: loopFor(x.loop || ''),
     href: x.href, external: !!x.external,
   });
 
   const banners = [...films.map(fromProject), ...RACK_EXTRAS.map(fromExtra)];
-  const wrap = qs('#film-banners');
+  const rail = qs('#film-rail');
+  const track = qs('#film-track');
+  const count = qs('#film-count');
+  if (count) count.textContent = String(banners.length).padStart(2, '0');
   const mediaEls = [];
 
   banners.forEach((item, i) => {
@@ -70,31 +75,41 @@ export function initFilmSection(lenis) {
         ${item.loop ? `<video muted loop playsinline preload="none" data-src="${item.loop}"></video>` : ''}
       </span>
       <span class="banner-caption">
-        <span class="banner-num">${String(i + 1).padStart(2, '0')}</span>
+        <span class="banner-num">${String(i + 1).padStart(2, '0')} / ${String(banners.length).padStart(2, '0')}</span>
         <h3>${item.title}</h3>
         <span class="banner-tag">${item.tag}<em>${item.external ? 'Watch &rarr;' : 'Open &rarr;'}</em></span>
       </span>`;
-    wrap.appendChild(el);
+    track.appendChild(el);
     mediaEls.push(el.querySelector('.banner-media'));
   });
 
-  // the More Films door closes the walk
-  const more = document.createElement('a');
-  more.className = 'film-banner is-more';
-  more.href = 'projects/video-archive/';
-  more.innerHTML = `
-    <span class="banner-caption is-centre">
-      <span class="banner-num">${String(banners.length + 1).padStart(2, '0')}</span>
-      <h3>More films</h3>
-      <span class="banner-tag">The rest of the reel<em>Enter &rarr;</em></span>
-    </span>`;
-  wrap.appendChild(more);
+  /* The rail is sticky, so the section's height is the distance the track
+     has to travel plus one screen to stand in. Measured, never guessed:
+     the cards are sized in viewport units and the track's true width is
+     only known once they are laid out. */
+  let travel = 0;
+  const measure = () => {
+    travel = Math.max(0, track.scrollWidth - rail.clientWidth);
+    rail.style.height = `${travel + window.innerHeight}px`;
+  };
+  measure();
+  addEventListener('resize', () => { measure(); ScrollTrigger.refresh(); });
+
+  let railP = 0;
+  ScrollTrigger.create({
+    trigger: rail,
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: true,
+    onUpdate: (self) => { railP = self.progress; },
+  });
+  const bar = qs('#film-progress');
 
   // A banner can only play after its complete local movie has passed the gate.
   let entered = false;
   const visible = new Set();
   const updatePlayback = () => {
-    for (const video of wrap.querySelectorAll('video')) {
+    for (const video of track.querySelectorAll('video')) {
       if (entered && visible.has(video)) {
         video.play().then(() => {
           if (visible.has(video)) video.classList.add('is-playing');
@@ -109,14 +124,14 @@ export function initFilmSection(lenis) {
       if (video) entry.isIntersecting ? visible.add(video) : visible.delete(video);
     }
     updatePlayback();
-  }, { threshold: 0.25 });
-  wrap.querySelectorAll('.film-banner').forEach(banner => io.observe(banner));
+  }, { threshold: 0.35 });
+  track.querySelectorAll('.film-banner').forEach(banner => io.observe(banner));
   document.addEventListener('mw:enter', () => { entered = true; updatePlayback(); }, { once: true });
 
-  /* ---- frame loop: the scrub, and the scroll-velocity warp that glues
-     the films to the journey ---- */
+  /* ---- frame loop: the scrub, the rail, and the momentum warp ---- */
   let last = performance.now();
   let sVel = 0;
+  let x = 0;
   gsap.ticker.add(() => {
     const now = performance.now();
     const dt = Math.min((now - last) / 1000, 0.1);
@@ -131,15 +146,26 @@ export function initFilmSection(lenis) {
     lbTop.style.transform = `scaleY(${lb.toFixed(3)})`;
     lbBottom.style.transform = `scaleY(${lb.toFixed(3)})`;
 
-    // the warp: momentum stretches and shears whichever film owns the frame
+    // the rail: weighted, so the track glides after the wheel rather than
+    // being bolted to it
+    const want = -railP * travel;
+    x = REDUCED_MOTION ? want : damp(x, want, 9, dt);
+    if (Math.abs(x - want) < 0.05) x = want;
+    track.style.transform = `translate3d(${x.toFixed(2)}px, 0, 0)`;
+    if (bar) bar.style.transform = `scaleX(${railP.toFixed(4)})`;
+
     if (REDUCED_MOTION) return;
     sVel += ((lenis.velocity || 0) - sVel) * (1 - Math.exp(-8 * dt));
-    const stretch = clamp(Math.abs(sVel) * 0.0012, 0, 0.045);
-    const shear = clamp(sVel * 0.05, -1.6, 1.6);
+    const stretch = clamp(Math.abs(sVel) * 0.0009, 0, 0.035);
+    const shear = clamp(sVel * 0.04, -1.4, 1.4);
+    const vw = window.innerWidth;
     for (const m of mediaEls) {
-      const r = m.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > innerHeight) continue;
-      m.style.transform = `scaleY(${(1 + stretch).toFixed(4)}) skewX(${shear.toFixed(3)}deg)`;
+      const r = m.parentElement.getBoundingClientRect();
+      if (r.right < 0 || r.left > vw || r.bottom < 0 || r.top > innerHeight) continue;
+      // parallax: the picture drifts against the card's travel, so each
+      // film reads as a window onto something deeper than the card
+      const c = ((r.left + r.width / 2) / vw - 0.5);
+      m.style.transform = `translate3d(${(-c * 7).toFixed(2)}%, 0, 0) scaleX(${(1 + stretch).toFixed(4)}) skewX(${shear.toFixed(3)}deg)`;
     }
   });
 
@@ -148,31 +174,7 @@ export function initFilmSection(lenis) {
   let loading = null;
   const preload = () => loading ??= scrubber.preload().then(() => scrubber.draw(true));
 
-  return { scrubber, preload };
-}
-
-/* ---- the showreel: a poster that plays with sound, the room's own
-   score ducking beneath it, and a pause whenever it leaves the frame ---- */
-export function initShowreel(audio) {
-  const frame = qs('#reel-frame'), video = qs('#reel-video'), play = qs('#reel-play');
-  if (!frame || !video || !play) return;
-  play.addEventListener('click', () => {
-    frame.classList.add('is-playing');
-    video.muted = false;
-    // a browser that refuses sound still gets the picture
-    video.play().catch(() => { video.muted = true; video.play().catch(() => {}); });
-    video.focus({ preventScroll: true });
-  });
-  video.addEventListener('play', () => { frame.classList.add('is-playing'); audio.duck(true); });
-  video.addEventListener('pause', () => audio.duck(false));
-  video.addEventListener('ended', () => {
-    audio.duck(false);
-    frame.classList.remove('is-playing');
-    video.currentTime = 0;
-  });
-  new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting && !video.paused) video.pause();
-  }, { threshold: 0.2 }).observe(frame);
+  return { scrubber, preload, measure };
 }
 
 /* ============================================================

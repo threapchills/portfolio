@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mike Whyle | Portfolio</title>
-  <meta name="description" content="Mike Whyle: GenAI filmmaker, writer, designer and vibe-coder in Cape Town. A scroll journey past the shamans' council to a reading of three cards: film, writing, design.">
+  <meta name="description" content="Mike Whyle: GenAI film-maker, writer and creative in Cape Town. The 2026 showreel, kind words from clients and colleagues, a CV, and three chambers of work: film, writing and design.">
   <meta property="og:title" content="Mike Whyle | Portfolio">
-  <meta property="og:description" content="A scroll into the council of shamans that resolves into a reading: film, writing, design.">
+  <meta property="og:description" content="The 2026 showreel, kind words, a CV, and three chambers of work: film, writing and design.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://portfolio.mikewhyle.com/assets/brand/og-card.jpg">
   <link rel="icon" href="favicon.png" type="image/png">
@@ -22,7 +22,7 @@
     #threshold { position: fixed; inset: 0; z-index: 200; background: #17181a;
       display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=21">
+  <link rel="stylesheet" href="css/overhaul.css?v=22">
 </head>
 <body class="overhaul">
 
@@ -32,6 +32,8 @@
       <p>Cape Town based GenAI film-maker; writer, and creative.</p>
       <p>The full journey needs JavaScript. The classic site asks nothing.</p>
       <nav>
+        <a href="showreel/mike-whyle-showreel-2026.mp4">Showreel</a> &middot;
+        <a href="cv/Mike-Whyle-CV-2026.pdf">CV</a> &middot;
         <a href="legacy/index-v1.html">Classic site</a>
       </nav>
     </div>
@@ -55,32 +57,141 @@
   </div>
 
   <header class="veil-nav">
-    <a href="#top" class="veil-mark" aria-label="Mike Whyle, back to the beginning">
+    <a href="#prologue" class="veil-mark" aria-label="Mike Whyle, back to the beginning">
       <img src="assets/brand/mikey-logo.webp" alt="Mikey">
     </a>
+    <nav class="pill-nav" aria-label="Sections">
+      <a href="#prologue" data-nav="prologue">Reel</a>
+      <a href="#proof" data-nav="proof" class="is-wide">Kind words</a>
+      <a href="#about" data-nav="about">About</a>
+      <a href="#reading" data-nav="work">Work</a>
+      <a class="pill-cv" href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV<span aria-hidden="true">&darr;</span></a>
+    </nav>
     <button id="mute-btn" aria-label="Pause sound">
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect class="b1" x="8" y="6" width="2" height="12" rx="1"/><rect class="b2" x="11" y="6" width="2" height="12" rx="1"/><rect class="b3" x="14" y="6" width="2" height="12" rx="1"/></svg>
     </button>
   </header>
 
-  <main inert>
-    <!-- Acts I to V · the story film, scrubbed by scroll -->
-    <section id="journey" aria-label="The journey into the artwork">
-      <div class="stage vignette">
-        <canvas id="hero-canvas"></canvas>
-        <div id="logo-veil" role="img" aria-label="Mikey">
-          <p class="hero-roles">Cape Town based GenAI film-maker; writer, and creative.</p>
-          <p class="hero-hint">Scroll</p>
+  <main inert id="top">
+    <!-- Prologue · the showreel, up front. The stage pins while the card
+         grows towards the frame; then the paper slides up over it -->
+    <section id="prologue" aria-label="Showreel">
+      <div class="prologue-stage">
+        <div class="prologue-glow" aria-hidden="true"></div>
+        <header class="prologue-head">
+          <h1 class="prologue-name" data-split>Mike Whyle</h1>
+          <p class="prologue-roles">Cape Town based GenAI film-maker; writer, and creative.</p>
+        </header>
+        <div class="reel-frame" id="reel-frame">
+          <video id="reel-video" playsinline controls preload="none" controlslist="nodownload"></video>
+          <button class="reel-poster" id="reel-play" aria-label="Play the showreel, with sound">
+            <span class="reel-stills" aria-hidden="true">
+            <img class="reel-still" data-still="1" alt="">
+            <img class="reel-still" data-still="2" alt="">
+            <img class="reel-still" data-still="3" alt="">
+            <img class="reel-still" data-still="4" alt="">
+            <img class="reel-still" data-still="5" alt="">
+            <img class="reel-still" data-still="6" alt="">
+            </span>
+            <span class="reel-play-icon" aria-hidden="true"></span>
+            <span class="reel-play-label"><span>Showreel 2026</span><i>&middot;</i><span>Play with sound</span><i class="x">&middot;</i><span class="x">1:30</span></span>
+          </button>
+        </div>
+        <p class="prologue-hint" aria-hidden="true">Scroll</p>
+      </div>
+    </section>
+
+    <!-- the paper: kind words, the clients, and the man himself -->
+    <section id="proof" class="paper" aria-labelledby="proof-title">
+      <div class="paper-inner">
+        <p class="paper-eyebrow">Testimonials</p>
+        <h2 class="paper-title" id="proof-title"><span class="scribbled">Kind<svg class="scribble scribble-under" viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 17c26-6 58-9 90-8 34 1 62 4 94 1 5-.5 8-1 11-2M20 25c34-4 82-6 128-3"/></svg></span> words</h2>
+        <div class="testimonials">
+          <div class="t-col">
+            <figure class="t-card is-feature" style="--tilt:-1.1deg">
+              <span class="t-cursor" style="--c:#3d7f86;--d:0s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Tim</b></span>
+              <blockquote>
+                <p>&ldquo;Mike&rsquo;s an excellent writer with a clear and knowledgeable passion for all things AI - this has enabled him to step up fast to take over and build on jobs like help center management - on which he is fast and produces great quality work. He&rsquo;s also keen to chat AI and to build knowledge across the team.</p>
+                <p>Mike&rsquo;s output is fantastic and increasingly wide-ranging - the quality is always great&hellip;<br>&hellip;Mike&rsquo;s a great communicator and a really thoughtful human presence in the team. His eagerness to be involved and to talk with passion about AI is infectious. Moreover, he&rsquo;s a fast worker who is <mark class="hl">able to distill complex subject matter to simple outputs.</mark>&rdquo;</p>
+              </blockquote>
+              <figcaption><strong>Tim Bowers</strong><span>Head of Education &amp; Enablement, Pencil</span></figcaption>
+            </figure>
+            <figure class="t-card" style="--tilt:0.9deg">
+              <span class="t-cursor" style="--c:#6b2a19;--d:-2.4s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Nic</b></span>
+              <blockquote><p>&ldquo;Mike&rsquo;s <mark class="hl">strategic thinking and content writing</mark> are top notch.&rdquo;</p></blockquote>
+              <figcaption><strong>Nic Latouf</strong><span>Serial Entrepreneur &amp; Founder, Lekker Network</span></figcaption>
+            </figure>
+          </div>
+          <div class="t-col">
+            <figure class="t-card" style="--tilt:1.3deg">
+              <span class="t-cursor" style="--c:#485068;--d:-4.1s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Elb&eacute;</b></span>
+              <blockquote><p>&ldquo;Mike&rsquo;s work was <mark class="hl">exceptionally insightful</mark> and his deliverables are always of excellent quality.&rdquo;</p></blockquote>
+              <figcaption><strong>Elb&eacute; Smith</strong><span>CEO, TQ Group</span></figcaption>
+            </figure>
+            <figure class="t-card" style="--tilt:-0.7deg">
+              <span class="t-cursor" style="--c:#8d5f24;--d:-1.3s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Bradley</b></span>
+              <blockquote>
+                <p>&ldquo;Mike&hellip; &hellip;the master of turning client ideas and content briefs into engaging stories, the champion of clever copy, and <mark class="hl">the guy who always found just the right word.</mark></p>
+                <p>Your talent for crafting magic with words has been an incredible asset to our team&hellip;&rdquo;</p>
+              </blockquote>
+              <figcaption><strong>Bradley Howland</strong><span>CEO &amp; Owner, Alkemi Collective</span></figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="clients">
+          <p class="paper-eyebrow">Clients</p>
+          <p class="clients-copy">Some of the awesome companies and brands who&rsquo;ve entrusted me with their storytelling include <span class="circled">Pencil<svg class="scribble scribble-ring" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M150 9C112 1 52 3 22 18 2 28 3 50 26 61c32 15 104 16 145 3 24-8 30-26 12-41-10-8-30-13-52-15"/></svg></span>, Virgin Active, Radisson RED hotels, Kearney, Scatec, Africa Health Conference, Table Mountain Aerial Cableway Company (TMACC), as well as nimble start-ups like Lula, Deep Atomic, and Twintech.</p>
+          <div class="client-strip">
+            <ul class="client-track" aria-label="Clients">
+            <li><img src="images/clients/pencil.webp" alt="Pencil" width="113" height="32" style="--w:113px"></li>
+            <li><img src="images/clients/virgin-active.webp" alt="Virgin Active" width="87" height="42" style="--w:87px"></li>
+            <li><img src="images/clients/radisson-red.webp" alt="Radisson RED" width="56" height="52" style="--w:56px"></li>
+            <li><img src="images/clients/kearney.webp" alt="Kearney" width="178" height="22" style="--w:178px"></li>
+            <li><img src="images/clients/scatec.webp" alt="Scatec" width="132" height="27" style="--w:132px"></li>
+            <li><img src="images/clients/africa-health.webp" alt="Africa Health" width="97" height="37" style="--w:97px"></li>
+            <li><img src="images/clients/table-mountain-aerial-cableway.webp" alt="Table Mountain Aerial Cableway" width="84" height="43" style="--w:84px"></li>
+            <li><img src="images/clients/lula.webp" alt="Lula" width="98" height="37" style="--w:98px"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="paper" aria-labelledby="about-title">
+      <div class="about-grid">
+        <figure class="about-photo">
+          <img src="images/about/mike.webp" alt="Mike Whyle" width="710" height="709">
+        </figure>
+        <div class="about-copy">
+          <p class="paper-eyebrow">About</p>
+          <h2 class="paper-title" id="about-title" data-split>Hi, I&rsquo;m Mike.</h2>
+          <p class="about-lede">I concept, write and art-direct for AI-first brands. My work spans campaign and product copy, brand worlds, prompting systems and award-winning GenAI film.</p>
+          <p>Fifteen years of writing across technology, energy, healthcare and finance give the work its range. Four years of hands-on generative practice give it its edge. At Pencil, I turn a fast-moving product into clear, visual material that clients and colleagues rely on.</p>
+          <p class="about-award"><span>Recognition &middot; 2026</span>Kalimba: shortlisted from 400+ entries in The Brandtech Group GenAI Film Competition.</p>
+          <div class="about-actions">
+            <a class="cv-download" href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></svg>
+              Download my CV<small>PDF &middot; 430 KB</small>
+            </a>
+            <a class="ink-pill" href="mailto:mikewhyle@gmail.com">Email</a>
+            <a class="ink-pill" href="https://www.linkedin.com/in/mikewhyle" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="ink-pill" href="https://wa.me/27616554726" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Act VI · the Reading -->
     <section id="reading-wrap" aria-label="The reading">
-      <!-- the film's last frame holds under the table for a seamless seam -->
+      <!-- the oracle wakes under the table as the paper lifts off him -->
       <div id="reading-ground" aria-hidden="true">
-        <img id="ground-frame" alt="">
+        <canvas id="ground-canvas"></canvas>
         <div class="ground-ink"></div>
+        <div class="reading-intro">
+          <p class="reading-eyebrow">The work</p>
+          <p class="reading-line">Three cards. Three ways in.</p>
+        </div>
       </div>
       <!-- the segue: the oracle gives up the wordmark, which blooms out of
            her own light and then settles into a panel of its own -->
@@ -90,6 +201,7 @@
       </div>
       <div id="reading">
         <div id="card-table"><!-- cards dealt by cards.js --></div>
+        <p class="reading-hint">Choose a card, or scroll on</p>
       </div>
       <!-- the triptych: that panel is divided in three and each column
            turns on its own axis, so the painting becomes the reading -->
@@ -115,7 +227,18 @@
           </div>
         </div>
       </div>
-      <div id="film-banners" aria-label="The films"><!-- banners injected --></div>
+      <div id="film-rail" aria-label="The films">
+        <div class="rail-stage">
+          <div id="film-track">
+            <div class="rail-intro">
+              <p class="door-eyebrow"><span class="eb-num">i</span>Human Being</p>
+              <h2 class="rail-title" data-split>The films</h2>
+              <p class="rail-sub"><span id="film-count">09</span> films &middot; scroll to travel</p>
+            </div>
+          </div>
+          <div class="rail-progress" aria-hidden="true"><span id="film-progress"></span></div>
+        </div>
+      </div>
     </section>
 
     <!-- chamber ii · Human Thinking · Writing. The scroll turns the cube
@@ -201,6 +324,8 @@
         <a class="contact-pill" href="https://mikewhyle.com" target="_blank" rel="noopener">My old site</a>
       </div>
       <nav class="outro-links" aria-label="More">
+        <a href="#prologue">Showreel</a>
+        <a href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV</a>
         <a href="#film">Film</a>
         <a href="#writing">Writing</a>
         <a href="#design">Design</a>
@@ -214,6 +339,18 @@
       </p>
     </section>
 
+    <!-- Coda · the council: the story film, scrubbed by scroll, now the
+         page's closing ritual before the mark -->
+    <section id="journey" aria-label="The journey into the artwork">
+      <div class="stage vignette">
+        <canvas id="hero-canvas"></canvas>
+        <div id="logo-veil" role="img" aria-label="Mikey">
+          <p class="hero-roles"><span class="eb-num">vi</span>Coda &middot; The council</p>
+          <p class="hero-hint">Scroll</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Act IX · the mark, cast in living metal. The page has said its
          piece; this is the name, and then the world begins again. -->
     <section id="chrome" aria-label="Mikey">
@@ -224,10 +361,10 @@
       <p class="chrome-line">Cape Town</p>
     </section>
 
-    <!-- Act IX · the loop gate: the world returns and the plate slides back in -->
+    <!-- the loop gate: the dark comes down, and the page begins again at the reel -->
     <section id="loop-gate" aria-hidden="true">
       <div class="gate-stage">
-        <canvas id="gate-canvas"></canvas>
+        <p class="gate-line">And so, back to the beginning.<span>The reel</span></p>
         <div id="gate-plate"></div>
       </div>
     </section>
@@ -248,30 +385,31 @@
   <div id="doorway-veil"></div>
   <div class="grain-veil"></div>
 
-  <script src="js/data.js?v=20261004"></script>
-  <script src="content/newsdrop/index.js?v=20261004"></script>
+  <script src="js/data.js?v=20261011"></script>
+  <script src="content/newsdrop/index.js?v=20261011"></script>
   <script src="js/vendor/gsap.min.js?v=3"></script>
   <script src="js/vendor/ScrollTrigger.min.js?v=3"></script>
   <script src="js/vendor/lenis.min.js?v=3"></script>
   <!-- One release map keeps every module, including shared audio, on the same revision. -->
   <script type="importmap">
     {"imports": {
-      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261004-sound",
-      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261004-sound",
-      "./js/core/audio.js": "./js/core/audio.js?v=20261004-sound",
-      "./js/core/cards.js": "./js/core/cards.js?v=20261004-sound",
-      "./js/core/chambers.js": "./js/core/chambers.js?v=20261004-sound",
-      "./js/core/chrome.js": "./js/core/chrome.js?v=20261004-sound",
-      "./js/core/cube.js": "./js/core/cube.js?v=20261004-sound",
-      "./js/core/cursor.js": "./js/core/cursor.js?v=20261004-sound",
-      "./js/core/delight.js": "./js/core/delight.js?v=20261004-sound",
-      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261004-sound",
-      "./js/core/ground.js": "./js/core/ground.js?v=20261004-sound",
-      "./js/core/journey.js": "./js/core/journey.js?v=20261004-sound",
-      "./js/core/loader.js": "./js/core/loader.js?v=20261004-sound",
-      "./js/core/readiness.js": "./js/core/readiness.js?v=20261004-sound",
-      "./js/core/sequence.js": "./js/core/sequence.js?v=20261004-sound",
-      "./js/core/util.js": "./js/core/util.js?v=20261004-sound"
+      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261011-reel",
+      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261011-reel",
+      "./js/core/audio.js": "./js/core/audio.js?v=20261011-reel",
+      "./js/core/cards.js": "./js/core/cards.js?v=20261011-reel",
+      "./js/core/chambers.js": "./js/core/chambers.js?v=20261011-reel",
+      "./js/core/chrome.js": "./js/core/chrome.js?v=20261011-reel",
+      "./js/core/cube.js": "./js/core/cube.js?v=20261011-reel",
+      "./js/core/cursor.js": "./js/core/cursor.js?v=20261011-reel",
+      "./js/core/delight.js": "./js/core/delight.js?v=20261011-reel",
+      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261011-reel",
+      "./js/core/ground.js": "./js/core/ground.js?v=20261011-reel",
+      "./js/core/journey.js": "./js/core/journey.js?v=20261011-reel",
+      "./js/core/loader.js": "./js/core/loader.js?v=20261011-reel",
+      "./js/core/prologue.js": "./js/core/prologue.js?v=20261011-reel",
+      "./js/core/readiness.js": "./js/core/readiness.js?v=20261011-reel",
+      "./js/core/sequence.js": "./js/core/sequence.js?v=20261011-reel",
+      "./js/core/util.js": "./js/core/util.js?v=20261011-reel"
     }}
   </script>
   <script type="module">
@@ -280,7 +418,8 @@
     import { initThreshold } from './js/core/loader.js';
     import { initJourney } from './js/core/journey.js';
     import { initReading } from './js/core/cards.js';
-    import { initFilmSection, initWritingSection, initDesignSection, initShowreel, PIECE_TONES } from './js/core/chambers.js';
+    import { initFilmSection, initWritingSection, initDesignSection, PIECE_TONES } from './js/core/chambers.js';
+    import { initPrologue } from './js/core/prologue.js';
     import { initGround } from './js/core/ground.js';
     import { audio, mountMuteButton, prefetchStems } from './js/core/audio.js';
     import { initCursor } from './js/core/cursor.js';
@@ -296,7 +435,7 @@
 
     // the old chamber URLs redirect here with a hash; within a session a
     // dealt reading means no second threshold, straight to the landing
-    const HASH_LAND = /^#(reading|film|writing|design)$/;
+    const HASH_LAND = /^#(reading|film|writing|design|about|proof)$/;
     const returning = sessionStorage.getItem('mw-reading') === 'dealt'
       && HASH_LAND.test(location.hash);
 
@@ -305,9 +444,10 @@
     if (!returning) scrollTo(0, 0);
 
     const journey = initJourney();
+    const prologue = initPrologue({ audio, lenis: journey.lenis });
+    journey.onLoop(() => prologue.replay());
     initReading();
     const film = initFilmSection(journey.lenis);
-    initShowreel(audio);
     const writing = initWritingSection(journey.lenis);
     const design = initDesignSection();
     // The coding door behaves like a small constellation: every project has
@@ -364,8 +504,8 @@
       const a = e.target.closest('a[href^="#"]');
       if (!a) return;
       e.preventDefault();
-      const el = a.hash.length > 1 ? qs(a.hash) : null;
-      journey.lenis.scrollTo(el ? el.offsetTop : 0, { duration: 1.6, easing: easeInOut });
+      const y = journey.spotFor(a.hash);
+      journey.lenis.scrollTo(y ?? 0, { duration: 1.6, easing: easeInOut });
     });
 
     // the Enter click wakes the sound; after that, any click, tap or key
@@ -406,7 +546,10 @@
             }
           }
         }
-        for (const video of document.querySelectorAll('#film-banners video[data-src]')) {
+        // the showreel arrives whole, like every other film here: one cut,
+        // the one this screen's shape will play
+        batch.add(prologue.reelSrc, 'video', prologue.video);
+        for (const video of document.querySelectorAll('#film-track video[data-src]')) {
           batch.add(video.dataset.src, 'video', video);
         }
         for (const { file } of NEWSDROP) batch.add(`content/newsdrop/${file}`, 'text');
@@ -416,7 +559,9 @@
         }
         preparing('Preparing the gallery', 'All files received. Applying the final visual effects.');
         journey.scrubber.usePrepared(batch);
+        journey.wakeReady();
         film.scrubber.usePrepared(batch);
+        film.measure();
         writing.setIssueText(batch);
         await design.warm(src => Promise.resolve(batch.get(src)));
         await document.fonts.ready;

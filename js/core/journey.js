@@ -1,12 +1,15 @@
 /* journey.js — orchestration of the index page.
-   Act I: the Mikey wordmark, its letters full of film, slides off west.
-   Acts II to V: the story film itself, decoded to frames at build time
-   and scrubbed by scroll — the council, the vortex, the spirit animals,
-   the savannah, the masks, and the long push into the oracle, all baked
-   into pixels so nothing can glitch.
-   Act VI: the film's last frame (the oracle's lit gaze under the moon)
-   holds beneath the reading while the ink breathes in and three cards
-   rise into the light she is looking through. */
+   The page opens on the showreel (prologue.js), and the paper of kind
+   words and the CV slides over it. When the paper lifts, the oracle is
+   already behind it: the last seconds of the council film scrub under the
+   scroll, his eyes kindle, and the reading begins. The wordmark blooms out
+   of his light, the panel divides in three, and the three cards that were
+   standing behind it turn: film, writing, design.
+   The full council film is now the page's coda, after the work and the
+   outro: the Mikey wordmark, its letters full of film, opens, and the
+   council, the vortex, the spirit animals, the savannah and the masks
+   play out under the scroll before the mark is cast in metal and the
+   page goes dark and begins again at the reel. */
 
 import { clamp, damp, seg, easeInOut, qs, qsa, IS_MOBILE, REDUCED_MOTION, PARAMS } from './util.js';
 import { FrameScrubber } from './sequence.js';
@@ -32,6 +35,11 @@ const BEATS = [0, 0.115, 0.36, 0.49, 0.67, 0.82, 1];
    blooms out of her own light, settles into a painted panel, and is then
    divided in three. Each column turns on its axis and the card that was
    always standing behind it comes into the room. */
+/* the reading now opens on its own: the paper lifts off the oracle while
+   the film's last seconds scrub beneath it (the torches catch, his eyes
+   kindle), and only then does the old choreography run, on the remainder */
+const WAKE = 0.15;                       // share of the reading spent waking him
+const WAKE_FRAMES = [258, 316];          // 0-based frames: torches lit, to the gaze
 const INK_IN       = [0, 0.07];      // the room dims over her lit gaze
 const SEGUE_BLOOM  = [0.05, 0.18];   // the wordmark screens out of her light
 const SEGUE_SOLID  = [0.15, 0.26];   // the panel lands opaque
@@ -49,7 +57,8 @@ const READING_BANDS = [
   { in: [0.74, 0.86], out: [0.92, 1.0] },
 ];
 const READING_CARD_BEATS = [0.48, 0.63, 0.78];
-const READING_BEATS = [0, 0.26, ...READING_CARD_BEATS, 1];
+const atWake = (b) => WAKE + b * (1 - WAKE);   // choreography time to section time
+const READING_BEATS = [0, WAKE, ...[0.26, ...READING_CARD_BEATS, 1].map(atWake)];
 
 /* Audio: the bed follows the film's own weather. It opens on ground and
    firelight because the council is already lit; the trance lifts it into
@@ -69,6 +78,7 @@ const MIX = {
   coding:  { sea: 0.15, fire: 0.00, sky: 0.25, earth: 0.00 },
   chrome:  { sky: 0.16, sea: 0.00, earth: 0.00, fire: 0.00 },  // the mark: thin, cold air
   outro:   { sea: 0.00, fire: 0.00, sky: 0.00, earth: 0.00 },
+  prologue:{ sky: 0.12, sea: 0.06, earth: 0.16, fire: 0.05 },  // the reel and the paper: a low bed
 };
 const mixAt = (p) => {
   if (p < 0.36) return MIX.act1;   // the council under the gold moon
@@ -100,12 +110,37 @@ export function initJourney() {
   const roles = qs('.hero-roles');
   const hint = qs('.hero-hint');
 
-  /* ---- the seam: the reading's ground carries the film's final frame ---- */
-  const groundFrame = qs('#ground-frame');
-  if (groundFrame) {
-    const dir = IS_MOBILE ? FRAMES.dirMobile : FRAMES.dir;
-    groundFrame.src = `${dir}/f_${String(FRAMES.count).padStart(4, '0')}.webp`;
-  }
+  /* ---- the reading's ground: the film's last seconds, his to wake in.
+     It shares the journey's frames (one download serves both) and lands
+     on the final frame, which is the geometry the segue plate was painted
+     to match. ---- */
+  const groundCanvas = qs('#ground-canvas');
+  const gctxR = groundCanvas ? groundCanvas.getContext('2d') : null;
+  let wakeOk = false, wakeIdx = -1, wakeP = 0;
+  const sizeWake = () => {
+    if (!groundCanvas) return;
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    groundCanvas.width = groundCanvas.clientWidth * dpr;
+    groundCanvas.height = groundCanvas.clientHeight * dpr;
+    wakeIdx = -1;
+  };
+  sizeWake();
+  addEventListener('resize', sizeWake);
+  const drawWake = (t) => {
+    if (!wakeOk || !gctxR) return;
+    const i = Math.round(WAKE_FRAMES[0] + t * (WAKE_FRAMES[1] - WAKE_FRAMES[0]));
+    if (i === wakeIdx) return;
+    const img = scrubber.images[i];
+    if (!img || !img.naturalWidth) return;
+    wakeIdx = i;
+    const cw = groundCanvas.width, ch = groundCanvas.height;
+    const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+    const w = img.naturalWidth * s, h = img.naturalHeight * s;
+    gctxR.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+  };
+  const wakeReady = () => { wakeOk = true; wakeIdx = -1; drawWake(wakeP); };
+  const readingIntro = qs('.reading-intro');
+  const readingHint = qs('.reading-hint');
   const groundInk = qs('#reading-ground .ground-ink');
   const segueBloom = qs('#segue .is-bloom');
   const segueSolid = qs('#segue .is-solid');
@@ -183,45 +218,20 @@ export function initJourney() {
     onUpdate: (self) => { readingP = self.progress; },
   });
 
-  /* the loop gate: the film's first frame returns behind the plate as it
-     slides back in from the east; at rest the view equals the top of the
-     page, and the scroll quietly teleports home */
-  /* The loop runs both ways once there is a whole page to loop through.
-     Going down, the gate closes and the scroll teleports home. Going up
-     from the very top, it teleports to the gate's far side instead, so the
-     wheel behaves like a wheel rather than like a document with an end.
-     It is off until the streamed assets are in (or until the visitor has
-     already come round once), because arriving at the bottom of a page
-     whose frames have not downloaded is a worse experience than a wall. */
+  /* the loop gate: past the mark the page goes dark, and at the bottom of
+     the dark the scroll quietly returns to the reel, which plays its
+     opening again. Forward only: an upward flick at the top of a portfolio
+     should never fling a visitor to its end. It stays shut until the page
+     has fully loaded, because there is nothing to return to before then. */
   let loopReady = false;
   const openLoop = () => { loopReady = true; };
-  /* The streaming chain is the proper signal, but it is a promise chain over
-     two frame sets and a GL warm, and if any link never settles the loop
-     would stay shut forever. A backstop after load opens it anyway: by then
-     the page is either ready or it is not going to be. */
   addEventListener('load', () => setTimeout(openLoop, 6000));
-
+  const loopHandlers = [];
+  const onLoop = (fn) => loopHandlers.push(fn);
   const gatePlate = qs('#gate-plate');
-  const gateCanvas = qs('#gate-canvas');
-  const gctx = gateCanvas ? gateCanvas.getContext('2d') : null;
-  let gateP = 0, gatePainted = false, looping = false;
-  const sizeGate = () => {
-    if (!gateCanvas) return;
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    gateCanvas.width = gateCanvas.clientWidth * dpr;
-    gateCanvas.height = gateCanvas.clientHeight * dpr;
-    gatePainted = false;
-  };
-  if (gateCanvas) { sizeGate(); addEventListener('resize', sizeGate); }
-  const paintGate = () => {
-    const img = scrubber.images[0];
-    if (gatePainted || !gctx || !img || !img.naturalWidth) return;
-    const cw = gateCanvas.width, ch = gateCanvas.height;
-    const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-    const w = img.naturalWidth * s, h = img.naturalHeight * s;
-    gctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
-    gatePainted = true;
-  };
+  const gateLine = qs('.gate-line');
+  const doorVeil = qs('#doorway-veil');
+  let gateP = 0, looping = false;
   if (gatePlate) {
     ScrollTrigger.create({
       trigger: '#loop-gate',
@@ -230,6 +240,15 @@ export function initJourney() {
       scrub: true,
       onUpdate: (self) => { gateP = self.progress; },
     });
+  }
+  function loopHome() {
+    looping = true;
+    gsap.set(doorVeil, { opacity: 1 });
+    lenis.scrollTo(0, { immediate: true });
+    ScrollTrigger.update();
+    loopHandlers.forEach((fn) => fn());
+    gsap.to(doorVeil, { opacity: 0, duration: 1.1, delay: 0.25, ease: 'power2.out',
+      onComplete: () => { looping = false; } });
   }
 
   /* the paper room: the fixed chrome flips while Vibe-Coding owns the frame */
@@ -250,9 +269,9 @@ export function initJourney() {
     lastNow = now;
     const p = progress;
 
-    /* the invisible cut: once the reading's ground has pinned (showing the
-       same offered-hands frame), the stage steps aside behind it */
-    if (stageEl) stageEl.style.visibility = readingP > 0.0001 ? 'hidden' : '';
+    /* the coda goes dark as the oracle settles, so the mark is cast in a
+       black room rather than cut in over a painting */
+    if (stageEl) stageEl.style.opacity = (1 - seg(p, 0.972, 1)).toFixed(3);
 
     /* velocity warp on the stage: scroll momentum stretches and shears,
        the same dialect the film chamber's banners speak */
@@ -298,25 +317,37 @@ export function initJourney() {
 
     if (!cardEls.length) cardEls = qsa('#card-table .card');
 
-    /* the room dims over her lit gaze as the reading takes the frame */
-    if (groundInk) groundInk.style.opacity = seg(readingP, INK_IN[0], INK_IN[1]).toFixed(3);
+    /* the oracle wakes as the paper lifts off him; rp is the old reading's
+       own time, which starts once he is looking at you */
+    wakeP = seg(readingP, 0, WAKE);
+    drawWake(easeInOut(wakeP));
+    const rp = seg(readingP, WAKE, 1);
+    if (readingIntro) {
+      const io = seg(readingP, WAKE * 0.3, WAKE * 0.75) * (1 - seg(rp, 0.015, 0.06));
+      readingIntro.style.opacity = io.toFixed(3);
+      readingIntro.style.transform = `translate3d(0, ${((1 - io) * 14).toFixed(2)}px, 0)`;
+    }
+    if (readingHint) readingHint.style.opacity = (seg(rp, 0.86, 0.96) * 0.75).toFixed(3);
+
+    /* the room dims over his lit gaze as the reading takes the frame */
+    if (groundInk) groundInk.style.opacity = seg(rp, INK_IN[0], INK_IN[1]).toFixed(3);
 
     /* the segue: screen first, so the wordmark is lit by her and not laid
        on top of her; then the solid copy lands it; then the triptych takes
        the panel over at identical geometry, which reads as no change at all */
     if (segueBloom) {
-      const handover = seg(readingP, SEGUE_OUT[0], SEGUE_OUT[1]);
-      const bloom = seg(readingP, SEGUE_BLOOM[0], SEGUE_BLOOM[1]);
-      const solid = seg(readingP, SEGUE_SOLID[0], SEGUE_SOLID[1]);
+      const handover = seg(rp, SEGUE_OUT[0], SEGUE_OUT[1]);
+      const bloom = seg(rp, SEGUE_BLOOM[0], SEGUE_BLOOM[1]);
+      const solid = seg(rp, SEGUE_SOLID[0], SEGUE_SOLID[1]);
       segueBloom.style.opacity = (bloom * (1 - handover)).toFixed(3);
       segueSolid.style.opacity = (solid * (1 - handover)).toFixed(3);
     }
     if (triptych) {
-      const live = readingP >= TRI_IN - 0.001 && readingP < 0.995;
+      const live = rp >= TRI_IN - 0.001 && rp < 0.995;
       triptych.classList.toggle('is-live', live);
       if (live) {
         triInners.forEach((el, i) => {
-          const t = seg(readingP, TRI_FLIPS[i][0], TRI_FLIPS[i][1], easeInOut);
+          const t = seg(rp, TRI_FLIPS[i][0], TRI_FLIPS[i][1], easeInOut);
           // the board leans out toward the room as it turns, then lies back
           const lean = Math.sin(t * Math.PI);
           el.style.setProperty('--turn', `${(-180 * t).toFixed(2)}deg`);
@@ -343,25 +374,16 @@ export function initJourney() {
        between the plate covering the frame and the triptych taking over,
        so the cards are simply already there when a column opens. */
     if (readingEl) {
-      const reveal = seg(readingP, TABLE_IN[0], TABLE_IN[1]);
+      const reveal = seg(rp, TABLE_IN[0], TABLE_IN[1]);
       readingEl.style.opacity = reveal.toFixed(3);
       readingEl.style.pointerEvents = reveal > 0.9 ? '' : 'none';
     }
 
-    /* the loop gate: world back first, then the plate; then home */
+    /* the loop gate: a line, then the dark, then home to the reel */
     if (gatePlate) {
-      paintGate();
-      gateCanvas.style.opacity = seg(gateP, 0.05, 0.3).toFixed(3);
-      const gx = 112 - 112 * seg(gateP, 0.3, 0.85, easeInOut);
-      gatePlate.style.transform = `translate3d(${gx.toFixed(3)}%, 0, 0)`;
-      if (gateP >= 0.985 && !looping) {
-        looping = true;
-        loopReady = true;                 // they have been all the way round
-        scrubber.progress = 0; scrubber.target = 0; scrubber.draw(true);
-        lenis.scrollTo(0, { immediate: true });
-        ScrollTrigger.update();
-        setTimeout(() => { looping = false; }, 300);
-      }
+      if (gateLine) gateLine.style.opacity = (seg(gateP, 0.08, 0.3) * (1 - seg(gateP, 0.55, 0.75))).toFixed(3);
+      gatePlate.style.opacity = seg(gateP, 0.45, 0.9).toFixed(3);
+      if (gateP >= 0.985 && !looping && loopReady) loopHome();
     }
 
     /* the reading's pool of light follows, dreamily late */
@@ -376,7 +398,7 @@ export function initJourney() {
        and the hover tilt keep their own lanes */
     if (cardEls.length) {
       const fs = READING_BANDS.map((b) =>
-        seg(readingP, b.in[0], b.in[1]) * (1 - seg(readingP, b.out[0], b.out[1])));
+        seg(rp, b.in[0], b.in[1]) * (1 - seg(rp, b.out[0], b.out[1])));
       const F = Math.max(...fs);
       cardEls.forEach((el, i) => {
         const fi = fs[i] ?? 0;
@@ -390,15 +412,12 @@ export function initJourney() {
       });
     }
 
-    /* audio: the film's moments, then the page sections below */
-    if (audio.started) {
-      const rest = sectionProgress();
-      audio.setMix(rest || mixAt(p));
-    }
+    /* audio: each section keeps its own weather; the coda follows the film */
+    if (audio.started) audio.setMix(sectionProgress(p));
   });
 
-  /* Which post-journey section owns the viewport (for the audio mix)? */
-  function sectionProgress() {
+  /* Which section owns the viewport (for the audio mix)? */
+  function sectionProgress(p) {
     const vh = window.innerHeight;
     const probe = (id) => {
       const el = qs(id);
@@ -408,72 +427,40 @@ export function initJourney() {
     };
     if (probe('#loop-gate')) return MIX.outro;
     if (probe('#chrome')) return MIX.chrome;
+    if (probe('#journey')) return mixAt(p);
     if (probe('#outro')) return MIX.outro;
     if (probe('#fourth-door')) return MIX.coding;
     if (probe('#design')) return MIX.design;
     if (probe('#writing')) return MIX.writing;
     if (probe('#film')) return MIX.film;
+    if (probe('#about') || probe('#proof') || probe('#prologue')) return MIX.prologue;
     if (probe('#reading-wrap')) return MIX.reading;
-    return null;
+    return MIX.prologue;
   }
 
-  /* ---- the loop, going backwards ----
-     At rest against the top, an upward gesture lands on the gate's far
-     side: the plate is closed there and the view is identical to the top
-     of the page, so the seam is invisible and the scroll simply continues
-     upward through the outro, the mark, and the rest of the work. */
-  const gateEl = qs('#loop-gate');
-  let reverseGuard = 0;
-  function reverseLoop() {
-    if (!loopReady || !gateEl || looping) return false;
-    // never off the threshold, where the page is held at zero and an upward
-    // flick would fling a first-time visitor straight to the end
-    if (document.getElementById('threshold')) return false;
-    const now = performance.now();
-    if (now < reverseGuard) return false;
-    // only from a genuine rest against the top, never mid-flick
-    if ((lenis.animatedScroll || window.scrollY) > 2) return false;
-    reverseGuard = now + 700;
-    looping = true;
-    const y = docTopOf(gateEl) + (gateEl.offsetHeight - window.innerHeight) * 0.985;
-    scrubber.progress = 0; scrubber.target = 0; scrubber.draw(true);
-    lenis.scrollTo(y, { immediate: true });
-    ScrollTrigger.update();
-    setTimeout(() => { looping = false; }, 300);
-    return true;
-  }
-  const docTopOf = (el) => el.getBoundingClientRect().top + window.scrollY;
-
-  addEventListener('wheel', (e) => {
-    if (e.deltaY < -2) reverseLoop();
-  }, { passive: true });
-
-  let touchY = 0;
-  addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; }, { passive: true });
-  addEventListener('touchmove', (e) => {
-    // a downward drag is an upward scroll
-    if (e.touches[0].clientY - touchY > 24) reverseLoop();
-  }, { passive: true });
+  const docTop = (el) => el.getBoundingClientRect().top + window.scrollY;
+  const readingAt = (b) => {
+    const r = qs('#reading-wrap');
+    return docTop(r) + b * (r.offsetHeight - window.innerHeight);
+  };
 
   /* ---- keyboard: arrows step between beats; the mysterious register
      keeps its usability underneath ---- */
   const beatPositions = () => {
-    const j = qs('#journey');
-    const jTop = j.offsetTop;
-    const jLen = j.offsetHeight - window.innerHeight;
-    const pts = BEATS.map((b) => jTop + b * jLen);
-    const reading = qs('#reading-wrap');
-    if (reading) {
-      const rLen = reading.offsetHeight - window.innerHeight;
-      for (const b of READING_CARD_BEATS) pts.push(reading.offsetTop + b * rLen);
+    const pts = [0];
+    for (const id of ['#proof', '#about']) { const el = qs(id); if (el) pts.push(docTop(el)); }
+    if (qs('#reading-wrap')) {
+      pts.push(readingAt(WAKE));
+      for (const b of READING_CARD_BEATS) pts.push(readingAt(atWake(b)));
     }
-    // document-absolute top: offsetTop lies for elements inside a
-    // positioned section, the rect never does
-    const docTop = (el) => el.getBoundingClientRect().top + window.scrollY;
-    const film = qs('#film');
-    if (film) pts.push(docTop(film));
     const scrub = qs('#scrub-wrap');
     if (scrub) pts.push(docTop(scrub));
+    const rail = qs('#film-rail');
+    if (rail) {
+      // the rail in quarters, so the keys walk the films rather than skip them
+      const len = rail.offsetHeight - window.innerHeight;
+      for (const b of [0, 0.25, 0.5, 0.75, 1]) pts.push(docTop(rail) + b * len);
+    }
     const pin = qs('#cube-pin');
     if (pin) {
       // the cube's four dwells: one beat per fronted face
@@ -483,14 +470,17 @@ export function initJourney() {
     const design = qs('#design');
     if (design) pts.push(docTop(design));
     const fourth = qs('#fourth-door');
-    if (fourth) pts.push(fourth.offsetTop - window.innerHeight * 0.1);
+    if (fourth) pts.push(docTop(fourth) - window.innerHeight * 0.1);
     const outro = qs('#outro');
-    if (outro) pts.push(outro.offsetTop);
+    if (outro) pts.push(docTop(outro));
+    const j = qs('#journey');
+    if (j) {
+      const jLen = j.offsetHeight - window.innerHeight;
+      for (const b of BEATS) pts.push(docTop(j) + b * jLen);
+    }
     const chrome = qs('#chrome');
     if (chrome) pts.push(docTop(chrome));
-    const gate = qs('#loop-gate');
-    if (gate) pts.push(gate.offsetTop + (gate.offsetHeight - window.innerHeight) * 0.95);
-    return pts;
+    return [...new Set(pts.map(Math.round))].sort((a, b) => a - b);
   };
   window.addEventListener('keydown', (e) => {
     if (qs('#threshold') || qs('#reading-plane')?.classList.contains('is-open')) return;
@@ -506,27 +496,33 @@ export function initJourney() {
     if (next !== undefined) lenis.scrollTo(next, { duration: 1.1, easing: easeInOut });
   });
 
-  /* Deep links land inside the journey: the old chamber URLs redirect
-     here with a hash, and the reading link lands past the ink-in so the
-     table is already lit and wide. Returns false on an unknown hash so
-     the caller can fall back to the top. */
-  function landTo(hash) {
+  /* Deep links, the nav and the outro links all land here: the old
+     chamber URLs redirect with a hash, and #reading lands where the three
+     cards stand level and the table is wide. Unknown hashes return null. */
+  function spotFor(hash) {
+    const el = (sel) => { const e = qs(sel); return e ? docTop(e) : null; };
     const spots = {
-      '#reading': () => {
-        // past the turn, where the three stand level and the table is wide
-        const r = qs('#reading-wrap');
-        return r.offsetTop + (r.offsetHeight - window.innerHeight) * 0.9;
-      },
-      '#film':    () => qs('#film')?.offsetTop,
-      '#writing': () => qs('#writing')?.offsetTop,
-      '#design':  () => qs('#design')?.offsetTop,
+      '': () => 0, '#': () => 0, '#top': () => 0, '#prologue': () => 0,
+      '#proof': () => el('#proof'),
+      '#about': () => el('#about'),
+      '#reading': () => readingAt(atWake(0.9)),
+      '#film': () => el('#film'),
+      '#writing': () => el('#writing'),
+      '#design': () => el('#design'),
+      '#fourth-door': () => el('#fourth-door'),
+      '#outro': () => el('#outro'),
     };
     const y = spots[hash]?.();
+    return y == null ? null : Math.max(0, y);
+  }
+  function landTo(hash) {
+    if (!hash || hash === '#') return false;
+    const y = spotFor(hash);
     if (y == null) return false;
     lenis.scrollTo(y, { immediate: true });
     ScrollTrigger.refresh();
     return true;
   }
 
-  return { lenis, scrubber, landTo, openLoop };
+  return { lenis, scrubber, landTo, spotFor, openLoop, onLoop, wakeReady };
 }

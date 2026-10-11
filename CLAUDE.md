@@ -17,7 +17,8 @@ A static site on GitHub Pages (portfolio.mikewhyle.com), deployed from
 
 - `node tests/readiness.mjs && node tests/asset-batch.mjs`
 - Added or removed an image, CSS background or video the page references?
-  Run `python3 scripts/build-preload-manifest.py`. The loader rejects any
+  Run `python3 scripts/build-preload-manifest.py` (it covers `assets`,
+  `images`, `video`, `showreel` and the News Drop). The loader rejects any
   asset missing from `js/core/asset-sizes.js`.
 - Bump the `?v=` strings for any changed JS or CSS in `index.html`.
 - No file over 100 MB can go into git (GitHub refuses it).
@@ -43,8 +44,31 @@ The loader ends on an Enter button (`.threshold-enter`); click it to get
 in. That click is also what starts the sound, since browsers block audio
 before a gesture. `?dbg` exposes `window.__cube` and `window.__lenis`.
 
+## The page, top to bottom (October 2026)
+
+Showreel (`#prologue`, `js/core/prologue.js`) → the paper: testimonials and
+clients (`#proof`), photo and CV (`#about`) → the reading (`#reading-wrap`:
+the oracle wakes on the last council frames, then the bloom, the triptych
+and the three cards) → film (Mikey scrub, then `#film-rail`, the films
+travelling sideways) → writing → design → vibe-coding → outro → the council
+film as the coda (`#journey`) → the chrome mark → the loop gate, which fades
+to black and returns to the reel.
+
+- The reel ships as two cuts in `showreel/`; `prologue.js` picks one by the
+  screen's shape and the threshold batch downloads only that one. Its six
+  poster stills are in `images/showreel/` (`-v` for the vertical cut).
+- The film rail plays light loops: `video/loops/` (1280 px) on desktop,
+  `video/loops-m/` (720 px) on phones. The `*-hero.mp4` originals stay for
+  the project pages.
+- Client logos are ink-on-transparent in `images/clients/`, sized to equal
+  optical weight (the width is in the markup). Pencil leads.
+- The CV is `cv/Mike-Whyle-CV-2026.pdf`; the nav's CV pill and the about
+  section both download it.
+- The More Films archive and Vanta Black are gone for good.
+
 ## Handovers
 
-- `HANDOVER-SHOWREEL.md`: the showreel, its source and pipeline, and how to
-  rework it for v2. Start there for any reel work.
+- `HANDOVER-SHOWREEL.md`: the v1 showreel, its source and pipeline. v2 is
+  now on the site (see above); the "Putting it back on the site" steps are
+  done.
 - `HANDOVER.md`: an earlier task brief for the journey (July 2026).

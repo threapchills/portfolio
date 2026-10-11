@@ -320,28 +320,6 @@ Then the light goes and the film moves indoors to a shebeen. Full tables, gold, 
     links: [
       { label: "Watch with sound", url: "../../video/weekend-thuggery-hero.mp4", primary: true }
     ]
-  },
-  {
-    id: "video-archive",
-    index: "11",
-    title: "More Films",
-    category: "GenAI Filmmaking",
-    type: "Personal",
-    skills: ["AI Prompting", "Visual Storytelling"],
-    tagline: "The rest of the reel: experiments, shorts, and work in progress.",
-    description: `An ongoing archive of GenAI filmmaking work: anime-influenced short films, experimental pieces, and various explorations of what AI video generation can do when given an actual aesthetic direction rather than a prompt list.`,
-    heroImage: "../../images/motionfold.png",
-    videos: [
-      "https://drive.google.com/file/d/1mb8nkdVeINYfRv6zsze-KKhV_VH_cDxH/view?usp=sharing",
-      "https://www.youtube.com/watch?v=hQ7ZkjxpdIQ",
-      "https://drive.google.com/file/d/1t40QjErBrtredC6FVyrHR_l8RmNu-_28/view?usp=sharing",
-      "https://drive.google.com/file/d/1J_j_Z7Lu_V6eloxoYpKqr4vLmh4FG9ZB/view?usp=sharing",
-      "https://drive.google.com/file/d/1qkm1kRKqVQTI9aZI8P1OtqdwyfGhTXjA/view?usp=sharing",
-      "https://youtu.be/5jpuoFmo-DY",
-      "https://youtube.com/shorts/Hh5Opro2tgo?feature=share",
-      "https://www.youtube.com/watch?v=iDio-suJ57k"
-    ],
-    links: []
   }
 ];
 
@@ -352,14 +330,13 @@ Then the light goes and the film moves indoors to a shebeen. Full tables, gold, 
    ============================================================ */
 
 const CHAMBER_MAP = {
-  "wishfish": { chamber: "film", chamberOrder: 0, rackLoop: "video/wishfish-hero.mp4" },
-  "kalimba":       { chamber: "film",    chamberOrder: 1, rackLoop: "video/kalimba-hero.mp4" },
-  "ramses":        { chamber: "film",    chamberOrder: 2, rackLoop: "video/ramses-hero.mp4" },
-  "ice-tea":       { chamber: "film",    chamberOrder: 3, rackLoop: "video/ice-tea-hero.mp4" },
-  "tale-of-twins": { chamber: "film",    chamberOrder: 4, rackLoop: "video/tale-of-twins-hero.mp4" },
-  "nobody-wears-it-better": { chamber: "film", chamberOrder: 5, rackLoop: "video/nobody-wears-it-better-hero.mp4" },
-  "weekend-thuggery":       { chamber: "film", chamberOrder: 6, rackLoop: "video/weekend-thuggery-hero.mp4" },
-  "video-archive": { chamber: "film",    chamberOrder: 7 },
+  "wishfish": { chamber: "film", chamberOrder: 0, rackLoop: "video/loops/wishfish.mp4" },
+  "kalimba":       { chamber: "film",    chamberOrder: 1, rackLoop: "video/loops/kalimba.mp4" },
+  "ramses":        { chamber: "film",    chamberOrder: 2, rackLoop: "video/loops/ramses.mp4" },
+  "ice-tea":       { chamber: "film",    chamberOrder: 3, rackLoop: "video/loops/ice-tea.mp4" },
+  "tale-of-twins": { chamber: "film",    chamberOrder: 4, rackLoop: "video/loops/tale-of-twins.mp4" },
+  "nobody-wears-it-better": { chamber: "film", chamberOrder: 5, rackLoop: "video/loops/nobody-wears-it-better.mp4" },
+  "weekend-thuggery":       { chamber: "film", chamberOrder: 6, rackLoop: "video/loops/weekend-thuggery.mp4" },
   "mythopoeic":    { chamber: "design",  chamberOrder: 1 },
   "healthtech":    { chamber: "design",  chamberOrder: 2 },
   "writing":       { chamber: "writing", chamberOrder: 1 },
@@ -419,22 +396,22 @@ const WRITING_FACES = (function () {
    root; the film page prefixes them. Mikey leads the rack.
    ============================================================ */
 
-/* Films shown as full-page banners that live outside PROJECTS. Each has a
-   proper hero loop; films without one fall back to the More Films archive.
-   Mikey leads the chamber as the scrub hero and has its own detail page. */
+/* Films shown on the rail that live outside PROJECTS. Each has its own
+   loop (a light rail cut in video/loops, a lighter one in video/loops-m for
+   phones). Mikey leads the chamber as the scrub hero and has its own page. */
 const RACK_EXTRAS = [
   {
     title: "Mythopoeic",
     tag: "Spec ad",
     poster: "images/mythopoeic/hero1.webp",
-    loop: "video/mythopoeic-hero.mp4",
+    loop: "video/loops/mythopoeic.mp4",
     href: "projects/mythopoeic/"
   },
   {
     title: "Vast Island",
     tag: "Trailer",
     poster: "images/vast-island/Exquisite_modern_disney_2k_202602152353-2.webp",
-    loop: "video/vast-island-hero.mp4",
+    loop: "video/loops/vast-island.mp4",
     href: "https://www.youtube.com/watch?v=JgBicFpTIDM",
     external: true
   }

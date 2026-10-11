@@ -106,7 +106,8 @@ export function initCursor() {
   const LABELS = [
     ['#threshold.is-ready', 'Enter'],
     ['.reel-poster', 'Play'],
-    ['.film-banner.is-more', 'Enter'],
+    ['.cv-download', 'Download'],
+    ['.pill-cv', 'CV'],
     ['.film-banner', 'Watch'],
     ['.artefact', 'Play'],
     ['.card', 'Open'],

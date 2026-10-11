@@ -1,9 +1,9 @@
 /* ground.js — the page's own light, changing as you descend.
    A flat background colour under a scroll this long reads as a wall. This
-   one is a gradient in time rather than in space: charcoal at the threshold,
-   warming through burnt umber across the film, arriving at gold by the time
-   the writing cube turns, and going back to charcoal behind the metal mark
-   so the loop closes on the colour it opened with.
+   one is a gradient in time rather than in space: charcoal under the reel,
+   warming through burnt umber across the films, arriving at gold by the time
+   the writing cube turns, back to charcoal for the council's coda and the
+   metal mark, and down to black at the loop, where it begins again.
 
    Through the design chamber the fixed stops hand over to the work itself.
    Each board carries a tone taken from its own dominant mid-tone at build
@@ -20,8 +20,8 @@ const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 
 /* the fixed stops, in document order: [selector, fraction through it, colour] */
 const STOPS = [
-  ['#journey',      0.00, '#17181a'],   // charcoal, where it starts
-  ['#journey',      0.62, '#241a12'],   // the first warmth, under the vortex
+  ['#prologue',     0.00, '#17181a'],   // charcoal, where it starts: the reel
+  ['#about',        0.60, '#1b1612'],   // the paper covers it; the oracle waits beneath
   ['#reading-wrap', 0.30, '#33200f'],
   ['#film',         0.02, '#4a2c12'],   // burnt umber through the reel
   ['#film',         0.65, '#8f6118'],
@@ -30,8 +30,10 @@ const STOPS = [
   // #design is not listed: the work itself owns the ground there
   ['#fourth-door',  0.04, '#9c6a1e'],
   ['#outro',        0.10, '#3c2711'],
+  ['#journey',      0.04, '#17181a'],   // the coda opens on charcoal, as the page once did
+  ['#journey',      0.62, '#241a12'],   // the first warmth, under the vortex
   ['#chrome',       0.20, '#17181a'],   // back to charcoal behind the mark
-  ['#loop-gate',    0.50, '#17181a'],   // and holds, so the loop is seamless
+  ['#loop-gate',    0.50, '#0e0b07'],   // and down into the dark, home to the reel
 ];
 
 export function initGround(tones) {

@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sizes = {}
-for folder in ("assets", "images", "video", "content/newsdrop"):
+for folder in ("assets", "images", "video", "showreel", "content/newsdrop"):
     for path in (ROOT / folder).rglob("*"):
         if path.is_file() and path.suffix.lower() in {".webp", ".png", ".jpg", ".jpeg", ".svg", ".mp4", ".txt"}:
             # GitHub Pages serves tracked text from the repository's LF blob,
