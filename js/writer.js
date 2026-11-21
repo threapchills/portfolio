@@ -437,15 +437,15 @@
   const links = $$('.top-nav a[href^="#"]');
   if (links.length && 'IntersectionObserver' in window) {
     const byId = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
+    // design sits inside the film section, so the deepest place in view wins
+    const places = $$('main > section[id], #design');
+    const inView = new Set();
     const spy = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        if (!e.isIntersecting) continue;
-        links.forEach((a) => a.classList.remove('is-here'));
-        const a = byId.get(e.target.id);
-        a && a.classList.add('is-here');
-      }
+      for (const e of entries) e.isIntersecting ? inView.add(e.target) : inView.delete(e.target);
+      const here = places.filter((el) => inView.has(el)).pop();
+      links.forEach((a) => a.classList.toggle('is-here', !!here && byId.get(here.id) === a));
     }, { rootMargin: '-45% 0px -50% 0px' });
-    $$('main > section[id]').forEach((s) => spy.observe(s));
+    places.forEach((el) => spy.observe(el));
   }
 
   if (motion) {

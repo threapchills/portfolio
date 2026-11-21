@@ -47,7 +47,8 @@ that the pointer cuts through (`#hero`), a strip of publications, about
 (`#about`, the CV's profile), kind words and clients (`#proof`), the
 writing as cards (`#writing`), services (`#services`), then the dark screen
 with the showreel, the films travelling sideways and the design boards
-(`#film`, `#design`), vibe-coding (`#code`) and contact.
+(`#film`, `#design`), creative tech (`#code`: Mike's blanket term for the
+vibe-coded apps and the video game work) and contact.
 
 - **One card format for every piece**, modelled on the testimonial cards:
   format and client along the top, a passage of the piece itself with one

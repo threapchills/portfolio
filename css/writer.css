@@ -84,7 +84,7 @@ section { position: relative; padding-block: clamp(4.5rem, 13vh, 9rem); }
 .top.on-night { background: rgba(23, 24, 26, 0.72); color: var(--moon); border-bottom-color: rgba(239, 228, 205, 0.12); }
 .top.on-night .top-cv { background: var(--moon); color: var(--night); }
 .top-name { font: 600 1.45rem/1 var(--display); text-decoration: none; letter-spacing: 0.01em; white-space: nowrap; }
-.top-nav { display: flex; align-items: center; gap: clamp(0.4rem, 1.6vw, 1.5rem); font: 500 0.86rem var(--ui); }
+.top-nav { display: flex; align-items: center; gap: clamp(0.3rem, 1.4vw, 1.4rem); font: 500 0.86rem var(--ui); }
 .top-nav a { text-decoration: none; padding: 0.45rem 0.2rem; white-space: nowrap; background: linear-gradient(var(--marker), var(--marker)) no-repeat 0 78% / 0% 42%; transition: background-size 0.35s var(--ease); }
 .top-nav a:hover, .top-nav a.is-here { background-size: 100% 42%; }
 .top-nav .top-cv { padding: 0.5rem 0.95rem; border-radius: 100px; background: var(--ink); color: var(--paper-hi); transition: transform 0.25s var(--ease), background 0.4s ease, color 0.4s ease; }
@@ -349,6 +349,7 @@ section { position: relative; padding-block: clamp(4.5rem, 13vh, 9rem); }
 /* ---- smaller screens ---- */
 @media (max-width: 1000px) {
   .artefacts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .top-nav { font-size: 0.8rem; }
   .boards { grid-template-columns: 1fr 1fr; }
   .board-wide { grid-column: 1 / -1; }
 }
