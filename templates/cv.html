@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!-- The CV's source. Print to cv/Mike-Whyle-CV-2026.pdf with scripts/build-cv.py (A4, backgrounds on). -->
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Michael Whyle · CV 2026</title>
+<meta name="author" content="Michael Whyle">
+<meta name="description" content="Curriculum vitae: writer, editor and GenAI filmmaker, Cape Town">
+<meta name="keywords" content="Michael Whyle, CV, writer, copywriter, editor, GenAI filmmaker, thought leadership, press releases, Pencil">
+<style>
+  /* static cuts, so the PDF embeds real outlines */
+  @font-face { font-family: 'Cormorant Garamond'; font-weight: 500; font-style: normal; src: url('cv-assets/cormorant-garamond-latin-500-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Cormorant Garamond'; font-weight: 500; font-style: italic; src: url('cv-assets/cormorant-garamond-latin-500-italic.woff2') format('woff2'); }
+  @font-face { font-family: 'Space Grotesk'; font-weight: 400; font-style: normal; src: url('cv-assets/space-grotesk-latin-400-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Space Grotesk'; font-weight: 500; font-style: normal; src: url('cv-assets/space-grotesk-latin-500-normal.woff2') format('woff2'); }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fef9eb; }
+  body { font: 400 8pt/1.42 'Space Grotesk', sans-serif; color: #3a270b; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a { color: inherit; text-decoration: none; }
+  .page { position: relative; width: 210mm; height: 297mm; overflow: hidden; background: #fef9eb; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .vrule { position: absolute; left: 138.2mm; top: 0; bottom: 0; width: 0; border-left: 0.75pt solid #8d8a84; }
+  .hrule { position: absolute; left: 0; right: 0; height: 0; border-top: 0.75pt solid #8d8a84; }
+  .left { position: absolute; left: 15mm; width: 115.4mm; }
+  .right { position: absolute; left: 145mm; width: 52mm; }
+
+  .name { font: 500 33pt/1 'Cormorant Garamond', serif; letter-spacing: 0.075em; text-transform: uppercase; color: #7a4f18; white-space: nowrap; }
+  .moons { display: flex; align-items: center; gap: 1.1mm; height: 6mm; }
+  .moons img { height: 5.6mm; width: auto; }
+  .role { font: 400 6.4pt/1 'Space Grotesk'; letter-spacing: 0.34em; text-transform: uppercase; color: #93672e; }
+  .profile { font: 500 11.6pt/1.36 'Cormorant Garamond', serif; color: #3a270b; }
+  .profile + .profile { margin-top: 1.9mm; }
+  .profile b { font-weight: 500; color: #7a4f18; }
+
+  .contact dt { font: 400 5.8pt/1 'Space Grotesk'; letter-spacing: 0.34em; text-transform: uppercase; color: #93672e; margin-top: 3.7mm; }
+  .contact dt:first-child { margin-top: 0; }
+  .contact dd { margin-top: 1.7mm; font-size: 8.4pt; line-height: 1.32; }
+  .contact dd a { border-bottom: 0.75pt solid #d9a34e; }
+  .contact dd a { display: inline-block; line-height: 1.25; }
+
+  h2 { display: flex; align-items: baseline; gap: 4.4mm; font: 500 17.5pt/1 'Cormorant Garamond', serif; color: #7a4f18; }
+  h2 i { font: italic 500 10pt/1 'Cormorant Garamond', serif; color: #c9923a; }
+  .right h2 { gap: 3.2mm; }
+
+  .job { position: relative; padding-left: 7mm; margin-top: 5mm; }
+  .job:first-of-type { margin-top: 4.6mm; }
+  .job::before { content: ''; position: absolute; left: 0; top: 0.5mm; width: 3.1mm; height: 3.1mm; border-radius: 50%; border: 0.6pt solid #cf933a; background: linear-gradient(90deg, #cf933a var(--f, 100%), transparent var(--f, 100%)); }
+  .job h3 { font: 500 9.2pt/1.3 'Space Grotesk'; color: #3a270b; }
+  .job .org { margin-top: 0.3mm; font-size: 8pt; color: #6b4a1a; line-height: 1.36; }
+  .job .org b { font-weight: 500; color: #3a270b; }
+  .job .when { margin-top: 1.5mm; font: 400 6.3pt/1 'Space Grotesk'; letter-spacing: 0.32em; text-transform: uppercase; color: #93672e; }
+  ul { list-style: none; }
+  .job ul { margin-top: 2.3mm; }
+  li { position: relative; padding-left: 3.6mm; }
+  li + li { margin-top: 1.05mm; }
+  li::before { content: ''; position: absolute; left: 0.4mm; top: 1.35mm; width: 1.15mm; height: 1.15mm; background: #d9963c; transform: rotate(45deg); }
+  li b { font-weight: 500; }
+
+  .callout { margin: 3.8mm 0 0 0; padding: 3.7mm 4mm 3.8mm; background: #f6edd6; border-left: 0.75pt solid #8d8a84; }
+  .callout .k { font: 400 6pt/1 'Space Grotesk'; letter-spacing: 0.34em; text-transform: uppercase; color: #d2743a; }
+  .callout .t { margin-top: 1.9mm; font: 500 13.5pt/1 'Cormorant Garamond', serif; letter-spacing: 0.2em; text-transform: uppercase; color: #7a4f18; }
+  .callout .t small { margin-left: 2mm; font: 400 5.8pt/1 'Space Grotesk'; letter-spacing: 0.34em; color: #93672e; vertical-align: 0.25em; }
+  .callout p { margin-top: 1.9mm; max-width: 90mm; }
+
+  .work { margin-top: 3.8mm; }
+  .work + .work { margin-top: 3.4mm; }
+  .work h3 { font: 500 11.6pt/1.15 'Cormorant Garamond', serif; color: #7a4f18; }
+  .work h3 small { margin-left: 1mm; font: 400 6pt/1 'Space Grotesk'; letter-spacing: 0.28em; color: #93672e; }
+  .work p { margin-top: 0.6mm; }
+  .work a { border-bottom: 0.75pt solid #d9a34e; }
+  .caps { margin-top: 4.2mm; }
+  .caps li + li { margin-top: 1.7mm; }
+  .kit { margin-top: 4.4mm; }
+  .kit dt { font: 400 5.8pt/1 'Space Grotesk'; letter-spacing: 0.34em; text-transform: uppercase; color: #93672e; margin-top: 3.9mm; }
+  .kit dt:first-child { margin-top: 0; }
+  .kit dd { margin-top: 1.5mm; }
+  .edu { margin-top: 4mm; }
+  .edu b { font-weight: 500; display: block; }
+  .edu span { color: #6b4a1a; }
+
+  .foot { position: absolute; left: 15mm; right: 12.8mm; bottom: 9.6mm; display: flex; justify-content: space-between; align-items: baseline; font: 400 5.8pt/1 'Space Grotesk'; letter-spacing: 0.34em; text-transform: uppercase; color: #b98a45; }
+  .foot i { font: italic 500 9pt/1 'Cormorant Garamond', serif; letter-spacing: 0; text-transform: none; color: #c9923a; }
+
+  .photo { position: absolute; left: 155.6mm; top: 8mm; width: 28.6mm; height: 28.6mm; border-radius: 50%; outline: 0.7pt solid #e2a441; outline-offset: 0.7mm; object-fit: cover; object-position: 50% 30%; }
+  .sign { position: absolute; left: 145mm; top: 246mm; width: 52mm; }
+  .sign p { margin-top: 2.4mm; font: italic 500 12.5pt/1.2 'Cormorant Garamond', serif; color: #9a6a24; }
+  .sign a { display: inline-block; margin-top: 1.6mm; font-size: 8.2pt; border-bottom: 0.75pt solid #d9a34e; line-height: 1.25; }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div class="vrule"></div>
+  <div class="hrule" style="top: 92.1mm"></div>
+
+  <div class="left" style="top: 15.4mm">
+    <h1 class="name">Michael Whyle</h1>
+    <div class="moons" style="margin-top: 3.1mm">
+      <img src="cv-assets/moon-1.png" alt=""><img src="cv-assets/moon-2.png" alt=""><img src="cv-assets/moon-3.png" alt=""><img src="cv-assets/moon-4.png" alt=""><img src="cv-assets/moon-5.png" alt="">
+    </div>
+    <p class="role" style="margin-top: 3mm">Writer &middot; Editor &middot; GenAI Filmmaker</p>
+    <p class="profile" style="margin-top: 5.2mm"><b>I write and edit for AI-first brands.</b> My work spans social and campaign copy, newsletters, thought leadership, press releases and scripts, alongside award-winning GenAI film.</p>
+    <p class="profile">Fifteen years of writing across technology, energy, healthcare and finance give the work its range. Four years of hands-on generative practice give it its edge. At Pencil, I turn a fast-moving product into clear, accurate copy that clients and colleagues rely on.</p>
+  </div>
+
+  <dl class="right contact" style="top: 17.2mm">
+    <dt>Email</dt><dd><a href="mailto:mikewhyle@gmail.com">mikewhyle@gmail.com</a></dd>
+    <dt>Mobile</dt><dd><a href="tel:+27616554726">+27 61 655 4726</a></dd>
+    <dt>Portfolio</dt><dd><a href="https://portfolio.mikewhyle.com">portfolio.mikewhyle.com</a><br><a href="https://www.mikewhyle.com">www.mikewhyle.com</a></dd>
+    <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/mikewhyle">linkedin.com/in/mikewhyle</a></dd>
+    <dt>Based in</dt><dd>Cape Town, South Africa</dd>
+  </dl>
+
+  <div class="left" style="top: 101.6mm">
+    <h2><i>i</i>Experience</h2>
+
+    <article class="job" style="--f: 100%">
+      <h3>GenAI Writer</h3>
+      <p class="org"><b>Pencil</b>, The Brandtech Group&rsquo;s generative AI platform for brands</p>
+      <p class="when">2026 &ndash; Present</p>
+      <ul>
+        <li>Custodian of tone for all marketing social copy: <b>The Pencil Perspective</b> podcast, <b>Humans of Pencil</b> and the bi-weekly product digest on LinkedIn.</li>
+        <li>Write and publish <b>The News Drop</b>, Pencil&rsquo;s weekly AI news digest on LinkedIn: 30+ editions since March 2026.</li>
+        <li>Head writer of Pencil&rsquo;s annual trends report, from thesis to approved copy.</li>
+        <li>Write website copy, including enterprise landing pages and competitor comparison pages optimised for SEO and AEO.</li>
+        <li>Write and design prompting guides and playbooks, including the Pencil Prompting Playbook for image and video.</li>
+        <li>Keep an extensive AI-first SaaS Help Centre in step with the product through an agentic pipeline I designed, with a human review of every change.</li>
+      </ul>
+      <div class="callout">
+        <p class="k">Recognition &middot; 2026</p>
+        <p class="t">Kalimba <small>GenAI film</small></p>
+        <p>Shortlisted from 400+ entries in The Brandtech Group GenAI Film Competition and awarded $1,000. An Afrofuturist mockumentary about a South African innovator who finds a way to measure and record consciousness.</p>
+      </div>
+    </article>
+
+    <article class="job" style="--f: 78%">
+      <h3>AI Strategy Consultant &amp; Content Director</h3>
+      <p class="org"><b>Freelance</b>, Cape Town</p>
+      <p class="when">2025 &ndash; 2026</p>
+      <ul>
+        <li>Led AI adoption strategy and content creation for healthtech start-ups and creative agencies, translating emerging AI capabilities into practical business applications.</li>
+        <li>Developed an AI transformation framework for TQ Group, a marketing agency: cost-benefit analysis showing around 80% cost reduction across video production, a scenario-based adoption roadmap and &ldquo;centaur model&rdquo; principles for human-AI creative collaboration.</li>
+        <li>Delivered writing, visual storytelling, design, branding and investor collateral for Dr Brian Levy&rsquo;s healthtech portfolio (Medtalkz, TravelMedz, TwinTech).</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="right" style="top: 101.6mm">
+    <h2><i>ii</i>Selected Work</h2>
+    <div class="work">
+      <h3>The AI detector dilemma <small>2025</small></h3>
+      <p>An opinion feature for Gadget on why AI detectors fail, and what educators and employers can do instead.</p>
+    </div>
+    <div class="work">
+      <h3>Op-eds in the press <small>2023&ndash;24</small></h3>
+      <p>Ghostwritten for Kearney, Scatec and SAPVIA; published in the Sunday Times, Engineering News and IOL Business Report.</p>
+    </div>
+    <div class="work">
+      <h3>Blood, Books and Bots <small>2025</small></h3>
+      <p>An essay on the true origins of AI, from cave art to GenAI.</p>
+    </div>
+    <div class="work">
+      <h3>Wish Fish <small>2026</small></h3>
+      <p>A solo-made GenAI fairy tale about a wish-granting fish that takes every wish literally. Script, direction, design, sound and score.</p>
+    </div>
+
+    <h2 style="margin-top: 8.6mm"><i>iii</i>Capabilities</h2>
+    <ul class="caps">
+      <li>Copywriting, editing and tone of voice</li>
+      <li>Press releases and thought leadership</li>
+      <li>Content strategy, SEO and GEO</li>
+      <li>Scripts for film, video and audio</li>
+      <li>Technical and research translation</li>
+      <li>Enablement, playbooks and documentation</li>
+      <li>AI workflow, agent and prompt design</li>
+      <li>Art direction for GenAI image and film</li>
+    </ul>
+  </div>
+
+  <p class="foot"><span>Michael Whyle &middot; Curriculum Vitae &middot; 2026</span><i>i</i></p>
+</section>
+
+<section class="page">
+  <div class="vrule"></div>
+  <div class="hrule" style="top: 45mm"></div>
+
+  <div class="left" style="top: 15.6mm">
+    <p class="name" style="font-size: 24pt">Michael Whyle</p>
+    <p class="role" style="margin-top: 4.3mm">Writer &middot; Editor &middot; GenAI Filmmaker</p>
+  </div>
+  <img class="photo" src="cv-assets/mike.jpg" alt="Michael Whyle">
+
+  <div class="left" style="top: 49.4mm">
+    <article class="job" style="--f: 50%">
+      <h3>Technical Writer</h3>
+      <p class="org"><b>Deep Atomic</b>, Swiss start-up pioneering modular nuclear energy and data centre infrastructure</p>
+      <p class="when">2024 &ndash; 2025</p>
+      <ul>
+        <li>Shaped the company&rsquo;s public narrative and tone of voice from inception, aligning it with global clean energy and digital infrastructure trends.</li>
+        <li>Translated complex nuclear technologies into clear, accessible content for technical and non-technical audiences, from user journeys to knowledge bases.</li>
+        <li>Developed white papers, investor decks, regulatory submissions and internal knowledge bases, collaborating with nuclear engineers, policy experts and software developers.</li>
+      </ul>
+    </article>
+
+    <article class="job" style="--f: 50%">
+      <h3>Senior Content Writer</h3>
+      <p class="org"><b>Alkemi Collective</b>, award-winning integrated marketing and PR agency</p>
+      <p class="when">2023 &ndash; 2024</p>
+      <ul>
+        <li>Spearheaded SEO content strategy for diverse B2B businesses, including blue-chip clients: press releases, op-eds, thought leadership, white papers and digital assets for integrated campaigns.</li>
+        <li>Wrote for clients including Kearney, Scatec, Virgin Active and Radisson RED, with work published in the Sunday Times, Engineering News, IOL Business Report and Bizcommunity.</li>
+        <li>Ran team enablement sessions on AI adoption and led knowledge-sharing on writing and storytelling in the era of AI.</li>
+        <li>Managed concurrent deadlines in a fast-paced environment, collaborating with subject matter experts and creative teams while preserving quality and brand integrity.</li>
+      </ul>
+    </article>
+
+    <article class="job" style="--f: 50%">
+      <h3>Writer and Editor</h3>
+      <p class="org"><b>MindShift Communications</b>, Cape Town PR, marketing and corporate communications provider specialising in healthcare</p>
+      <p class="when">2018 &ndash; 2022</p>
+      <ul>
+        <li>Wrote and edited PR, marketing and corporate communications for healthcare clients.</li>
+        <li>Produced press releases and thought leadership for a variety of clients.</li>
+      </ul>
+    </article>
+
+    <article class="job" style="--f: 28%">
+      <h3>Writer &amp; Database Consultant</h3>
+      <p class="org"><b>AWARD</b> (Association for Water and Rural Development), a multidisciplinary water-sector NPO</p>
+      <p class="when">2013 &ndash; 2017</p>
+      <ul>
+        <li>Generated content, data-driven presentations and reports to further the NPO&rsquo;s mission, and managed its stakeholder databases.</li>
+        <li>Developed working proficiency in data structures, database architecture and SQL.</li>
+      </ul>
+    </article>
+
+    <article class="job" style="--f: 0%">
+      <h3>New Media Assistant Editor</h3>
+      <p class="org"><b>Grocott&rsquo;s Mail</b>, South Africa&rsquo;s oldest independent newspaper</p>
+      <p class="when">2011 &ndash; 2013</p>
+      <ul>
+        <li>Managed the CMS back end, produced multimedia content and handled digital advertising (Google AdWords and AdSense).</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="right" style="top: 53.6mm">
+    <h2><i>iv</i>Toolkit</h2>
+    <dl class="kit">
+      <dt>Generative</dt><dd>Midjourney, GPT Image, Nano Banana Pro, Seedance, Runway, ComfyUI, ElevenLabs, Pencil</dd>
+      <dt>Design &amp; post</dt><dd>Photoshop, Illustrator, InDesign, Premiere Pro, FL Studio</dd>
+      <dt>Build &amp; automate</dt><dd>Claude Code, n8n, Unreal Engine 5, HTML, CSS, JavaScript, WebGL shaders, Python, React, Firebase, REST APIs, Git</dd>
+      <dt>Marketing &amp; ops</dt><dd>SEO and GEO tooling, Google Analytics, CMS and community platforms, Google and Microsoft suites, Monday, Slack</dd>
+    </dl>
+
+    <h2 style="margin-top: 9.6mm"><i>v</i>Education</h2>
+    <p class="edu"><b>Bachelor of Arts, Anthropology</b><span>Rhodes University &middot; 2008</span></p>
+
+    <h2 style="margin-top: 9.6mm"><i>vi</i>Interests</h2>
+    <ul class="caps">
+      <li>Music, art, literature and film</li>
+      <li>Philosophy</li>
+      <li>Social justice</li>
+      <li>Running and hiking</li>
+    </ul>
+  </div>
+
+  <div class="sign">
+    <div class="moons">
+      <img src="cv-assets/moon-5.png" alt=""><img src="cv-assets/moon-4.png" alt=""><img src="cv-assets/moon-3.png" alt=""><img src="cv-assets/moon-2.png" alt=""><img src="cv-assets/moon-1.png" alt="">
+    </div>
+    <p>Let&rsquo;s build worlds together.</p>
+    <a href="mailto:mikewhyle@gmail.com">mikewhyle@gmail.com</a>
+  </div>
+
+  <p class="foot"><span>portfolio.mikewhyle.com</span><i>ii</i></p>
+</section>
+
+</body>
+</html>

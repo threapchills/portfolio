@@ -1,612 +1,591 @@
 <!DOCTYPE html>
-<html lang="en" data-root=".">
+<!-- Built by scripts/build-site.py from templates/home.html and content/writing/. Edit those, then rebuild. -->
+<html lang="en-ZA">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mike Whyle | Portfolio</title>
-  <meta name="description" content="Mike Whyle: GenAI film-maker, writer and creative in Cape Town. The 2026 showreel, kind words from clients and colleagues, a CV, and three chambers of work: film, writing and design.">
-  <meta property="og:title" content="Mike Whyle | Portfolio">
-  <meta property="og:description" content="The 2026 showreel, kind words, a CV, and three chambers of work: film, writing and design.">
+  <title>Mike Whyle | Writer</title>
+  <meta name="description" content="Mike Whyle is a writer in Cape Town. Thought leadership, press releases, features and short-form copy for AI-first brands, with the published work to show for it.">
+  <meta property="og:title" content="Mike Whyle | Writer">
+  <meta property="og:description" content="Clarity that cuts through the noise. Op-eds, press releases, features and short-form copy, published from the Sunday Times to Gadget.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://portfolio.mikewhyle.com/assets/brand/og-card.jpg">
+  <meta property="og:url" content="https://portfolio.mikewhyle.com/">
+  <meta property="og:image" content="https://portfolio.mikewhyle.com/assets/brand/og-writer.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://portfolio.mikewhyle.com/">
   <link rel="icon" href="favicon.png" type="image/png">
-  <meta name="theme-color" content="#17181a">
+  <meta name="theme-color" content="#ece7db">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    /* critical: whatever happens to the stylesheet, the page opens on the
-       charcoal ground.js starts from, so the first paint is the real one */
-    html { background: #17181a; }
-    body { margin: 0; background: #17181a; color: #efe4cd; }
-    #threshold { position: fixed; inset: 0; z-index: 200; background: #17181a;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  </style>
-  <link rel="stylesheet" href="css/overhaul.css?v=24">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/writer.css?v=20261121b">
 </head>
-<body class="overhaul">
+<body class="home">
 
-  <noscript>
-    <div class="noscript-poster">
-      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;">Mike Whyle</h1>
-      <p>Cape Town based GenAI film-maker; writer, and creative.</p>
-      <p>The full journey needs JavaScript. The classic site asks nothing.</p>
-      <nav>
-        <a href="showreel/mike-whyle-showreel-2026.mp4">Showreel</a> &middot;
-        <a href="cv/Mike-Whyle-CV-2026.pdf">CV</a> &middot;
-        <a href="legacy/index-v1.html">Classic site</a>
-      </nav>
-    </div>
-  </noscript>
+  <a class="skip" href="#writing">Skip to the writing</a>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 
-  <!-- Act 0 · the Threshold -->
-  <div id="threshold">
-    <p class="threshold-name">Mike Whyle</p>
-
-    <div class="threshold-moons" role="progressbar" aria-label="Loading">
-      <img class="threshold-moon" src="assets/journey/moon-1.webp" alt="">
-      <img class="threshold-moon" src="assets/journey/moon-2.webp" alt="">
-      <img class="threshold-moon" src="assets/journey/moon-3.webp" alt="">
-      <img class="threshold-moon" src="assets/journey/moon-4.webp" alt="">
-      <img class="threshold-moon" src="assets/journey/moon-5.webp" alt="">
-    </div>
-    <div class="threshold-progress">
-      <p id="load-stage" role="status" aria-live="polite">Measuring the journey&hellip;</p>
-      <p id="load-detail"></p>
-    </div>
-  </div>
-
-  <header class="veil-nav">
-    <a href="#prologue" class="veil-mark" aria-label="Mike Whyle, back to the beginning">
-      <img src="assets/brand/mikey-logo.webp" alt="Mikey">
-    </a>
-    <nav class="pill-nav" aria-label="Sections">
-      <a href="#prologue" data-nav="prologue">Reel</a>
-      <a href="#proof" data-nav="proof" class="is-wide">Kind words</a>
-      <a href="#about" data-nav="about">About</a>
-      <a href="#reading" data-nav="work">Work</a>
-      <a class="pill-cv" href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV<span aria-hidden="true">&darr;</span></a>
+  <header class="top" id="top">
+    <a class="top-name" href="#about">Mike Whyle</a>
+    <nav class="top-nav" aria-label="Sections">
+      <a href="#writing">Writing</a>
+      <a href="#services">Services</a>
+      <a href="#proof">Kind words</a>
+      <a href="#film">Film and design</a>
+      <a class="top-cv" href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV <span aria-hidden="true">&darr;</span></a>
     </nav>
-    <button id="mute-btn" aria-label="Pause sound">
-      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect class="b1" x="8" y="6" width="2" height="12" rx="1"/><rect class="b2" x="11" y="6" width="2" height="12" rx="1"/><rect class="b3" x="14" y="6" width="2" height="12" rx="1"/></svg>
-    </button>
   </header>
 
-  <main inert id="top">
-    <!-- Prologue · the showreel, up front. The stage pins while the card
-         grows towards the frame; then the paper slides up over it -->
-    <section id="prologue" aria-label="Showreel">
-      <div class="prologue-stage">
-        <div class="prologue-glow" aria-hidden="true"></div>
-        <header class="prologue-head">
-          <h1 class="prologue-name" data-split>Mike Whyle</h1>
-          <p class="prologue-roles">Cape Town based GenAI film-maker; writer, and creative.</p>
-        </header>
-        <div class="reel-frame" id="reel-frame">
-          <video id="reel-video" playsinline controls preload="none" controlslist="nodownload"></video>
-          <button class="reel-poster" id="reel-play" aria-label="Play the showreel, with sound">
-            <span class="reel-stills" aria-hidden="true">
-            <img class="reel-still" data-still="1" alt="">
-            <img class="reel-still" data-still="2" alt="">
-            <img class="reel-still" data-still="3" alt="">
-            <img class="reel-still" data-still="4" alt="">
-            <img class="reel-still" data-still="5" alt="">
-            <img class="reel-still" data-still="6" alt="">
-            </span>
-            <span class="reel-play-icon" aria-hidden="true"></span>
-            <span class="reel-play-label"><span>Showreel 2026</span><i>&middot;</i><span>Play with sound</span><i class="x">&middot;</i><span class="x">1:30</span></span>
-          </button>
-        </div>
-        <p class="prologue-hint" aria-hidden="true">Scroll</p>
-      </div>
-    </section>
+  <main>
 
-    <!-- the paper: kind words, the clients, and the man himself -->
-    <section id="proof" class="paper" aria-labelledby="proof-title">
-      <div class="paper-inner">
-        <p class="paper-eyebrow">Testimonials</p>
-        <h2 class="paper-title" id="proof-title"><span class="scribbled">Kind<svg class="scribble scribble-under" viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 17c26-6 58-9 90-8 34 1 62 4 94 1 5-.5 8-1 11-2M20 25c34-4 82-6 128-3"/></svg></span> words</h2>
-        <div class="testimonials">
-          <div class="t-col">
-            <figure class="t-card" style="--tilt:-1.1deg">
-              <span class="t-cursor" style="--c:#3d7f86;--d:0s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Tim</b></span>
-              <blockquote>
-                <p>&ldquo;Mike&rsquo;s an excellent writer with a clear and knowledgeable passion for all things AI&hellip;</p>
-                <p>Mike&rsquo;s output is fantastic and increasingly wide-ranging - the quality is always great&hellip;<br>&hellip;Moreover, he&rsquo;s a fast worker who is <mark class="hl">able to distill complex subject matter to simple outputs.</mark>&rdquo;</p>
-              </blockquote>
-              <figcaption><strong>Tim Bowers</strong><span>Head of Education &amp; Enablement, Pencil</span></figcaption>
-            </figure>
-            <figure class="t-card" style="--tilt:0.9deg">
-              <span class="t-cursor" style="--c:#6b2a19;--d:-2.4s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Nic</b></span>
-              <blockquote><p>&ldquo;Mike&rsquo;s <mark class="hl">strategic thinking and content writing</mark> are top notch.&rdquo;</p></blockquote>
-              <figcaption><strong>Nic Latouf</strong><span>Serial Entrepreneur &amp; Founder, Lekker Network</span></figcaption>
-            </figure>
-          </div>
-          <div class="t-col">
-            <figure class="t-card" style="--tilt:1.3deg">
-              <span class="t-cursor" style="--c:#485068;--d:-4.1s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Elb&eacute;</b></span>
-              <blockquote><p>&ldquo;Mike&rsquo;s work was <mark class="hl">exceptionally insightful</mark> and his deliverables are always of excellent quality.&rdquo;</p></blockquote>
-              <figcaption><strong>Elb&eacute; Smith</strong><span>CEO, TQ Group</span></figcaption>
-            </figure>
-            <figure class="t-card" style="--tilt:-0.7deg">
-              <span class="t-cursor" style="--c:#8d5f24;--d:-1.3s" aria-hidden="true"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Bradley</b></span>
-              <blockquote>
-                <p>&ldquo;Mike&hellip; &hellip;the master of turning client ideas and content briefs into engaging stories, the champion of clever copy, and <mark class="hl">the guy who always found just the right word.</mark></p>
-                <p>Your talent for crafting magic with words has been an incredible asset to our team&hellip;&rdquo;</p>
-              </blockquote>
-              <figcaption><strong>Bradley Howland</strong><span>CEO &amp; Owner, Alkemi Collective</span></figcaption>
-            </figure>
-          </div>
-        </div>
-
-        <div class="clients">
-          <p class="paper-eyebrow">Clients</p>
-          <p class="clients-copy">Some of the awesome companies and brands who&rsquo;ve entrusted me with their storytelling include <span class="circled">Pencil<svg class="scribble scribble-ring" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M150 9C112 1 52 3 22 18 2 28 3 50 26 61c32 15 104 16 145 3 24-8 30-26 12-41-10-8-30-13-52-15"/></svg></span><sup class="fn-mark" aria-describedby="fn-pencil">*</sup>, Virgin Active, Radisson RED hotels, Kearney, Scatec, Africa Health Conference, Table Mountain Aerial Cableway Company (TMACC), as well as nimble start-ups like Lula, Deep Atomic, and Twintech.</p>
-          <p class="clients-note" id="fn-pencil"><span aria-hidden="true">*</span> Currently full time at Pencil.</p>
-          <div class="client-strip">
-            <ul class="client-track" aria-label="Clients">
-            <li><img src="images/clients/pencil.webp" alt="Pencil" width="113" height="32" style="--w:113px"></li>
-            <li><img src="images/clients/virgin-active.webp" alt="Virgin Active" width="87" height="42" style="--w:87px"></li>
-            <li><img src="images/clients/radisson-red.webp" alt="Radisson RED" width="56" height="52" style="--w:56px"></li>
-            <li><img src="images/clients/kearney.webp" alt="Kearney" width="178" height="22" style="--w:178px"></li>
-            <li><img src="images/clients/scatec.webp" alt="Scatec" width="132" height="27" style="--w:132px"></li>
-            <li><img src="images/clients/africa-health.webp" alt="Africa Health" width="97" height="37" style="--w:97px"></li>
-            <li><img src="images/clients/table-mountain-aerial-cableway.webp" alt="Table Mountain Aerial Cableway" width="84" height="43" style="--w:84px"></li>
-            <li><img src="images/clients/lula.webp" alt="Lula" width="98" height="37" style="--w:98px"></li>
-            </ul>
-          </div>
-        </div>
+    <!-- the opening: one line, then the writer -->
+    <section class="hero" id="about" aria-labelledby="hero-title">
+      <div class="lane">
+        <p class="note" data-wc="#hero-title" data-live>6 words</p>
+        <h1 class="hero-title" id="hero-title" data-words>Clarity that cuts through the noise.</h1>
       </div>
-    </section>
-
-    <section id="about" class="paper" aria-labelledby="about-title">
-      <div class="about-grid">
-        <figure class="about-photo">
-          <img src="images/about/mike.webp" alt="Mike Whyle" width="710" height="709">
-        </figure>
-        <div class="about-copy">
-          <p class="paper-eyebrow">About</p>
-          <h2 class="paper-title" id="about-title" data-split>Hi, I&rsquo;m Mike.</h2>
-          <p class="about-lede">I concept, write and art-direct for AI-first brands. My work spans campaign and product copy, brand worlds, prompting systems and award-winning GenAI film.</p>
-          <p>Fifteen years of writing across technology, energy, healthcare and finance give the work its range. Four years of hands-on generative practice give it its edge. At Pencil, I turn a fast-moving product into clear, visual material that clients and colleagues rely on.</p>
-          <p class="about-award"><span>Recognition &middot; 2026</span>Kalimba: shortlisted from 400+ entries in The Brandtech Group GenAI Film Competition.</p>
-          <div class="about-actions">
-            <a class="cv-download" href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></svg>
-              Download my CV<small>PDF &middot; 430 KB</small>
-            </a>
-            <a class="ink-pill" href="mailto:mikewhyle@gmail.com">Email</a>
-            <a class="ink-pill" href="https://www.linkedin.com/in/mikewhyle" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="ink-pill" href="https://wa.me/27616554726" target="_blank" rel="noopener">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Act VI · the Reading -->
-    <section id="reading-wrap" aria-label="The reading">
-      <!-- the oracle wakes under the table as the paper lifts off him -->
-      <div id="reading-ground" aria-hidden="true">
-        <canvas id="ground-canvas"></canvas>
-        <div class="ground-ink"></div>
-        <div class="reading-intro">
-          <p class="reading-eyebrow">The work</p>
-          <p class="reading-line">Three cards. Three ways in.</p>
-        </div>
-      </div>
-      <!-- the segue: the oracle gives up the wordmark, which blooms out of
-           her own light and then settles into a panel of its own -->
-      <div id="segue" aria-hidden="true">
-        <div class="segue-plate is-bloom"></div>
-        <div class="segue-plate is-solid"></div>
-      </div>
-      <div id="reading">
-        <div id="card-table"><!-- cards dealt by cards.js --></div>
-        <p class="reading-hint">Choose a card, or scroll on</p>
-      </div>
-      <!-- the triptych: that panel is divided in three and each column
-           turns on its own axis, so the painting becomes the reading -->
-      <div id="triptych" aria-hidden="true">
-        <div class="tri-col"><div class="tri-inner"><span class="tri-face tri-front"></span><span class="tri-face tri-back"></span></div></div>
-        <div class="tri-col"><div class="tri-inner"><span class="tri-face tri-front"></span><span class="tri-face tri-back"></span></div></div>
-        <div class="tri-col"><div class="tri-inner"><span class="tri-face tri-front"></span><span class="tri-face tri-back"></span></div></div>
-      </div>
-    </section>
-
-    <!-- chamber i · Human Being · Film. The Mikey scrub leads, the
-         banners walk the reel; the whole act rides the one scroll now -->
-    <section id="film" aria-label="Film: the work">
-      <div id="scrub-wrap">
-        <div id="scrub-stage" class="vignette">
-          <canvas id="scrub-canvas"></canvas>
-          <div class="letterbox letterbox-top" id="lb-top"></div>
-          <div class="letterbox letterbox-bottom" id="lb-bottom"></div>
-          <div class="scrub-brand" id="scrub-brand">
-            <img src="assets/brand/mikey-logo.webp" alt="Mikey">
-            <p>A spec film. This is what cinematic AI looks like now.</p>
-            <a class="scrub-cta" href="projects/mikey/">Enter the film &rarr;</a>
-          </div>
-        </div>
-      </div>
-      <div id="film-rail" class="paper" aria-label="The films">
-        <div class="rail-stage">
-          <div id="film-track">
-            <div class="rail-intro">
-              <p class="door-eyebrow"><span class="eb-num">i</span>Human Being</p>
-              <h2 class="rail-title" data-split>The films</h2>
-              <p class="rail-sub"><span id="film-count">09</span> films &middot; scroll to travel</p>
+      <div class="lane hero-body">
+        <p class="note" data-wc="#hero-lede">48 words</p>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div id="hero-lede">
+              <p class="lede">I&rsquo;m Mike Whyle, a writer in Cape Town. I write for AI&#8209;first brands: thought leadership, press releases, features, newsletters, scripts and social copy.</p>
+              <p class="lede lede-2">Fifteen years of writing across technology, energy, healthcare and finance give the work its range. Four years of hands-on generative practice give it its edge.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-ink" href="#writing">Read the work</a>
+              <a class="btn" href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">Download my CV <small>PDF</small></a>
+              <a class="btn" href="mailto:mikewhyle@gmail.com">Email</a>
+              <a class="btn" href="https://www.linkedin.com/in/mikewhyle" target="_blank" rel="noopener">LinkedIn</a>
             </div>
           </div>
-          <div class="rail-progress" aria-hidden="true"><span id="film-progress"></span></div>
+          <figure class="hero-photo">
+            <img src="images/about/mike.webp" alt="Mike Whyle" width="710" height="709">
+          </figure>
+        </div>
+      </div>
+      <div class="pubs" aria-label="Published in">
+        <p class="pubs-label">Published in</p>
+        <div class="pubs-window">
+          <ul class="pubs-track">
+            <li>Sunday Times</li><li>Engineering News</li><li>IOL Business Report</li><li>Gadget</li><li>Bizcommunity</li><li>iAfrica</li><li>Good Things Guy</li><li>Hospitality Marketplace</li><li>Essential Flavours</li><li>Galore SA</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- chamber ii · Human Thinking · Writing. The scroll turns the cube
-         through one full revolution; drag stays free for play -->
-    <section id="writing" aria-label="Writing: the collections">
-      <div id="cube-pin">
-        <div class="writing-ground" aria-hidden="true"></div>
-      <!-- the ground the cube turns on: Mike's own case for AI, scrolling
-           with the turn; a few of its load-bearing sentences in gold -->
-      <div class="essay-ground" aria-label="Essay: Blood, Books and Bots">
-        <article class="essay-text" id="essay-text">
-          <p class="essay-eyebrow">Essay &middot; 2025</p>
-          <h3 class="essay-title">Blood, Books and Bots</h3>
+    <!-- kind words, then the clients -->
+    <section class="proof" id="proof" aria-labelledby="proof-title">
+      <div class="lane">
+        <p class="note">4 testimonials</p>
+        <h2 class="title" id="proof-title"><span class="scribbled">Kind<svg class="scribble scribble-under" viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 17c26-6 58-9 90-8 34 1 62 4 94 1 5-.5 8-1 11-2M20 25c34-4 82-6 128-3"/></svg></span> words</h2>
+      </div>
+      <div class="lane">
+        <span class="note-gap"></span>
+        <div class="testimonials">
+          <figure class="t-card" style="--tilt:-0.6deg">
+            <span class="t-cursor" style="--c:#3d7f86;--d:0s" aria-hidden="true"><svg viewBox="0 0 16 18"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Tim</b></span>
+            <blockquote>
+              <p>&ldquo;Mike&rsquo;s an excellent writer with a clear and knowledgeable passion for all things AI&hellip;</p>
+              <p>Mike&rsquo;s output is fantastic and increasingly wide-ranging - the quality is always great&hellip;<br>&hellip;Moreover, he&rsquo;s a fast worker who is <mark class="hl">able to distill complex subject matter to simple outputs.</mark>&rdquo;</p>
+            </blockquote>
+            <figcaption><strong>Tim Bowers</strong><span>Head of Education &amp; Enablement, Pencil</span></figcaption>
+          </figure>
+          <figure class="t-card" style="--tilt:0.5deg">
+            <span class="t-cursor" style="--c:#8d5f24;--d:-1.3s" aria-hidden="true"><svg viewBox="0 0 16 18"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Bradley</b></span>
+            <blockquote>
+              <p>&ldquo;Mike&hellip; &hellip;the master of turning client ideas and content briefs into engaging stories, the champion of clever copy, and <mark class="hl">the guy who always found just the right word.</mark></p>
+              <p>Your talent for crafting magic with words has been an incredible asset to our team&hellip;&rdquo;</p>
+            </blockquote>
+            <figcaption><strong>Bradley Howland</strong><span>CEO &amp; Owner, Alkemi Collective</span></figcaption>
+          </figure>
+          <figure class="t-card" style="--tilt:0.4deg">
+            <span class="t-cursor" style="--c:#6b2a19;--d:-2.4s" aria-hidden="true"><svg viewBox="0 0 16 18"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Nic</b></span>
+            <blockquote><p>&ldquo;Mike&rsquo;s <mark class="hl">strategic thinking and content writing</mark> are top notch.&rdquo;</p></blockquote>
+            <figcaption><strong>Nic Latouf</strong><span>Serial Entrepreneur &amp; Founder, Lekker Network</span></figcaption>
+          </figure>
+          <figure class="t-card" style="--tilt:-0.4deg">
+            <span class="t-cursor" style="--c:#485068;--d:-4.1s" aria-hidden="true"><svg viewBox="0 0 16 18"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg><b>Elb&eacute;</b></span>
+            <blockquote><p>&ldquo;Mike&rsquo;s work was <mark class="hl">exceptionally insightful</mark> and his deliverables are always of excellent quality.&rdquo;</p></blockquote>
+            <figcaption><strong>Elb&eacute; Smith</strong><span>CEO, TQ Group</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="lane clients">
+        <p class="note">10 clients</p>
+        <div>
+          <p class="clients-copy">Some of the awesome companies and brands who&rsquo;ve entrusted me with their storytelling include <span class="circled">Pencil<svg class="scribble scribble-ring" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M150 9C112 1 52 3 22 18 2 28 3 50 26 61c32 15 104 16 145 3 24-8 30-26 12-41-10-8-30-13-52-15"/></svg></span><sup class="fn-mark" aria-describedby="fn-pencil">*</sup>, Virgin Active, Radisson RED hotels, Kearney, Scatec, Africa Health Conference, Table Mountain Aerial Cableway Company (TMACC), as well as nimble start-ups like Lula, Deep Atomic, and Twintech.</p>
+          <p class="clients-note" id="fn-pencil"><span aria-hidden="true">*</span> Currently full time at Pencil.</p>
+          <ul class="client-logos" aria-label="Clients">
+            <li><img src="images/clients/pencil.webp" alt="Pencil" width="113" height="32" loading="lazy"></li>
+            <li><img src="images/clients/virgin-active.webp" alt="Virgin Active" width="87" height="42" loading="lazy"></li>
+            <li><img src="images/clients/radisson-red.webp" alt="Radisson RED" width="56" height="52" loading="lazy"></li>
+            <li><img src="images/clients/kearney.webp" alt="Kearney" width="178" height="22" loading="lazy"></li>
+            <li><img src="images/clients/scatec.webp" alt="Scatec" width="132" height="27" loading="lazy"></li>
+            <li><img src="images/clients/africa-health.webp" alt="Africa Health" width="97" height="37" loading="lazy"></li>
+            <li><img src="images/clients/table-mountain-aerial-cableway.webp" alt="Table Mountain Aerial Cableway" width="84" height="43" loading="lazy"></li>
+            <li><img src="images/clients/lula.webp" alt="Lula" width="98" height="37" loading="lazy"></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- the essay, at three lengths -->
+    <section class="essay" id="essay" aria-labelledby="essay-title">
+      <div class="lane">
+        <p class="note">Essay, 2025</p>
+        <div>
+          <h2 class="title" id="essay-title">Blood, Books and Bots</h2>
           <p class="essay-sub">The true origins of AI</p>
-          <p><em class="essay-key">The first known use of AI is actually much earlier than people think.</em></p>
-          <p>In fact it was during the Palaeolithic era, probably around 100,000 years ago.</p>
-          <p>Imagine the first time a human ever used blood or ochre to daub her handprint onto the rock surface. Art teachers rightfully describe her (or him) as the ur-painter; the first artist. The first handprints and other cave paintings were the true origin and deep root of all human art. But this was also one of the first known uses of artificial intelligence.</p>
-          <p>Because this first artwork was not purely decorative. As a palaeolithic nomad, the caves she would visit in her life were too many to remember. To properly make meaning and to storify her existence, she had to augment her natural intelligence, manipulating both tools, and the very environment – the rockface into which she inscribed this first “token”. This would be around the time of the advent of spoken language – itself an early iteration of AI – a shared cultural construct that gives rise to shared meaning making, and what Harari calls “intersubjective reality”.</p>
-          <p>Cave art eventually became the symbolic written language with which we humans would steadily continue to augment and extend the power of our memories and of our minds. But AI was just getting started. Books, and, later, the printing press, were early iterations of AI, ones which facilitated the worldwide spread of mathematics, and the scientific method.</p>
-          <p>The next iteration came in the form of semiconductors, microchips, computing, data centers, and the World Wide Web. This last version of AI became our collective memory, a digital home for the entire corpus or “text” of humankind: A massive repository of symbolic language, spanning from right back to those cave-dwelling days.</p>
-          <p>And now GenAI emerges as the latest version of what has always simply been AI – ie: the human tendency to augment our natural abilities with various external tools (both material and intellectual ones). It’s already cliché to mention that the previous iterations – All the ones I just mentioned, plus machine learning; social media algos; the denoising on your phone’s camera etc. – that, once perfected, they lose that “AI” moniker, and become just regular old “tech”.</p>
-          <p>The previous industrial revolution largely decoupled strength from economic agency – I can get stronger, it might make me healthier and more attractive, sure, but it won’t necessarily make me richer –   <em class="essay-key">what the previous IRs did for Strength, this AI Industrial revolution will do for Intelligence.</em></p>
-          <p>And so, for many of us, whose vocations involve being clever, realistically AI is coming for our jobs. It’s the crude economics of capitalist market logic and machines just becoming better faster and cheaper.</p>
-          <p>Unless what you do specifically requires humans… They say preachers, &amp; politicians are safe… Similarly, certain traditional shamanic healers, and also human touch based arts like reiki practitioners are fine. Probably most nursing staff, as well as child and elderly care workers, and other such roles are also generally safer. The likes of sex workers, exotic dancers and other escorts are probably all good. The rest of us, not so much. Difficult to predict really.</p>
-          <p>That said, we could expect the economy to be coerced into a major reconfiguration fairly soon. I’m not sure how it’ll look, but the scale of job loss will mean there is precious little spending and therefore no GDP growth, so governments’ hands will eventually be forced into heavy structural economic reform.</p>
-          <p>The moral stigma against AI, just like with the previous iterations, is largely based on deeper cultural narratives and (understandable) fears about our own purpose and meaning-making in life, rather than rational thought. It’s a fear encoded in our stories that warn against the likes of AI – from Prometheus; the Golem of Jewish folklore; or Frankenstein’s monster, and (examples from my day) The Terminator; The Matrix; &amp; Black Mirror.</p>
-          <p>The synth, the camera, the loom, and the automobile were all accompanied by the same pitch-fork wielding mobs that we see arrayed in spiritual vengeance on Facebook and LinkedIN against AI today. All of these technologies too were considered “cheating”, and worse: “dangerous,” “egregious”; even “threatening to unravel the very moral fabric of society” in their time.</p>
-          <p>However, we accepted them once we realised that on balance, they actually tend to do more good than harm. <em class="essay-key">AI does more good than harm.</em> Be honest, that’s why you’re here, on your device; itself a form of AI.</p>
-          <p>And by the way, Socrates proclaimed the same thing about one of the earliest versions of AI – writing itself! He warned writing would erode memory, imperil critical thinking, and basically make us stupider all-round. Perhaps he was not wrong.</p>
-          <p>AI is not Cheating, AI is not moral decay. It’s not a moral virtue either. It’s technology. It’s a tool. <em class="essay-key">AI is the new brush.</em> The new pen, the new keyboard, and the new camera. It doesn’t replace those older ones, it’s just a new one to add to your toolkit-slash-techstack.</p>
-          <p>AI is not Evil. Nor is it good. It’s a cultural technology and it is a tool. It happens to be the most intricate, complex one humans have yet devised – as a software object, but also just on a purely physical level, if we look at the network of data centers, each one using as much power as a city, that spans the globe. And there’s a LOT more coming. Turns out, there’s massive money to be made in turning dumb electrons into smart ones, and the uber-wealthy are scrambling over each other to build them, even as I write this. But I digress…</p>
-          <p>To be clear, tech progress doesn’t necessarily bring about moral or even human quality of life progress. As humans we seem to perpetually disagree so vehemently that war is a constant feature of our story arc. Tech hasn’t solved inequality, starvation or other kinds of suffering. Many think we were happier on the whole back in the hunter gatherer days. Who knows?</p>
-          <p>But tech progress is some kind of progress. Harari sees it as the evolution – and ever-evolving complexity -of information networks, tracing a clear arc from single-celled organisms to the space-faring interstellar beings we might eventually become.</p>
-          <p>In the story of the stone soup a small group of strangers makes a soup of pure water and some stones. Of course this is made possible because of many small gifts, gestures and donations of ingredients over time.</p>
-          <p>It’s the same with AI. The “magic trick” of AI, the uncanny, Turing-test-passing illusion of sentience – is only possible because we all contributed to it, (at least anyone with any sort of digital footprint). <em class="essay-key">In an ideal world AI would be something like a communal stone soup; something that we all get to eat from, and reap the benefits of collectively.</em></p>
-          <p>Wishing AI away doesn’t help. Wishing we could turn the tech-clock back ten years doesn’t help. <em class="essay-key">Our job as the adults in the room is to accept reality and technology as it stands, and then work to reorganise society and the economy accordingly.</em></p>
+          <p class="essay-intro">Compression is intelligence. A key message should hold as a bumper sticker and as a thesis. Here is one argument at three lengths.</p>
+        </div>
+      </div>
+      <div class="lane">
+        <p class="note" id="essay-count" aria-live="polite">93 words</p>
+        <div class="dial-wrap">
+          <div class="dial" role="tablist" aria-label="Choose a length">
+            <button role="tab" id="tab-short" aria-controls="panel-short" aria-selected="false" data-words="5" tabindex="-1">The bumper sticker</button>
+            <button role="tab" id="tab-lines" aria-controls="panel-lines" aria-selected="true" data-words="93">Six lines</button>
+            <button role="tab" id="tab-full" aria-controls="panel-full" aria-selected="false" data-words="1,185" tabindex="-1">The essay</button>
+          </div>
+          <div class="essay-panel essay-short" id="panel-short" role="tabpanel" aria-labelledby="tab-short" hidden>
+            <p>AI is the new pencil.</p>
+          </div>
+          <div class="essay-panel essay-lines" id="panel-lines" role="tabpanel" aria-labelledby="tab-lines">
+            <ol>
+              <li>The first known use of AI is actually much earlier than people think.</li>
+              <li>What the previous IRs did for Strength, this AI Industrial revolution will do for Intelligence.</li>
+              <li>AI does more good than harm.</li>
+              <li>AI is the new brush.</li>
+              <li>In an ideal world AI would be something like a communal stone soup; something that we all get to eat from, and reap the benefits of collectively.</li>
+              <li>Our job as the adults in the room is to accept reality and technology as it stands, and then work to reorganise society and the economy accordingly.</li>
+            </ol>
+          </div>
+          <div class="essay-panel essay-full" id="panel-full" role="tabpanel" aria-labelledby="tab-full" hidden>
+            <article class="prose">
+              <p><mark class="hl">The first known use of AI is actually much earlier than people think.</mark></p>
+              <p>In fact it was during the Palaeolithic era, probably around 100,000 years ago.</p>
+              <p>Imagine the first time a human ever used blood or ochre to daub her handprint onto the rock surface. Art teachers rightfully describe her (or him) as the ur-painter; the first artist. The first handprints and other cave paintings were the true origin and deep root of all human art. But this was also one of the first known uses of artificial intelligence.</p>
+              <p>Because this first artwork was not purely decorative. As a palaeolithic nomad, the caves she would visit in her life were too many to remember. To properly make meaning and to storify her existence, she had to augment her natural intelligence, manipulating both tools, and the very environment – the rockface into which she inscribed this first “token”. This would be around the time of the advent of spoken language – itself an early iteration of AI – a shared cultural construct that gives rise to shared meaning making, and what Harari calls “intersubjective reality”.</p>
+              <p>Cave art eventually became the symbolic written language with which we humans would steadily continue to augment and extend the power of our memories and of our minds. But AI was just getting started. Books, and, later, the printing press, were early iterations of AI, ones which facilitated the worldwide spread of mathematics, and the scientific method.</p>
+              <p>The next iteration came in the form of semiconductors, microchips, computing, data centers, and the World Wide Web. This last version of AI became our collective memory, a digital home for the entire corpus or “text” of humankind: a massive repository of symbolic language, spanning from right back to those cave-dwelling days.</p>
+              <p>And now GenAI emerges as the latest version of what has always simply been AI – i.e. the human tendency to augment our natural abilities with various external tools (both material and intellectual ones). It’s already cliché to mention that the previous iterations – all the ones I just mentioned, plus machine learning; social media algos; the denoising on your phone’s camera etc. – that, once perfected, they lose that “AI” moniker, and become just regular old “tech”.</p>
+              <p>The previous industrial revolution largely decoupled strength from economic agency – I can get stronger, it might make me healthier and more attractive, sure, but it won’t necessarily make me richer – <mark class="hl">what the previous IRs did for Strength, this AI Industrial revolution will do for Intelligence.</mark></p>
+              <p>And so, for many of us, whose vocations involve being clever, realistically AI is coming for our jobs. It’s the crude economics of capitalist market logic and machines just becoming better faster and cheaper.</p>
+              <p>Unless what you do specifically requires humans… They say preachers and politicians are safe… Similarly, certain traditional shamanic healers, and also human touch based arts like reiki practitioners are fine. Probably most nursing staff, as well as child and elderly care workers, and other such roles are also generally safer. The likes of sex workers, exotic dancers and other escorts are probably all good. The rest of us, not so much. Difficult to predict really.</p>
+              <p>That said, we could expect the economy to be coerced into a major reconfiguration fairly soon. I’m not sure how it’ll look, but the scale of job loss will mean there is precious little spending and therefore no GDP growth, so governments’ hands will eventually be forced into heavy structural economic reform.</p>
+              <p>The moral stigma against AI, just like with the previous iterations, is largely based on deeper cultural narratives and (understandable) fears about our own purpose and meaning-making in life, rather than rational thought. It’s a fear encoded in our stories that warn against the likes of AI – from Prometheus; the Golem of Jewish folklore; or Frankenstein’s monster, and (examples from my day) The Terminator; The Matrix; and Black Mirror.</p>
+              <p>The synth, the camera, the loom, and the automobile were all accompanied by the same pitch-fork wielding mobs that we see arrayed in spiritual vengeance on Facebook and LinkedIn against AI today. All of these technologies too were considered “cheating”, and worse: “dangerous,” “egregious”; even “threatening to unravel the very moral fabric of society” in their time.</p>
+              <p>However, we accepted them once we realised that on balance, they actually tend to do more good than harm. <mark class="hl">AI does more good than harm.</mark> Be honest, that’s why you’re here, on your device; itself a form of AI.</p>
+              <p>And by the way, Socrates proclaimed the same thing about one of the earliest versions of AI – writing itself! He warned writing would erode memory, imperil critical thinking, and basically make us stupider all-round. Perhaps he was not wrong.</p>
+              <p>AI is not cheating. AI is not moral decay. It’s not a moral virtue either. It’s technology. It’s a tool. <mark class="hl">AI is the new brush.</mark> The new pen, the new keyboard, and the new camera. It doesn’t replace those older ones, it’s just a new one to add to your toolkit-slash-techstack.</p>
+              <p>AI is not evil. Nor is it good. It’s a cultural technology and it is a tool. It happens to be the most intricate, complex one humans have yet devised – as a software object, but also just on a purely physical level, if we look at the network of data centers, each one using as much power as a city, that spans the globe. And there’s a LOT more coming. Turns out, there’s massive money to be made in turning dumb electrons into smart ones, and the uber-wealthy are scrambling over each other to build them, even as I write this. But I digress…</p>
+              <p>To be clear, tech progress doesn’t necessarily bring about moral or even human quality of life progress. As humans we seem to perpetually disagree so vehemently that war is a constant feature of our story arc. Tech hasn’t solved inequality, starvation or other kinds of suffering. Many think we were happier on the whole back in the hunter gatherer days. Who knows?</p>
+              <p>But tech progress is some kind of progress. Harari sees it as the evolution – and ever-evolving complexity – of information networks, tracing a clear arc from single-celled organisms to the space-faring interstellar beings we might eventually become.</p>
+              <p>In the story of the stone soup a small group of strangers makes a soup of pure water and some stones. Of course this is made possible because of many small gifts, gestures and donations of ingredients over time.</p>
+              <p>It’s the same with AI. The “magic trick” of AI, the uncanny, Turing-test-passing illusion of sentience – is only possible because we all contributed to it, (at least, anyone with any sort of digital footprint). <mark class="hl">In an ideal world AI would be something like a communal stone soup; something that we all get to eat from, and reap the benefits of collectively.</mark></p>
+              <p>Wishing AI away doesn’t help. Wishing we could turn the tech-clock back ten years doesn’t help. <mark class="hl">Our job as the adults in the room is to accept reality and technology as it stands, and then work to reorganise society and the economy accordingly.</mark></p>
+            </article>
+          </div>
+          <p class="essay-more"><a href="writing/blood-books-and-bots/">Open the essay as its own page</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- short and long: one caption, one feature -->
+    <section class="range" id="range" aria-labelledby="range-title">
+      <div class="lane">
+        <p class="note">2 pieces</p>
+        <h2 class="title" id="range-title">Short and long</h2>
+      </div>
+      <div class="lane">
+        <p class="note" data-wc="#caption-copy">33 words</p>
+        <article class="exhibit exhibit-caption">
+          <div class="caption-copy" id="caption-copy">
+            <p>Multiplayer Pencil.</p>
+            <p>AI-infused marketing mind meld loading.</p>
+            <p>The limitless possibility-space of AI-enabled creation can feel bewildering. Don&rsquo;t fly in solo. Bring your creative crew along on the AI journey.</p>
+            <p>Book a Demo today!</p>
+          </div>
+          <dl class="cells">
+            <div><dt>Format</dt><dd>Social caption</dd></div>
+            <div><dt>Client</dt><dd><img src="images/clients/pencil.webp" alt="Pencil" width="85" height="24" loading="lazy"></dd></div>
+            <div><dt>Published</dt><dd>LinkedIn, 2026</dd></div>
+          </dl>
         </article>
       </div>
-        <div id="cube-scene">
-          <div id="cube"><!-- faces built by cube.js --></div>
-          <div class="writing-access">
-            <button id="latest-writing">Latest News Drop · #28 <span aria-hidden="true">→</span></button>
+      <div class="lane">
+        <p class="note">1,909 words</p>
+        <article class="exhibit exhibit-feature">
+          <h3 class="exhibit-title"><a href="https://gadget.co.za/aidetector36t/" target="_blank" rel="noopener">The AI detector dilemma</a></h3>
+          <blockquote class="pull">
+            <p>Using an AI detector to catch a modern LLM is like sending a 1990s-era MS Office Paperclip Helper to fight a T1000 from the Terminator movies.</p>
+          </blockquote>
+          <p class="exhibit-dek">A feature on why AI detectors fail, what UCT&rsquo;s decision to drop Turnitin&rsquo;s AI score signals, and what educators and employers can do instead.</p>
+          <dl class="cells">
+            <div><dt>Format</dt><dd>Opinion feature</dd></div>
+            <div><dt>Byline</dt><dd>Mike Whyle</dd></div>
+            <div><dt>Published</dt><dd>Gadget, 7 October 2025</dd></div>
+          </dl>
+          <p class="exhibit-go"><a class="btn btn-ink" href="https://gadget.co.za/aidetector36t/" target="_blank" rel="noopener">Read it on Gadget</a></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- the index: every piece, labelled -->
+    <section class="work" id="writing" aria-labelledby="work-title">
+      <div class="lane">
+        <p class="note">16 pieces</p>
+        <div>
+          <h2 class="title" id="work-title">The work</h2>
+          <p class="work-intro">Over the years I&rsquo;ve become comfortable with a broad range of formats, tones and styles: white papers, op-eds and think pieces, light-hearted personality-driven stories, and crisp short-form copy.</p>
+          <p class="work-intro work-intro-2">At Alkemi Collective, press releases were my daily bread. These ran in top South African publications, each in the client&rsquo;s own voice.</p>
+        </div>
+      </div>
+      <div class="lane">
+        <span class="note-gap"></span>
+        <div class="work-body">
+          <div class="filters" role="group" aria-label="Filter by format">
+            <button type="button" data-filter="all" aria-pressed="true">All<span>16</span></button>
+            <button type="button" data-filter="pov" aria-pressed="false">Points of view<span>4</span></button>
+            <button type="button" data-filter="oped" aria-pressed="false">Ghostwritten op-eds<span>4</span></button>
+            <button type="button" data-filter="press" aria-pressed="false">Press releases<span>5</span></button>
+            <button type="button" data-filter="feature" aria-pressed="false">Features<span>2</span></button>
+            <button type="button" data-filter="short" aria-pressed="false">Short form<span>1</span></button>
           </div>
-          <p class="cube-hint">Scroll to turn · drag to tumble · a titled tile opens its piece</p>
+          <div class="work-head" aria-hidden="true">
+            <span>Words</span><span>Piece</span><span>Format</span><span>Client</span><span>Published</span>
+          </div>
+          <ol class="work-list" id="work-list">
+            <li class="work-row" data-group="pov">
+              <a class="work-link" href="writing/blood-books-and-bots/">
+                <span class="work-words">1,185<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Blood, Books and Bots</b></span><span class="work-dek">The true origins of AI.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Essay</span>
+                <span class="work-cell work-client"><em>Client</em>Own byline</span>
+                <span class="work-cell work-pub"><em>Published</em>2025</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="pov">
+              <a class="work-link" href="https://gadget.co.za/aidetector36t/" target="_blank" rel="noopener">
+                <span class="work-words">1,909<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>The AI detector dilemma</b></span><span class="work-dek">Why AI detectors fail, and what to do instead.</span><span class="work-where">Opens on Gadget</span></span>
+                <span class="work-cell work-format"><em>Format</em>Opinion feature</span>
+                <span class="work-cell work-client"><em>Client</em>Own byline</span>
+                <span class="work-cell work-pub"><em>Published</em>Gadget, October 2025</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="short">
+              <a class="work-link" href="#range">
+                <span class="work-words">33<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Multiplayer Pencil</b></span><span class="work-dek">A launch caption for LinkedIn.</span><span class="work-where">Shown above</span></span>
+                <span class="work-cell work-format"><em>Format</em>Social caption</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/pencil.webp" alt="Pencil" width="113" height="32" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>LinkedIn, 2026</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="pov">
+              <a class="work-link" href="writing/what-in-the-smr/">
+                <span class="work-words">1,756<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>“What in the SMR…?!”</b></span><span class="work-dek">Small reactors, big stakes: understanding the SMR gold rush.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Explainer</span>
+                <span class="work-cell work-client"><em>Client</em>Deep Atomic</span>
+                <span class="work-cell work-pub"><em>Published</em>Deep Atomic, 2025</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="pov">
+              <a class="work-link" href="https://gadget.co.za/grok4sal78f/" target="_blank" rel="noopener">
+                <span class="work-words">700<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Why you can’t trust Grok 4’s benchmarks</b></span><span class="work-dek">Top scores on paper. A different matter in practice.</span><span class="work-where">Opens on Gadget</span></span>
+                <span class="work-cell work-format"><em>Format</em>Opinion feature</span>
+                <span class="work-cell work-client"><em>Client</em>Own byline</span>
+                <span class="work-cell work-pub"><em>Published</em>Gadget, July 2025</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="oped">
+              <a class="work-link" href="writing/reimagining-mining-and-climate/">
+                <span class="work-words">678<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Reimagining mining and climate</b></span><span class="work-dek">Africa’s social and economic imperatives are as important as the energy transition.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Ghostwritten op-ed</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/kearney.webp" alt="Kearney" width="178" height="22" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>Sunday Times, February 2024</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="oped">
+              <a class="work-link" href="writing/a-symphony-of-solutions/">
+                <span class="work-words">575<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>A symphony of solutions</b></span><span class="work-dek">South Africa’s tech-agnostic energy mix.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Ghostwritten op-ed</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/scatec.webp" alt="Scatec" width="132" height="27" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>Engineering News, May 2024</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="oped">
+              <a class="work-link" href="writing/changing-the-beat-of-hospitality/">
+                <span class="work-words">763<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Changing the beat of hospitality</b></span><span class="work-dek">Why, even after Covid, hospitality is still the ideal space to learn, grow and experience.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Ghostwritten op-ed</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/radisson-red.webp" alt="Radisson RED" width="56" height="52" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>Hospitality Marketplace, 2023</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="oped">
+              <a class="work-link" href="writing/sapvia-localisation-study/">
+                <span class="work-words">1,136<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>SAPVIA shares insights from localisation study</b></span><span class="work-dek">A call for solar PV value chain development support.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Ghostwritten op-ed</span>
+                <span class="work-cell work-client"><em>Client</em>SAPVIA</span>
+                <span class="work-cell work-pub"><em>Published</em>IOL Business Report, 2023</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="press">
+              <a class="work-link" href="writing/esther-mahlangu-retrospective/">
+                <span class="work-words">821<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>“Then I Knew I Was Good at Painting”</b></span><span class="work-dek">Esther Mahlangu, a retrospective.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Press release</span>
+                <span class="work-cell work-client"><em>Client</em>Iziko Museums of South Africa</span>
+                <span class="work-cell work-pub"><em>Published</em>iAfrica, February 2024</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="press">
+              <a class="work-link" href="writing/africa-health-2024-cape-town/">
+                <span class="work-words">757<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Africa Health 2024 relocates to Cape Town</b></span><span class="work-dek">Healthcare financing in the spotlight.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Press release</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/africa-health.webp" alt="Africa Health" width="97" height="37" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>Bizcommunity, 2024</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="press">
+              <a class="work-link" href="writing/baby-rose-sa-swimstar/">
+                <span class="work-words">514<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Baby Rose: SA swimstar</b></span><span class="work-dek">From heart surgery at 11 weeks to a swimming sensation.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Human-interest press release</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/virgin-active.webp" alt="Virgin Active" width="87" height="42" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>Good Things Guy, March 2024</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="press">
+              <a class="work-link" href="writing/pioneering-progress/">
+                <span class="work-words">854<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Pioneering progress</b></span><span class="work-dek">Resource constraints in African radiology and oncology.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Press release</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/africa-health.webp" alt="Africa Health" width="97" height="37" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>iAfrica, October 2024</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="press">
+              <a class="work-link" href="writing/committed-to-conservation/">
+                <span class="work-words">644<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Committed to conservation</b></span><span class="work-dek">Preserving biodiversity on Table Mountain.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Press release</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/table-mountain-aerial-cableway.webp" alt="Table Mountain Aerial Cableway" width="84" height="43" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>iAfrica, May 2024</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="feature">
+              <a class="work-link" href="writing/risen-from-the-sea/">
+                <span class="work-words">901<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Risen from the sea</b></span><span class="work-dek">Show your love for Table Mountain.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Destination feature</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/table-mountain-aerial-cableway.webp" alt="Table Mountain Aerial Cableway" width="84" height="43" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>Galore SA, April 2024</span>
+              </a>
+            </li>
+            <li class="work-row" data-group="feature">
+              <a class="work-link" href="writing/chef-andre-hill/">
+                <span class="work-words">405<i> words</i></span>
+                <span class="work-main"><span class="work-title"><b>Chef Andre Hill celebrates the flavours of Cape Town</b></span><span class="work-dek">A profile of Radisson RED’s head chef.</span></span>
+                <span class="work-cell work-format"><em>Format</em>Profile feature</span>
+                <span class="work-cell work-client"><em>Client</em><img src="images/clients/radisson-red.webp" alt="Radisson RED" width="56" height="52" loading="lazy"></span>
+                <span class="work-cell work-pub"><em>Published</em>Essential Flavours, 2024</span>
+              </a>
+            </li>
+          </ol>
+          <p class="work-empty" id="work-empty" hidden>Nothing under that filter yet.</p>
         </div>
       </div>
     </section>
 
-    <!-- chamber iii · Human Doing · Design -->
-    <section id="design" aria-label="Design: the identities">
-      <div id="design-flow"><!-- pieces injected --></div>
-    </section>
-
-    <!-- Act VII · the fourth door · Vibe-Coding -->
-    <section id="fourth-door" aria-label="Vibe-Coding">
-      <p class="door-eyebrow"><span class="eb-num">iv</span>Past the cards, a fourth door</p>
-      <h2 class="door-title">Vibe-Coding</h2>
-      <div class="artefacts">
-        <a class="artefact" data-symbol="moon" href="https://slumbr.mikewhyle.com/" target="_blank" rel="noopener">
-          <img class="artefact-sigil" src="assets/journey/moon-5.webp" alt="">
-          <h3>SLUMBR</h3>
-          <span class="artefact-cta">Drift off &rarr;</span>
-        </a>
-        <a class="artefact" data-symbol="mask" href="https://tarot.mikewhyle.com/" target="_blank" rel="noopener">
-          <img class="artefact-sigil" src="assets/journey/mask-hires.webp" alt="">
-          <h3>Afrikan Tarot</h3>
-          <span class="artefact-cta">Read your cards &rarr;</span>
-        </a>
-        <a class="artefact" data-symbol="moth" href="https://threapchills.github.io/skybaby/" target="_blank" rel="noopener">
-          <img class="artefact-sigil" src="assets/journey/moth-full.webp" alt="">
-          <h3>Mystik Skies</h3>
-          <span class="artefact-cta">Play &rarr;</span>
-        </a>
-        <a class="artefact" data-symbol="tower" href="https://threapchills.github.io/MagicCarpetWizard/" target="_blank" rel="noopener">
-          <img class="artefact-sigil" src="assets/journey/land-03-tower.webp" alt="">
-          <h3>Magic Carpet Wizard</h3>
-          <p>My first ever GitHub repo to earn stars and forks. Hella proud of that!</p>
-          <span class="artefact-cta">Play &rarr;</span>
-        </a>
-        <a class="artefact" data-symbol="owl" href="https://threapchills.github.io/ManuscriptMaker/" target="_blank" rel="noopener">
-          <img class="artefact-sigil" src="assets/journey/owl1.webp" alt="">
-          <h3>Manuscript Maker</h3>
-          <p>A game in the making. Work in progress.</p>
-          <span class="artefact-cta">Explore the WIP &rarr;</span>
-        </a>
-      </div>
-      <p class="door-credit">Soundscape by <a href="https://slumbr.mikewhyle.com/" target="_blank" rel="noopener">SLUMBR</a>.</p>
-    </section>
-
-    <!-- Act VIII · the outro -->
-    <section id="outro" class="paper" aria-label="Contact">
-      <div class="outro-moons">
-        <img src="assets/journey/moon-5.webp" alt="">
-        <img src="assets/journey/moon-4.webp" alt="">
-        <img src="assets/journey/moon-3.webp" alt="">
-        <img src="assets/journey/moon-2.webp" alt="">
-        <img src="assets/journey/moon-1.webp" alt="">
-      </div>
-      <p class="outro-eyebrow"><span class="eb-num">v</span>Onwards</p>
-      <h2 class="outro-title">Let's build worlds together.</h2>
-      <div class="outro-contact">
-        <a class="contact-pill" href="https://wa.me/27616554726" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.099-.471-.15-.668.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.668-1.612-.916-2.207-.241-.579-.486-.5-.668-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          WhatsApp
-        </a>
-        <a class="contact-pill" href="mailto:mikewhyle@gmail.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-          Email
-        </a>
-        <a class="contact-pill" href="https://www.instagram.com/iii.mikey/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
-          Instagram
-        </a>
-        <a class="contact-pill" href="https://mikewhyle.com" target="_blank" rel="noopener">My old site</a>
-      </div>
-      <nav class="outro-links" aria-label="More">
-        <a href="#prologue">Showreel</a>
-        <a href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV</a>
-        <a href="#film">Film</a>
-        <a href="#writing">Writing</a>
-        <a href="#design">Design</a>
-        <a href="https://slumbr.mikewhyle.com/" target="_blank" rel="noopener">SLUMBR</a>
-        <a href="https://tarot.mikewhyle.com/" target="_blank" rel="noopener">Afrikan Tarot</a>
-        <a href="legacy/index-v1.html">Classic site</a>
-      </nav>
-      <p class="outro-credit">
-        Made with Fable 5<br>
-        &copy; 2026 Mike Whyle
-      </p>
-    </section>
-
-    <!-- Coda · the council, played backwards: from the oracle's gaze to the
-         council and into the wordmark, whose letters then turn to chrome -->
-    <section id="journey" aria-label="The journey into the artwork">
-      <div class="stage vignette">
-        <canvas id="hero-canvas"></canvas>
-        <!-- the mark, cast in living metal: the stencil's letters exactly,
-             so the film inside the word turns to chrome in place -->
-        <div id="chrome-stage">
-          <canvas id="chrome-canvas" aria-hidden="true"></canvas>
-          <h2 class="chrome-alt">Mikey</h2>
+    <!-- services, as they stand on mikewhyle.com -->
+    <section class="services" id="services" aria-labelledby="services-title">
+      <div class="lane">
+        <p class="note">8 services</p>
+        <div>
+          <h2 class="title" id="services-title">Services offered</h2>
+          <p class="work-intro">Technical precision or creative flair, vertically integrated with design or standalone.</p>
         </div>
-        <p class="chrome-line">Cape Town</p>
-        <div id="logo-veil" role="img" aria-label="Mikey">
-
+      </div>
+      <div class="lane">
+        <span class="note-gap"></span>
+        <div class="service-grid">
+          <div class="service-col">
+          <details class="service" open>
+            <summary>Strategic content development</summary>
+            <ul>
+              <li>Long- and short-form writing: articles, blogs, op-eds, newsletters.</li>
+              <li>White papers, investor decks, pitch documents, explainer content.</li>
+              <li>Website copywriting and SEO-optimised content.</li>
+              <li>Brand tone of voice, messaging architecture, content playbooks.</li>
+            </ul>
+          </details>
+          <details class="service">
+            <summary>Thought leadership &amp; editorial consulting</summary>
+            <ul>
+              <li>Ghost-writing for executives and founders.</li>
+              <li>Editorial planning, content calendars, campaign story arcs.</li>
+              <li>Research distillation and positioning papers.</li>
+              <li>Corporate storytelling, narrative reframing, media placement.</li>
+            </ul>
+          </details>
+          <details class="service">
+            <summary>Technical and specialised writing</summary>
+            <ul>
+              <li>Energy sector specialised communications.</li>
+              <li>Healthcare and medical sector digital marketing and copywriting (B2B/B2C).</li>
+              <li>AI/Tech, SaaS and software / API landscape content.</li>
+              <li>Official documents, submissions, business presentations and reports.</li>
+            </ul>
+          </details>
+          <details class="service">
+            <summary>AI &amp; new media content solutions</summary>
+            <ul>
+              <li>AI integration, prompt engineering and automation orchestration.</li>
+              <li>AI-augmented creative workflow design and implementation.</li>
+              <li>AI-assisted visual production, tailored image generation, design and typography for video and stills.</li>
+            </ul>
+          </details>
+          </div>
+          <div class="service-col">
+          <details class="service">
+            <summary>Digital publishing &amp; platform support</summary>
+            <ul>
+              <li>Websites: strategy; UX; building and maintenance; continuous or once-off web content creation; CMS oversight.</li>
+              <li>Analytics reporting aligned to content goals.</li>
+              <li>Platform-specific social media content and campaigns with integrated multimedia storytelling.</li>
+            </ul>
+          </details>
+          <details class="service">
+            <summary>Creative production &amp; storytelling</summary>
+            <ul>
+              <li>Multimedia scripting: audio, voice, video and motion.</li>
+              <li>Sound design, sonic branding and music production for companies or specific campaigns.</li>
+              <li>Concept development, mood boards and art direction ideation.</li>
+              <li>Visual narrative design using both AI and traditional tools.</li>
+            </ul>
+          </details>
+          <details class="service">
+            <summary>Brand strategy &amp; narrative alignment</summary>
+            <ul>
+              <li>Communication strategy for start-ups and mission-driven brands.</li>
+              <li>Thought leadership integration across earned, owned and paid channels.</li>
+              <li>Narrative consulting and ghost-writing for complex or technical subject matter.</li>
+            </ul>
+          </details>
+          <details class="service">
+            <summary>Workshops, training &amp; facilitation</summary>
+            <ul>
+              <li>Writing for impact: internal team workshops to help your team hone the craft of writing.</li>
+              <li>AI for content creators: intro to AI-augmented storytelling for creatives and digital marketers.</li>
+            </ul>
+          </details>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- the loop gate: the dark comes down, and the page begins again at the reel -->
-    <section id="loop-gate" aria-hidden="true">
-      <div class="gate-stage">
-        <div id="gate-plate"></div>
+    <!-- further down: the reel, the films, the design, the code -->
+    <section class="screen" id="film" aria-labelledby="film-title">
+      <div class="lane">
+        <p class="note">Also</p>
+        <div>
+          <h2 class="title" id="film-title">Film, design and code</h2>
+          <p class="screen-intro">I also write, direct and score GenAI films, design brand identities, and vibe-code apps and games.</p>
+          <p class="screen-award"><strong>Recognition, 2026.</strong> Kalimba: shortlisted from 400+ entries in The Brandtech Group GenAI Film Competition.</p>
+        </div>
+      </div>
+      <div class="lane">
+        <p class="note">1:30</p>
+        <div class="reel" id="reel">
+          <button class="reel-poster" id="reel-play" aria-label="Play the showreel, with sound">
+            <img src="images/showreel/still-2.webp" alt="" width="1600" height="900" loading="lazy">
+            <span class="reel-icon" aria-hidden="true"></span>
+            <span class="reel-label">Showreel 2026. Play with sound.</span>
+          </button>
+        </div>
+      </div>
+      <div class="lane">
+        <p class="note">9 films</p>
+        <div class="films" id="films">
+          <a class="film" href="projects/wishfish/"><video muted loop playsinline preload="none" poster="images/posters/wishfish.webp" data-loop="wishfish"></video><span class="film-title">WishFish</span><span class="film-tag">A fairy tale for the AI age.</span></a>
+          <a class="film" href="projects/kalimba/"><video muted loop playsinline preload="none" poster="images/posters/kalimba.webp" data-loop="kalimba"></video><span class="film-title">Kalimba</span><span class="film-tag">An Afrofuturist mockumentary shortlisted from 400+ entries.</span></a>
+          <a class="film" href="projects/ramses/"><video muted loop playsinline preload="none" poster="images/posters/ramses.webp" data-loop="ramses"></video><span class="film-title">Ramses</span><span class="film-tag">A mythic Egyptian animated epic.</span></a>
+          <a class="film" href="projects/mythopoeic/"><video muted loop playsinline preload="none" poster="images/posters/mythopoeic.webp" data-loop="mythopoeic"></video><span class="film-title">Mythopoeic</span><span class="film-tag">A speculative jewellery brand, built with AI.</span></a>
+          <a class="film" href="projects/nobody-wears-it-better/"><video muted loop playsinline preload="none" poster="images/posters/nobody-wears-it-better.webp" data-loop="nobody-wears-it-better"></video><span class="film-title">Nobody Wears It Better</span><span class="film-tag">A couture campaign that takes its own slogan literally.</span></a>
+          <a class="film" href="https://www.youtube.com/watch?v=JgBicFpTIDM" target="_blank" rel="noopener"><video muted loop playsinline preload="none" poster="images/posters/vast-island.webp" data-loop="vast-island"></video><span class="film-title">Vast Island</span><span class="film-tag">Trailer.</span></a>
+          <a class="film" href="projects/ice-tea/"><video muted loop playsinline preload="none" poster="images/posters/ice-tea.webp" data-loop="ice-tea"></video><span class="film-title">Ice Tea</span><span class="film-tag">A short visual study. Afrofuturism on film.</span></a>
+          <a class="film" href="projects/weekend-thuggery/"><video muted loop playsinline preload="none" poster="images/posters/weekend-thuggery.webp" data-loop="weekend-thuggery"></video><span class="film-title">Weekend Thuggery</span><span class="film-tag">A township braai where the guests have teeth.</span></a>
+          <a class="film" href="projects/tale-of-twins/"><video muted loop playsinline preload="none" poster="images/posters/tale-of-twins.webp" data-loop="tale-of-twins"></video><span class="film-title">Tale of Twins</span><span class="film-tag">A homage to 70s wuxia cinema, starring two cats.</span></a>
+        </div>
+      </div>
+      <div class="lane" id="design">
+        <p class="note">Design</p>
+        <div class="boards">
+          <a class="board board-wide" href="projects/mythopoeic/"><img src="images/mythopoeic/hero1.webp" alt="Mythopoeic: a model in copper jewellery" loading="lazy"><span>Mythopoeic. A luxury brand that never existed, conjured whole with AI.</span></a>
+          <a class="board" href="projects/mythopoeic/"><img src="images/design/mythmood.webp" alt="Mythopoeic mood board" loading="lazy"><span>Mythopoeic. Editorial worlds.</span></a>
+          <a class="board" href="projects/healthtech/"><img src="images/healthtech-design0B.webp" alt="Healthtech brand identities" loading="lazy"><span>EduTalkz, TravelMedz, TwinTech. Brand identities for three healthtech start-ups.</span></a>
+        </div>
+      </div>
+      <div class="lane">
+        <p class="note">Vibe-coding</p>
+        <ul class="apps">
+          <li><a href="https://slumbr.mikewhyle.com/" target="_blank" rel="noopener"><b>SLUMBR</b><span>A sleep meditation and white noise machine.</span></a></li>
+          <li><a href="https://tarot.mikewhyle.com/" target="_blank" rel="noopener"><b>Afrikan Tarot</b><span>Read your cards.</span></a></li>
+          <li><a href="https://threapchills.github.io/skybaby/" target="_blank" rel="noopener"><b>Mystik Skies</b><span>A browser god game.</span></a></li>
+          <li><a href="https://threapchills.github.io/MagicCarpetWizard/" target="_blank" rel="noopener"><b>Magic Carpet Wizard</b><span>My first ever GitHub repo to earn stars and forks. Hella proud of that!</span></a></li>
+          <li><a href="https://threapchills.github.io/ManuscriptMaker/" target="_blank" rel="noopener"><b>Manuscript Maker</b><span>A game in the making. Work in progress.</span></a></li>
+        </ul>
+      </div>
+      <div class="lane">
+        <span class="note-gap"></span>
+        <p class="journey-link"><a href="journey.html">Take the scroll journey</a> The film and design side of this portfolio as one long scroll, with sound.</p>
       </div>
     </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="lane">
+        <p class="note" data-wc="#contact-title">4 words</p>
+        <div>
+          <h2 class="contact-title" id="contact-title">Let&rsquo;s build worlds together.</h2>
+          <div class="actions">
+            <a class="btn btn-ink" href="mailto:mikewhyle@gmail.com">mikewhyle@gmail.com</a>
+            <a class="btn" href="https://wa.me/27616554726" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn" href="https://www.linkedin.com/in/mikewhyle" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn" href="https://www.instagram.com/iii.mikey/" target="_blank" rel="noopener">Instagram</a>
+            <a class="btn" href="cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV <small>PDF</small></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- the chambers' corner labels, lit while their act owns the frame -->
-  <span class="chamber-edge" id="edge-film"><em>i</em> Human Being</span>
-  <span class="chamber-edge" id="edge-writing"><em>ii</em> Human Thinking</span>
-  <span class="chamber-edge" id="edge-design"><em>iii</em> Human Doing</span>
+  <footer class="foot">
+    <div class="lane">
+      <span class="note-gap"></span>
+      <div class="foot-inner">
+        <p>&copy; 2026 Mike Whyle. Cape Town. Made with Fable 5.</p>
+        <nav aria-label="More">
+          <a href="#writing">Writing</a>
+          <a href="#services">Services</a>
+          <a href="#film">Film and design</a>
+          <a href="journey.html">The scroll journey</a>
+          <a href="https://mikewhyle.com" target="_blank" rel="noopener">My old site</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
 
-  <!-- the writing plane: a cube face zoomed to full screen -->
-  <div id="reading-plane" role="dialog" aria-modal="true" aria-label="Reading" aria-hidden="true" data-lenis-prevent>
-    <div class="plane-progress" id="plane-progress" aria-hidden="true"></div>
-    <div class="plane-inner" id="plane-inner"></div>
-  </div>
-  <button class="plane-close" id="plane-close" aria-label="Close and return to the cube" hidden>Close <span aria-hidden="true">&times;</span></button>
-
-  <div id="doorway-veil"></div>
-  <div class="grain-veil"></div>
-
-  <script src="js/data.js?v=20261011b"></script>
-  <script src="content/newsdrop/index.js?v=20261011"></script>
-  <script src="js/vendor/gsap.min.js?v=3"></script>
-  <script src="js/vendor/ScrollTrigger.min.js?v=3"></script>
-  <script src="js/vendor/lenis.min.js?v=3"></script>
-  <!-- One release map keeps every module, including shared audio, on the same revision. -->
-  <script type="importmap">
-    {"imports": {
-      "./js/core/asset-batch.js": "./js/core/asset-batch.js?v=20261011-essay",
-      "./js/core/asset-sizes.js": "./js/core/asset-sizes.js?v=20261011-essay",
-      "./js/core/audio.js": "./js/core/audio.js?v=20261011-essay",
-      "./js/core/cards.js": "./js/core/cards.js?v=20261011-essay",
-      "./js/core/chambers.js": "./js/core/chambers.js?v=20261011-essay",
-      "./js/core/chrome.js": "./js/core/chrome.js?v=20261011-essay",
-      "./js/core/cube.js": "./js/core/cube.js?v=20261011-essay",
-      "./js/core/cursor.js": "./js/core/cursor.js?v=20261011-essay",
-      "./js/core/delight.js": "./js/core/delight.js?v=20261011-essay",
-      "./js/core/gl-planes.js": "./js/core/gl-planes.js?v=20261011-essay",
-      "./js/core/ground.js": "./js/core/ground.js?v=20261011-essay",
-      "./js/core/journey.js": "./js/core/journey.js?v=20261011-essay",
-      "./js/core/loader.js": "./js/core/loader.js?v=20261011-essay",
-      "./js/core/prologue.js": "./js/core/prologue.js?v=20261011-essay",
-      "./js/core/readiness.js": "./js/core/readiness.js?v=20261011-essay",
-      "./js/core/sequence.js": "./js/core/sequence.js?v=20261011-essay",
-      "./js/core/util.js": "./js/core/util.js?v=20261011-essay"
-    }}
-  </script>
-  <script type="module">
-    import { AssetBatch } from './js/core/asset-batch.js';
-    import assetSizes from './js/core/asset-sizes.js';
-    import { initThreshold } from './js/core/loader.js';
-    import { initJourney } from './js/core/journey.js';
-    import { initReading } from './js/core/cards.js';
-    import { initFilmSection, initWritingSection, initDesignSection, initEssayGround, PIECE_TONES } from './js/core/chambers.js';
-    import { initPrologue } from './js/core/prologue.js';
-    import { initGround } from './js/core/ground.js';
-    import { audio, mountMuteButton, prefetchStems } from './js/core/audio.js';
-    import { initCursor } from './js/core/cursor.js';
-    import { initDelight } from './js/core/delight.js';
-    import { initChrome } from './js/core/chrome.js';
-    import { qs, easeInOut } from './js/core/util.js';
-
-    gsap.registerPlugin(ScrollTrigger);
-    mountMuteButton();
-    prefetchStems();
-    initCursor();
-    initDelight();
-
-    // the old chamber URLs redirect here with a hash; within a session a
-    // dealt reading means no second threshold, straight to the landing
-    const HASH_LAND = /^#(reading|film|writing|design|about|proof)$/;
-    const returning = sessionStorage.getItem('mw-reading') === 'dealt'
-      && HASH_LAND.test(location.hash);
-
-    history.scrollRestoration = 'manual';
-    document.documentElement.style.scrollBehavior = 'auto';
-    if (!returning) scrollTo(0, 0);
-
-    const journey = initJourney();
-    const prologue = initPrologue({ audio, lenis: journey.lenis });
-    journey.onLoop(() => prologue.replay());
-    initReading();
-    const film = initFilmSection(journey.lenis);
-    const writing = initWritingSection(journey.lenis);
-    initEssayGround();
-    const design = initDesignSection();
-    // The coding door behaves like a small constellation: every project has
-    // its own sigil, and the card follows the visitor's pointer in 3D.
-    const artefacts = [...document.querySelectorAll('.artefact')];
-    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reducedMotion) {
-      artefacts.forEach((card, index) => {
-        card.style.setProperty('--orbit-delay', `${index * -1.8}s`);
-        card.addEventListener('pointermove', (event) => {
-          const rect = card.getBoundingClientRect();
-          const x = (event.clientX - rect.left) / rect.width - 0.5;
-          const y = (event.clientY - rect.top) / rect.height - 0.5;
-          card.style.setProperty('--mx', `${(x * 8).toFixed(2)}deg`);
-          card.style.setProperty('--my', `${(-y * 8).toFixed(2)}deg`);
-          card.style.setProperty('--lift', '-8px');
-        });
-        card.addEventListener('pointerleave', () => {
-          card.style.setProperty('--mx', '0deg');
-          card.style.setProperty('--my', '0deg');
-          card.style.setProperty('--lift', '0px');
-        });
-      });
-    }
-    if ('IntersectionObserver' in window) {
-      const artefactObserver = new IntersectionObserver((entries) => {
-        entries.forEach(({ target, isIntersecting }) => target.classList.toggle('is-visible', isIntersecting));
-      }, { threshold: 0.2 });
-      artefacts.forEach((card) => artefactObserver.observe(card));
-    } else {
-      artefacts.forEach((card) => card.classList.add('is-visible'));
-    }
-    // the page's own light: charcoal to gold and back, the design chamber lit
-    // by whichever board is on screen
-    const ground = initGround(PIECE_TONES);
-    const chrome = initChrome();
-    // the coda hands the mark to the metal and heats it as it takes the frame
-    journey.useChrome(chrome);
-
-    // the chambers' corner labels light while their act owns the frame
-    for (const [sel, id] of [['#film', 'edge-film'], ['#writing', 'edge-writing'], ['#design', 'edge-design']]) {
-      const edge = document.getElementById(id);
-      ScrollTrigger.create({
-        trigger: sel, start: 'top 60%', end: 'bottom 40%',
-        onToggle: (self) => edge.classList.toggle('is-on', self.isActive),
-      });
-    }
-
-    // in-page anchors ride the smooth scroll: the outro links, the nav mark
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href^="#"]');
-      if (!a) return;
-      e.preventDefault();
-      const y = journey.spotFor(a.hash);
-      journey.lenis.scrollTo(y ?? 0, { duration: 1.6, easing: easeInOut });
-    });
-
-    // the Enter click wakes the sound; after that, any click, tap or key
-    // revives it if a phone has suspended it. The sound button handles its
-    // own clicks, so the two can never cancel each other out.
-    const revive = (e) => {
-      if (audio.muted || e.target.closest?.('#mute-btn')) return;
-      if (!audio.audible) audio.wake();
-    };
-    window.addEventListener('pointerdown', revive);
-    window.addEventListener('keydown', revive);
-
-    document.body.style.overflow = 'hidden';
-    journey.lenis.stop();
-    initThreshold({
-      run: async (onProgress, preparing) => {
-        const batch = new AssetBatch(assetSizes, { onProgress });
-        for (const src of [...journey.scrubber.sources(), ...film.scrubber.sources()]) batch.add(src);
-        for (const img of document.images) {
-          img.loading = 'eager';
-          // Some chambers keep an empty <img> as a frame target and fill it
-          // later. An empty source is not an asset and must not resolve to
-          // the document URL (which would poison the strict manifest gate).
-          const source = img.currentSrc || img.getAttribute('src');
-          if (source) batch.add(source, 'image', img);
-        }
-        // Include the cube panels, masks, paper and other CSS-only artwork.
-        const cssArtwork = [];
-        for (const element of document.querySelectorAll('body *')) {
-          const style = getComputedStyle(element);
-          for (const name of ['backgroundImage', 'maskImage']) {
-            for (const match of style[name].matchAll(/url\((?:"([^"]*)"|'([^']*)'|([^)]*))\)/g)) {
-              const src = match[1] || match[2] || match[3];
-              if (!src.startsWith('data:')) {
-                batch.add(src);
-                cssArtwork.push({ element, name, token: match[0], src });
-              }
-            }
-          }
-        }
-        // the showreel arrives whole, like every other film here: one cut,
-        // the one this screen's shape will play
-        batch.add(prologue.reelSrc, 'video', prologue.video);
-        for (const video of document.querySelectorAll('#film-track video[data-src]')) {
-          batch.add(video.dataset.src, 'video', video);
-        }
-        for (const { file } of NEWSDROP) batch.add(`content/newsdrop/${file}`, 'text');
-        await batch.load();
-        for (const { element, name, token, src } of cssArtwork) {
-          element.style[name] = getComputedStyle(element)[name].replace(token, `url("${batch.get(src).src}")`);
-        }
-        preparing('Preparing the gallery', 'All files received. Applying the final visual effects.');
-        journey.scrubber.usePrepared(batch);
-        journey.wakeReady();
-        film.scrubber.usePrepared(batch);
-        film.measure();
-        writing.setIssueText(batch);
-        await design.warm(src => Promise.resolve(batch.get(src)));
-        await document.fonts.ready;
-        journey.openLoop();
-      },
-      onEnter: () => {
-        // called inside the Enter gesture: the one moment a browser lets a
-        // page start its sound
-        audio.wake();
-        document.body.style.overflow = '';
-        document.querySelector('main').inert = false;
-        journey.lenis.start();
-        ScrollTrigger.refresh();
-        if (!journey.landTo(location.hash)) {
-          journey.lenis.scrollTo(0, { immediate: true });
-          scrollTo(0, 0);
-        }
-        document.dispatchEvent(new CustomEvent('mw:enter'));
-      },
-    });
-  </script>
+  <script src="js/writer.js?v=20261121b" defer></script>
 </body>
 </html>

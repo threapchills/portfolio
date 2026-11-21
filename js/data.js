@@ -358,12 +358,6 @@ const WRITING_FACES = (function () {
   };
   return [
     {
-      id: "newsdrop",
-      title: "The News Drop",
-      eyebrow: "The weekly AI dispatch",
-      type: "newsdrop"
-    },
-    {
       id: "commentary",
       title: "Commentary",
       eyebrow: "Published articles",

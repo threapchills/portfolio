@@ -1,10 +1,9 @@
 # Mike Whyle's portfolio: notes for Claude
 
 A static site on GitHub Pages (portfolio.mikewhyle.com), deployed from
-`main`. The journey is the single scroll in `index.html`: ES modules in
-`js/core/` (cache-busted with `?v=` strings in the importmap) and styles in
-`css/overhaul.css`. The legacy project pages use `css/style.css` and
-`css/cohesion.css`.
+`main`. Since November 2026 it is a **writer's portfolio**, built for the
+Creative Copywriter role at Pencil. The October scroll journey (showreel,
+films, design, with sound) lives on beside it at `journey.html`.
 
 ## Working with Mike
 
@@ -12,22 +11,83 @@ A static site on GitHub Pages (portfolio.mikewhyle.com), deployed from
   Pages deployments in the Actions tab. No pull requests unless he asks.
 - Quality over speed, but be efficient: he is mindful of usage credits.
 - He values nuanced, precise, well-made prose, in copy and in replies.
+- Writing rules, in copy, comments and commit messages: no em dashes (use a
+  spaced en dash, a colon or a semicolon); no "This is not X. It is Y."
+  constructions; British English; sentence case; short sentences on the
+  page; end when the content ends.
+- When editing his copy, stay close to his wording and polish it.
 
-## Before every push
+## The writer's portfolio (`index.html`)
+
+`index.html` and everything in `writing/` are **generated**. Do not edit
+them by hand. Edit the sources, then run `python3 scripts/build-site.py`:
+
+- `templates/home.html`: the home page, with `{{PLACEHOLDERS}}` for the
+  index of work, the filters and the essay.
+- `content/writing/index.json`: one entry per piece (title, dek, group,
+  format, client, publication and date, logo, link to the published
+  version). The order here is the order on the page.
+- `content/writing/<slug>.txt`: the text of each piece that has a reading
+  page. Blank line between paragraphs, `## ` for a subheading, `- ` for a
+  list item, `[[double brackets]]` round a sentence to highlight it.
+- `css/writer.css` and `js/writer.js`: shared by the home page and the
+  reading pages. Bump `V` in `scripts/build-site.py` when either changes.
+
+The page, top to bottom: the opening line and intro (`#about`), a strip of
+publications, kind words and clients (`#proof`), the essay *Blood, Books
+and Bots* at three lengths (`#essay`), one caption and one feature
+(`#range`), the labelled index of every piece with filters (`#writing`),
+services (`#services`), then, much further down and on a dark ground, the
+showreel, films, design and apps (`#film`, `#design`), and contact.
+
+The device that runs through it is the margin: each block carries its word
+count there, counted live by `js/writer.js` from `data-wc` attributes.
+
+- Every piece carries three labels: format, client, publication and date.
+- Client logos are in `images/clients/`; a client without one is set as
+  text (Iziko, Deep Atomic, SAPVIA).
+- The News Drop is gone from the site at Mike's request. Do not restore it.
+- The SMR explainer is labelled by format and client only. Never tag it
+  "unpublished".
+- The page loads light: no gate, no sound. Film loops fetch as their cards
+  scroll into view (`video/loops/`, `video/loops-m/` on phones, posters in
+  `images/posters/`); the showreel loads only when played.
+
+## The CV
+
+`cv/Mike-Whyle-CV-2026.pdf` is printed from `templates/cv.html` by
+`python3 scripts/build-cv.py [path-to-chrome]` (needs Playwright). Its
+fonts and images are in `templates/cv-assets/`. Check that it still fits
+two pages after any edit.
+
+## The journey (`journey.html`)
+
+The October build, unchanged apart from the News Drop: ES modules in
+`js/core/` (cache-busted with `?v=` strings in the importmap) and styles in
+`css/overhaul.css`. The legacy project pages in `projects/` use
+`css/style.css` and `css/cohesion.css`.
+
+Top to bottom: showreel (`#prologue`) → testimonials, clients, photo and CV
+on paper → the reading (oracle, bloom, triptych, three cards) → film (Mikey
+scrub, then the films travelling sideways) → the writing cube over the
+essay → design → vibe-coding and the outro → the council film as the coda,
+into the liquid chrome wordmark → the loop gate back to the reel.
+
+Before pushing a change to the journey:
 
 - `node tests/readiness.mjs && node tests/asset-batch.mjs`
-- Added or removed an image, CSS background or video the page references?
-  Run `python3 scripts/build-preload-manifest.py` (it covers `assets`,
-  `images`, `video`, `showreel` and the News Drop). The loader rejects any
-  asset missing from `js/core/asset-sizes.js`.
-- Bump the `?v=` strings for any changed JS or CSS in `index.html`.
+- Added or removed an image, CSS background or video it references? Run
+  `python3 scripts/build-preload-manifest.py`. Its loader rejects any asset
+  missing from `js/core/asset-sizes.js`.
+- Bump the `?v=` strings for any changed JS or CSS in `journey.html`.
 - No file over 100 MB can go into git (GitHub refuses it).
 
 ## Testing in a cloud session
 
-Python's `http.server` fails under the preload; use a small Node static
-server. Headless Chromium cannot decode H.264 and runs out of image-decode
-memory on the 1920 px film frames, so stub both before loading the page:
+Python's `http.server` fails under the journey's preload; use a small Node
+static server. The writer's pages need no stubs. For the journey, headless
+Chromium cannot decode H.264 and runs out of image-decode memory on the
+1920 px film frames, so stub both before loading the page:
 
 ```js
 await page.addInitScript(() => {
@@ -40,41 +100,16 @@ await page.addInitScript(() => {
 });
 ```
 
-The loader ends on an Enter button (`.threshold-enter`); click it to get
-in. That click is also what starts the sound, since browsers block audio
-before a gesture. `?dbg` exposes `window.__cube` and `window.__lenis`.
+The journey's loader ends on an Enter button (`.threshold-enter`); click it
+to get in. `?dbg` exposes `window.__cube` and `window.__lenis`.
 
-## The page, top to bottom (October 2026)
+## Not published
 
-Showreel (`#prologue`, `js/core/prologue.js`) → the paper: testimonials and
-clients (`#proof`), photo and CV (`#about`) → the reading (`#reading-wrap`:
-the oracle wakes on the last council frames, then the bloom, the triptych
-and the three cards) → film (Mikey scrub, then `#film-rail`, the films
-travelling sideways, on paper) → writing → design → vibe-coding and the
-outro (one continuous paper room) → the council film as the coda
-(`#journey`, played backwards from the oracle into the closed wordmark,
-whose letters then turn to liquid chrome in place: `#chrome-stage` lives in
-the coda's stage, at the stencil's exact size) → the loop gate, which fades
-to black in silence and returns to the reel.
-
-- The reel ships as two cuts in `showreel/`; `prologue.js` picks one by the
-  screen's shape and the threshold batch downloads only that one. Its six
-  poster stills are in `images/showreel/` (`-v` for the vertical cut).
-- The film rail plays light loops: `video/loops/` (1280 px) on desktop,
-  `video/loops-m/` (720 px) on phones. The `*-hero.mp4` originals stay for
-  the project pages.
-- Client logos are ink-on-transparent in `images/clients/`, sized to equal
-  optical weight (the width is in the markup). Pencil leads.
-- The CV is `cv/Mike-Whyle-CV-2026.pdf`; the nav's CV pill and the about
-  section both download it.
-- The More Films archive and Vanta Black are gone for good.
-- Design boards are framed at their own aspect ratio (`ar` in `PIECES`,
-  measured from the files). A new board needs its `ar`, or it will be shown
-  at 16:9.
+`_config.yml` keeps these notes, `templates/`, `scripts/`, `tests/` and
+`content/` off the public site. Private files (job descriptions, notes to
+colleagues, reviews) never go into this repo: it is public.
 
 ## Handovers
 
-- `HANDOVER-SHOWREEL.md`: the v1 showreel, its source and pipeline. v2 is
-  now on the site (see above); the "Putting it back on the site" steps are
-  done.
+- `HANDOVER-SHOWREEL.md`: the v1 showreel, its source and pipeline.
 - `HANDOVER.md`: an earlier task brief for the journey (July 2026).

@@ -4,3 +4,7 @@ exclude:
   - CLAUDE.md
   - HANDOVER.md
   - HANDOVER-SHOWREEL.md
+  - templates
+  - scripts
+  - tests
+  - content

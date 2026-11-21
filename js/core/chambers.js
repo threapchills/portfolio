@@ -190,9 +190,7 @@ export function initWritingSection(lenis) {
   /* One flat index of everything written, genre and order discarded. The
      cube deals it round its six faces. */
   const ENTRIES = WRITING_FACES.flatMap((f) => (
-    f.type === 'newsdrop'
-      ? NEWSDROP.map((it) => ({ label: `#${it.n}`, title: it.title, kind: 'issue', file: it.file, n: it.n, date: it.date }))
-      : f.items.map((st) => ({ title: st.title, kind: 'story', url: st.url, excerpt: st.excerpt }))
+    f.items.map((st) => ({ title: st.title, kind: 'story', url: st.url, excerpt: st.excerpt }))
   ));
   const ISSUES = ENTRIES.filter((e) => e.kind === 'issue');   // newest first
 
@@ -250,9 +248,6 @@ export function initWritingSection(lenis) {
       controls[(index + (e.shiftKey ? -1 : 1) + controls.length) % controls.length]?.focus();
     }
   });
-  const latest = qs('#latest-writing');
-  latest.innerHTML = `Latest News Drop · #${ISSUES[0].n} <span aria-hidden="true">→</span>`;
-  latest.addEventListener('click', () => openCell(ISSUES[0]));
 
   // a hairline of gold measures how far through the piece the reader is
   plane.addEventListener('scroll', () => {
@@ -362,9 +357,7 @@ export function initWritingSection(lenis) {
     last = now;
   });
 
-  return { cube, setIssueText(batch) {
-    issueText = new Map(NEWSDROP.map(({ file }) => [file, batch.get(`content/newsdrop/${file}`)]));
-  } };
+  return { cube };
 }
 
 /* ============================================================
