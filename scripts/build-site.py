@@ -6,22 +6,21 @@ list item, [[double brackets]] around a sentence to highlight).
 
 Run from anywhere:  python3 scripts/build-site.py
 """
-import html, json, math, re
+import html, json, re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "content" / "writing"
-V = "20261121b"          # bump when css/writer.css or js/writer.js change
+V = "20261121f"          # bump when css/writer.css or js/writer.js change
 
 data = json.loads((SRC / "index.json").read_text(encoding="utf-8"))
 GROUPS, PIECES, LOGOS = data["groups"], data["pieces"], data["logos"]
-group_label = {g["id"]: g["label"] for g in GROUPS}
 esc = html.escape
 
-
-def words_in(text):
-    plain = re.sub(r"^(## |- )", "", text.replace("[[", "").replace("]]", ""), flags=re.M)
-    return len(re.findall(r"\S+", plain))
+# the cards' cursors and their resting tilts, dealt round in turn
+COLOURS = ["#3d7f86", "#6b2a19", "#485068", "#8d5f24", "#5a6b3a"]
+TILTS = [-1.1, 0.9, 1.3, -0.7, 0.6, -0.9, 1.0, -0.5]
+CURSOR = '<svg viewBox="0 0 16 18"><path d="M1 1l13.2 7.4-6.1 1.5-3 5.7z"/></svg>'
 
 
 def inline(text):
@@ -50,10 +49,6 @@ def to_html(text, indent="        "):
     return "\n".join(out)
 
 
-def fmt(n):
-    return f"{n:,}"
-
-
 def client_cell(p, prefix=""):
     logo = p.get("logo")
     if logo:
@@ -65,50 +60,47 @@ def client_cell(p, prefix=""):
 for p in PIECES:
     if p.get("file"):
         p["text"] = (SRC / p["file"]).read_text(encoding="utf-8")
-        p["words"] = words_in(p["text"])
     p["page"] = bool(p.get("file"))
 
 # ---------------------------------------------------------------- the home page
-rows = []
-for p in PIECES:
+cards = []
+for i, p in enumerate(PIECES):
+    passage = "".join(f"<p>{inline(line)}</p>" for line in p["passage"].split("\n"))
+    top = f'<div class="w-top"><span class="w-format">{esc(p["format"])}</span><span class="w-client">{client_cell(p)}</span></div>'
+    foot = f'<div class="w-foot"><strong class="w-title">{esc(p["title"], quote=False)}</strong><span class="w-meta">{esc(p["published"])}</span>'
+    cursor = f'<span class="t-cursor" style="--d:{-(i * 1.7) % 7:.1f}s" aria-hidden="true">{CURSOR}<b>{esc(p["tag"])}</b></span>'
+    style = f'--tilt:{TILTS[i % len(TILTS)]}deg;--c:{COLOURS[i % len(COLOURS)]}'
     if p["page"]:
-        href, attrs, where = f'writing/{p["slug"]}/', "", ""
+        open_tag, close_tag = f'<a class="card w-card" href="writing/{p["slug"]}/" data-cursor="Read" style="{style}">', "</a>"
+        foot += '<span class="w-go">Read</span></div>'
     elif p.get("href"):
-        href, attrs = p["href"], ' target="_blank" rel="noopener"'
-        where = f'<span class="work-where">Opens on {esc(p["published"].split(",")[0])}</span>'
+        where = p["published"].split(",")[0]
+        open_tag, close_tag = f'<a class="card w-card" href="{p["href"]}" target="_blank" rel="noopener" data-cursor="Read" style="{style}">', "</a>"
+        foot += f'<span class="w-go">Read on {esc(where)}</span></div>'
     else:
-        href, attrs, where = p["home_href"], "", '<span class="work-where">Shown above</span>'
-    rows.append(f'''            <li class="work-row" data-group="{p["group"]}">
-              <a class="work-link" href="{href}"{attrs}>
-                <span class="work-words">{fmt(p["words"])}<i> words</i></span>
-                <span class="work-main"><span class="work-title"><b>{esc(p["title"], quote=False)}</b></span><span class="work-dek">{esc(p["dek"], quote=False)}</span>{where}</span>
-                <span class="work-cell work-format"><em>Format</em>{esc(p["format"])}</span>
-                <span class="work-cell work-client"><em>Client</em>{client_cell(p)}</span>
-                <span class="work-cell work-pub"><em>Published</em>{esc(p["published"])}</span>
-              </a>
-            </li>''')
+        open_tag, close_tag = f'<div class="card w-card" style="{style}">', "</div>"
+        foot += "</div>"
+    cards.append(f'''          <div class="w-item" role="listitem" data-group="{p["group"]}">
+            {open_tag}
+              {cursor}
+              {top}
+              <div class="w-passage">{passage}</div>
+              {foot}
+            {close_tag}
+          </div>''')
 
-filters = [f'            <button type="button" data-filter="all" aria-pressed="true">All<span>{len(PIECES)}</span></button>']
+filters = [f'          <button type="button" data-filter="all" aria-pressed="true">All<span>{len(PIECES)}</span></button>']
 for g in GROUPS:
     n = sum(1 for p in PIECES if p["group"] == g["id"])
-    filters.append(f'            <button type="button" data-filter="{g["id"]}" aria-pressed="false">{esc(g["label"])}<span>{n}</span></button>')
-
-essay = next(p for p in PIECES if p["slug"] == "blood-books-and-bots")
-keys = re.findall(r"\[\[(.+?)\]\]", essay["text"])
-keys = [k[0].upper() + k[1:] for k in keys]
-essay_lines = "\n".join(f"              <li>{esc(k, quote=False)}</li>" for k in keys)
-lines_words = sum(len(k.split()) for k in keys)
+    if n:
+        filters.append(f'          <button type="button" data-filter="{g["id"]}" aria-pressed="false">{esc(g["label"])}<span>{n}</span></button>')
 
 home = (ROOT / "templates" / "home.html").read_text(encoding="utf-8")
 for key, value in {
     "{{V}}": V,
     "{{COUNT}}": str(len(PIECES)),
-    "{{WORK_ROWS}}": "\n".join(rows),
+    "{{CARDS}}": "\n".join(cards),
     "{{FILTERS}}": "\n".join(filters),
-    "{{ESSAY_LINES}}": essay_lines,
-    "{{ESSAY_LINES_WORDS}}": str(lines_words),
-    "{{ESSAY_WORDS}}": fmt(essay["words"]),
-    "{{ESSAY_FULL}}": to_html(essay["text"], "              "),
 }.items():
     home = home.replace(key, value)
 assert "{{" not in home, re.findall(r"\{\{.*?\}\}", home)
@@ -141,64 +133,33 @@ PIECE = '''<!DOCTYPE html>
   <header class="top">
     <a class="top-name" href="../../">Mike Whyle</a>
     <nav class="top-nav" aria-label="Site">
-      <a href="../../#writing">All writing</a>
-      <a href="../../#services">Services</a>
+      <a href="../../#writing">Writing</a>
       <a class="top-cv" href="../../cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV <span aria-hidden="true">&darr;</span></a>
     </nav>
   </header>
   <main>
-    <article id="piece">
-      <section class="piece-head">
-        <div class="lane">
-          <p class="note">{words} words<br>{minutes} min read</p>
-          <div>
-            <h1 class="piece-title">{title}</h1>
-            <p class="piece-dek">{dek}</p>{credit}
-            <dl class="cells">
-              <div><dt>Format</dt><dd>{format}</dd></div>
-              <div><dt>Client</dt><dd>{client}</dd></div>
-              <div><dt>Published</dt><dd>{published}</dd></div>
-            </dl>
-          </div>
-        </div>
-      </section>
-      <section class="piece-body">
-        <div class="lane">
-          <p class="note" id="read-count">0 of {words} words</p>
-          <div class="prose">
+    <article id="piece" class="piece">
+      <header class="piece-head">
+        <h1 class="piece-title">{title}</h1>{dek}{credit}
+        <dl class="cells">
+          <div><dt>Format</dt><dd>{format}</dd></div>
+          <div><dt>Client</dt><dd>{client}</dd></div>
+          <div><dt>Published</dt><dd>{published}</dd></div>
+        </dl>
+      </header>
+      <div class="prose">
 {body}
-          </div>
+      </div>
+      <footer class="piece-foot">{original}
+        <div class="actions">
+          <a class="btn btn-ink" href="../../#writing">All writing</a>
+          <a class="btn" href="mailto:mikewhyle@gmail.com">Email</a>
+          <a class="btn" href="../../cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV <small>PDF</small></a>
         </div>
-      </section>
+        <a class="next" href="../{next_slug}/"><small>Next</small><b>{next_title}</b></a>
+      </footer>
     </article>
-    <section class="piece-foot">
-      <div class="lane">
-        <span class="note-gap"></span>
-        <div class="foot-box">{original}
-          <div class="actions">
-            <a class="btn btn-ink" href="../../#writing">All writing</a>
-            <a class="btn" href="mailto:mikewhyle@gmail.com">Email Mike</a>
-            <a class="btn" href="../../cv/Mike-Whyle-CV-2026.pdf" download="Mike-Whyle-CV-2026.pdf">CV <small>PDF</small></a>
-          </div>
-          <a class="next" href="../{next_slug}/"><small>Next: {next_format}, {next_client}</small><b>{next_title}</b></a>
-        </div>
-      </div>
-    </section>
   </main>
-  <footer class="foot">
-    <div class="lane">
-      <span class="note-gap"></span>
-      <div class="foot-inner">
-        <p>&copy; 2026 Mike Whyle. Cape Town.</p>
-        <nav aria-label="More">
-          <a href="../../">Home</a>
-          <a href="../../#writing">Writing</a>
-          <a href="../../#services">Services</a>
-          <a href="../../#film">Film and design</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
   <script src="../../js/writer.js?v={v}" defer></script>
 </body>
 </html>
@@ -207,27 +168,25 @@ PIECE = '''<!DOCTYPE html>
 pages = [p for p in PIECES if p["page"]]
 for i, p in enumerate(pages):
     nxt = pages[(i + 1) % len(pages)]
-    credit = p.get("credit") or (f'Ghostwritten for {p["client"]}.' if p["group"] == "oped" else "")
-    credit = f'\n            <p class="piece-credit">{esc(credit, quote=False)}</p>' if credit else ""
+    dek = f'\n        <p class="piece-dek">{esc(p["dek"], quote=False)}</p>' if p.get("dek") else ""
+    credit = f'\n        <p class="piece-credit">{esc(p["credit"], quote=False)}</p>' if p.get("credit") else ""
     original = ""
     if p.get("original"):
-        original = f'\n          <p>Read the published version in <a class="plain" href="{esc(p["original"])}" target="_blank" rel="noopener">{esc(p["original_label"])}</a>.</p>'
+        original = f'\n        <p>Read the published version in <a class="plain" href="{esc(p["original"])}" target="_blank" rel="noopener">{esc(p["original_label"])}</a>.</p>'
     page = PIECE.format(
         file=p["file"], slug=p["slug"], v=V,
         title=esc(p["title"], quote=False), title_plain=esc(p["title"].strip("“”")),
-        desc=esc(f'{p["dek"]} {p["format"]} by Mike Whyle; {p["client"]}; {p["published"]}.'),
-        dek=esc(p["dek"], quote=False), credit=credit,
-        words=fmt(p["words"]), minutes=max(1, math.ceil(p["words"] / 230)),
+        desc=esc(f'{p["title"].strip("“”")}. {p["format"]}; {p["client"]}; {p["published"]}. By Mike Whyle.'),
+        dek=dek, credit=credit,
         format=esc(p["format"]), client=client_cell(p, "../../"), published=esc(p["published"]),
-        body=to_html(p["text"], "            "), original=original,
+        body=to_html(p["text"], "        "), original=original,
         next_slug=nxt["slug"], next_title=esc(nxt["title"], quote=False),
-        next_format=esc(nxt["format"]), next_client=esc(nxt["client"]),
     )
     out = ROOT / "writing" / p["slug"]
     out.mkdir(parents=True, exist_ok=True)
     (out / "index.html").write_text(page, encoding="utf-8")
 
-# writing/ itself points at the index on the home page
+# writing/ itself points at the cards on the home page
 (ROOT / "writing" / "index.html").write_text('''<!DOCTYPE html>
 <html lang="en-ZA">
 <head>
@@ -242,11 +201,9 @@ for i, p in enumerate(pages):
   <script>location.replace('../#writing');</script>
 </head>
 <body>
-  <p style="padding: 3rem 2rem;">The writing is on the home page. <a href="../#writing">Continue</a></p>
+  <p style="padding: 3rem 2rem;"><a href="../#writing">Writing</a></p>
 </body>
 </html>
 ''', encoding="utf-8")
 
-print(f"Built index.html and {len(pages)} reading pages. Essay: {essay['words']} words; key lines: {lines_words} words.")
-for p in PIECES:
-    print(f'  {p["words"]:>5}  {p["group"]:<8} {p["title"]}')
+print(f"Built index.html with {len(PIECES)} cards, and {len(pages)} reading pages.")

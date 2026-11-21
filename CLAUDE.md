@@ -23,34 +23,55 @@ films, design, with sound) lives on beside it at `journey.html`.
 them by hand. Edit the sources, then run `python3 scripts/build-site.py`:
 
 - `templates/home.html`: the home page, with `{{PLACEHOLDERS}}` for the
-  index of work, the filters and the essay.
-- `content/writing/index.json`: one entry per piece (title, dek, group,
-  format, client, publication and date, logo, link to the published
-  version). The order here is the order on the page.
+  writing cards and the filters.
+- `content/writing/index.json`: one entry per piece (title, group, format,
+  client, publication and date, logo, link to the published version, the
+  `passage` shown on its card, the `tag` on its cursor). The order here is
+  the order of the cards.
 - `content/writing/<slug>.txt`: the text of each piece that has a reading
   page. Blank line between paragraphs, `## ` for a subheading, `- ` for a
   list item, `[[double brackets]]` round a sentence to highlight it.
 - `css/writer.css` and `js/writer.js`: shared by the home page and the
   reading pages. Bump `V` in `scripts/build-site.py` when either changes.
 
-The page, top to bottom: the opening line and intro (`#about`), a strip of
-publications, kind words and clients (`#proof`), the essay *Blood, Books
-and Bots* at three lengths (`#essay`), one caption and one feature
-(`#range`), the labelled index of every piece with filters (`#writing`),
-services (`#services`), then, much further down and on a dark ground, the
-showreel, films, design and apps (`#film`, `#design`), and contact.
+**Only Mike's words go on the page.** He asked for every line he did not
+write to be removed. Headlines, intros and captions come from his old site,
+the October build or his CV; a card's passage is lifted verbatim from its
+piece (the build does not check this, so check it yourself); a subtitle is
+shown only where the piece has one of its own. Do not add intros,
+explainers, summaries or taglines unless he asks. Short functional labels
+(nav, buttons, format names) are fine.
 
-The device that runs through it is the margin: each block carries its word
-count there, counted live by `js/writer.js` from `data-wc` attributes.
+The page, top to bottom: the headline over a field of typographic noise
+that the pointer cuts through (`#hero`), a strip of publications, about
+(`#about`, the CV's profile), kind words and clients (`#proof`), the
+writing as cards (`#writing`), services (`#services`), then the dark screen
+with the showreel, the films travelling sideways and the design boards
+(`#film`, `#design`), vibe-coding (`#code`) and contact.
 
-- Every piece carries three labels: format, client, publication and date.
+- **One card format for every piece**, modelled on the testimonial cards:
+  format and client along the top, a passage of the piece itself with one
+  phrase highlighted, then title, publication and date. The essay is one
+  card among the others. Mike rejected a table of pieces, word counts in
+  the margin, and showing the essay at several lengths: do not bring them
+  back.
+- Motion is GSAP, ScrollTrigger and Lenis (`js/vendor/`), loaded on the
+  home page only: cards are dealt in on a scrub, tilt under the pointer and
+  reshuffle when filtered; columns drift and lean with the scroll; the
+  films pin and travel sideways on desktop. With reduced motion, or without
+  the libraries, the page is a plain two-column layout.
+- GSAP folds the CSS `rotate`, `scale` and `translate` properties into its
+  own transform and then sets them to `none`. Never rely on those
+  properties on an element GSAP animates.
+- Call `ScrollTrigger.refresh()` only while the cards are at rest (no FLIP
+  offsets), or their triggers are measured in the wrong place.
 - Client logos are in `images/clients/`; a client without one is set as
   text (Iziko, Deep Atomic, SAPVIA).
 - The News Drop is gone from the site at Mike's request. Do not restore it.
 - The SMR explainer is labelled by format and client only. Never tag it
   "unpublished".
 - The page loads light: no gate, no sound. Film loops fetch as their cards
-  scroll into view (`video/loops/`, `video/loops-m/` on phones, posters in
+  come into view (`video/loops/`, `video/loops-m/` on phones, posters in
   `images/posters/`); the showreel loads only when played.
 
 ## The CV

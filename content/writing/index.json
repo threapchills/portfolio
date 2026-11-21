@@ -1,70 +1,49 @@
 {
-  "_note": "Source of truth for the writing on the home page and the reading pages. Run python3 scripts/build-site.py after editing. 'group' is the filter; 'format', 'client' and 'published' are the three label cells. A piece with 'file' gets a reading page at writing/<slug>/; one with only 'href' links out.",
+  "_note": "Source of truth for the writing cards on the home page and the reading pages. Run python3 scripts/build-site.py after editing. Every word shown is Mike's own: 'passage' is lifted verbatim from the piece ([[ ]] marks the highlighted phrase, ' … ' a cut, a newline a line break); 'dek' is the piece's own subtitle, where it has one. 'format', 'client' and 'published' are the three labels; 'tag' is the name on the card's cursor. A piece with 'file' gets a reading page at writing/<slug>/; one with only 'href' links out.",
   "groups": [
-    {"id": "pov", "label": "Points of view"},
-    {"id": "oped", "label": "Ghostwritten op-eds"},
-    {"id": "press", "label": "Press releases"},
-    {"id": "feature", "label": "Features"},
-    {"id": "short", "label": "Short form"}
+    {
+      "id": "pov",
+      "label": "Points of view"
+    },
+    {
+      "id": "oped",
+      "label": "Ghostwritten op-eds"
+    },
+    {
+      "id": "press",
+      "label": "Press releases"
+    },
+    {
+      "id": "feature",
+      "label": "Features"
+    },
+    {
+      "id": "short",
+      "label": "Short form"
+    }
   ],
   "pieces": [
     {
-      "slug": "blood-books-and-bots",
-      "title": "Blood, Books and Bots",
-      "dek": "The true origins of AI.",
-      "group": "pov",
-      "format": "Essay",
-      "client": "Own byline",
-      "published": "2025",
-      "file": "blood-books-and-bots.txt",
-      "home_href": "#essay",
-      "excerpt": "The first known use of AI is actually much earlier than people think."
-    },
-    {
       "slug": "the-ai-detector-dilemma",
       "title": "The AI detector dilemma",
-      "dek": "Why AI detectors fail, and what to do instead.",
       "group": "pov",
       "format": "Opinion feature",
       "client": "Own byline",
       "published": "Gadget, October 2025",
-      "words": 1909,
       "href": "https://gadget.co.za/aidetector36t/",
-      "home_href": "#range"
+      "tag": "Gadget",
+      "passage": "Using an AI detector to catch a modern LLM is [[like sending a 1990s-era MS Office Paperclip Helper to fight a T1000]] from the Terminator movies. The LLM is a trillion-parameter model trained on supercomputer clusters; the detector is a thin classifier guessing from shallow patterns."
     },
     {
       "slug": "multiplayer-pencil",
       "title": "Multiplayer Pencil",
-      "dek": "A launch caption for LinkedIn.",
       "group": "short",
       "format": "Social caption",
       "client": "Pencil",
       "logo": "pencil",
       "published": "LinkedIn, 2026",
-      "words": 33,
-      "home_href": "#range"
-    },
-    {
-      "slug": "what-in-the-smr",
-      "title": "“What in the SMR…?!”",
-      "dek": "Small reactors, big stakes: understanding the SMR gold rush.",
-      "group": "pov",
-      "format": "Explainer",
-      "client": "Deep Atomic",
-      "published": "Deep Atomic, 2025",
-      "file": "what-in-the-smr.txt",
-      "excerpt": "Generative AI and the digital economy are advancing at breakneck pace, but looming energy shortfalls could thwart Big Tech’s best-laid plans for expansion."
-    },
-    {
-      "slug": "why-you-cant-trust-grok-4s-benchmarks",
-      "title": "Why you can’t trust Grok 4’s benchmarks",
-      "dek": "Top scores on paper. A different matter in practice.",
-      "group": "pov",
-      "format": "Opinion feature",
-      "client": "Own byline",
-      "published": "Gadget, July 2025",
-      "words": 700,
-      "href": "https://gadget.co.za/grok4sal78f/"
+      "tag": "LinkedIn",
+      "passage": "Multiplayer Pencil.\nAI-infused marketing mind meld loading.\nThe limitless possibility-space of AI-enabled creation can feel bewildering. [[Don’t fly in solo.]] Bring your creative crew along on the AI journey.\nBook a Demo today!"
     },
     {
       "slug": "reimagining-mining-and-climate",
@@ -77,12 +56,66 @@
       "published": "Sunday Times, February 2024",
       "file": "reimagining-mining-and-climate.txt",
       "original": "https://times-e-editions.pressreader.com/article/282574497983463",
-      "original_label": "the Sunday Times"
+      "original_label": "the Sunday Times",
+      "tag": "Sunday Times",
+      "passage": "In Africa, there are foundational elements of social and economic development, which are equally if not more important than the energy transition. … From a South African perspective, coal remains a critical commodity to help us reliably navigate the energy transition – [[we cannot simply switch it off.]]"
+    },
+    {
+      "slug": "blood-books-and-bots",
+      "title": "Blood, Books and Bots",
+      "dek": "The true origins of AI",
+      "group": "pov",
+      "format": "Essay",
+      "client": "Own byline",
+      "published": "2025",
+      "file": "blood-books-and-bots.txt",
+      "tag": "Mike",
+      "passage": "AI is not cheating. AI is not moral decay. It’s not a moral virtue either. It’s technology. It’s a tool. [[AI is the new brush.]] The new pen, the new keyboard, and the new camera."
+    },
+    {
+      "slug": "esther-mahlangu-retrospective",
+      "title": "“Then I Knew I Was Good at Painting”",
+      "dek": "Esther Mahlangu, A Retrospective",
+      "group": "press",
+      "format": "Press release",
+      "client": "Iziko Museums of South Africa",
+      "published": "iAfrica, February 2024",
+      "file": "esther-mahlangu-retrospective.txt",
+      "original": "https://iafrica.com/iziko-museums-of-south-africa-presents-then-i-knew-i-was-good-at-painting-esther-mahlangu-a-retrospective/",
+      "original_label": "iAfrica",
+      "tag": "iAfrica",
+      "passage": "Transcending the boundaries of canvas and mural, Mahlangu’s work displays [[an inimitable fluency across diverse mediums]], from small, treasured keepsakes to vast public installations and murals."
+    },
+    {
+      "slug": "what-in-the-smr",
+      "title": "“What in the SMR…?!”",
+      "dek": "Small Reactors, Big Stakes: Understanding the SMR Gold Rush",
+      "group": "pov",
+      "format": "Explainer",
+      "client": "Deep Atomic",
+      "published": "Deep Atomic, 2025",
+      "file": "what-in-the-smr.txt",
+      "tag": "Deep Atomic",
+      "passage": "Generative AI and the digital economy are advancing at breakneck pace, but looming energy shortfalls could thwart Big Tech’s best-laid plans for expansion. The worldwide race for reliable, clean energy has become [[a high-stakes game where digital progress and climate survival hang in the balance.]]"
+    },
+    {
+      "slug": "baby-rose-sa-swimstar",
+      "title": "Baby Rose: SA swimstar",
+      "group": "press",
+      "format": "Human-interest press release",
+      "client": "Virgin Active",
+      "logo": "virgin-active",
+      "published": "Good Things Guy, March 2024",
+      "file": "baby-rose-sa-swimstar.txt",
+      "original": "https://www.goodthingsguy.com/people/from-heart-surgery-to-swim-star-baby-roses-inspiring-journey/",
+      "original_label": "Good Things Guy",
+      "tag": "Good Things Guy",
+      "passage": "Her infectious joy and indefatigable spirit are inspirational. [[The ripples of her laughter and the splashes of her tiny hands]] vividly remind us that there is always hope, even in the darkest moments of despair."
     },
     {
       "slug": "a-symphony-of-solutions",
       "title": "A symphony of solutions",
-      "dek": "South Africa’s tech-agnostic energy mix.",
+      "dek": "South Africa’s tech-agnostic energy mix",
       "group": "oped",
       "format": "Ghostwritten op-ed",
       "client": "Scatec",
@@ -91,12 +124,38 @@
       "file": "a-symphony-of-solutions.txt",
       "credit": "Written on behalf of Alberto Gambacorta, Scatec’s VP of project development for sub-Saharan Africa.",
       "original": "https://www.engineeringnews.co.za/article/opinion-a-symphony-of-solutions-south-africas-tech-agnostic-energy-mix-2024-05-10",
-      "original_label": "Engineering News"
+      "original_label": "Engineering News",
+      "tag": "Engineering News",
+      "passage": "The government must grapple with [[a complex balancing act]], reconciling the urgent need for energy security in the face of some of the world’s worst loadshedding, with the need to secure long-term sustainability."
+    },
+    {
+      "slug": "risen-from-the-sea",
+      "title": "Risen from the sea",
+      "group": "feature",
+      "format": "Destination feature",
+      "client": "Table Mountain Aerial Cableway",
+      "logo": "table-mountain-aerial-cableway",
+      "published": "Galore SA, April 2024",
+      "file": "risen-from-the-sea.txt",
+      "original": "https://galoresa.online/2024/04/03/world-travel-awards-2024-show-your-love-for-table-mountain/",
+      "original_label": "Galore SA",
+      "tag": "Galore SA",
+      "passage": "Imagine gazing out at a sunset that cascades over the ocean, viewed from the summit of a majestic flat-topped peak that has stood as witness to the passage of time for hundreds of millions of years. [[This is Table Mountain.]]"
+    },
+    {
+      "slug": "why-you-cant-trust-grok-4s-benchmarks",
+      "title": "Why you can’t trust Grok 4’s benchmarks",
+      "group": "pov",
+      "format": "Opinion feature",
+      "client": "Own byline",
+      "published": "Gadget, July 2025",
+      "href": "https://gadget.co.za/grok4sal78f/",
+      "tag": "Gadget",
+      "passage": "On paper, this suggests Musk’s creation might be one of the most powerful AI models yet developed. [[In practice, however]], the announcement has been met with significant skepticism from the AI community and users alike."
     },
     {
       "slug": "changing-the-beat-of-hospitality",
       "title": "Changing the beat of hospitality",
-      "dek": "Why, even after Covid, hospitality is still the ideal space to learn, grow and experience.",
       "group": "oped",
       "format": "Ghostwritten op-ed",
       "client": "Radisson RED",
@@ -105,37 +164,14 @@
       "file": "changing-the-beat-of-hospitality.txt",
       "credit": "Written on behalf of, and in collaboration with, Leonie Andereya of Radisson RED.",
       "original": "https://hospitalitymarketplace.co.za/changing-the-beat-of-hospitality-industry/",
-      "original_label": "Hospitality Marketplace"
-    },
-    {
-      "slug": "sapvia-localisation-study",
-      "title": "SAPVIA shares insights from localisation study",
-      "dek": "A call for solar PV value chain development support.",
-      "group": "oped",
-      "format": "Ghostwritten op-ed",
-      "client": "SAPVIA",
-      "published": "IOL Business Report, 2023",
-      "file": "sapvia-localisation-study.txt",
-      "credit": "Written on behalf of the South African Photovoltaic Industry Association.",
-      "original": "https://www.iol.co.za/business-report/energy/sapvia-shares-insights-from-localisation-study-calls-for-solar-pv-value-chain-development-support-8ea6d304-759e-4e0b-b24a-5ae476697ed5",
-      "original_label": "IOL Business Report"
-    },
-    {
-      "slug": "esther-mahlangu-retrospective",
-      "title": "“Then I Knew I Was Good at Painting”",
-      "dek": "Esther Mahlangu, a retrospective.",
-      "group": "press",
-      "format": "Press release",
-      "client": "Iziko Museums of South Africa",
-      "published": "iAfrica, February 2024",
-      "file": "esther-mahlangu-retrospective.txt",
-      "original": "https://iafrica.com/iziko-museums-of-south-africa-presents-then-i-knew-i-was-good-at-painting-esther-mahlangu-a-retrospective/",
-      "original_label": "iAfrica"
+      "original_label": "Hospitality Marketplace",
+      "tag": "Hospitality Marketplace",
+      "passage": "Such are the dreary narratives of yesteryear, but it’s time to throw those out, [[like so many soiled linens.]] Enter 2023, the year of good news."
     },
     {
       "slug": "africa-health-2024-cape-town",
       "title": "Africa Health 2024 relocates to Cape Town",
-      "dek": "Healthcare financing in the spotlight.",
+      "dek": "Healthcare financing in the spotlight",
       "group": "press",
       "format": "Press release",
       "client": "Africa Health",
@@ -143,64 +179,13 @@
       "published": "Bizcommunity, 2024",
       "file": "africa-health-2024-cape-town.txt",
       "original": "https://www.bizcommunity.com/article/healthcare-financing-to-top-the-agenda-when-africas-largest-healthcare-conference-moves-to-the-mother-city-in-october-675001a",
-      "original_label": "Bizcommunity"
-    },
-    {
-      "slug": "baby-rose-sa-swimstar",
-      "title": "Baby Rose: SA swimstar",
-      "dek": "From heart surgery at 11 weeks to a swimming sensation.",
-      "group": "press",
-      "format": "Human-interest press release",
-      "client": "Virgin Active",
-      "logo": "virgin-active",
-      "published": "Good Things Guy, March 2024",
-      "file": "baby-rose-sa-swimstar.txt",
-      "original": "https://www.goodthingsguy.com/people/from-heart-surgery-to-swim-star-baby-roses-inspiring-journey/",
-      "original_label": "Good Things Guy"
-    },
-    {
-      "slug": "pioneering-progress",
-      "title": "Pioneering progress",
-      "dek": "Resource constraints in African radiology and oncology.",
-      "group": "press",
-      "format": "Press release",
-      "client": "Africa Health",
-      "logo": "africa-health",
-      "published": "iAfrica, October 2024",
-      "file": "pioneering-progress.txt",
-      "original": "https://iafrica.com/pioneering-progress-amid-resource-constraints-in-african-radiology-and-oncology/",
-      "original_label": "iAfrica"
-    },
-    {
-      "slug": "committed-to-conservation",
-      "title": "Committed to conservation",
-      "dek": "Preserving biodiversity on Table Mountain.",
-      "group": "press",
-      "format": "Press release",
-      "client": "Table Mountain Aerial Cableway",
-      "logo": "table-mountain-aerial-cableway",
-      "published": "iAfrica, May 2024",
-      "file": "committed-to-conservation.txt",
-      "original": "https://iafrica.com/committed-to-conservation-preserving-biodiversity-on-table-mountain/",
-      "original_label": "iAfrica"
-    },
-    {
-      "slug": "risen-from-the-sea",
-      "title": "Risen from the sea",
-      "dek": "Show your love for Table Mountain.",
-      "group": "feature",
-      "format": "Destination feature",
-      "client": "Table Mountain Aerial Cableway",
-      "logo": "table-mountain-aerial-cableway",
-      "published": "Galore SA, April 2024",
-      "file": "risen-from-the-sea.txt",
-      "original": "https://galoresa.online/2024/04/03/world-travel-awards-2024-show-your-love-for-table-mountain/",
-      "original_label": "Galore SA"
+      "original_label": "Bizcommunity",
+      "tag": "Bizcommunity",
+      "passage": "Now, in a significant shift, Africa Health 2024 is set to be hosted in Cape Town, following previous years’ events in Johannesburg. This marks [[the first time the conference will be held in the Mother City.]]"
     },
     {
       "slug": "chef-andre-hill",
       "title": "Chef Andre Hill celebrates the flavours of Cape Town",
-      "dek": "A profile of Radisson RED’s head chef.",
       "group": "feature",
       "format": "Profile feature",
       "client": "Radisson RED",
@@ -209,17 +194,96 @@
       "file": "chef-andre-hill.txt",
       "credit": "Co-authored with Marisa Calvert.",
       "original": "https://essentialflavours.co.za/essentials/chef-talk/chef-andre-hill-celebrates-the-flavours-of-cape-town/",
-      "original_label": "Essential Flavours"
+      "original_label": "Essential Flavours",
+      "tag": "Essential Flavours",
+      "passage": "From home-cooked Cape Malay flavours to the world’s finest tables, Andre Hill’s journey reminds us that [[food transcends boundaries.]]"
+    },
+    {
+      "slug": "sapvia-localisation-study",
+      "title": "SAPVIA shares insights from localisation study",
+      "dek": "Calls for solar PV value chain development support",
+      "group": "oped",
+      "format": "Ghostwritten op-ed",
+      "client": "SAPVIA",
+      "published": "IOL Business Report, 2023",
+      "file": "sapvia-localisation-study.txt",
+      "credit": "Written on behalf of the South African Photovoltaic Industry Association.",
+      "original": "https://www.iol.co.za/business-report/energy/sapvia-shares-insights-from-localisation-study-calls-for-solar-pv-value-chain-development-support-8ea6d304-759e-4e0b-b24a-5ae476697ed5",
+      "original_label": "IOL Business Report",
+      "tag": "IOL Business Report",
+      "passage": "If we’re not careful, it’s the people of South Africa looking to make their households resilient against load shedding, who could ultimately bear the additional costs. … [[The catch-22 is not intractable.]]"
+    },
+    {
+      "slug": "pioneering-progress",
+      "title": "Pioneering progress",
+      "dek": "Amid resource constraints in African radiology and oncology",
+      "group": "press",
+      "format": "Press release",
+      "client": "Africa Health",
+      "logo": "africa-health",
+      "published": "iAfrica, October 2024",
+      "file": "pioneering-progress.txt",
+      "original": "https://iafrica.com/pioneering-progress-amid-resource-constraints-in-african-radiology-and-oncology/",
+      "original_label": "iAfrica",
+      "tag": "iAfrica",
+      "passage": "As the continent grapples with the rising burden of cancer, the intersection of oncology and radiology emerges as a complex landscape where [[cutting-edge advancements contend with pressing issues of accessibility]], affordability, and healthcare system economics."
+    },
+    {
+      "slug": "committed-to-conservation",
+      "title": "Committed to conservation",
+      "dek": "Preserving biodiversity on Table Mountain",
+      "group": "press",
+      "format": "Press release",
+      "client": "Table Mountain Aerial Cableway",
+      "logo": "table-mountain-aerial-cableway",
+      "published": "iAfrica, May 2024",
+      "file": "committed-to-conservation.txt",
+      "original": "https://iafrica.com/committed-to-conservation-preserving-biodiversity-on-table-mountain/",
+      "original_label": "iAfrica",
+      "tag": "iAfrica",
+      "passage": "Maintaining this sanctuary in its pristine natural state over the past nine decades – as the city below expanded into the bustling metropolis we know and love today – is [[a remarkable feat of long-term conservation]] and sustainable tourism."
     }
   ],
   "logos": {
-    "pencil": {"alt": "Pencil", "w": 113, "h": 32},
-    "virgin-active": {"alt": "Virgin Active", "w": 87, "h": 42},
-    "radisson-red": {"alt": "Radisson RED", "w": 56, "h": 52},
-    "kearney": {"alt": "Kearney", "w": 178, "h": 22},
-    "scatec": {"alt": "Scatec", "w": 132, "h": 27},
-    "africa-health": {"alt": "Africa Health", "w": 97, "h": 37},
-    "table-mountain-aerial-cableway": {"alt": "Table Mountain Aerial Cableway", "w": 84, "h": 43},
-    "lula": {"alt": "Lula", "w": 98, "h": 37}
+    "pencil": {
+      "alt": "Pencil",
+      "w": 113,
+      "h": 32
+    },
+    "virgin-active": {
+      "alt": "Virgin Active",
+      "w": 87,
+      "h": 42
+    },
+    "radisson-red": {
+      "alt": "Radisson RED",
+      "w": 56,
+      "h": 52
+    },
+    "kearney": {
+      "alt": "Kearney",
+      "w": 178,
+      "h": 22
+    },
+    "scatec": {
+      "alt": "Scatec",
+      "w": 132,
+      "h": 27
+    },
+    "africa-health": {
+      "alt": "Africa Health",
+      "w": 97,
+      "h": 37
+    },
+    "table-mountain-aerial-cableway": {
+      "alt": "Table Mountain Aerial Cableway",
+      "w": 84,
+      "h": 43
+    },
+    "lula": {
+      "alt": "Lula",
+      "w": 98,
+      "h": 37
+    }
   }
 }
