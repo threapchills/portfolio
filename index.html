@@ -18,12 +18,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/writer.css?v=20261121h">
+  <link rel="stylesheet" href="css/writer.css?v=20261121i">
 </head>
 <body class="home">
 
   <a class="skip" href="#writing">Skip to the writing</a>
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  <div class="box" id="box" role="dialog" aria-modal="true" aria-label="Viewer" hidden><button class="box-close" id="box-close" type="button">Close</button><div class="box-stage" id="box-stage"></div></div>
   <div class="cur" id="cur" aria-hidden="true"><div class="cur-disc"><span></span></div></div>
 
   <header class="top" id="top">
@@ -393,15 +394,15 @@
               <h2 class="title" data-rise>The films</h2>
               <p class="rail-sub">09 films</p>
             </div>
-            <a class="film" href="projects/wishfish/" data-cursor="Open"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/wishfish.webp" data-loop="wishfish"></video></span><span class="film-title">WishFish</span><span class="film-tag">Short film</span></a>
-            <a class="film" href="projects/kalimba/" data-cursor="Open"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/kalimba.webp" data-loop="kalimba"></video></span><span class="film-title">Kalimba</span><span class="film-tag">BTG GenAI Film Competition</span></a>
-            <a class="film" href="projects/ramses/" data-cursor="Open"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/ramses.webp" data-loop="ramses"></video></span><span class="film-title">Ramses</span><span class="film-tag">Runway 2026 Film Competition</span></a>
-            <a class="film" href="projects/mythopoeic/" data-cursor="Open"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/mythopoeic.webp" data-loop="mythopoeic"></video></span><span class="film-title">Mythopoeic</span><span class="film-tag">Spec ad</span></a>
-            <a class="film" href="projects/nobody-wears-it-better/" data-cursor="Open"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/nobody-wears-it-better.webp" data-loop="nobody-wears-it-better"></video></span><span class="film-title">Nobody Wears It Better</span><span class="film-tag">Spec / Mikey</span></a>
+            <a class="film" href="https://drive.google.com/file/d/1zlrxc1I8f1DI0zQJlctxAuXIvWBrKB0C/view?usp=drive_link" target="_blank" rel="noopener" data-cursor="Watch"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/wishfish.webp" data-loop="wishfish"></video></span><span class="film-title">WishFish</span><span class="film-tag">Short film</span></a>
+            <a class="film" href="https://www.youtube.com/watch?v=qQjJgnHjRlI" target="_blank" rel="noopener" data-cursor="Watch"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/kalimba.webp" data-loop="kalimba"></video></span><span class="film-title">Kalimba</span><span class="film-tag">BTG GenAI Film Competition</span></a>
+            <a class="film" href="https://drive.google.com/file/d/1lANyxkWP2oqHhilP28eTMtdJaVXpD-jx/view?usp=sharing" target="_blank" rel="noopener" data-cursor="Watch"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/ramses.webp" data-loop="ramses"></video></span><span class="film-title">Ramses</span><span class="film-tag">Runway 2026 Film Competition</span></a>
+            <a class="film" href="https://vimeo.com/1182972379" target="_blank" rel="noopener" data-cursor="Watch"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/mythopoeic.webp" data-loop="mythopoeic"></video></span><span class="film-title">Mythopoeic</span><span class="film-tag">Spec ad</span></a>
+            <a class="film" href="video/nobody-wears-it-better-hero.mp4" data-box="video" data-cursor="Play"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/nobody-wears-it-better.webp" data-loop="nobody-wears-it-better"></video></span><span class="film-title">Nobody Wears It Better</span><span class="film-tag">Spec / Mikey</span></a>
             <a class="film" href="https://www.youtube.com/watch?v=JgBicFpTIDM" target="_blank" rel="noopener" data-cursor="Watch"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/vast-island.webp" data-loop="vast-island"></video></span><span class="film-title">Vast Island</span><span class="film-tag">Trailer</span></a>
-            <a class="film" href="projects/ice-tea/" data-cursor="Open"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/ice-tea.webp" data-loop="ice-tea"></video></span><span class="film-title">Ice Tea</span><span class="film-tag">Personal / Creative Concept</span></a>
-            <a class="film" href="projects/weekend-thuggery/" data-cursor="Open"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/weekend-thuggery.webp" data-loop="weekend-thuggery"></video></span><span class="film-title">Weekend Thuggery</span><span class="film-tag">Spec / Mikey</span></a>
-            <a class="film" href="projects/tale-of-twins/" data-cursor="Open"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/tale-of-twins.webp" data-loop="tale-of-twins"></video></span><span class="film-title">Tale of Twins</span><span class="film-tag">Personal / For Fun</span></a>
+            <a class="film" href="https://www.youtube.com/watch?v=qkdM4NyXUjY" target="_blank" rel="noopener" data-cursor="Watch"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/ice-tea.webp" data-loop="ice-tea"></video></span><span class="film-title">Ice Tea</span><span class="film-tag">Personal / Creative Concept</span></a>
+            <a class="film" href="video/weekend-thuggery-hero.mp4" data-box="video" data-cursor="Play"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/weekend-thuggery.webp" data-loop="weekend-thuggery"></video></span><span class="film-title">Weekend Thuggery</span><span class="film-tag">Spec / Mikey</span></a>
+            <a class="film" href="https://www.youtube.com/watch?v=u2bsxG1hylc" target="_blank" rel="noopener" data-cursor="Watch"><span class="film-frame"><video muted loop playsinline preload="none" poster="images/posters/tale-of-twins.webp" data-loop="tale-of-twins"></video></span><span class="film-title">Tale of Twins</span><span class="film-tag">Personal / For Fun</span></a>
           </div>
           <div class="rail-progress" aria-hidden="true"><span id="film-progress"></span></div>
         </div>
@@ -409,12 +410,200 @@
 
       <div class="wrap" id="design">
         <h2 class="title" data-rise>Design</h2>
-        <div class="boards">
-          <a class="board board-wide" href="projects/mythopoeic/" data-cursor="Open"><span class="board-frame"><img src="images/mythopoeic/hero1.webp" alt="Mythopoeic" loading="lazy"></span><span class="board-cap"><b>Mythopoeic</b>A luxury brand that never existed, conjured whole with AI.</span></a>
-          <a class="board" href="projects/mythopoeic/" data-cursor="Open"><span class="board-frame"><img src="images/design/mythmood.webp" alt="Mythopoeic mood board" loading="lazy"></span><span class="board-cap"><b>Mythopoeic</b>Editorial worlds, dreamed from salt flats and moonlight.</span></a>
-          <a class="board" href="projects/healthtech/" data-cursor="Open"><span class="board-frame"><img src="images/healthtech-design0B.webp" alt="Healthtech brand identities" loading="lazy"></span><span class="board-cap"><b>EduTalkz &middot; TravelMedz &middot; TwinTech</b>Brand identities and visual systems for three healthtech startups.</span></a>
+        <div class="d-grid" id="design-grid" role="list">
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/desert-swag/withcar.webp" data-box="img" data-cursor="View" style="--tilt:-1.1deg">
+              <img src="images/design-cards/01-withcar.webp" alt="Desert Swag" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Desert Swag</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/desert-swag/all-tied-up-beige.webp" data-box="img" data-cursor="View" style="--tilt:-0.7deg">
+              <img src="images/design-cards/02-all-tied-up-beige.webp" alt="Desert Swag" width="900" height="996" loading="lazy">
+              <span class="d-cap"><strong>Desert Swag</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/desert-swag/beige-space.webp" data-box="img" data-cursor="View" style="--tilt:1.0deg">
+              <img src="images/design-cards/03-beige-space.webp" alt="Desert Swag" width="900" height="1125" loading="lazy">
+              <span class="d-cap"><strong>Desert Swag</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/desert-swag/double-view.webp" data-box="img" data-cursor="View" style="--tilt:0.9deg">
+              <img src="images/design-cards/04-double-view.webp" alt="Desert Swag" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Desert Swag</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/desert-swag/hill-grmen-beige.webp" data-box="img" data-cursor="View" style="--tilt:0.6deg">
+              <img src="images/design-cards/05-hill-grmen-beige.webp" alt="Desert Swag" width="900" height="1125" loading="lazy">
+              <span class="d-cap"><strong>Desert Swag</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/desert-swag/rearview-beige.webp" data-box="img" data-cursor="View" style="--tilt:-0.5deg">
+              <img src="images/design-cards/06-rearview-beige.webp" alt="Desert Swag" width="900" height="507" loading="lazy">
+              <span class="d-cap"><strong>Desert Swag</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/hero1.webp" data-box="img" data-cursor="View" style="--tilt:1.3deg">
+              <img src="images/design-cards/07-hero1.webp" alt="Mythopoeic" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong><span>A luxury brand that never existed, conjured whole with AI.</span></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/mythmood.webp" data-box="img" data-cursor="View" style="--tilt:-0.9deg">
+              <img src="images/design-cards/08-mythmood.webp" alt="Mythopoeic" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong><span>Editorial worlds, dreamed from salt flats and moonlight.</span></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/myh.webp" data-box="img" data-cursor="View" style="--tilt:-1.1deg">
+              <img src="images/design-cards/09-myh.webp" alt="Mythopoeic" width="900" height="503" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/hero3.webp" data-box="img" data-cursor="View" style="--tilt:-0.7deg">
+              <img src="images/design-cards/10-hero3.webp" alt="Mythopoeic" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/hero4.webp" data-box="img" data-cursor="View" style="--tilt:1.0deg">
+              <img src="images/design-cards/11-hero4.webp" alt="Mythopoeic" width="900" height="504" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/doubleview.webp" data-box="img" data-cursor="View" style="--tilt:0.9deg">
+              <img src="images/design-cards/12-doubleview.webp" alt="Mythopoeic" width="900" height="450" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/hero6.webp" data-box="img" data-cursor="View" style="--tilt:0.6deg">
+              <img src="images/design-cards/13-hero6.webp" alt="Mythopoeic" width="900" height="592" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/bracelet-showcase.webp" data-box="img" data-cursor="View" style="--tilt:-0.5deg">
+              <img src="images/design-cards/14-bracelet-showcase.webp" alt="Mythopoeic" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/mytho12.webp" data-box="img" data-cursor="View" style="--tilt:1.3deg">
+              <img src="images/design-cards/15-mytho12.webp" alt="Mythopoeic" width="900" height="503" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong><span>Copper and labradorite; the house materials.</span></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/necklace-showcase-1.webp" data-box="img" data-cursor="View" style="--tilt:-0.9deg">
+              <img src="images/design-cards/16-necklace-showcase-1.webp" alt="Mythopoeic" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/necklace-showcase--on-model.webp" data-box="img" data-cursor="View" style="--tilt:-1.1deg">
+              <img src="images/design-cards/17-necklace-showcase--on-model.webp" alt="Mythopoeic" width="900" height="900" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/product-showcase-all-2.webp" data-box="img" data-cursor="View" style="--tilt:-0.7deg">
+              <img src="images/design-cards/18-product-showcase-all-2.webp" alt="Mythopoeic" width="900" height="725" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/product-erf---rings.webp" data-box="img" data-cursor="View" style="--tilt:1.0deg">
+              <img src="images/design-cards/19-product-erf---rings.webp" alt="Mythopoeic" width="900" height="503" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/rhino-rider.webp" data-box="img" data-cursor="View" style="--tilt:0.9deg">
+              <img src="images/design-cards/20-rhino-rider.webp" alt="Mythopoeic" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong><span>The brand extends into fauna, myth and landscape.</span></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/mythopoeic/rhino.webp" data-box="img" data-cursor="View" style="--tilt:0.6deg">
+              <img src="images/design-cards/21-rhino.webp" alt="Mythopoeic" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Mythopoeic</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/healthtech-design0B.webp" data-box="img" data-cursor="View" style="--tilt:-0.5deg">
+              <img src="images/design-cards/22-healthtech-design0b.webp" alt="EduTalkz · TravelMedz · TwinTech" width="900" height="450" loading="lazy">
+              <span class="d-cap"><strong>EduTalkz · TravelMedz · TwinTech</strong><span>Brand identities and visual systems for three healthtech startups.</span></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/herobanner.webp" data-box="img" data-cursor="View" style="--tilt:1.3deg">
+              <img src="images/design-cards/23-herobanner.webp" alt="EduTalkz" width="900" height="531" loading="lazy">
+              <span class="d-cap"><strong>EduTalkz</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/healthtech-design0C.webp" data-box="img" data-cursor="View" style="--tilt:-0.9deg">
+              <img src="images/design-cards/24-healthtech-design0c.webp" alt="Healthtech identities" width="900" height="1207" loading="lazy">
+              <span class="d-cap"><strong>Healthtech identities</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/healthtech-design2.webp" data-box="img" data-cursor="View" style="--tilt:-1.1deg">
+              <img src="images/design-cards/25-healthtech-design2.webp" alt="Healthtech identities" width="900" height="1350" loading="lazy">
+              <span class="d-cap"><strong>Healthtech identities</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/healthtech-design3.webp" data-box="img" data-cursor="View" style="--tilt:-0.7deg">
+              <img src="images/design-cards/26-healthtech-design3.webp" alt="Healthtech identities" width="900" height="1350" loading="lazy">
+              <span class="d-cap"><strong>Healthtech identities</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/healthtech-design7.webp" data-box="img" data-cursor="View" style="--tilt:1.0deg">
+              <img src="images/design-cards/27-healthtech-design7.webp" alt="Healthtech identities" width="900" height="504" loading="lazy">
+              <span class="d-cap"><strong>Healthtech identities</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/healthtech-design9.webp" data-box="img" data-cursor="View" style="--tilt:0.9deg">
+              <img src="images/design-cards/28-healthtech-design9.webp" alt="Healthtech identities" width="900" height="506" loading="lazy">
+              <span class="d-cap"><strong>Healthtech identities</strong><span>Complex science, kept approachable; AI-first, at a fraction of the cost.</span></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/healthtech-design10.webp" data-box="img" data-cursor="View" style="--tilt:0.6deg">
+              <img src="images/design-cards/29-healthtech-design10.webp" alt="Healthtech identities" width="900" height="564" loading="lazy">
+              <span class="d-cap"><strong>Healthtech identities</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/healthtech-design13.webp" data-box="img" data-cursor="View" style="--tilt:-0.5deg">
+              <img src="images/design-cards/30-healthtech-design13.webp" alt="Healthtech identities" width="900" height="504" loading="lazy">
+              <span class="d-cap"><strong>Healthtech identities</strong></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/lookbookv2.webp" data-box="img" data-cursor="View" style="--tilt:1.3deg">
+              <img src="images/design-cards/31-lookbookv2.webp" alt="Mikey · brand identity" width="900" height="1692" loading="lazy">
+              <span class="d-cap"><strong>Mikey · brand identity</strong><span>Wordmark, monogram and mark system for the Mikey film brand.</span></span>
+            </a>
+          </div>
+          <div class="d-item" role="listitem">
+            <a class="card d-card" href="images/design/cars.webp" data-box="img" data-cursor="View" style="--tilt:-0.9deg">
+              <img src="images/design-cards/32-cars.webp" alt="Automotive" width="900" height="270" loading="lazy">
+              <span class="d-cap"><strong>Automotive</strong><span>Concept showroom visualisation.</span></span>
+            </a>
+          </div>
         </div>
-        <p class="journey-link"><a class="btn btn-moon" href="journey.html">The scroll journey</a></p>
       </div>
     </section>
 
@@ -446,7 +635,7 @@
             <span class="artefact-cta">Play &rarr;</span>
           </a>
           <a class="artefact" href="https://threapchills.github.io/ManuscriptMaker/" target="_blank" rel="noopener">
-            <img class="artefact-sigil" src="assets/journey/owl1.webp" alt="" loading="lazy">
+            <img class="artefact-sigil" src="assets/journey/owl-cut.webp" alt="" loading="lazy">
             <h3>Manuscript Maker</h3>
             <p>A game in the making. Work in progress.</p>
             <span class="artefact-cta">Explore the WIP &rarr;</span>
@@ -466,9 +655,8 @@
           <a class="btn" href="mailto:mikewhyle@gmail.com">Email</a>
           <a class="btn" href="https://www.linkedin.com/in/mikewhyle" target="_blank" rel="noopener">LinkedIn</a>
           <a class="btn" href="https://www.instagram.com/iii.mikey/" target="_blank" rel="noopener">Instagram</a>
-          <a class="btn" href="https://mikewhyle.com" target="_blank" rel="noopener">My old site</a>
         </div>
-        <p class="contact-credit">Made with Fable 5<br>&copy; 2026 Mike Whyle</p>
+        <p class="contact-credit">Made with the help of Claude<br>&copy; 2026 Mike Whyle</p>
       </div>
     </section>
 
@@ -477,6 +665,6 @@
   <script src="js/vendor/gsap.min.js?v=3" defer></script>
   <script src="js/vendor/ScrollTrigger.min.js?v=3" defer></script>
   <script src="js/vendor/lenis.min.js?v=3" defer></script>
-  <script src="js/writer.js?v=20261121h" defer></script>
+  <script src="js/writer.js?v=20261121i" defer></script>
 </body>
 </html>

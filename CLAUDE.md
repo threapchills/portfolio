@@ -2,8 +2,9 @@
 
 A static site on GitHub Pages (portfolio.mikewhyle.com), deployed from
 `main`. Since November 2026 it is a **writer's portfolio**, built for the
-Creative Copywriter role at Pencil. The October scroll journey (showreel,
-films, design, with sound) lives on beside it at `journey.html`.
+Creative Copywriter role at Pencil. The October scroll journey still exists
+at `journey.html`, but nothing links to it: Mike wants the site to work as
+one cohesive whole, with no links to older versions of it.
 
 ## Working with Mike
 
@@ -46,8 +47,8 @@ The page, top to bottom: the headline over a field of typographic noise
 that the pointer cuts through (`#hero`), a strip of publications, about
 (`#about`, the CV's profile), kind words and clients (`#proof`), the
 writing as cards (`#writing`), services (`#services`), then the dark screen
-with the showreel, the films travelling sideways and the design boards
-(`#film`, `#design`), creative tech (`#code`: Mike's blanket term for the
+with the showreel, the films travelling sideways and every design board as
+a card (`#film`, `#design`), creative tech (`#code`: Mike's blanket term for the
 vibe-coded apps and the video game work) and contact.
 
 - **One card format for every piece**, modelled on the testimonial cards:
@@ -66,6 +67,15 @@ vibe-coded apps and the video game work) and contact.
   properties on an element GSAP animates.
 - Call `ScrollTrigger.refresh()` only while the cards are at rest (no FLIP
   offsets), or their triggers are measured in the wrong place.
+- **No links to older versions of the site**: not `journey.html`, not the
+  legacy project pages in `projects/`, not mikewhyle.com. Film cards open
+  the film where it lives (YouTube, Vimeo, Drive), or in the on-page
+  viewer for the two that only exist as local clips.
+- The design boards come from `content/design.json`: 32 cards, each a 900
+  px copy in `images/design-cards/` that opens the full image in the
+  viewer. A new board needs its thumb and its entry there.
+- The credit line reads "Made with the help of Claude" (not one model's
+  name: several did the work).
 - Client logos are in `images/clients/`; a client without one is set as
   text (Iziko, Deep Atomic, SAPVIA).
 - The News Drop is gone from the site at Mike's request. Do not restore it.
@@ -84,7 +94,8 @@ two pages after any edit.
 
 ## The journey (`journey.html`)
 
-The October build, unchanged apart from the News Drop: ES modules in
+Unlinked from the site since November 2026 (see above). The October build,
+unchanged apart from the News Drop: ES modules in
 `js/core/` (cache-busted with `?v=` strings in the importmap) and styles in
 `css/overhaul.css`. The legacy project pages in `projects/` use
 `css/style.css` and `css/cohesion.css`.

@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "content" / "writing"
-V = "20261121h"          # bump when css/writer.css or js/writer.js change
+V = "20261121i"          # bump when css/writer.css or js/writer.js change
 
 data = json.loads((SRC / "index.json").read_text(encoding="utf-8"))
 GROUPS, PIECES, LOGOS = data["groups"], data["pieces"], data["logos"]
@@ -89,6 +89,17 @@ for i, p in enumerate(PIECES):
             {close_tag}
           </div>''')
 
+boards = []
+DESIGN = json.loads((ROOT / "content" / "design.json").read_text(encoding="utf-8"))["boards"]
+for i, d in enumerate(DESIGN):
+    text = f'<span>{esc(d["text"], quote=False)}</span>' if d.get("text") else ""
+    boards.append(f'''          <div class="d-item" role="listitem">
+            <a class="card d-card" href="{d["img"]}" data-box="img" data-cursor="View" style="--tilt:{TILTS[(i * 3) % len(TILTS)]}deg">
+              <img src="{d["thumb"]}" alt="{esc(d["name"])}" width="{d["w"]}" height="{d["h"]}" loading="lazy">
+              <span class="d-cap"><strong>{esc(d["name"])}</strong>{text}</span>
+            </a>
+          </div>''')
+
 filters = [f'          <button type="button" data-filter="all" aria-pressed="true">All<span>{len(PIECES)}</span></button>']
 for g in GROUPS:
     n = sum(1 for p in PIECES if p["group"] == g["id"])
@@ -101,6 +112,7 @@ for key, value in {
     "{{COUNT}}": str(len(PIECES)),
     "{{CARDS}}": "\n".join(cards),
     "{{FILTERS}}": "\n".join(filters),
+    "{{BOARDS}}": "\n".join(boards),
 }.items():
     home = home.replace(key, value)
 assert "{{" not in home, re.findall(r"\{\{.*?\}\}", home)
@@ -206,4 +218,4 @@ for i, p in enumerate(pages):
 </html>
 ''', encoding="utf-8")
 
-print(f"Built index.html with {len(PIECES)} cards, and {len(pages)} reading pages.")
+print(f"Built index.html with {len(PIECES)} writing cards and {len(DESIGN)} design cards, and {len(pages)} reading pages.")

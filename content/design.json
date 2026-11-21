@@ -1,0 +1,237 @@
+{
+  "_note": "The design boards, in the order they are dealt. 'img' is the full image the card opens; 'thumb' is the 900 px copy on the card; 'name' and 'text' are Mike's captions from the October build. Run python3 scripts/build-site.py after editing.",
+  "boards": [
+    {
+      "name": "Desert Swag",
+      "img": "images/design/desert-swag/withcar.webp",
+      "thumb": "images/design-cards/01-withcar.webp",
+      "w": 900,
+      "h": 506
+    },
+    {
+      "name": "Desert Swag",
+      "img": "images/design/desert-swag/all-tied-up-beige.webp",
+      "thumb": "images/design-cards/02-all-tied-up-beige.webp",
+      "w": 900,
+      "h": 996
+    },
+    {
+      "name": "Desert Swag",
+      "img": "images/design/desert-swag/beige-space.webp",
+      "thumb": "images/design-cards/03-beige-space.webp",
+      "w": 900,
+      "h": 1125
+    },
+    {
+      "name": "Desert Swag",
+      "img": "images/design/desert-swag/double-view.webp",
+      "thumb": "images/design-cards/04-double-view.webp",
+      "w": 900,
+      "h": 506
+    },
+    {
+      "name": "Desert Swag",
+      "img": "images/design/desert-swag/hill-grmen-beige.webp",
+      "thumb": "images/design-cards/05-hill-grmen-beige.webp",
+      "w": 900,
+      "h": 1125
+    },
+    {
+      "name": "Desert Swag",
+      "img": "images/design/desert-swag/rearview-beige.webp",
+      "thumb": "images/design-cards/06-rearview-beige.webp",
+      "w": 900,
+      "h": 507
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/hero1.webp",
+      "thumb": "images/design-cards/07-hero1.webp",
+      "w": 900,
+      "h": 506,
+      "text": "A luxury brand that never existed, conjured whole with AI."
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/design/mythmood.webp",
+      "thumb": "images/design-cards/08-mythmood.webp",
+      "w": 900,
+      "h": 506,
+      "text": "Editorial worlds, dreamed from salt flats and moonlight."
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/design/myh.webp",
+      "thumb": "images/design-cards/09-myh.webp",
+      "w": 900,
+      "h": 503
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/hero3.webp",
+      "thumb": "images/design-cards/10-hero3.webp",
+      "w": 900,
+      "h": 506
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/hero4.webp",
+      "thumb": "images/design-cards/11-hero4.webp",
+      "w": 900,
+      "h": 504
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/design/doubleview.webp",
+      "thumb": "images/design-cards/12-doubleview.webp",
+      "w": 900,
+      "h": 450
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/hero6.webp",
+      "thumb": "images/design-cards/13-hero6.webp",
+      "w": 900,
+      "h": 592
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/bracelet-showcase.webp",
+      "thumb": "images/design-cards/14-bracelet-showcase.webp",
+      "w": 900,
+      "h": 506
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/design/mytho12.webp",
+      "thumb": "images/design-cards/15-mytho12.webp",
+      "w": 900,
+      "h": 503,
+      "text": "Copper and labradorite; the house materials."
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/necklace-showcase-1.webp",
+      "thumb": "images/design-cards/16-necklace-showcase-1.webp",
+      "w": 900,
+      "h": 506
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/necklace-showcase--on-model.webp",
+      "thumb": "images/design-cards/17-necklace-showcase--on-model.webp",
+      "w": 900,
+      "h": 900
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/product-showcase-all-2.webp",
+      "thumb": "images/design-cards/18-product-showcase-all-2.webp",
+      "w": 900,
+      "h": 725
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/product-erf---rings.webp",
+      "thumb": "images/design-cards/19-product-erf---rings.webp",
+      "w": 900,
+      "h": 503
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/design/rhino-rider.webp",
+      "thumb": "images/design-cards/20-rhino-rider.webp",
+      "w": 900,
+      "h": 506,
+      "text": "The brand extends into fauna, myth and landscape."
+    },
+    {
+      "name": "Mythopoeic",
+      "img": "images/mythopoeic/rhino.webp",
+      "thumb": "images/design-cards/21-rhino.webp",
+      "w": 900,
+      "h": 506
+    },
+    {
+      "name": "EduTalkz · TravelMedz · TwinTech",
+      "img": "images/healthtech-design0B.webp",
+      "thumb": "images/design-cards/22-healthtech-design0b.webp",
+      "w": 900,
+      "h": 450,
+      "text": "Brand identities and visual systems for three healthtech startups."
+    },
+    {
+      "name": "EduTalkz",
+      "img": "images/design/herobanner.webp",
+      "thumb": "images/design-cards/23-herobanner.webp",
+      "w": 900,
+      "h": 531
+    },
+    {
+      "name": "Healthtech identities",
+      "img": "images/healthtech-design0C.webp",
+      "thumb": "images/design-cards/24-healthtech-design0c.webp",
+      "w": 900,
+      "h": 1207
+    },
+    {
+      "name": "Healthtech identities",
+      "img": "images/healthtech-design2.webp",
+      "thumb": "images/design-cards/25-healthtech-design2.webp",
+      "w": 900,
+      "h": 1350
+    },
+    {
+      "name": "Healthtech identities",
+      "img": "images/healthtech-design3.webp",
+      "thumb": "images/design-cards/26-healthtech-design3.webp",
+      "w": 900,
+      "h": 1350
+    },
+    {
+      "name": "Healthtech identities",
+      "img": "images/healthtech-design7.webp",
+      "thumb": "images/design-cards/27-healthtech-design7.webp",
+      "w": 900,
+      "h": 504
+    },
+    {
+      "name": "Healthtech identities",
+      "img": "images/healthtech-design9.webp",
+      "thumb": "images/design-cards/28-healthtech-design9.webp",
+      "w": 900,
+      "h": 506,
+      "text": "Complex science, kept approachable; AI-first, at a fraction of the cost."
+    },
+    {
+      "name": "Healthtech identities",
+      "img": "images/healthtech-design10.webp",
+      "thumb": "images/design-cards/29-healthtech-design10.webp",
+      "w": 900,
+      "h": 564
+    },
+    {
+      "name": "Healthtech identities",
+      "img": "images/healthtech-design13.webp",
+      "thumb": "images/design-cards/30-healthtech-design13.webp",
+      "w": 900,
+      "h": 504
+    },
+    {
+      "name": "Mikey · brand identity",
+      "img": "images/design/lookbookv2.webp",
+      "thumb": "images/design-cards/31-lookbookv2.webp",
+      "w": 900,
+      "h": 1692,
+      "text": "Wordmark, monogram and mark system for the Mikey film brand."
+    },
+    {
+      "name": "Automotive",
+      "img": "images/design/cars.webp",
+      "thumb": "images/design-cards/32-cars.webp",
+      "w": 900,
+      "h": 270,
+      "text": "Concept showroom visualisation."
+    }
+  ]
+}

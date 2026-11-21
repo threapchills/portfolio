@@ -295,6 +295,66 @@
     document.fonts && document.fonts.ready.then(() => { place(shown); if (motion) ScrollTrigger.refresh(); });
   }
 
+  /* ---- the design boards: every one a card, three columns abreast ---- */
+  const dGrid = $('#design-grid');
+  if (dGrid) {
+    const boards = $$('.d-item', dGrid);
+    let dCols = [];
+    const count = () => (innerWidth > 1000 ? 3 : 2);
+    const lay = () => {
+      const n = count();
+      if (dCols.length === n) return;
+      dGrid.replaceChildren();
+      dGrid.classList.add('is-built');
+      dCols = Array.from({ length: n }, () => { const d = document.createElement('div'); d.className = 'd-col'; dGrid.appendChild(d); return d; });
+      for (const item of boards) dCols.reduce((a, b) => (a.offsetHeight <= b.offsetHeight ? a : b)).appendChild(item);
+      if (motion) ScrollTrigger.refresh();
+    };
+    lay();
+    boards.forEach((item, i) => { const card = $('.d-card', item); deal(card, item, i); tiltable(card, 0.8); });
+    let relay;
+    addEventListener('resize', () => { clearTimeout(relay); relay = setTimeout(lay, 200); });
+  }
+
+  /* ---- the viewer: a board or a film opens where you are ---- */
+  const box = $('#box'), viewer = $('#box-stage');
+  if (box) {
+    let from = null;
+    const close = () => {
+      if (box.hidden) return;
+      box.classList.remove('is-open');
+      setTimeout(() => { box.hidden = true; viewer.replaceChildren(); }, 350);
+      lenis && lenis.start();
+      document.documentElement.style.overflow = '';
+      from && from.focus({ preventScroll: true });
+    };
+    const open = (link) => {
+      from = link;
+      let node;
+      if (link.dataset.box === 'video') {
+        node = document.createElement('video');
+        node.controls = true; node.playsInline = true; node.autoplay = true; node.src = link.href;
+      } else {
+        node = new Image();
+        node.alt = ($('img', link) || {}).alt || '';
+        node.src = link.href;
+      }
+      viewer.replaceChildren(node);
+      box.hidden = false;
+      requestAnimationFrame(() => box.classList.add('is-open'));
+      lenis && lenis.stop();
+      document.documentElement.style.overflow = 'hidden';
+      $('#box-close').focus({ preventScroll: true });
+      const disc = $('#cur'); disc && disc.classList.remove('is-on');
+    };
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[data-box]');
+      if (link && !e.metaKey && !e.ctrlKey) { e.preventDefault(); open(link); return; }
+      if (!box.hidden && (e.target === box || e.target === viewer || e.target.closest('#box-close'))) close();
+    });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  }
+
   const filters = $$('.filters button');
   filters.forEach((btn) => btn.addEventListener('click', () => {
     const group = btn.dataset.filter;
@@ -321,7 +381,7 @@
 
   /* ---- columns drift against each other, and lean into the scroll ---- */
   if (motion) {
-    const drifting = [...$$('.t-col'), ...$$('.w-col')];
+    const drifting = [...$$('.t-col'), ...$$('.w-col'), ...$$('.d-col')];
     drifting.forEach((col, i) => {
       if (i % 2 === 0 || !wide()) return;
       gsap.to(col, { y: -90, ease: 'none', scrollTrigger: { trigger: col.parentElement, start: 'top bottom', end: 'bottom top', scrub: 0.5 } });
@@ -420,10 +480,6 @@
 
     // made after the pin, so its end takes the pinned distance into account
     ScrollTrigger.create({ trigger: '.screen', start: 'top 48px', end: 'bottom 48px', onToggle: (self) => top.classList.toggle('on-night', self.isActive) });
-
-    $$('.board-frame img').forEach((img) => {
-      gsap.fromTo(img, { yPercent: -7 }, { yPercent: 7, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: 0.5 } });
-    });
 
     gsap.from('.artefact', {
       y: 110, rotation: (i) => (i % 2 ? 7 : -7), autoAlpha: 0, duration: 1, ease: 'power4.out', stagger: 0.09,
