@@ -168,7 +168,7 @@ section { position: relative; padding-block: clamp(4.5rem, 13vh, 9rem); }
   opacity: 0.34;
 }
 /* the light on the card follows the pointer */
-.card::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(26rem circle at var(--mx) var(--my), rgba(255, 255, 255, 0.75), transparent 60%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
+.card::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(22rem circle at var(--mx) var(--my), rgba(255, 255, 255, 0.34), transparent 62%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
 .card:hover { box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 40px 80px rgba(60, 38, 10, 0.22); }
 .card:hover::after { opacity: 1; }
 
