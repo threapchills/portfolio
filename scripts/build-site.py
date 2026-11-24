@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "content" / "writing"
-V = "20261121j"          # bump when css/writer.css or js/writer.js change
+V = "20261124a"          # bump when css/writer.css or js/writer.js change
 
 data = json.loads((SRC / "index.json").read_text(encoding="utf-8"))
 GROUPS, PIECES, LOGOS = data["groups"], data["pieces"], data["logos"]

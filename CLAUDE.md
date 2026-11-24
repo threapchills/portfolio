@@ -67,11 +67,12 @@ vibe-coded apps and the video game work) and contact.
   properties on an element GSAP animates.
 - Call `ScrollTrigger.refresh()` only while the cards are at rest (no FLIP
   offsets), or their triggers are measured in the wrong place.
-- **No links to older versions of the site**: not `journey.html`, not the
-  legacy project pages in `projects/`, not mikewhyle.com. Film cards open
-  the film where it lives (YouTube, Vimeo, Drive), or in the on-page
-  viewer for the two that only exist as local clips.
-- The design boards come from `content/design.json`: 32 cards, each a 900
+- **No links to older versions of the site**: not `journey.html`, not
+  mikewhyle.com. The film sub-pages in `projects/` are part of the site:
+  every film card opens its own sub-page (Vast Island has none, so it
+  opens YouTube). Mike was annoyed when these links were removed without
+  asking: do not re-point or drop links on your own inference; ask.
+- The design boards come from `content/design.json`: 30 cards, each a 900
   px copy in `images/design-cards/` that opens the full image in the
   viewer. A new board needs its thumb and its entry there.
 - The credit line reads "Made with the help of Claude" (not one model's
